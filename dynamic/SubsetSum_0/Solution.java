@@ -2,6 +2,12 @@ package dynamic.SubsetSum_0;
 
 import java.util.Map;
 
+/** M
+ Given a set of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given sum.
+ Example:
+ Input:  set[] = {3, 34, 4, 12, 5, 2}, sum = 9
+ Output:  True  //There is a subset (4, 5) with sum 9.
+ */
 public class Solution {
 
     // Brute force recursive solution, O(2^n) - time, O(n) - space
@@ -15,7 +21,6 @@ public class Solution {
 
         boolean include = subsetSum(arr, n - 1, sum - arr[n]);
         boolean exclude = subsetSum(arr, n - 1, sum);
-        int a= 0;
 
         return include || exclude;
     }

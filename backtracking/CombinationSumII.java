@@ -35,7 +35,7 @@ public class CombinationSumII {
 
     public static void main(String[] args) {
         CombinationSumII s = new CombinationSumII();
-        System.out.println(s.combinationSum(new int[] {2,5,2,1,2}, 5));
+        System.out.println(s.combinationSum(new int[] {2,5,2,1}, 5));
         System.out.println(s.combinationSum(new int[] {10,1,2,7,6,1,5}, 8));
         System.out.println(s.combinationSum(new int[] {2,3,5}, 8));
     }
