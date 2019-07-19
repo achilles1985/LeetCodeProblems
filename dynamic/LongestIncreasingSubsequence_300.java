@@ -21,12 +21,29 @@ public class LongestIncreasingSubsequence_300 {
     public static void main(String[] args) {
         LongestIncreasingSubsequence_300 s = new LongestIncreasingSubsequence_300();
         System.out.println(s.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18})); // 4
-        System.out.println(s.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 4})); // 3
+        System.out.println(s.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 4})); // 3!
         System.out.println(s.lengthOfLISDynamicTopDown(new int[]{10, 9, 2, 5, 3, 4})); // 3
         System.out.println(s.lengthOfLISDynamicBottomUp(new int[]{-1, 3, 4, 5, 2, 2,2,2})); // 5
     }
 
     // Brute Force, O(2^n), O(n^2) - space
+    public int lengthOfLIS2(int[] nums) {
+        return lengthofLIS2(nums, Integer.MIN_VALUE, 0);
+    }
+
+    public int lengthofLIS2(int[] nums, int prev, int curpos) {
+        if (curpos == nums.length) {
+            return 0;
+        }
+        int taken = 0;
+        if (nums[curpos] > prev) {
+            taken = 1 + lengthofLIS2(nums, nums[curpos], curpos + 1);
+        }
+        int nottaken = lengthofLIS2(nums, prev, curpos + 1);
+
+        return Math.max(taken, nottaken);
+    }
+
     public int lengthOfLIS(int[] nums) {
         int max = 0;
         for (int i = 0; i < nums.length; i++) {

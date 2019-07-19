@@ -16,11 +16,11 @@ public class SubsetSum {
         SubsetSum s = new SubsetSum();
         System.out.println(s.subsetSum(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
         System.out.println(s.subsetSumDynamicBottomUp(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
-        //System.out.println(s.subsetSumDynamicTopDown(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
+        System.out.println(s.subsetSumDynamicTopDown(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
 
         System.out.println(s.subsetSum(new int[] {7, 3, 2, 5, 8}, 12)); // true
         System.out.println(s.subsetSumDynamicBottomUp(new int[] {7, 3, 2, 5, 8}, 12)); // true
-        //System.out.println(s.subsetSumDynamicTopDown(new int[] {7, 3, 2, 5, 8}, 12)); // true
+        System.out.println(s.subsetSumDynamicTopDown(new int[] {7, 3, 2, 5, 8}, 12)); // true
 
         System.out.println(s.subsetSum(new int[] {7, 3, 2, 5, 8}, 122)); // false
         System.out.println(s.subsetSumDynamicBottomUp(new int[] {7, 3, 2, 5, 8}, 122)); // false
