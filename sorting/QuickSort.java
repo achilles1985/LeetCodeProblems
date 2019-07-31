@@ -12,15 +12,18 @@ public class QuickSort {
         int[] arr1 = new int[] {2,1,4,6,5,7,9,10};
         int[] arr2 = new int[] {7,6,5,4,3,2,1};
         int[] arr3 = new int[] {1,2,3,4,5,6,7};
+        int[] arr4 = new int[] {1,8,3,9,4,5,7};
 
         s.sort(arr0);
         s.sort(arr1);
         s.sort(arr2);
         s.sort(arr3);
+        s.sort(arr4);
         SolutionUtils.print(arr0);
         SolutionUtils.print(arr1);
         SolutionUtils.print(arr2);
         SolutionUtils.print(arr3);
+        SolutionUtils.print(arr4);
     }
 
     private void sort(int[] arr) {
