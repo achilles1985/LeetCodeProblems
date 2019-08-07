@@ -27,6 +27,9 @@ public final class SolutionUtils {
     }
 
     public static void print(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
         System.out.print(arr[0]);
         for (int i = 1; i < arr.length; i++) {
             System.out.print("," + arr[i]);

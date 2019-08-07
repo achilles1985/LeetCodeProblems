@@ -20,7 +20,9 @@ public class Solution {
     // https://discuss.leetcode.com/topic/24532/3-4-short-lines-integer-newton-every-language
     public int newtonSqr(int x) {
         long r = x;
-        while(r*r > x) r = (r + x/r)/2;
+        while(r*r > x) {
+            r = (r + x/r)/2;
+        }
         return (int)r;
     }
 
