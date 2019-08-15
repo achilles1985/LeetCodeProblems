@@ -2,18 +2,21 @@ package sorting;
 
 import utils.SolutionUtils;
 
+// https://www.geeksforgeeks.org/quick-sort/
 public class QuickSort {
 
     // O(n*log(n)) - time, O(1) - space
     public static void main(String[] args) {
         QuickSort s = new QuickSort();
 
+        int[] arr5 = new int[] {3,4,5,8,9,7};
         int[] arr0 = new int[] {50,23,9,18,61,32};
         int[] arr1 = new int[] {2,1,4,6,5,7,9,10};
         int[] arr2 = new int[] {7,6,5,4,3,2,1};
         int[] arr3 = new int[] {1,2,3,4,5,6,7};
         int[] arr4 = new int[] {1,8,3,9,4,5,7};
 
+        s.sort(arr5);
         s.sort(arr0);
         s.sort(arr1);
         s.sort(arr2);

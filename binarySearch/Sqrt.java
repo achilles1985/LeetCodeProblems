@@ -17,13 +17,32 @@ package binarySearch;
  */
 public class Sqrt {
 
+    // We return the largest integer whose square is less than or equal to the given integer, e.g. sqr(21) = 4^2<sqr(21)<5^2, so we return 4.
     public static void main(String[] args) {
         Sqrt s = new Sqrt();
-        System.out.println(s.mySqrt(4)); //2
-        System.out.println(s.mySqrt(8)); //2
+        System.out.println(s.mySqrt2(4)); //2
+        System.out.println(s.mySqrt2(8)); //2
+        System.out.println(s.mySqrt2(21)); //4
     }
 
+    // O(log(x)) - time, O(1) - space
     public int mySqrt(int x) {
+        long low = 0;
+        long high = x;
+        while (low <= high) {
+            long mid = low + (high-low)/2;
+            long res = mid*mid;
+            if (res <= x) {
+                low = mid+1;
+            } else {
+                high = mid-1;
+            }
+        }
+
+        return (int)low-1;
+    }
+
+    public int mySqrt2(int x) {
         if (x == 0 || x == 1) {
             return x;
         }

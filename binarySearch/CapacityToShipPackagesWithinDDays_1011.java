@@ -5,7 +5,8 @@ package binarySearch;
 /**
  * M
  A conveyor belt has packages that must be shipped from one port to another within D days.
- The i-th package on the conveyor belt has a weight of weights[i].  Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship.
+ The i-th package on the conveyor belt has a weight of weights[i].  Each day, we load the ship with packages on the conveyor belt (in the order given by weights).
+ We may not load more weight than the maximum weight capacity of the ship.
  Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
 
  Example 1:
@@ -52,7 +53,7 @@ public class CapacityToShipPackagesWithinDDays_1011 {
         System.out.println(s.shipWithinDays(new int[] {1,2,3,1,1}, 4)); //3
     }
 
-    // O(n*log(n)) - time
+    // O(n*log(sum(n)-max(n))) - time, O(1) - space
     public int shipWithinDays(int[] weights, int D) {
         int left = 0;
         int right = 0;
