@@ -1,14 +1,21 @@
-package stack.DailyTemperature_739;
+package stack;
 
 import java.util.Stack;
 
-/**
+import utils.SolutionUtils;
+
+/** M
  Given a list of daily temperatures T, return a list such that, for each day in the input, tells you how many days you would have to wait until a warmer temperature. If there is no future day for which this is possible, put 0 instead.
  For example, given the list of temperatures T = [73, 74, 75, 71, 69, 72, 76, 73], your output should be [1, 1, 4, 2, 1, 1, 0, 0].
 
  Note: The length of temperatures will be in the range [1, 30000]. Each temperature will be an integer in the range [30, 100].
  */
-public class Solution {
+public class DailyTemperature {
+
+    public static void main(String[] args) {
+        DailyTemperature s = new DailyTemperature();
+        SolutionUtils.print(s.dailyTemperatures2(new int[]{73, 74, 75, 71, 69, 72, 76, 73})); // [1,1,4,2,1,1,0,0]
+    }
 
     // O(n^2) - time, O(1) - memory (result array is not counted)
     public int[] dailyTemperatures(int[] input) {
@@ -24,7 +31,7 @@ public class Solution {
         return res;
     }
 
-    // O(m) public int[] dailyTemperatures(int[] input) {
+    // O(n) - time, O(n) - space
     public int[] dailyTemperatures2(int[] input) {
         int[] res = new int[input.length];
         Stack<Integer> stack = new Stack<>();
