@@ -1,7 +1,6 @@
-package stack.ImplementStackUsingQueues_121;
+package stack;
 
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
@@ -30,66 +29,72 @@ import java.util.Queue;
 In push operation, the new element is always enqueued to q1. In pop() operation, if q2 is empty then all the elements except the last, are moved to q2.
 Finally the last element is dequeued from q1 and returned. (https://www.geeksforgeeks.org/implement-stack-using-queue/)
  */
-public class MyStack {
+public class ImplementStackUsingQueues_121 {
+    private Queue<Integer> q1;
+    private Queue<Integer> q2;
+    private int last;
 
-    private Queue<Integer> queue1;
-    private Queue<Integer> queue2;
-
-    public MyStack() {
-        queue1 = new LinkedList<>();
-        queue2 = new LinkedList<>();
+    /** Initialize your data structure here. */
+    public ImplementStackUsingQueues_121() {
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
     }
 
     /** Push element x onto stack. */
+    // O(1) - time
     public void push(int x) {
-        queue1.add(x);
+        q1.offer(x);
+        last = x;
     }
 
     /** Removes the element on top of the stack and returns that element. */
+    // O(n) - time
     public int pop() {
-        if (queue1.isEmpty()) {
-            return -1;
+        while (q1.size() > 1) {
+            last = q1.poll();
+            q2.add(last);
         }
 
-        while (queue1.size() != 1) {
-            queue2.add(queue1.poll());
-        }
-
-        int res = queue1.poll();
-
-        Queue<Integer> temp = queue1;
-        queue1 = queue2;
-        queue2 = temp;
+        int res = q1.poll();
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
 
         return res;
     }
 
     /** Get the top element. */
+    // O(1) - time
     public int top() {
-        if (queue1.isEmpty()) {
-            return -1;
-        }
-
-        while (queue1.size() != 1) {
-            queue2.add(queue1.poll());
-        }
-
-        int res = queue1.peek();
-        queue2.add(queue1.poll());
-
-        Queue<Integer> temp = queue1;
-        queue1 = queue2;
-        queue2 = temp;
-
-        return res;
+        return last;
     }
 
     /** Returns whether the stack is empty. */
     public boolean empty() {
-        return queue1.isEmpty() && queue2.isEmpty();
+        return q1.isEmpty() && q2.isEmpty();
     }
 
+    public static void main(String[] args) {
+        ImplementStackUsingQueues_121 stack = new ImplementStackUsingQueues_121();
+
+        stack.push(1);
+        stack.push(2);
+        System.out.println(stack.top());   // returns 2
+        System.out.println(stack.pop());   // returns 2
+        System.out.println(stack.empty()); // returns false
+    }
 }
+
+/** We can use only one queue if while pushing remove elements and add them to the queue except the new pushed.
+ * public void push(int x) {
+    q1.add(x);
+    int sz = q1.size();
+    while (sz > 1) {
+      q1.add(q1.remove());
+      sz--;
+   }
+ }
+ */
 
 /**
  * Your MyStack object will be instantiated and called as such:

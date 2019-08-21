@@ -20,6 +20,7 @@ public class MaximumSubarray_53 {
 
     public static void main(String[] args) {
         MaximumSubarray_53 s = new MaximumSubarray_53();
+        System.out.println(s.maxSubArray(new int[] {1,2,3,4})); // [4,-1,2,1] 6
         System.out.println(s.maxSubArray(new int[] {-2,1,-3,4,-1,2,1,-5,4})); // [4,-1,2,1] 6
         System.out.println(s.maxSubArray2(new int[] {-2,1,-3,4,-1,2,1,-5,4})); // [4,-1,2,1] 6
         System.out.println(s.maxSubArrayDynamic(new int[] {-2,1,-3,4,-1,2,1,-5,4})); // [4,-1,2,1] 6
