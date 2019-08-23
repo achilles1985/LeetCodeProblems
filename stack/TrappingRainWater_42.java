@@ -42,6 +42,7 @@ public class TrappingRainWater_42 {
         return ans;
     }
 
+    // Not using stack
     // O(n) - time, O(n) - space
     public int trap(int[] height) {
         if (height == null || height.length == 0) {
@@ -67,6 +68,7 @@ public class TrappingRainWater_42 {
         return ans;
     }
 
+    // Based on stack
     // O(n) - time, O(n) - space
     public int trap2(int[] height) {
         Stack<Integer> stack = new Stack<>();
@@ -85,5 +87,32 @@ public class TrappingRainWater_42 {
         }
 
         return ans;
+    }
+
+    // O(n) - time, O(1) - space
+    public int trap4(int[] height) {
+        int result = 0;
+        int left_max = 0, right_max = 0;
+        int lo = 0, hi = height.length-1;
+        while (lo <= hi) {
+            if (height[lo] < height[hi]) {
+                if (height[lo] > left_max) {
+                   left_max = height[lo];
+                } else {
+                  result += left_max - height[lo];
+                }
+                lo++;
+            }
+            else {
+                if (height[hi] > right_max) {
+                    right_max = height[hi];
+                } else {
+                    result += right_max - height[hi];
+                }
+                hi--;
+            }
+        }
+
+        return result;
     }
 }

@@ -20,22 +20,9 @@ package array.FindDuplicateNumber_287;
 public class Solution {
 
     // O(n) - time, O(1) - space
-    public int findDuplicate(int[] nums) {
-        int l = 0;
-        int r = nums.length-1;
-        while (l <= r) {
-            int m = (l+r)/2;
-            if (nums[m] == nums[l] || nums[m] == nums[r]) {
-                return nums[m];
-            }
-            l++;
-        }
-
-        return -1;
-    }
-
     // https://leetcode.com/problems/find-the-duplicate-number/solution/ (Cycle detection)
     public int findDuplicate2(int[] nums) {
+        // Find the intersection point of the two runners.
         int slow = nums[0];
         int fast = nums[0];
         do {
@@ -43,6 +30,28 @@ public class Solution {
             fast = nums[nums[fast]];
         } while (slow != fast);
 
-        return slow;
+        // Find the "entrance" to the cycle.
+        int ptr1 = nums[0];
+        int ptr2 = slow;
+        while (ptr1 != ptr2) {
+            ptr1 = nums[ptr1];
+            ptr2 = nums[ptr2];
+        }
+
+        return ptr1;
+    }
+
+    // O(n) - time, O(1) - space
+    public int findDuplicate3(int[] nums) {
+        for (int i = 0; i <= nums.length - 1; i++){
+            int val = Math.abs(nums[i]);
+            if (nums[val] > 0){
+                nums[val] = -nums[val];
+            }
+            else {
+                return Math.abs(nums[i]);
+            }
+        }
+        return -1;
     }
 }
