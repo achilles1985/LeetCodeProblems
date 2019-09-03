@@ -23,10 +23,10 @@ package array;
  Output: 0
  Explanation: In this case, no transaction is done, i.e. max profit = 0.
  */
-public class BestTimeToBuyAndSellStockII_122 {
+public class BestTimeToBuyAndSellStock_II_122 {
 
     public static void main(String[] args) {
-        BestTimeToBuyAndSellStockII_122 s = new BestTimeToBuyAndSellStockII_122();
+        BestTimeToBuyAndSellStock_II_122 s = new BestTimeToBuyAndSellStock_II_122();
         System.out.println(s.maxProfitBF(new int[]{7,1,5,3,6,4})); //7
         System.out.println(s.maxProfit(new int[]{1,2,3,4,5})); //4
         System.out.println(s.maxProfit(new int[]{7,6,4,3,1})); //0
