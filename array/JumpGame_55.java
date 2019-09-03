@@ -16,6 +16,7 @@ package array;
  Explanation: You will always arrive at index 3 no matter what. Its maximum
  jump length is 0, which makes it impossible to reach the last index.
  */
+
 public class JumpGame_55 {
 
     public static void main(String[] args) {
