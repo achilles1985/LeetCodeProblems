@@ -22,10 +22,10 @@ import java.util.Set;
  [-1, -1, 2]
  ]
  */
-public class TreeSum_15 {
+public class ThreeSum_15 {
 
     public static void main(String[] args) {
-        TreeSum_15 s = new TreeSum_15();
+        ThreeSum_15 s = new ThreeSum_15();
         System.out.println(s.threeSumBF(new int[]{-1,0,1,2,-1,-4}));
         System.out.println(s.threeSum(new int[]{-1,0,1,2,-1,-4}));
         System.out.println(s.threeSum2(new int[]{-1,0,1,2,-1,-4}));
