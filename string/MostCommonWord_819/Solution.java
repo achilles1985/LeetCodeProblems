@@ -1,22 +1,15 @@
 package string.MostCommonWord_819;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Optional;
-import java.util.PriorityQueue;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import static java.lang.Character.isAlphabetic;
 
 /** Easy
- * Given a paragraph and a list of banned words, return the most frequent word that is not in the list of banned words.  It is guaranteed there is at least one word that isn't banned, and that the answer is unique.
- Words in the list of banned words are given in lowercase, and free of punctuation.  Words in the paragraph are not case sensitive.  The answer is in lowercase.
+ Given a paragraph and a list of banned words, return the most frequent word that is not in the list of banned words.
+ It is guaranteed there is at least one word that isn't banned, and that the answer is unique.
+ Words in the list of banned words are given in lowercase, and free of punctuation.
+ Words in the paragraph are not case sensitive.  The answer is in lowercase.
 
  Example:
  Input:
@@ -41,7 +34,7 @@ import static java.lang.Character.isAlphabetic;
  */
 public class Solution {
 
-    // O(n + m) - time, where n is size of paragraph and m is size of banner
+    // O(n + m) - time, where n is size of paragraph and m is size of banner, at least O(m) - space
     public String mostCommonWord(String paragraph, String[] banned) {
         Set<String> set = new HashSet<>();
         for (String word: banned) {

@@ -1,10 +1,10 @@
-package string.LongestSubstringWithoutRepeatingCharacters_3;
+package string;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /** M
- * Given a string, find the length of the longest substring without repeating characters.
+ Given a string, find the length of the longest substring without repeating characters.
 
  Example 1:
  Input: "abcabcbb"
@@ -22,20 +22,16 @@ import java.util.Set;
  Explanation: The answer is "wke", with the length of 3.
  Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
-public class Solution {
+public class LongestSubstringWithoutRepeatingCharacters_3 {
 
-    // O(n^3) - time, O(min(n,m)) - space
-    public int lengthOfLongestSubstring(String s) {
-        int ans = 0;
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i+1; j <= s.length(); j++) {
-                if (allUnique(i, j, s)) {
-                    ans = Math.max(ans, j-i);
-                }
-            }
-        }
-
-        return ans;
+    public static void main(String[] args) {
+        LongestSubstringWithoutRepeatingCharacters_3 s = new LongestSubstringWithoutRepeatingCharacters_3();
+        System.out.println(s.lengthOfLongestSubstring2("pwwkeww")); //3
+        System.out.println(s.lengthOfLongestSubstring2("dvdf")); //3
+        System.out.println(s.lengthOfLongestSubstring2("au")); //2
+        System.out.println(s.lengthOfLongestSubstring2("abcabcbb")); //3
+        System.out.println(s.lengthOfLongestSubstring("bbbbb")); //1
+        System.out.println(s.lengthOfLongestSubstring("pwwkew")); //3
     }
 
     // O(n) - time, O(min(n,m)) - space
@@ -53,6 +49,23 @@ public class Solution {
                 set.remove(s.charAt(i++));
             }
         }
+        return ans;
+    }
+
+    // O(n^3) - time, O(min(n,m)) - space
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i+1; j <= s.length(); j++) {
+                if (allUnique(i, j, s)) {
+                    ans = Math.max(ans, j-i);
+                }
+            }
+        }
+
         return ans;
     }
 
