@@ -62,6 +62,7 @@ public class RomanToInteger_13 {
         System.out.println(s.romanToInt("IX")); //9
         System.out.println(s.romanToInt("LVIII")); //58
         System.out.println(s.romanToInt("MCMXCIV")); //1994
+        System.out.println(s.romanToInt("CCCLXV")); //365
     }
 
     // O(n) - time, O(1) - space
