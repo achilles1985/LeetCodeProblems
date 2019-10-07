@@ -1,7 +1,6 @@
-package string.CountBinarySubstrings_696;
+package string;
 
-/**
- * Easy
+/** E
  Give a string s, count the number of non-empty (contiguous) substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively.
  Substrings that occur multiple times are counted the number of times they occur.
 
@@ -21,23 +20,30 @@ package string.CountBinarySubstrings_696;
  s.length will be between 1 and 50,000.
  s will only consist of "0" or "1" characters.
  */
-public class Solution {
+public class CountBinarySubstrings_696 {
 
+    public static void main(String[] args) {
+        CountBinarySubstrings_696 s = new CountBinarySubstrings_696();
+        System.out.println(s.countBinarySubstrings("00110011")); //6
+        System.out.println(s.countBinarySubstrings("10101")); //4
+    }
+
+    // O(n) - time, O(n) - space
     public int countBinarySubstrings(String s) {
-        int[] groups = new int[s.length()];
-        int t = 0;
-        groups[0] = 1;
+        int[] counts = new int[s.length()];
+        int j = 0;
+        counts[0] = 1;
+        // count each group
         for (int i = 1; i < s.length(); i++) {
-            if (s.charAt(i-1) != s.charAt(i)) {
-                groups[++t] = 1;
+            if (s.charAt(i) != s.charAt(i-1)) {
+                counts[++j] = 1;
             } else {
-                groups[t]++;
+                counts[j]++;
             }
         }
-
         int ans = 0;
-        for (int i = 1; i <= t; i++) {
-            ans += Math.min(groups[i-1], groups[i]);
+        for (int i = 1; i <= j; i++) {
+            ans += Math.min(counts[i-1], counts[i]);
         }
         return ans;
     }
