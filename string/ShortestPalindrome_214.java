@@ -1,5 +1,8 @@
 package string;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** H
  * Given a string s, you are allowed to convert it to a palindrome by adding characters in front of it. Find and
  * return the shortest palindrome you can find by performing this transformation.
@@ -21,6 +24,8 @@ public class ShortestPalindrome_214 {
         System.out.println(s.shortestPalindrome("aacecaaa")); //aaacecaaa
         System.out.println(s.shortestPalindrome("abcd")); //dcbabcd
         System.out.println(s.shortestPalindrome("abaklm")); //mlkabaklm
+
+        List<String> l = new ArrayList<>();
     }
 
     // O(n^2) - time, O(1) - space

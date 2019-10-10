@@ -8,10 +8,11 @@ public class LinkedListUtils {
         }
 
         ListNode current = head;
-        while(current != null) {
+        while(current.next != null) {
             System.out.print(current.val + "->");
             current = current.next;
         }
+        System.out.print(current.val);
         System.out.println();
     }
 }
