@@ -1,5 +1,7 @@
 package linkedlist;
 
+import com.sun.org.apache.bcel.internal.generic.LNEG;
+
 /** E
  * Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the
  * nodes of the first two lists.
@@ -22,8 +24,6 @@ public class MergeTwoSortedLists_21 {
         LinkedListUtils.print(s.mergeTwoLists2(head1, head2));
     }
 
-    // not using dummy node
-    // O(m+n) - time, O(1) - space
     // Using dummy node
     // O(m+n) - time, O(1) - space
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -44,6 +44,8 @@ public class MergeTwoSortedLists_21 {
         return dummy.next;
     }
 
+    // Not using dummy node
+    // O(m+n) - time, O(1) - space
     public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
         if (l1 == null) {
             return l2;

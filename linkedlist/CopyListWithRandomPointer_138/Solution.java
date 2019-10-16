@@ -20,48 +20,63 @@ import java.util.Map;
  */
 public class Solution {
 
-    // O(n) - time, O(1) - space
-    public ListNode copyRandomList(ListNode head) {
-        ListNode curr1 = head;
-        Map<ListNode, ListNode> randoms = new HashMap<>();
-        // populate the map of val->random
-        while(curr1 != null) {
-            randoms.put(curr1, curr1.random);
-            curr1 = curr1.next;
-        }
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        ListNode head = new ListNode(1);
+        ListNode n1 = new ListNode(2);
+        ListNode n2 = new ListNode(3);
+        ListNode n3 = new ListNode(4);
+        head.next = n1;
+        head.random = n3;
+        n1.next = n2;
+        n1.random = n1;
+        n2.next = n3;
 
-        // clone list of (value, next)
-        ListNode cloneHead = cloneSimpleList(head);
-
-        // update cloned list with random
-        ListNode curr2 = cloneHead;
-        curr1 = head;
-        while (curr1 != null) {
-            curr2.random = randoms.get(curr1);
-            curr2 = curr2.next;
-            curr1 = curr1.next;
-        }
-
-        return cloneHead;
+        ListNode clone = s.copyRandomList2(head);
     }
 
-    public ListNode cloneSimpleList(ListNode head) {
-        ListNode curr1 = head;
+    // O(n) - time, space
+    public ListNode copyRandomList2(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        Map<ListNode, ListNode> map = new HashMap();
+        ListNode curr = head;
+        while (curr != null) {
+            map.put(curr, new ListNode(curr.val));
+            curr = curr.next;
+        }
+        curr = head;
+        while (curr != null) {
+            map.get(curr).next = map.get(curr.next);
+            map.get(curr).random = map.get(curr.random);
+            curr = curr.next;
+        }
+        return map.get(head);
+    }
 
-        ListNode head2 = null;
-        ListNode curr2 = null;
-
-        while (curr1 != null) {
-            if (head2 == null) {
-                head2 = new ListNode(curr1.val);
-                curr2 = head2;
-            } else {
-                curr2.next = new ListNode(curr1.val);
-                curr2 = curr2.next;
-            }
-            curr1 = curr1.next;
+    // O(n) - time, space
+    public ListNode copyRandomList(ListNode head) {
+        ListNode curr = head;
+        ListNode dummy = new ListNode(0);
+        ListNode dummyIter = dummy;
+        Map<ListNode, ListNode> map = new HashMap();
+        while (curr != null) {
+            ListNode clone = new ListNode(curr.val);
+            map.put(curr, clone);
+            dummyIter.next = clone;
+            dummyIter = dummyIter.next;
+            curr = curr.next;
         }
 
-        return head2;
+        ListNode cloneIter = dummy.next;
+        while (head != null) {
+            ListNode clone = map.get(head.random);
+            cloneIter.random = clone;
+            cloneIter = cloneIter.next;
+            head = head.next;
+        }
+
+        return dummy.next;
     }
 }

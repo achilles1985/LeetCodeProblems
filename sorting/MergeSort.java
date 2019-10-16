@@ -20,6 +20,7 @@ public class MergeSort {
         SolutionUtils.print(arr3);
     }
 
+    // O(n*log(n)) - time, O()
     public void sort(int[] arr) {
         sort(arr, 0, arr.length-1);
     }

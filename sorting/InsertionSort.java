@@ -18,6 +18,7 @@ public class InsertionSort {
         SolutionUtils.print(arr3);
     }
 
+    // O(n^2) - time, O(1) - space
     public void sort(int[] input) {
         for (int i = 1; i < input.length; i++) {
             for (int j = i-1; j >= 0 ; j--) {
