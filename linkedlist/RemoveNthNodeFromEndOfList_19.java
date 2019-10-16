@@ -43,8 +43,8 @@ public class RemoveNthNodeFromEndOfList_19 {
             first = first.next;
         }
         // second points to the (k + l)-th last node, deletes its successor.
-        second.next = second.next.next ;
-        return dummyHead.next ;
+        second.next = second.next.next;
+        return dummyHead.next;
     }
 
     // O(n) - time, O(1) - space, one path

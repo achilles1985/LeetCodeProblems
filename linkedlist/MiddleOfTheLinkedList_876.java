@@ -40,6 +40,17 @@ public class MiddleOfTheLinkedList_876 {
 
     // O(n) - time, O(1) - space
     public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public ListNode middleNode2(ListNode head) {
         if (head.next == null) {
             return head;
         }
@@ -50,16 +61,5 @@ public class MiddleOfTheLinkedList_876 {
             slow = slow.next;
         }
         return slow.next;
-    }
-
-    public ListNode middleNode2(ListNode head) {
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        return slow;
     }
 }
