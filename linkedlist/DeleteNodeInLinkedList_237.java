@@ -1,5 +1,7 @@
 package linkedlist;
 
+import linkedlist.utils.ListNode;
+
 public class DeleteNodeInLinkedList_237 {
 
     public void deleteNode(ListNode node) {

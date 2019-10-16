@@ -1,5 +1,8 @@
 package linkedlist;
 
+import linkedlist.utils.LinkedListUtils;
+import linkedlist.utils.ListNode;
+
 /**M
  * A graphical example of insertion sort. The partial sorted list (black) initially contains only the first element
  * in the list.

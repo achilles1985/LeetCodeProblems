@@ -3,6 +3,7 @@ package linkedlist;
 import java.util.Arrays;
 import java.util.Stack;
 
+import linkedlist.utils.ListNode;
 import utils.SolutionUtils;
 
 /** M

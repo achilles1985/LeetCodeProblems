@@ -1,9 +1,6 @@
 package linkedlist;
 
-import java.util.Arrays;
-
-import jdk.internal.org.objectweb.asm.util.CheckAnnotationAdapter;
-import utils.SolutionUtils;
+import linkedlist.utils.ListNode;
 
 /** M
  * Given a (singly) linked list with head node root, write a function to split the linked list into k consecutive

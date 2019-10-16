@@ -2,6 +2,8 @@ package linkedlist;
 
 import java.util.Stack;
 
+import linkedlist.utils.ListNode;
+
 /** E
  * Given a singly linked list, determine if it is a palindrome.
  *

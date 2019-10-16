@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.utils;
 
 public class LinkedListUtils {
 

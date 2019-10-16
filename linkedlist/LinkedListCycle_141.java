@@ -3,7 +3,7 @@ package linkedlist;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.org.apache.bcel.internal.generic.LNEG;
+import linkedlist.utils.ListNode;
 
 /** E
  * Given a linked list, determine if it has a cycle in it.

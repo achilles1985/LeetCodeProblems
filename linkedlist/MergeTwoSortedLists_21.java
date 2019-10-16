@@ -1,6 +1,7 @@
 package linkedlist;
 
-import com.sun.org.apache.bcel.internal.generic.LNEG;
+import linkedlist.utils.LinkedListUtils;
+import linkedlist.utils.ListNode;
 
 /** E
  * Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the
