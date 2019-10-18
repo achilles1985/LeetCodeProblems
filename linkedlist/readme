@@ -1,0 +1,7 @@
+Points to remember
+
+When dealing with linkedlist problems, one should remember the follows:
+1) dummy node like for "Merge two sorted lists", "Remove Nth Node From End Of List"
+2) LinkedList can be split: "Sort List", "Insertion sort list"
+3) To find the middle, slow and fast pointers are used.
+4) To reverse the list, we need 3 pointers: prev, curr, next

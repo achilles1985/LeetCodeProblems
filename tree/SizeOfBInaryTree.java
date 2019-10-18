@@ -1,8 +1,8 @@
-package tree.SizeOfBinaryTree;
+package tree;
 
 import utils.TreeNode;
 
-public class Main {
+public class SizeOfBInaryTree {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(4);
@@ -13,7 +13,15 @@ public class Main {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(9);
 
-        Solution s = new Solution();
+        SizeOfBInaryTree s = new SizeOfBInaryTree();
         System.out.println(s.sizeOfBinaryTree(root));
+    }
+
+    // O(n) time, O(n) - for skew tree
+    public int sizeOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return sizeOfBinaryTree(root.left) + sizeOfBinaryTree(root.right) + 1;
     }
 }
