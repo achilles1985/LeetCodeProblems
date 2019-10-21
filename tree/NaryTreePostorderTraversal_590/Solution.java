@@ -1,6 +1,6 @@
 package tree.NaryTreePostorderTraversal_590;
 
-import tree.Node;
+import tree.utils.Node;
 
 import java.util.Collections;
 import java.util.LinkedList;

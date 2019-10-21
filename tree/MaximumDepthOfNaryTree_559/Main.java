@@ -1,6 +1,6 @@
 package tree.MaximumDepthOfNaryTree_559;
 
-import tree.Node;
+import tree.utils.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;

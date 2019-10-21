@@ -1,6 +1,6 @@
 package tree.MaximumDepthOfNaryTree_559;
 
-import tree.Node;
+import tree.utils.Node;
 
 /**E
  Given a n-ary tree, find its maximum depth.
