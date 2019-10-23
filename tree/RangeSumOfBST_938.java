@@ -30,9 +30,33 @@ public class RangeSumOfBST_938 {
         root.right = new TreeNode(15);
         root.left.left = new TreeNode(3);
         root.left.right = new TreeNode(7);
-        root.right.right = new TreeNode(15);
+        root.right.right = new TreeNode(18);
 
-        System.out.println(s.rangeSumBST(root, 7, 15));
+        System.out.println(s.rangeSumBST(root, 7, 15)); //32
+        System.out.println(s.rangeSumBSTIterative(root, 7, 15)); //32
+    }
+
+    // O(n) - time, space for not balanced tree
+    public int rangeSumBSTIterative(TreeNode root, int L, int R) {
+        if (root == null) {
+            return 0;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        int sum = 0;
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node.val >= L && node.val <= R) {
+                sum += node.val;
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
+        return sum;
     }
 
     //O(n) - time, space
@@ -40,35 +64,13 @@ public class RangeSumOfBST_938 {
         if (root == null) {
             return 0;
         }
-        int sum = (root.val <= R && root.val >= L)? root.val : 0;
-        if (root.val > L) {
-            sum += rangeSumBST(root.left, L, R);
+        if (root.val >= L && root.val <= R) {
+            return root.val + rangeSumBST(root.left, L, R) + rangeSumBST(root.right, L, R);
         }
-        if (root.val < R) {
-            sum += rangeSumBST(root.right, L, R);
+        if (root.val < L) {
+            return rangeSumBST(root.right, L, R);
         }
-        return sum;
+        return rangeSumBST(root.left, L, R);
     }
 
-    //O(n) - time, space
-    public int rangeSumBSTIterative(TreeNode root, int L, int R) {
-        int count = 0;
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            if (node != null) {
-                if (L <= node.val && node.val <= R) {
-                    count += node.val;
-                }
-                if (L < node.val) {
-                    stack.push(node.left);
-                }
-                if (node.val < R) {
-                    stack.push(node.right);
-                }
-            }
-        }
-
-        return count;
-    }}
+}

@@ -1,4 +1,4 @@
-package tree.NaryTreePostorderTraversal_590;
+package tree;
 
 import tree.utils.Node;
 
@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-public class Solution {
+public class NaryTreePostorderTraversal_590 {
 
     public List<Integer> postorder(Node root) {
         Stack<Node> s = new Stack<>();
