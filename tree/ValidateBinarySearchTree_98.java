@@ -37,12 +37,33 @@ public class ValidateBinarySearchTree_98 {
         root.left = new TreeNode(1);
         root.right = new TreeNode(3);
 
-        System.out.println(s.isValidBST(root));
+        TreeNode root1 = new TreeNode(10);
+        root1.left = new TreeNode(10);
+        root1.right = new TreeNode(15);
+        root1.right.left = new TreeNode(6);
+        root1.right.right = new TreeNode(20);
+
+        System.out.println(s.isValidBST2(root1));
     }
 
     // O(n) - time, space
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, null, null);
+    }
+
+    // The problem with that solution is that if root is equal to MIN or MAX, we return false, instead of true
+    public boolean isValidBST2(TreeNode root) {
+        return isValidBST2(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private boolean isValidBST2(TreeNode root, int min, int max) {
+        if (root == null) {
+            return true;
+        }
+        if (root.val <= min || root.val >= max) {
+            return false;
+        }
+        return isValidBST2(root.left, min, root.val) && isValidBST2(root.right, root.val, max);
     }
 
     private boolean isValidBST(TreeNode root, Integer min, Integer max) {

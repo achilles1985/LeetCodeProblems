@@ -1,5 +1,6 @@
 package tree;
 
+import tree.utils.TreeUtils;
 import utils.TreeNode;
 
 /** M
@@ -8,9 +9,9 @@ import utils.TreeNode;
  *
  *     1
  *    / \
- *   2   5
- *  / \   \
- * 3   4   6
+ *   2    5
+ *  / \   / \
+ * 3   4  6  7
  *
  * The flattened tree should look like:
  * 1
@@ -24,6 +25,8 @@ import utils.TreeNode;
  *         5
  *          \
  *           6
+ *            \
+ *             7
  */
 public class FlattenBinaryTreeToLinkedList_114 {
 
@@ -34,9 +37,11 @@ public class FlattenBinaryTreeToLinkedList_114 {
         root1.right = new TreeNode(5);
         root1.left.left = new TreeNode(3);
         root1.left.right = new TreeNode(4);
-        root1.right.right = new TreeNode(6);
+        root1.right.left = new TreeNode(6);
+        root1.right.right = new TreeNode(7);
 
         s.flatten(root1);
+        TreeUtils.print(root1);
     }
 
     public void flatten(TreeNode root) {

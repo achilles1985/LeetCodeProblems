@@ -1,4 +1,4 @@
-package tree.LargestBSTsubtree_333;
+package tree;
 
 import utils.TreeNode;
 
@@ -14,13 +14,52 @@ import utils.TreeNode;
  * right size + 1 and new min will be min of left side and new max will be max of
  * right side.
  *
+ * Example
+ *       5
+ *     /  \
+ *    2    4
+ *  /  \
+ * 1    3
+ * Answer: 3 (2-1-3)
  * References:
  * http://www.geeksforgeeks.org/find-the-largest-subtree-in-a-tree-that-is-also-a-bst/
  * https://leetcode.com/problems/largest-bst-subtree/
  */
-public class Solution {
+public class LargestBSTsubtree_333 {
 
+    public static void main(String[] args) {
+        LargestBSTsubtree_333 s = new LargestBSTsubtree_333();
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(4);
+        root.left.left = new TreeNode(1);
+        root.left.right = new TreeNode(3);
+
+        TreeNode root1 = new TreeNode(10);
+        root1.left = new TreeNode(7);
+        root1.right = new TreeNode(14);
+        root1.left.left = new TreeNode(5);
+        root1.left.right = new TreeNode(8);
+        root1.right.left = new TreeNode(12);
+        root1.right.right = new TreeNode(16);
+        root1.left.left.left = new TreeNode(4);
+        root1.left.left.right = new TreeNode(6);
+        root1.right.left.left = new TreeNode(10);
+        root1.right.left.right = new TreeNode(13);
+
+        System.out.println(s.largestBST2(root1)); //3
+    }
+
+    // O(n^2) - time for skewed tree
     public int largestBST(TreeNode root){
+        if (isBST(root)) {
+            return size(root);
+        }
+        return Math.max(largestBST(root.left), largestBST(root.right));
+    }
+
+    // O(n) - time for skewed tree
+    public int largestBST2(TreeNode root){
         MinMax m = largest(root);
         return m.size;
     }
@@ -34,7 +73,7 @@ public class Solution {
         //postorder traversal of tree. First visit left and right then
         //use information of left and right to calculate largest BST.
         MinMax leftMinMax = largest(root.left);
-        MinMax rightMinMax =largest(root.right);
+        MinMax rightMinMax = largest(root.right);
 
         MinMax m = new MinMax();
 
@@ -42,7 +81,7 @@ public class Solution {
         //of this node is not greater/equal than max of left and less than min of right
         //then subtree with this node as root will not be BST.
         //Return false and max size of left and right subtree to parent
-        if(leftMinMax.isBST == false || rightMinMax.isBST == false || (leftMinMax.max > root.val || rightMinMax.min <= root.val)){
+        if(leftMinMax.isBST == false || rightMinMax.isBST == false || (leftMinMax.max < root.val || rightMinMax.min > root.val)){
             m.isBST = false;
             m.size = Math.max(leftMinMax.size, rightMinMax.size);
             return m;
@@ -69,6 +108,30 @@ public class Solution {
         private int size = 0;
         private int min = Integer.MIN_VALUE;
         private int max = Integer.MAX_VALUE;
-        private boolean isBST;
+        private boolean isBST = true;
+    }
+
+    private int size(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return size(root.left) + size(root.left) + 1;
+    }
+
+    private boolean isBST(TreeNode root) {
+        return isValidBST(root, null, null);
+    }
+
+    private boolean isValidBST(TreeNode root, Integer min, Integer max) {
+        if (root == null) {
+            return true;
+        }
+        if ((min != null && root.val <= min) || (max != null && root.val > max)) {
+            return false;
+        }
+        if (!isValidBST(root.left, min, root.val) || !isValidBST(root.right, root.val, max)) {
+            return false;
+        }
+        return true;
     }
 }
