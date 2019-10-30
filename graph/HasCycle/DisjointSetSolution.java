@@ -1,8 +1,8 @@
 package graph.HasCycle;
 
-import graph.DisjointSet;
-import graph.Edge;
-import graph.Graph;
+import graph.utils.DisjointSet;
+import graph.utils.Edge;
+import graph.utils.Graph;
 
 public class DisjointSetSolution {
 

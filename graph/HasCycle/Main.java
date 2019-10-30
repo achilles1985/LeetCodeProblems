@@ -1,6 +1,6 @@
 package graph.HasCycle;
 
-import graph.Graph;
+import graph.utils.Graph;
 
 public class Main {
 

@@ -1,7 +1,7 @@
 package graph.HasCycle;
 
-import graph.Graph;
-import graph.Node;
+import graph.utils.Graph;
+import graph.utils.Node;
 
 import java.util.HashSet;
 import java.util.Set;

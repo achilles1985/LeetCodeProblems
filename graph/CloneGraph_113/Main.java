@@ -1,6 +1,6 @@
 package graph.CloneGraph_113;
 
-import graph.Node;
+import graph.utils.Node;
 
 public class Main {
 

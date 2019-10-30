@@ -1,7 +1,6 @@
 package graph.RedundantConnection_684;
 
-import graph.DisjointSet;
-import graph.Edge;
+import graph.utils.DisjointSet;
 
 /** M
  *  In this problem, a tree is an undirected graph that is connected and has no cycles.

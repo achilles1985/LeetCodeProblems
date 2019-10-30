@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import graph.utils.Graph;
+import graph.utils.Node;
+
 public class TopologicalSort {
 
     public Stack<Node> toSortList(Graph graph) {

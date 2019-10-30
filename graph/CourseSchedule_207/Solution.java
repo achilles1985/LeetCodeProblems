@@ -1,6 +1,6 @@
 package graph.CourseSchedule_207;
 
-import graph.DisjointSet;
+import graph.utils.DisjointSet;
 
 import java.util.HashMap;
 import java.util.HashSet;

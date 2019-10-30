@@ -1,6 +1,6 @@
 package graph.CloneGraph_113;
 
-import graph.Node;
+import graph.utils.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;

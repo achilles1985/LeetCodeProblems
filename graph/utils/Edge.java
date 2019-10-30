@@ -1,4 +1,4 @@
-package graph;
+package graph.utils;
 
 public class Edge {
     public int distance;
