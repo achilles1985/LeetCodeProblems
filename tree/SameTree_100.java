@@ -1,6 +1,5 @@
 package tree;
 
-import java.util.LinkedList;
 import java.util.Stack;
 
 import utils.TreeNode;

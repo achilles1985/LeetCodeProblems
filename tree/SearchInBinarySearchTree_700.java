@@ -36,7 +36,7 @@ public class SearchInBinarySearchTree_700 {
         root.left.right = new TreeNode(7);
         root.right.right = new TreeNode(18);
 
-        TreeUtils.print(s.searchBST(root, 7)); //
+        TreeUtils.print(s.searchBST(root, 2)); //
         TreeUtils.print(s.searchBSTIterative(root, 7)); //
     }
 

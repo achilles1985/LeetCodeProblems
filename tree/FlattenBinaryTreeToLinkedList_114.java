@@ -6,7 +6,6 @@ import utils.TreeNode;
 /** M
  * Given a binary tree, flatten it to a linked list in-place.
  * For example, given the following tree:
- *
  *     1
  *    / \
  *   2    5
@@ -44,6 +43,7 @@ public class FlattenBinaryTreeToLinkedList_114 {
         TreeUtils.print(root1);
     }
 
+    // O(n) - time, O(h) - space
     public void flatten(TreeNode root) {
         helper(root);
     }

@@ -1,9 +1,7 @@
 package tree;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
@@ -25,8 +23,7 @@ import utils.TreeNode;
 /*
     The idea is to find the root first which is the last element in postorder array.
     Then find that element in inorder array. Then all element on the left would be left subtree, right - right subtree.
-    Then recurse on the left subarray and find its root in postorder array by traversing through it starting from the end till find the first occurrence of that
-    element in postorder array.
+    Then recurse on the right and left subarrays of inorder untill the leaf is found. While recursing decrement postorderIndex to find the next root.
  */
 public class ConstructBinaryTreeFromInorderAndPostorderTraversal_106 {
 
@@ -36,7 +33,7 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal_106 {
         TreeUtils.print(s.buildTree(new int[]{9,3,15,20,7}, new int[]{9,15,7,20,3}));
     }
 
-    // O(n*log(n)) - O(n^2) - time, space. Time/space can be improve if to determine how to get next root in O(1) - time. like in https://github.com/mission-peace/interview/blob/master/src/com/interview/tree/ContructTreeFromInorderPostOrder.java
+    // O(n) - time, O(h) - space
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         if (inorder == null || postorder == null) {
             return null;
@@ -45,31 +42,30 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal_106 {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return buildTree(inorder, 0, inorder.length-1, postorder, postorder.length-1, map);
+        return buildTreeHelper(postorder, new PostorderIndex(postorder.length-1), 0, inorder.length-1, map);
     }
 
-    private TreeNode buildTree(int[] inorder, int inorderStart, int inorderEnd, int[] postorder, int postorderEnd, Map<Integer, Integer> map) {
-        if (inorderStart > inorderEnd || postorderEnd < 0) {
+    private TreeNode buildTreeHelper(int[] postorder, PostorderIndex poIdx, int inStart, int inEnd, Map<Integer, Integer> map) {
+        if (inStart > inEnd) {
             return null;
         }
-        int inorderRootIdx = map.get(postorder[postorderEnd]);
-        TreeNode node = new TreeNode(postorder[postorderEnd]);
-        node.left = buildTree(inorder, inorderStart, inorderRootIdx - 1, postorder, findIndex(inorder, postorder, inorderStart, inorderRootIdx - 1), map);
-        node.right = buildTree(inorder, inorderRootIdx + 1, inorderEnd, postorder, findIndex(inorder, postorder, inorderRootIdx + 1, inorderEnd), map);
-
+        Integer inRoot = map.get(postorder[poIdx.index]);
+        TreeNode node = new TreeNode(postorder[poIdx.index]);
+        poIdx.decrement();
+        node.right = buildTreeHelper(postorder, poIdx, inRoot+1, inEnd, map);
+        node.left = buildTreeHelper(postorder, poIdx, inStart, inRoot-1, map);
         return node;
     }
 
-    private int findIndex(int[] inorder, int[] postorder, int inorderStart, int inorderEnd) {
-        Set<Integer> set = new HashSet<>();
-        for (int i = inorderStart; i <= inorderEnd; i++) {
-            set.add(inorder[i]);
+    private static class PostorderIndex {
+        private int index;
+
+        private PostorderIndex(int index) {
+            this.index = index;
         }
-        for (int i = postorder.length-1; i >= 0; i--) {
-            if (set.contains(postorder[i])) {
-                return i;
-            }
+
+        private void decrement() {
+            --index;
         }
-        return -1;
     }
 }

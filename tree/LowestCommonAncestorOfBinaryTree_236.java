@@ -36,10 +36,10 @@ import utils.TreeNode;
  *     All of the nodes' values will be unique.
  *     p and q are different and both values will exist in the binary tree.
  */
-public class LowestCommonAncestorOfBinaryTree_235 {
+public class LowestCommonAncestorOfBinaryTree_236 {
 
     public static void main(String[] args) {
-        LowestCommonAncestorOfBinaryTree_235 s = new LowestCommonAncestorOfBinaryTree_235();
+        LowestCommonAncestorOfBinaryTree_236 s = new LowestCommonAncestorOfBinaryTree_236();
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(5);
         root.right = new TreeNode(1);
@@ -50,7 +50,7 @@ public class LowestCommonAncestorOfBinaryTree_235 {
         root.right.right = new TreeNode(8);
         root.right.left = new TreeNode(0);
 
-        System.out.println(s.lowestCommonAncestor(root, new TreeNode(6), new TreeNode(8))); //5
+        System.out.println(s.lowestCommonAncestor(root, new TreeNode(6), new TreeNode(4))); //5
     }
 
     // O(n) - time, space

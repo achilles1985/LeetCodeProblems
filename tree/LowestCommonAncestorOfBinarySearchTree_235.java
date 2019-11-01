@@ -30,10 +30,10 @@ import utils.TreeNode;
  *     All of the nodes' values will be unique.
  *     p and q are different and both values will exist in the BST.
  */
-public class LowestCommonAncestorOfBinarySearchTree_236 {
+public class LowestCommonAncestorOfBinarySearchTree_235 {
 
     public static void main(String[] args) {
-        LowestCommonAncestorOfBinarySearchTree_236 s = new LowestCommonAncestorOfBinarySearchTree_236();
+        LowestCommonAncestorOfBinarySearchTree_235 s = new LowestCommonAncestorOfBinarySearchTree_235();
         TreeNode root = new TreeNode(6);
         root.left = new TreeNode(2);
         root.right = new TreeNode(8);

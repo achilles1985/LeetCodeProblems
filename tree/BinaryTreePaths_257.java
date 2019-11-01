@@ -21,6 +21,11 @@ import utils.TreeNode;
  * Output: ["1->2->5", "1->3"]
  * Explanation: All root-to-leaf paths are: 1->2->5, 1->3
  */
+/*
+    Mistakes:
+        1. Remember about mutable/immutable method's args like path. If we use mutable StringBuilder, each recursion call will be having common, latest instance of the string.
+        2. Make sure when doing root.val that root is not null.
+ */
 public class BinaryTreePaths_257 {
 
     public static void main(String[] args) {
@@ -35,7 +40,7 @@ public class BinaryTreePaths_257 {
         System.out.println(s.binaryTreePaths(root));
     }
 
-    // O(n) - time, space. Mistakes: remember about mutable/immutable method's args like path. If we use mutable StringBuilder, each recursion call will be having common, latest instance of the string.
+    // O(n) - time, space.
     public List<String> binaryTreePaths(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();

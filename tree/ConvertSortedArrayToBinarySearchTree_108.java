@@ -11,7 +11,6 @@ import utils.TreeNode;
  * Example:
  * Given the sorted array: [-10,-3,0,5,9],
  * One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
- *
  *       0
  *      / \
  *    -3   9
@@ -22,9 +21,11 @@ public class ConvertSortedArrayToBinarySearchTree_108 {
 
     public static void main(String[] args) {
         ConvertSortedArrayToBinarySearchTree_108 s = new ConvertSortedArrayToBinarySearchTree_108();
+        TreeUtils.print(s.sortedArrayToBST(new int[]{1,2,4,5,7,8,9}));
         TreeUtils.print(s.sortedArrayToBST(new int[]{-10,-3,0,5,9}));
     }
 
+    // O(n) - time, O(h) - space
     public TreeNode sortedArrayToBST(int[] nums) {
         if (nums == null || nums.length == 0) {
             return null;

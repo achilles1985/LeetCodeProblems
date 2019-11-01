@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+    1. private inner class is not visible from other classes except outer one. If inner class is public, class's private methods are not visible from other classes, except outer one.
+    If inner class is private, its public methods are not visible from other class except outer one.
+ */
 public class UsefulJava {
 
     public static void main(String[] args) {

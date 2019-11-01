@@ -2,7 +2,7 @@ package tree;
 
 import utils.TreeNode;
 
-public class SizeOfBInaryTree {
+public class SizeOfBinaryTree {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(4);
@@ -13,7 +13,7 @@ public class SizeOfBInaryTree {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(9);
 
-        SizeOfBInaryTree s = new SizeOfBInaryTree();
+        SizeOfBinaryTree s = new SizeOfBinaryTree();
         System.out.println(s.sizeOfBinaryTree(root));
     }
 

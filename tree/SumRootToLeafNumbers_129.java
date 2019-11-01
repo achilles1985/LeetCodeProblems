@@ -46,23 +46,25 @@ public class SumRootToLeafNumbers_129 {
         root.left.left = new TreeNode(5);
         root.left.right = new TreeNode(1);
 
-        System.out.println(s.sumNumbers(root));
+        System.out.println(s.sumNumbers(root)); //1026
     }
 
     // O(n) - time, space
     public int sumNumbers(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        sumNumbers(root, list);
-
-        return 0;
+        return sumNumbers(root, 0);
     }
 
-    private void sumNumbers(TreeNode root, List<Integer> list) {
+    private int sumNumbers(TreeNode root, int sum) {
         if (root == null) {
-            return;
+            return 0;
         }
-        sumNumbers(root.left, list);
-        list.add(root.val);
-        sumNumbers(root.right, list);
+        sum = sum*10 + root.val;
+        if (root.left == null && root.right == null) {
+            return sum;
+        }
+        int left = sumNumbers(root.left, sum);
+        int right = sumNumbers(root.right, sum);
+
+        return left + right;
     }
 }

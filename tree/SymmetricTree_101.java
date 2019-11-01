@@ -9,18 +9,18 @@ import utils.TreeNode;
  * E
  * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
  * For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
- * 1
- * /  \
- * 2    2
- * / \   / \
+ *      1
+ *    /  \
+ *   2    2
+ *  / \   / \
  * 3  4  4   3
  * <p>
  * But the following [1,2,2,null,3,null,3] is not:
- * 1
- * / \
- * 2   2
- * \   \
- * 3    3
+ *     1
+ *    / \
+ *   2   2
+ *    \   \
+ *    3    3
  * <p>
  * Note:
  * Bonus points if you could solve it both recursively and iteratively.
@@ -37,15 +37,25 @@ public class SymmetricTree_101 {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(9);
 
-        System.out.println(s.isSymmetric(root)); // false
+        System.out.println(s.isSymmetric2(root)); // false
     }
 
-    // O(n) - time, space
+    // O(n) - time, O(h) - space
     public boolean isSymmetric(TreeNode root) {
         return root == null || checkSymmetric(root.left, root.right);
     }
 
-    // O(n) - time, space
+    private boolean checkSymmetric(TreeNode r1, TreeNode r2) {
+        if (r1 == null && r2 == null) {
+            return true;
+        }
+        if (r1 != null && r2 != null) { // do not have to check r1.left.val == r2.right.val, just compare roots values
+            return r1.val == r2.val && checkSymmetric(r1.left, r2.right) && checkSymmetric(r1.right, r2.left);
+        }
+        return false;
+    }
+
+    // O(n) - time, O(h) - space
     public boolean isSymmetricIterative(TreeNode root) {
         if (root == null) {
             return true;
@@ -73,13 +83,21 @@ public class SymmetricTree_101 {
         return q1.isEmpty();
     }
 
-    private boolean checkSymmetric(TreeNode r1, TreeNode r2) {
+    // O(n) - time, O(h) - space
+    public boolean isSymmetric2(TreeNode root) {
+        return root == null || isSymetric2Helper(root.left, root.right);
+    }
+
+    private boolean isSymetric2Helper(TreeNode r1, TreeNode r2) {
         if (r1 == null && r2 == null) {
             return true;
         }
-        if (r1 != null && r2 != null) { // do not have to check r1.left.val == r2.right.val, just compare roots values
-            return r1.val == r2.val && checkSymmetric(r1.left, r2.right) && checkSymmetric(r1.right, r2.left);
+        if (r1 == null || r2 == null) {
+            return false;
         }
-        return false;
+        if (r1.val != r2.val) {
+            return false;
+        }
+        return r1.val == r2.val && isSymetric2Helper(r1.left, r2.right) && isSymetric2Helper(r1.right, r2.left);
     }
 }

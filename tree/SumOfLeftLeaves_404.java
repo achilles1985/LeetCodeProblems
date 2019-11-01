@@ -29,7 +29,7 @@ public class SumOfLeftLeaves_404 {
     public int sumOfLeftLeaves(TreeNode root) {
         int sum = 0;
         if (root == null){
-            return sum;
+            return 0;
         }
         if (isNodeALeafNode(root.left)){
             sum += root.left.val;
