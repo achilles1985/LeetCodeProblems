@@ -1,5 +1,7 @@
-package graph.KeysAndRooms_841;
+package graph;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,28 +28,43 @@ import java.util.Stack;
  Output: false
  Explanation: We can't enter the room with number 2.
  */
-public class Solution {
+public class KeysAndRooms_841 {
 
-    // O(V + E) - time, where V - number of rooms and E - keys; O(V) - space
+    public static void main(String[] args) {
+        KeysAndRooms_841 s = new KeysAndRooms_841();
+        List<List<Integer>> rooms1 = new ArrayList<>();
+        rooms1.add(Arrays.asList(1));
+        rooms1.add(Arrays.asList(2));
+        rooms1.add(Arrays.asList(3));
+        rooms1.add(new ArrayList<>());
+
+        List<List<Integer>> rooms2 = new ArrayList<>();
+        rooms2.add(Arrays.asList(1, 3));
+        rooms2.add(Arrays.asList(3, 0, 1));
+        rooms2.add(Arrays.asList(2));
+        rooms2.add(Arrays.asList(0));
+
+        System.out.println(s.canVisitAllRooms(rooms1)); // true
+        System.out.println(s.canVisitAllRooms(rooms2)); // false
+    }
+
+    // O(n) - time,space, n - number of rooms
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-        if (rooms == null || rooms.isEmpty()) {
-            return false;
+        if (rooms == null || rooms.size() == 0) {
+            return true;
         }
         Stack<Integer> stack = new Stack<>();
         Set<Integer> visited = new HashSet<>();
-
         stack.push(0);
-        visited.add(0);
         while (!stack.isEmpty()) {
-            Integer current = stack.pop();
-            for (Integer room: rooms.get(current)) {
-                if (!visited.contains(room)) {
-                    stack.push(room);
-                    visited.add(room);
+            Integer node = stack.pop();
+            visited.add(node);
+            for (Integer child: rooms.get(node)) {
+                if (!visited.contains(child)) {
+                    stack.push(child);
                 }
             }
         }
-
         return visited.size() == rooms.size();
     }
 }

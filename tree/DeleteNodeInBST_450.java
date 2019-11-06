@@ -34,6 +34,9 @@ import utils.TreeNode;
  *    \   \
  *     4   7
  */
+/*
+ if element to be deleted has left and right subtrees, find next greater element in the right subtree, nextGreater.left = element.left, root.left = element.rightChild or root.right == element.leftChild
+ */
 public class DeleteNodeInBST_450 {
 
     public static void main(String[] args) {
@@ -70,7 +73,7 @@ public class DeleteNodeInBST_450 {
         if (rightNode == null) {
             return leftNode;
         }
-        TreeNode iterator = rightNode;
+        TreeNode iterator = rightNode; // looks for next greater
         while (iterator.left != null) {
             iterator = iterator.left;
         }
@@ -78,99 +81,4 @@ public class DeleteNodeInBST_450 {
         return rightNode;
     }
 
-    // Incorrect solution
-    public TreeNode deleteNode2(TreeNode root, int key) {
-        if (root == null) {
-            return null;
-        }
-        if (root.left == null && root.right == null && root.val == key) {
-            return null;
-        }
-        TreeNode parent = null; TreeNode curr = root;
-        while (curr != null && curr.val != key) {
-            parent = curr;
-            if (key < curr.val) {
-                curr = curr.left;
-            } else {
-                curr = curr.right;
-            }
-        }
-        if (curr == null) {
-            return root;
-        }
-        if (isLeafNode(curr)) {
-            if (key < parent.val) {
-                parent.left = null;
-            } else {
-                parent.right = null;
-            }
-        }
-        if (hasOneChild(curr)) {
-            if (parent == null) {
-                if (curr.left != null) {
-                    root = curr.left;
-                } else {
-                    root = curr.right;
-                }
-                return root;
-            }
-            if (key < parent.val) {
-                parent.left = curr.left;
-            } else {
-                parent.right = curr.right;
-            }
-        }
-        if (hasTwoChildren(curr)) {
-            TreeNode lower = lower(curr);
-            TreeNode parentForLower = findParent(lower, root);
-            curr.val = lower.val;
-            if (parentForLower.left.val == parentForLower.val) {
-                parentForLower.left = null;
-            } else {
-                parentForLower.right = null;
-            }
-
-        }
-        return root;
-    }
-
-    private boolean hasTwoChildren(TreeNode node) {
-        return node.left != null && node.right != null;
-    }
-
-    private boolean hasOneChild(TreeNode node) {
-        return node.left == null || node.right == null;
-    }
-
-    private TreeNode lower(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
-        TreeNode curr = root.left;
-        while (curr != null && curr.right != null) {
-            curr = curr.right;
-        }
-        return curr;
-    }
-
-    private TreeNode findParent(TreeNode lower, TreeNode root) {
-        if (lower == null) {
-            return null;
-        }
-        TreeNode parent = null;
-        TreeNode curr = root;
-        while (curr != null && curr != lower) {
-            parent = curr;
-            if (curr.val > lower.val) {
-                curr = curr.left;
-            } else {
-                curr = curr.right;
-            }
-        }
-        return parent;
-    }
-
-    private boolean isLeafNode(TreeNode node) {
-        return node.left == null && node.right == null;
-    }
 }

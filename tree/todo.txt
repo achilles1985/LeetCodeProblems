@@ -1,7 +1,6 @@
 TODO:
 1. ConstructBinaryTreeFromString
 2. ConstructBinaryTreeFromPreorderAndPostTraversal
-3. Delete Node in a BST
 
 Problem types:
 General (search(700), max depth(104), diameter(543), size, paths(257), sum(404,1022,129,112), common ancestor(235,236), insertion, deletion)

@@ -27,7 +27,6 @@ import utils.TreeNode;
  *            /   \
  *           6    7
  *
- *
  *           1
  *         /   \
  *       2       3
