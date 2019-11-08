@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import graph.utils.DisjointSet;
 import utils.SolutionUtils;
 
 /** M
@@ -44,8 +45,27 @@ public class RedundantConnection_684 {
 
     public static void main(String[] args) {
         RedundantConnection_684 s = new RedundantConnection_684();
-        SolutionUtils.print(s.findRedundantConnection(new int[][] {{1,2},{1,3},{2,3}})); // [2,3]
-        SolutionUtils.print(s.findRedundantConnection(new int[][] {{1,2},{2,3},{3,4},{1,4},{1,5}})); // [1,4]
+        SolutionUtils.print(s.findRedundantConnection2(new int[][] {{1,2},{1,3},{2,3}})); // [2,3]
+        SolutionUtils.print(s.findRedundantConnection2(new int[][] {{1,2},{2,3},{3,4},{1,4},{1,5}})); // [1,4]
+    }
+
+    // O(n) - time, O(n) - space
+    public int[] findRedundantConnection2(int[][] edges) {
+        DisjointSet ds = new DisjointSet();
+        for (int i = 1; i <= edges.length; i++) {
+            ds.makeSet(i);
+        }
+        for (int[] edge: edges) {
+            int node1 = edge[0];
+            int node2 = edge[1];
+            int parent1 = ds.findSet(node1);
+            int parent2 = ds.findSet(node2);
+            if (parent1 == parent2) {
+                return edge;
+            }
+            ds.union(node1, node2);
+        }
+        return new int[]{};
     }
 
     // O(n^2) - time, O(n) - space

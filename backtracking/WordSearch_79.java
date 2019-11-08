@@ -25,18 +25,17 @@ public class WordSearch_79 {
 
     public static void main(String[] args) {
         WordSearch_79 s = new WordSearch_79();
-        //System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCCED")); // true
-        //System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "SEE")); // true
-        //System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCB")); // false
-        //System.out.println(s.exist(new char[][] {{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}}, "AAB")); // true
+        System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCCED")); // true
+        System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "SEE")); // true
+        System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCB")); // false
+        System.out.println(s.exist(new char[][] {{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}}, "AAB")); // true
         System.out.println(s.exist(new char[][] {{'A', 'A'}}, "AAA")); // false
     }
 
     public boolean exist(char[][] board, String word) {
-        boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (findPath(i, j, word, board, 0, visited)) {
+                if (findPath(i, j, word, board, 0)) {
                     return true;
                 }
             }
@@ -45,7 +44,7 @@ public class WordSearch_79 {
         return false;
     }
 
-    private boolean findPath(int i, int j, String word, char[][] board, int counter, boolean[][] visited) {
+    private boolean findPath(int i, int j, String word, char[][] board, int counter) {
         if (word.length() == counter) {
             return true;
         }
@@ -54,11 +53,11 @@ public class WordSearch_79 {
         }
 
         char temp = board[i][j];
-        board[i][j] = '$';
-        boolean right = findPath(i, j+1, word, board, counter+1, visited);
-        boolean down = findPath(i+1, j, word, board, counter+1, visited);
-        boolean left = findPath(i, j-1, word, board, counter+1, visited);
-        boolean up = findPath(i-1, j, word, board, counter+1, visited);
+        board[i][j] = '*';
+        boolean right = findPath(i, j+1, word, board, counter+1);
+        boolean down = findPath(i+1, j, word, board, counter+1);
+        boolean left = findPath(i, j-1, word, board, counter+1);
+        boolean up = findPath(i-1, j, word, board, counter+1);
 
         if (right || down || left || up) {
             return true;

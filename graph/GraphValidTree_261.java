@@ -1,4 +1,4 @@
-package graph.GraphValidTree_261;
+package graph;
 
 import graph.utils.DisjointSet;
 
@@ -24,12 +24,22 @@ import graph.utils.DisjointSet;
  all edges are undirected, [0, 1] is the same as [1, 0] and thus will not
  appear together in edges.
  */
-// it can be done with union-find algorithm
+// it can be done with union-find algorithm or cycle detection algorithm (in that case for undirected graph to avoid self-loop we should not go backtrack from children to its parent)
 //http://www.geeksforgeeks.org/union-find/
 //https://discuss.leetcode.com/topic/21712/ac-java-union-find-solution
 
-public class Solution {
+public class GraphValidTree_261 {
 
+    public static void main(String[] args) {
+        GraphValidTree_261 s = new GraphValidTree_261();
+        int[][] edges1 = new int[][]{{0, 1}, {0, 2}, {0, 3}, {3, 4}}; //true
+        int[][] edges2 = new int[][]{}; //true
+
+        System.out.println(s.validTree(1, edges1));
+        System.out.println(s.validTree(1, edges2));
+    }
+
+    // O(n) - time, space
     public boolean validTree(int n, int[][] edges) {
         DisjointSet disjointSet = new DisjointSet();
         for (int[] edge: edges) {

@@ -1,4 +1,4 @@
-package graph.NetworkDelayTime_743;
+package graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +23,19 @@ import java.util.Set;
  The length of times will be in the range [1, 6000].
  All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 0 <= w <= 100.
  */
-public class Solution {
+/*
+ Use Dijkstra's algorithm
+ */
+public class NetworkDelayTime_743 {
 
+    public static void main(String[] args) {
+        NetworkDelayTime_743 s = new NetworkDelayTime_743();
+        System.out.println(s.networkDelayTime(new int[][] {{1,2,1}}, 2, 2)); // 2
+        System.out.println(s.networkDelayTime(new int[][] {{1,2,1},{2,1,3}}, 2, 2)); // 2
+        System.out.println(s.networkDelayTime(new int[][] {{2,1,1},{2,3,1},{3,4,1}}, 4, 2)); // 2
+    }
+
+    // O(n*log(n)) - time for heap implementation, O(n) - space, n - number of nodes
     public int networkDelayTime(int[][] times, int N, int K) {
         if (times == null || times.length == 0) {
             return -1;
