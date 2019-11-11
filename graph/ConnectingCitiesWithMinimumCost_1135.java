@@ -2,7 +2,7 @@ package graph;
 
 import java.util.Arrays;
 
-import graph.utils.DisjointSet;
+import graph.mustknow.DisjointSet;
 
 public class ConnectingCitiesWithMinimumCost_1135 {
 

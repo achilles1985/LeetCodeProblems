@@ -1,6 +1,6 @@
 package graph;
 
-import graph.utils.DisjointSet;
+import graph.mustknow.DisjointSet;
 
 /**
  * https://leetcode.com/problems/graph-valid-tree/?tab=Description

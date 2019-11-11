@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import graph.utils.DisjointSet;
+import graph.mustknow.DisjointSet;
 import utils.SolutionUtils;
 
 /** M

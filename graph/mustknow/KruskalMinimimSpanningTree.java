@@ -1,8 +1,11 @@
-package graph.utils;
+package graph.mustknow;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import graph.utils.Edge;
+import graph.utils.Graph;
 
 public class KruskalMinimimSpanningTree {
 

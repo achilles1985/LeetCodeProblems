@@ -1,4 +1,4 @@
-package graph.AlienDictionary;
+package graph;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 /** M
  * There is a new alien language which uses the latin alphabet.
@@ -30,8 +29,14 @@ import java.util.Stack;
  If the order is invalid, return an empty string.
  There may be multiple valid order of letters, return any one of them is fine.
  */
-public class Solution {
+public class AlienDictionary_269 {
 
+    public static void main(String[] args) {
+        AlienDictionary_269 s = new AlienDictionary_269();
+        System.out.println(s.alienOrder(new String[] {"wrt", "wrf", "er", "ett", "rftt"}, 5)); // "wertf"
+    }
+
+    // O(n*m) - time, n - number of characters, m - number of words O(n) - space
     public String alienOrder(String[] words, int nuumberOfLetters) {
         // create a graph
         List<char[]> edges = new ArrayList<>();
@@ -45,7 +50,7 @@ public class Solution {
             }
         }
 
-        List<Character> sorted = topologicaSort(edges);
+        List<Character> sorted = topologicalSort(edges);
         StringBuilder builder = new StringBuilder();
         for (Character c: sorted) {
             builder.append(c);
@@ -54,7 +59,7 @@ public class Solution {
         return builder.toString();
     }
 
-    private List<Character> topologicaSort(List<char[]> edges) {
+    private List<Character> topologicalSort(List<char[]> edges) {
         Map<Character, List<Character>> graph = new HashMap<>();
         for (char[] edge: edges) {
             char v1 = edge[0];

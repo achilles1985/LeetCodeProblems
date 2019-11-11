@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import graph.utils.DisjointSet;
+import graph.mustknow.DisjointSet;
 
 /**M
  *  There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in

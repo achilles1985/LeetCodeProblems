@@ -1,4 +1,4 @@
-package graph.utils;
+package graph.mustknow;
 
 import java.util.Collection;
 import java.util.HashMap;
