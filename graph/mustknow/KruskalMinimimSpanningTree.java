@@ -7,9 +7,13 @@ import java.util.List;
 import graph.utils.Edge;
 import graph.utils.Graph;
 
+/*
+ https://www.youtube.com/watch?v=fAuF0EuZVCk&list=PLrmLmBdmIlpu2f2g8ltqaaCZiq6GJvl1j&index=3
+ MST (Minimum Spanning Tree - spanning weighted undirected graph with sum of the edge weights is minimum)
+ */
 public class KruskalMinimimSpanningTree {
 
-
+    // O(E*log(E) + E) - time (sort edges + operation on DisjoinSet), O(V+E) - space
     public List<Edge> getMST(Graph graph) {
         DisjointSet set = new DisjointSet();
         for (Integer node: graph.nodes.keySet()) {

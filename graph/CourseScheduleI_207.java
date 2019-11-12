@@ -35,6 +35,7 @@ import java.util.Set;
 /*
 Test:
     empty graph, zero numCourse
+    Cycle detection
  */
 public class CourseScheduleI_207 {
 

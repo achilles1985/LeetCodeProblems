@@ -39,6 +39,7 @@ Test:
     DAG, DCG, empty prerequisites, zero numCourses
 Mistakes:
     Pay attention to description (numCourses must not be equal to prerequisite.length)
+Related to cycle detection
  */
 public class CourseScheduleII_210 {
 
