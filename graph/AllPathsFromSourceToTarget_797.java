@@ -1,9 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /** M
  * Given a directed, acyclic graph of N nodes.  Find all possible paths from node 0 to node N-1, and return them in any order.
@@ -36,31 +34,26 @@ public class AllPathsFromSourceToTarget_797 {
         System.out.println(s.allPathsSourceTarget(new int[][]{{1}, {}})); // [[0,1]]
     }
 
-    // O(v) - time, space
+    // O(n) - time,n - number of vertices, O(n) - space (depth of the stack)
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
-        Set<Integer> visited = new HashSet<>();
+        if (graph == null || graph.length == 0) {
+            return new ArrayList<>();
+        }
         List<List<Integer>> result = new ArrayList<>();
-        allPathsSourceTargetUtil(0, graph.length-1, graph, visited, result);
+        dfs(0, graph.length-1, graph, new ArrayList<>(), result);
 
         return result;
     }
 
-    private void allPathsSourceTargetUtil(int node, int target, int[][] graph, Set<Integer> visited, List<List<Integer>> result) {
-        if (visited.contains(node)) {
-            return;
-        }
+    private void dfs(int node, int target, int[][] graph, List<Integer> path, List<List<Integer>> result) {
+        path.add(node);
         if (node == target) {
-            List<Integer> path = new ArrayList<>();
-            for (int n: visited) {
-                path.add(n);
-            }
-            path.add(target);
-            result.add(path);
+            result.add(new ArrayList<>(path));
         }
-        visited.add(node);
-        for (int child: graph[node]) {
-            allPathsSourceTargetUtil(child, target, graph, visited, result);
+        for (int children: graph[node]) {
+            dfs(children, target, graph, path, result);
         }
-        visited.remove(node);
+        path.remove(path.size()-1);
     }
+
 }

@@ -39,7 +39,7 @@ import utils.SolutionUtils;
  */
 /*
 Checks each edge one by one
-Use union find to have O(n) - time, space
+Find the edge that make a cycle, use union find to have O(n) - time, space
  */
 public class RedundantConnection_684 {
 

@@ -39,12 +39,17 @@ Note:
     According to the definition of tree on Wikipedia: “a tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.”
     The height of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
  */
+/*
+The idea is to remove leaves layer by layer till we end up with 1 if number of layers are odd, or 2 if even.
+To determine if the node is a leave we maintain degree[] array containing how many connections each node has. If 1 - then it is a leave.
+We remove that leave and decrease degree of its parent.
+ */
 public class MinimumHeightTrees_310 {
 
     public static void main(String[] args) {
         MinimumHeightTrees_310 s = new MinimumHeightTrees_310();
-        System.out.println(s.findMinHeightTrees(11, new int[][]{{0,1},{0,2},{2,3},{0,4},{2,5},{5,6},{3,7},{6,8},{8,9},{9,10}})); //[5, 6]
         System.out.println(s.findMinHeightTrees(4, new int[][]{{1,0},{1,2},{1,3}})); //[1]
+        System.out.println(s.findMinHeightTrees(11, new int[][]{{0,1},{0,2},{2,3},{0,4},{2,5},{5,6},{3,7},{6,8},{8,9},{9,10}})); //[5, 6]
         System.out.println(s.findMinHeightTrees(2, new int[][]{})); //[0,1]
         System.out.println(s.findMinHeightTrees(6, new int[][]{{0,3},{1,3},{2,3},{4,3},{5,4}})); //[3, 4]
     }
@@ -76,7 +81,7 @@ public class MinimumHeightTrees_310 {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Integer leave = queue.poll();
-                for(int parent: graph.get(leave)) {
+                for(int parent: graph.getOrDefault(leave, new ArrayList<>())) {
                     degree[parent]--;
                     if (degree[parent] == 1) {
                         queue.add(parent);

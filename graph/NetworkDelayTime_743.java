@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +25,8 @@ import java.util.Set;
  All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 0 <= w <= 100.
  */
 /*
+Questions:
+    1. Cycles or disconnected nodes are possible?
  Use Dijkstra's algorithm
  */
 public class NetworkDelayTime_743 {
@@ -35,13 +38,13 @@ public class NetworkDelayTime_743 {
         System.out.println(s.networkDelayTime(new int[][] {{2,1,1},{2,3,1},{3,4,1}}, 4, 2)); // 2
     }
 
-    // O(n*log(n)) - time for heap implementation, O(n) - space, n - number of nodes
+    // O(V*log(V)) - time for heap implementation, O(V + E) - space (to create graph)
     public int networkDelayTime(int[][] times, int N, int K) {
         if (times == null || times.length == 0) {
             return -1;
         }
 
-        Map<Integer, List<int[]>> graph = new HashMap<>();
+        Map<Integer, List<int[]>> graph = new HashMap<>(); // vertex to its edges
         for (int[] edge: times) {
             int v1 = edge[0];
             int v2 = edge[1];
@@ -50,12 +53,12 @@ public class NetworkDelayTime_743 {
         }
 
         Set<Integer> visited = new HashSet<>();
-        Map<Integer, Integer> weights = new HashMap<>();
+        Map<Integer, Integer> weights = new HashMap<>(); // to keep weights
         for (int i = 1; i <= N; i++) {
             weights.put(i, Integer.MAX_VALUE);
         }
 
-        Queue<int[]> heap = new PriorityQueue<>((p1, p2) -> p1[1] - p2[1]);
+        Queue<int[]> heap = new PriorityQueue<>((p1, p2) -> p1[1] - p2[1]); // min heap of (vertex->weight)
         heap.add(new int[] {K, 0});
         weights.put(K, 0);
         while (!heap.isEmpty()) {
@@ -85,75 +88,6 @@ public class NetworkDelayTime_743 {
         }
 
         return max == Integer.MAX_VALUE ? -1 : max;
-    }
-
-/*    public int networkDelayTime(int[][] times, int N, int K) {
-        Map<Integer, List<int[]>> graph = new HashMap<>();
-
-        for (int[] edge: times) {
-            List<int[]> pair = graph.get(edge[0]);
-            if (pair == null) {
-                pair = new ArrayList<>();
-            }
-            pair.add(new int[] {edge[1], edge[2]});
-            graph.put(edge[0], pair);
-        }
-
-        Queue<int[]> heap = new PriorityQueue<>((p1, p2) -> p1[1] - p2[1]);
-        heap.offer(new int[] {K, 0});
-        Map<Integer, Integer> destination = new HashMap<>();
-
-        while (!heap.isEmpty()) {
-            int[] curr = heap.poll();
-            if (graph.get(curr[0]) != null) {
-                for (int[] adj : graph.get(curr[0])) {
-                    if (!destination.containsKey(adj[0])) {
-                        heap.offer(new int[]{adj[0], adj[1] + curr[1]});
-                        destination.put(adj[0], adj[1] + curr[1]);
-                    }
-                }
-            }
-        }
-
-        int max = 0;
-        for (int weight: destination.values()) {
-            max = Math.max(max, weight);
-        }
-
-        return max;
-    }*/
-
-    public int networkDelayTime2(int[][] times, int N, int K) {
-        Map<Integer, List<int[]>> graph = new HashMap();
-        for (int[] edge: times) {
-            if (!graph.containsKey(edge[0]))
-                graph.put(edge[0], new ArrayList<int[]>());
-            graph.get(edge[0]).add(new int[]{edge[1], edge[2]});
-        }
-        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(
-                (info1, info2) -> info1[0] - info2[0]);
-        heap.offer(new int[]{0, K});
-
-        Map<Integer, Integer> dist = new HashMap();
-
-        while (!heap.isEmpty()) {
-            int[] info = heap.poll();
-            int d = info[0], node = info[1];
-            if (dist.containsKey(node)) continue;
-            dist.put(node, d);
-            if (graph.containsKey(node))
-                for (int[] edge: graph.get(node)) {
-                    int nei = edge[0], d2 = edge[1];
-                    if (!dist.containsKey(nei))
-                        heap.offer(new int[]{d+d2, nei});
-                }
-        }
-
-        if (dist.size() != N) return -1;
-        int ans = 0;
-        for (int cand: dist.values())
-            ans = Math.max(ans, cand);
-        return ans;
     }
 
 }

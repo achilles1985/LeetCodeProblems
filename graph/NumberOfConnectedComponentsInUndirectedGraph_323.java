@@ -26,6 +26,9 @@ import java.util.Set;
  Since all edges are undirected, [0, 1] is the same as [1, 0] and
  thus will not appear together in edges.
  */
+/*
+We do DFS and count how much time we cal dfs from for loop or Union find
+ */
 public class NumberOfConnectedComponentsInUndirectedGraph_323 {
 
     public static void main(String[] args) {

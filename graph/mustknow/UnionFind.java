@@ -7,7 +7,7 @@ import java.util.Map;
  Disjoint sets using path compression and union by rank
  O(n) - space, O(m) - time, m - number of operations
 
- Can be used for cycle detection, max spanning tree finding
+ Can be used for cycle detection, max spanning tree finding, disjoined graphs
   */
 public class UnionFind {
 

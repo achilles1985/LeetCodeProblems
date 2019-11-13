@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 import utils.SolutionUtils;
 
@@ -45,10 +46,10 @@ public class CourseScheduleII_210 {
 
     public static void main(String[] args) {
         CourseScheduleII_210 s = new CourseScheduleII_210();
+        SolutionUtils.print(s.findOrder(4, new int[][]{{1,2},{2,3},{3,4},{4,1}})); // []
         SolutionUtils.print(s.findOrder(3, new int[][]{})); // [0,1,2]
         SolutionUtils.print(s.findOrder(4, new int[][]{{1,0},{2,0},{3,1},{3,2}})); //[0,1,2,3] or [0,2,1,3]
         SolutionUtils.print(s.findOrder(2, new int[][]{{1,0}})); //[0,1]
-        SolutionUtils.print(s.findOrder(4, new int[][]{{1,2},{2,3},{3,4},{4,1}})); // []
         SolutionUtils.print(s.findOrder(3, new int[][]{{1,0}})); // [2,0,1]
     }
 

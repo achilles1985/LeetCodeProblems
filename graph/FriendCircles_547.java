@@ -47,23 +47,28 @@ public class FriendCircles_547 {
     public static void main(String[] args) {
         FriendCircles_547 s = new FriendCircles_547();
         System.out.println(s.findCircleNum2(new int[][]{
+                {1},{2},{3},{0},{0}})); // 1
+        System.out.println(s.findCircleNum2(new int[][]{
                 {1,1,0},
                 {1,1,0},
                 {0,0,1}})); // 2
-        System.out.println(s.findCircleNum(new int[][]{
+        System.out.println(s.findCircleNum2(new int[][]{
                 {1,1,0},
                 {1,1,1},
                 {0,1,1}})); // 1
-        System.out.println(s.findCircleNum(new int[][]{
+        System.out.println(s.findCircleNum2(new int[][]{
                 {1,0,0,0,0},
                 {0,1,0,0,0},
                 {0,0,1,0,0},
                 {0,0,0,1,0},
                 {0,0,0,0,1}})); // 5
-        System.out.println(s.findCircleNum(new int[][]{
+        System.out.println(s.findCircleNum2(new int[][]{
                 {1,2,3,0,0}})); // 1
-        System.out.println(s.findCircleNum(new int[][]{
-                {1},{2},{3},{0},{0}})); // 1
+        System.out.println(s.findCircleNum2(new int[][]{
+                {1,0,0,1},
+                {0,1,1,0},
+                {0,1,1,1},
+                {1,0,1,1}})); // 1
     }
 
     // O(n*m) - time, space
@@ -71,37 +76,22 @@ public class FriendCircles_547 {
         if (M == null || M.length == 0) {
             return 0;
         }
-        List<int[]> edges = new ArrayList<>();
-        for (int i = 0; i < M.length; i++) {
-            for (int j = 0; j < M[0].length; j++) {
-                if (M[i][j] == 1) {
-                    edges.add(new int[]{i,j});
-                }
-            }
-        }
         DisjointSet ds = new DisjointSet();
         for (int i = 0; i < M.length; i++) {
+            ds.makeSet(i);
+        }
+        for (int i = 0; i < M.length; i++) {
             for (int j = 0; j < M[0].length; j++) {
                 if (M[i][j] == 1) {
-                    ds.makeSet(i);
-                    ds.makeSet(j);
+                    ds.union(i,j);
                 }
             }
         }
-        for (int[] edge: edges) {
-            int n1 = edge[0];
-            int n2 = edge[1];
-            int p1 = ds.findSet(n1);
-            int p2 = ds.findSet(n2);
-            if (p1 != p2) {
-                ds.union(n1, n2);
-            }
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < M.length; i++) {
+            set.add(ds.findSet(i));
         }
-        Map<Integer, Integer> map = new HashMap<>();
-        for (DisjointSet.Node node: ds.getNodes()) {
-            map.put(node.rank, map.getOrDefault(node.rank, 0) + 1);
-        }
-        return map.size();
+        return set.size();
     }
 
     // O(n*m) - time, space
