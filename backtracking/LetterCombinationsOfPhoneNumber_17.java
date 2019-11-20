@@ -25,6 +25,7 @@ public class LetterCombinationsOfPhoneNumber_17 {
         System.out.println(s.letterCombinations("23")); // ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
     }
 
+    // O((4^n)*n) - time, O(n + 4^n)-space, n - number of digits in the input, 4 - because we have at most 4 letters for each number
     public List<String> letterCombinations(String digits) {
         if (digits == null || digits.length() == 0) {
             return Collections.emptyList();

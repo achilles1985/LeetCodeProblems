@@ -21,14 +21,16 @@ import java.util.List;
  []
  ]
  */
-public class SubsetI {
+public class SubsetI_78 {
 
     public static void main(String[] args) {
-        SubsetI s = new SubsetI();
+        SubsetI_78 s = new SubsetI_78();
+        System.out.println(s.subsets(new int[] {4,4,4,1,4}));
         System.out.println(s.subsets(new int[] {1,2,3}));
         System.out.println(s.subsets(new int[] {2,1,3}));
     }
 
+    // O(2^n) - time, space
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();

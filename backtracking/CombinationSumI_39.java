@@ -1,7 +1,6 @@
 package backtracking;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,18 +29,17 @@ import java.util.List;
  [3,5]
  ]
  */
-public class CombinationSumI {
+public class CombinationSumI_39 {
 
     public static void main(String[] args) {
-        CombinationSumI s = new CombinationSumI();
-        System.out.println(s.combinationSum(new int[] {2,3,5}, 8));
-        System.out.println(s.combinationSum(new int[] {2,3,6,7}, 7));
+        CombinationSumI_39 s = new CombinationSumI_39();
+        System.out.println(s.combinationSum(new int[] {2,3,5}, 8)); //[[2, 2, 2, 2], [2, 3, 3], [3, 5]]
+        System.out.println(s.combinationSum(new int[] {2,3,6,7}, 7)); //[[2, 2, 3], [7]]
     }
 
-    public List<List<Integer>> combinationSum(int[] nums, int target) {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
-        Arrays.sort(nums);
-        dfs(nums, 0, target, new ArrayList<>(), result, 0);
+        dfs(candidates, 0, target, new ArrayList<>(), result, 0);
 
         return result;
     }
@@ -51,12 +49,10 @@ public class CombinationSumI {
             result.add(new ArrayList<>(list));
             return;
         }
-
-        if (sum > target) {
-            return;
-        }
-
         for (int i = start; i < nums.length; i++) {
+            if (sum + nums[i] > target) {
+                continue;
+            }
             list.add(nums[i]);
             sum += nums[i];
             dfs(nums, sum, target, list, result, i); // not i + 1 because we can reuse same elements

@@ -19,9 +19,9 @@ import java.util.List;
   []
   ]
  */
-public class SubsetII {
+public class SubsetII_90 {
     public static void main(String[] args) {
-        SubsetII s = new SubsetII();
+        SubsetII_90 s = new SubsetII_90();
         System.out.println(s.subsets(new int[]{2,1,2}));
         System.out.println(s.subsets(new int[]{2,1,2, 3}));
     }

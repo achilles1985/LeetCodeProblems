@@ -20,9 +20,12 @@ public class PalindromePartitioning_131 {
 
     public static void main(String[] args) {
         PalindromePartitioning_131 s = new PalindromePartitioning_131();
+        System.out.println(s.partition("rotor"));
+        System.out.println(s.partition("aaabbbcc"));
         System.out.println(s.partition("aab"));
     }
 
+    // O(n*2^n) - time
     public List<List<String>> partition(String s) {
         List<List<String>> partitions = new LinkedList();
         backtrack(s, partitions, new LinkedList<>(), 0);

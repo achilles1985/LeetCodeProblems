@@ -1,4 +1,4 @@
-package backtracking.Combinations_77;
+package backtracking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,12 @@ import java.util.List;
  * [1,4],
  * ]
  */
-public class Solution {
+public class Combinations_77 {
+
+    public static void main(String[] args) {
+        Combinations_77 s = new Combinations_77();
+        System.out.println(s.combine(4, 2));
+    }
 
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
@@ -38,7 +43,6 @@ public class Solution {
             curr.add(i);
             backtrack(i + 1, k, n, curr, res);
             curr.remove(curr.size() - 1);
-            int y = 0;
         }
     }
 }

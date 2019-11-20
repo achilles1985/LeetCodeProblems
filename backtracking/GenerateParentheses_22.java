@@ -1,6 +1,7 @@
 package backtracking;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** M
@@ -19,56 +20,11 @@ public class GenerateParentheses_22 {
 
     public static void main(String[] args) {
         GenerateParentheses_22 s = new GenerateParentheses_22();
-        //System.out.println(s.generateParenthesis(2));
-        System.out.println(s.generateParenthesis2(2));
+        System.out.println(s.generateParenthesis(2));
+        System.out.println(s.generateParenthesis(3));
     }
 
-    public List<String> generateParenthesis2(int n) {
-        List<String> res = new ArrayList<>();
-        generateParenthesisUtils2(n, n, "", res);
-
-        return res;
-    }
-
-    private void generateParenthesisUtils2(int leftCount, int rightCount, String str, List<String> res) {
-        if (leftCount == 0 && rightCount == 0) {
-            res.add(str);
-            return;
-        }
-
-        if (leftCount > 0) {
-            generateParenthesisUtils2(leftCount-1, rightCount, str+"(", res);
-            int y = 0;
-        }
-        if (leftCount < rightCount) {
-            generateParenthesisUtils2(leftCount, rightCount-1, str+")", res);
-            int h = 0;
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // O(n) - space
+    // O(exponential) - time, O(n) - space
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
         dfs(n, n, "", result);

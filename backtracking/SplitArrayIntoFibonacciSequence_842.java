@@ -48,6 +48,7 @@ public class SplitArrayIntoFibonacciSequence_842 {
         System.out.println(s.splitIntoFibonacci("112358130")); // []
     }
 
+    // O(exponential) - time, O(n) - space
     public List<Integer> splitIntoFibonacci(String str) {
         List<Integer> res = new ArrayList<>();
         split(str, 0, res);
@@ -87,7 +88,7 @@ public class SplitArrayIntoFibonacciSequence_842 {
             return true;
         }
 
-        int i = res.size() - 1;
-        return res.get(i) + res.get(i - 1) == (int)num;
+        int last = res.size() - 1;
+        return res.get(last) + res.get(last - 1) == (int)num;
     }
 }

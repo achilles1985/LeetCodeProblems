@@ -14,14 +14,14 @@ public class RestoreIPAddresses_93 {
 
     public static void main(String[] args) {
         RestoreIPAddresses_93 s = new RestoreIPAddresses_93();
-        //System.out.println(s.restoreIpAddresses("25523412343"));
+        System.out.println(s.restoreIpAddresses("25523412343"));
+        System.out.println(s.restoreIpAddresses("010010"));
         System.out.println(s.restoreIpAddresses2("25525511135"));
-        //System.out.println(s.restoreIpAddresses("010010"));
     }
 
     public List<String> restoreIpAddresses(String s) {
         List<String> result = new ArrayList<>();
-        restoreIpAddresses(0, 0, s, new ArrayList<>(), result);
+        restoreIpAddressesHelper(0, 0, s, new ArrayList<>(), result);
 
         return result;
     }
@@ -82,7 +82,7 @@ public class RestoreIPAddresses_93 {
         }
     }
 
-    private void restoreIpAddresses(int start, int count, String input, List<String> list, List<String> result) {
+    private void restoreIpAddressesHelper(int start, int count, String input, List<String> list, List<String> result) {
         if (start == input.length() && count == 4) {
             buildResult(list, result);
             return;
@@ -100,7 +100,7 @@ public class RestoreIPAddresses_93 {
                 continue;
             }
             list.add(sub);
-            restoreIpAddresses(i+1, count+1, input, list, result);
+            restoreIpAddressesHelper(i+1, count+1, input, list, result);
             list.remove(list.size()-1);
         }
     }
