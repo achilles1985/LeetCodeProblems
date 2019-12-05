@@ -25,9 +25,15 @@ public class WordSearch_79 {
 
     public static void main(String[] args) {
         WordSearch_79 s = new WordSearch_79();
-        System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCCED")); // true
+        System.out.println(s.exist(new char[][] {
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}}, "ABCCED")); // true
+        System.out.println(s.exist(new char[][] {
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}}, "ABCB")); // false
         System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "SEE")); // true
-        System.out.println(s.exist(new char[][] {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCB")); // false
         System.out.println(s.exist(new char[][] {{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}}, "AAB")); // true
         System.out.println(s.exist(new char[][] {{'A', 'A'}}, "AAA")); // false
     }

@@ -43,7 +43,9 @@ public class ClimbingStairs_70 {
             return 0;
         }
 
-        return climbStairsDynamicMemoization(n-1) + climbStairsDynamicMemoization(n-2);
+        int a = climbStairsBruteForce(n - 1);
+        int b = climbStairsBruteForce(n - 2);
+        return a + b;
     }
 
     // O(n) - time and space

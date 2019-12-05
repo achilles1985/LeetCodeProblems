@@ -1,6 +1,6 @@
 package trie.autocomplete;
 
-import utils.PrefixTrie;
+import trie.PrefixTrie;
 
 import java.util.ArrayList;
 import java.util.List;

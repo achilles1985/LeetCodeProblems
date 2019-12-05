@@ -1,4 +1,4 @@
-package utils;
+package trie;
 
 import java.util.ArrayList;
 import java.util.HashMap;
