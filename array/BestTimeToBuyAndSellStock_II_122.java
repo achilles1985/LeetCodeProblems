@@ -64,14 +64,10 @@ public class BestTimeToBuyAndSellStock_II_122 {
             for (int i = start + 1; i < prices.length; i++) {
                 if (prices[start] < prices[i]) {
                     int profit = calculate(prices, i + 1) + prices[i] - prices[start];
-                    if (profit > maxprofit) {
-                        maxprofit = profit;
-                    }
+                    maxprofit = Math.max(maxprofit, profit);
                 }
             }
-            if (maxprofit > max) {
-                max = maxprofit;
-            }
+            max = Math.max(max, maxprofit);
         }
         return max;
     }

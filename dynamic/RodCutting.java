@@ -1,5 +1,7 @@
 package dynamic;
 
+import java.util.Arrays;
+
 /**
  * Given a rod of length n inches and a table of prices pi, i=1,2,…,n, write an algorithm to find the maximum revenue rn obtainable by cutting up the rod and selling the pieces.
  * Example:
@@ -10,43 +12,58 @@ public class RodCutting {
 
     public static void main(String[] args) {
         RodCutting s = new RodCutting();
-        System.out.println(s.profitBruteForce(new int[] {2,5,7,8}, 4));
-        System.out.println(s.profitDynamicBottomUp(new int[] {2,5,7,8}, 4));
+        System.out.println(s.profitBruteForce(new int[] {2,5,7,8}, 4)); //10
+        System.out.println(s.profitTopDown(new int[] {2,5,7,8}, 4)); //10
+        System.out.println(s.profitDynamicBottomUp(new int[] {2,5,7,8}, 4)); //10
     }
 
+    // O(length^length) - time, O(length) - space
     public int profitBruteForce(int[] prices, int length) {
         if (length <= 0) {
             return 0;
         }
-
         int max = 0;
         for (int i = 0; i < length; i++) {
             int localMax = profitBruteForce(prices, length-i-1) + prices[i];
-            if (localMax > max) {
-                max = localMax;
-            }
+            max = Math.max(max, localMax);
         }
-
         return max;
     }
 
+    // O(length^2) - time, O(length) - space
+    public int profitTopDown(int[] prices, int length) {
+        int[] cache = new int[length+1];
+        cache[0] = 0;
+        Arrays.fill(cache, -1);
+        return profitTopDownHelper(prices, length, cache);
+    }
+
+    private int profitTopDownHelper(int[] prices, int length, int[] cache) {
+        if (length < 0) {
+            return 0;
+        }
+        if (cache[length] != -1) {
+            return cache[length];
+        }
+        int max = 0;
+        for (int i = 0; i < length; i++) {
+            int localMax = profitTopDownHelper(prices, length-i-1, cache) + prices[i];
+            max = Math.max(max, localMax);
+        }
+        cache[length] = max;
+
+        return cache[length];
+    }
+
+    // O(length^2) - time, O(length) - space
     public int profitDynamicBottomUp(int[] prices, int length) {
-        int[][] res = new int[length+1][prices.length+1];
-        for (int i = 1; i <= length; i++) {
-            for (int j = 1; j <= prices.length; j++) {
-                if (j < i) {
-                    res[i][j] = res[i-1][j];
-                } else {
-                    if (j%i == 0) {
-                        res[i][j] = Math.max(res[i-1][j], (j/i)*prices[i-1]);
-                    } else {
-                        res[i][j] = Math.max(res[i-1][j], prices[i-1] + res[i-1][j-i]);
-                    }
-                }
+        int max[] = new int[prices.length+1];
+        for(int i=1; i <= prices.length; i++){
+            for(int j=i; j <= prices.length; j++){
+                max[j] = Math.max(max[j], max[j-i] + prices[i-1]);
             }
         }
-
-        return res[length][prices.length];
+        return max[prices.length];
     }
 
 }

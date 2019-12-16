@@ -30,8 +30,8 @@ public class TargetSum_494 {
 
     public static void main(String[] args) {
         TargetSum_494 s = new TargetSum_494();
-        System.out.println(s.findTargetSumWaysBruteForce(new int[] {1,1,1,1,1}, 3));
-        System.out.println(s.findTargetSumWaysDynamicTopDown(new int[] {1,1,1,1,1}, 3));
+        System.out.println(s.findTargetSumWaysBruteForce(new int[] {1,1,1,1,1}, 3)); //5
+        System.out.println(s.findTargetSumWaysDynamicTopDown(new int[] {1,1,1,1,1}, 3)); //5
     }
 
     // O(2^n) - time, n - size of nums, O(n) - space, the depth of the recursion tree ca go up to n.
@@ -40,16 +40,16 @@ public class TargetSum_494 {
     }
 
     public int findTargetSumWaysDynamicTopDown(int[] nums, int S) {
-        Map<Key, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         return findTargetSumWaysDynamicTopDown(nums, S, 0, 0, map);
     }
 
     // O(n*target sum) - time, space
-    private int findTargetSumWaysDynamicTopDown(int[] nums, int target, int i, int sum, Map<Key, Integer> map) {
+    private int findTargetSumWaysDynamicTopDown(int[] nums, int target, int i, int sum, Map<String, Integer> map) {
         if (i == nums.length) {
             return target == sum ? 1 : 0;
         }
-        Key key = new Key(i, sum);
+        String key = i+":"+sum;
         if (map.containsKey(key)) {
             return map.get(key);
         }
@@ -69,33 +69,5 @@ public class TargetSum_494 {
         int s2 = findTargetSumWaysBruteForce(nums, target, i+1, sum - nums[i]);
 
         return s1 + s2;
-    }
-
-    private static class Key {
-        int index;
-        int sum;
-
-        public Key(int index, int remainder) {
-            this.index = index;
-            this.sum = remainder;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Key key = (Key) o;
-
-            if (index != key.index) return false;
-            return sum == key.sum;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = index;
-            result = 31 * result + sum;
-            return result;
-        }
     }
 }

@@ -20,32 +20,19 @@ public class MaximumSubarray_53 {
 
     public static void main(String[] args) {
         MaximumSubarray_53 s = new MaximumSubarray_53();
+        System.out.println(s.maxSubArray(new int[] {1,2})); // [1] 1
         System.out.println(s.maxSubArray(new int[] {1,2,3,4})); // [4,-1,2,1] 6
         System.out.println(s.maxSubArray(new int[] {-2,1,-3,4,-1,2,1,-5,4})); // [4,-1,2,1] 6
         System.out.println(s.maxSubArray2(new int[] {-2,1,-3,4,-1,2,1,-5,4})); // [4,-1,2,1] 6
         System.out.println(s.maxSubArrayDynamic(new int[] {-2,1,-3,4,-1,2,1,-5,4})); // [4,-1,2,1] 6
     }
 
-    // Brute force, O(n^3) - time, O(1) - space
-    public int maxSubArray(int[] nums) {
-        int max = 0;
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i; j < nums.length; j++) {
-                int localSum = 0;
-                for (int k = i; k < j; k++) {
-                    localSum += nums[k];
-                }
-                max = Math.max(max, localSum);
-            }
-        }
-        return max;
-    }
-
     // O(n^2) - time, O(1) - space
     public int maxSubArray2(int[] nums) {
-        int max = 0;
+        int max = nums[0];
         for (int i = 0; i < nums.length; i++) {
             int sum = nums[i];
+            max = Math.max(max, sum);
             for (int j = i+1; j < nums.length; j++) {
                 sum += nums[j];
                 max = Math.max(max, sum);
@@ -69,6 +56,22 @@ public class MaximumSubarray_53 {
             max = Math.max(max, sum);
         }
 
+        return max;
+    }
+
+    // Incorrect, but useful traversing, Brute force, O(n^3) - time, O(1) - space
+    public int maxSubArray(int[] nums) {
+        int max = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i; j < nums.length; j++) {
+                int localSum = nums[i];
+                max = Math.max(max, localSum);
+                for (int k = i+1; k < j; k++) {
+                    localSum += nums[k];
+                }
+                max = Math.max(max, localSum);
+            }
+        }
         return max;
     }
 }

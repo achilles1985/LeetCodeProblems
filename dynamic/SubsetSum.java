@@ -14,17 +14,85 @@ public class SubsetSum {
 
     public static void main(String[] args) {
         SubsetSum s = new SubsetSum();
-        System.out.println(s.subsetSum(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
+        System.out.println(s.subsetSum1(new int[] {2,4,5}, 9)); // true
+        System.out.println(s.subsetSumTopDown1(new int[] {2,4,5}, 9)); // true
+        System.out.println(s.subsetSumBottomUp1(new int[] {2,4,5}, 9)); // true
+        System.out.println(s.subsetSum1(new int[] {2,4,5}, 8)); // false
+        System.out.println(s.subsetSumTopDown1(new int[] {2,4,5}, 8)); // false
+        System.out.println(s.subsetSumBottomUp1(new int[] {2,4,5}, 8)); // false
+
+        System.out.println(s.subsetSum1(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
         System.out.println(s.subsetSumDynamicBottomUp(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
         System.out.println(s.subsetSumDynamicTopDown(new int[] {3, 34, 4, 12, 5, 2}, 9)); // true
 
-        System.out.println(s.subsetSum(new int[] {7, 3, 2, 5, 8}, 12)); // true
+        System.out.println(s.subsetSum1(new int[] {7, 3, 2, 5, 8}, 12)); // true
         System.out.println(s.subsetSumDynamicBottomUp(new int[] {7, 3, 2, 5, 8}, 12)); // true
         System.out.println(s.subsetSumDynamicTopDown(new int[] {7, 3, 2, 5, 8}, 12)); // true
 
-        System.out.println(s.subsetSum(new int[] {7, 3, 2, 5, 8}, 122)); // false
+        System.out.println(s.subsetSum1(new int[] {7, 3, 2, 5, 8}, 122)); // false
         System.out.println(s.subsetSumDynamicBottomUp(new int[] {7, 3, 2, 5, 8}, 122)); // false
         System.out.println(s.subsetSumDynamicTopDown(new int[] {7, 3, 2, 5, 8}, 122)); // false
+    }
+
+    // O(2^n) - time, O(n) - space, n - array length
+    public boolean subsetSum1(int[] arr, int sum) {
+        return subsetSumHelper1(0, 0, arr, sum);
+    }
+
+    private boolean subsetSumHelper1(int currIdx, int currSum, int[] arr, int sum) {
+        if (currSum == sum) {
+            return true;
+        }
+        if (currIdx == arr.length && currSum != sum) {
+            return false;
+        }
+        boolean include = subsetSumHelper1(currIdx + 1, currSum + arr[currIdx], arr, sum);
+        boolean exclude = subsetSumHelper1(currIdx + 1, currSum, arr, sum);
+        return include || exclude;
+    }
+
+    // O(n*sum) - time, O(n*sum)
+    public boolean subsetSumTopDown1(int[] arr, int sum) {
+        Map<String, Boolean> cache = new HashMap<>();
+        return subsetSumTopDownHelper1(0, 0, arr, sum, cache);
+    }
+
+    private boolean subsetSumTopDownHelper1(int currIdx, int currSum, int[] arr, int sum, Map<String, Boolean> cache) {
+        if (currSum == sum) {
+            return true;
+        }
+        String key = currIdx + ":" + currSum;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        if (currIdx == arr.length && currSum != sum) {
+            return false;
+        }
+        boolean result = subsetSumTopDownHelper1(currIdx + 1, currSum + arr[currIdx], arr, sum, cache) || subsetSumTopDownHelper1(currIdx + 1, currSum, arr, sum, cache);
+        cache.put(key, result);
+
+        return cache.get(key);
+    }
+
+    // O(n*sum) - time, space
+    public boolean subsetSumBottomUp1(int[] arr, int sum) {
+        boolean[][] dp = new boolean[arr.length][sum+1];
+        for (int i = 0; i < sum; i++) {
+            if (arr[0] == i) {
+                dp[0][i] = true;
+            }
+        }
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j <= sum; j++) {
+                if (j == arr[i]) {
+                    dp[i][j] = true;
+                }
+                else if (j > arr[i]) {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - arr[i]];
+                }
+            }
+        }
+        return dp[arr.length-1][sum];
     }
 
     // O(2^n) - time, O(n) - space

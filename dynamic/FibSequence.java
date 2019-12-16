@@ -46,6 +46,7 @@ public class FibSequence {
     // O(n) - time, O(n) - space
     public int fibDynamicBottomUp(int n) {
         int[] cach = new int[n+1];
+        cach[0] = 1;
         cach[1] = 1;
         for (int i = 2; i <= n; i++) {
             cach[i] = cach[i-1] + cach[i-2];
@@ -57,13 +58,12 @@ public class FibSequence {
     // O(n) - time, O(1) - space
     public int fibDynamicBottomUp2(int n) {
         int fib1 = 1, fib2 = 1;
-        int fib = 0;
         for (int i = 2; i <= n; i++) {
-            fib = fib1 + fib2;
+            int fib = fib1 + fib2;
             fib1 = fib2;
             fib2 = fib;
         }
 
-        return fib;
+        return fib2;
     }
 }

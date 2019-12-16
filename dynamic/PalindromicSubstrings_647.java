@@ -17,42 +17,40 @@ package dynamic;
  Note:
  The input string length won't exceed 1000.
  */
+/*
+Since whether string is a palindrom depends on where we start expending. We need to try 2 ways.
+If the string is odd, start from left==right, even - left, right = left+1 (rotor -> odd, abba - even)
+ */
 public class PalindromicSubstrings_647 {
 
     public static void main(String[] args) {
         PalindromicSubstrings_647 s = new PalindromicSubstrings_647();
-        System.out.println(s.countSubstrings("abc")); //3
-        System.out.println(s.countSubstrings("aaa")); //6
+        System.out.println(s.countSubstrings2("racecar")); //10
+        System.out.println(s.countSubstrings2("aaa")); //6
+        System.out.println(s.countSubstrings2("abc")); //3
     }
 
-    // O(n^2) - time, space
-    public int countSubstrings(String s) {
-        if (s.isEmpty()) {
+    // O(n^2) - time, O(1) - space
+    public int countSubstrings2(String s) {
+        if (s == null || s.length() == 0) {
             return 0;
         }
-        if (s.length() == 1) {
-            return 1;
-        }
-        boolean[][] dp = new boolean[s.length()][s.length()];
         int count = 0;
-        for (int i = 0; i < s.length(); i++) {
-            dp[i][i] = true;
-            count++;
+        for (int center = 0; center < s.length(); center++) {
+            count += expand(center, center, s);
+            count += expand(center, center+1, s);
         }
-        for (int i = 1; i < s.length(); i++) {
-            for (int j = 0, k = i; k < s.length(); j++, k++) {
-                if (s.charAt(j) == s.charAt(k) && k-j == 1) {
-                    dp[j][k] = true;
-                    count++;
-                } else if (s.charAt(j) == s.charAt(k) && dp[j+1][k-1]) {
-                    dp[j][k] = true;
-                    count++;
-                } else {
-                    dp[j][k] = false;
-                }
-            }
-        }
-
         return count;
     }
+
+    private int expand(int left, int right, String s) {
+        int count = 0;
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+            count++;
+        }
+        return count;
+    }
+
 }

@@ -21,6 +21,7 @@ public class LongestConsecutiveSequence_128 {
 
     public static void main(String[] args) {
         LongestConsecutiveSequence_128 s = new LongestConsecutiveSequence_128();
+        System.out.println(s.longestConsecutive2(new int[]{2,1,3,5,10,11,12})); // 7
         System.out.println(s.longestConsecutive2(new int[]{9,1,4,7,3,-1,0,5,8,-1,6})); // 7
         System.out.println(s.longestConsecutive(new int[]{9,1,4,7,3,-1,0,5,8,-1,6})); // 7
         System.out.println(s.longestConsecutive2(new int[]{100,4,200,1,3,2})); // 4 [1,2,3,4]

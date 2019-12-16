@@ -24,6 +24,7 @@ public class FindAllNumbersDisappearedInArray_448 {
         System.out.println(s.findDisappearedNumbers2(new int[]{4,3,2,7,8,2,3,1})); // [5,6]
     }
 
+    // O(n) - time, O(1) - space
     public List<Integer> findDisappearedNumbers2(int[] nums) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {

@@ -33,26 +33,7 @@ public class LargestNumber_179 {
         }
         String res = Arrays.stream(nums)
                 .mapToObj(String::valueOf)
-                .sorted((a, b) -> {
-                    int p = 0;
-                    int p1L = a.length();
-                    int p2L = b.length();
-                    while (p < p1L + p2L) {
-                        if (a.charAt(p%p1L) > b.charAt(p%p2L)) {
-                            return -1;
-                        }
-                        if (a.charAt(p%p1L) < b.charAt(p%p2L)) {
-                            return 1;
-                        }
-                        p++;
-                    }
-
-                    return 0;
-
-//                    String order1 = a + b;
-//                    String order2 = b + a;
-//                    return order2.compareTo(order1);
-                })
+                .sorted((a, b) -> (b+a).compareTo(a+b))
                 .collect(Collectors.joining());
 
         return res.startsWith("0") ? "0" : res;

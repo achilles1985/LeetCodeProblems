@@ -1,2 +1,5 @@
 TODO:
 https://leetcode.com/problems/partition-array-for-maximum-sum/
+
+MUST TO KNOW:
+SubsetSum, LongestPalindromicSubstring, Knapsack, RodCut,

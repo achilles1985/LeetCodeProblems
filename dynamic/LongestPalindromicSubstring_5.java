@@ -13,19 +13,18 @@ package dynamic;
  Input: "cbbd"
  Output: "bb"
  */
+/*
+Since whether string is a palindrom depends on where we start expending. We need to try 2 ways.
+If the string is odd, start from left==right, even - left, right = left+1 (rotor -> odd, abba - even)
+ */
 public class LongestPalindromicSubstring_5 {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring_5 s = new LongestPalindromicSubstring_5();
-        System.out.println(s.longestPalindrome("bbbab")); //bab
-        System.out.println(s.longestPalindrome("babad")); //bab
-        System.out.println(s.longestPalindrome("cbbd")); //bb
-
-        System.out.println(s.longestPalindrome("bb")); //bb
-        System.out.println(s.longestPalindromeDynamicBottomUp("bb")); //bb
-
-        System.out.println(s.longestPalindrome("kbcdedcbl")); //bcdedcb
-        System.out.println(s.longestPalindromeDynamicBottomUp("kbcdedcbl")); //bcdedcb
+        System.out.println(s.longestPalindrome("racecar")); //bab
+        System.out.println(s.longestPalindrome2("racecar")); //bab
+        System.out.println(s.longestPalindrome("nabbam")); //abba
+        System.out.println(s.longestPalindrome2("nabbam")); //abba
     }
 
     // O(n^3) - time, O(1) - space
@@ -47,33 +46,32 @@ public class LongestPalindromicSubstring_5 {
         return max;
     }
 
-    // O(n^2) - time, O(n^2) - space
-    public String longestPalindromeDynamicBottomUp(String s) {
-        if (s.isEmpty() || s.length() == 1) {
-            return s;
+
+    // O(n^2) - time, O(1) - space
+    public String longestPalindrome2(String s) {
+        if (s == null || s.length() < 1) {
+            return "";
         }
-        boolean[][] dp = new boolean[s.length()][s.length()];
+        int start = 0, end = 0;
         for (int i = 0; i < s.length(); i++) {
-            dp[i][i] = true;
-        }
-        String max = s.substring(0,1);
-        for (int i = 1; i < s.length(); i++) {
-            for (int j = 0, k = i; k < s.length(); j++, k++) {
-                if (s.charAt(j) == s.charAt(k) && k-j == 1) {
-                    dp[j][k] = true;
-                } else if (s.charAt(j) == s.charAt(k) && dp[j+1][k-1]) {
-                    dp[j][k] = true;
-                } else {
-                    dp[j][k] = false;
-                }
-                String sub = s.substring(j, k+1);
-                if (dp[j][k] && sub.length() > max.length()) {
-                    max = sub;
-                }
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
             }
         }
+        return s.substring(start, end + 1);
+    }
 
-        return max;
+    private int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
     }
 
     private boolean isPolindrom(String str) {
