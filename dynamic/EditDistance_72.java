@@ -30,10 +30,14 @@ import java.util.Map;
  exention -> exection (replace 'n' with 'c')
  exection -> execution (insert 'u')
  */
+/*
+https://www.techiedelight.com/levenshtein-distance-edit-distance-problem/ - good explanation
+ */
 public class EditDistance_72 {
 
     public static void main(String[] args) {
         EditDistance_72 s = new EditDistance_72();
+        String res = "abc".substring(0,0);
         System.out.println(s.minDistance("horse", "ros")); //3
         System.out.println(s.minDistanceDynamicBottomUp("horse", "ros")); //3
         System.out.println(s.minDistanceDynamicTopDown("horse", "ros")); //3

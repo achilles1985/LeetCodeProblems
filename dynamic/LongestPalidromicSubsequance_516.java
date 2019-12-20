@@ -39,7 +39,7 @@ public class LongestPalidromicSubsequance_516 {
         return longestPalindromeSubseq(s, 0, s.length()-1);
     }
 
-    // O(n^2) - time, space
+    // O(n^2) - time, O(n) - space
     public int longestPalindromeSubseqTopDown(String s) {
         Map<String, Integer> map = new HashMap<>();
         return longestPalindromeSubseqTopDown(s, 0, s.length()-1, map);
@@ -72,12 +72,11 @@ public class LongestPalidromicSubsequance_516 {
         if (map.containsKey(key)) {
             return map.get(key);
         }
-
+        if (start > end) {
+            return 0;
+        }
         if (start == end) {
             return 1;
-        }
-        if (s.charAt(start) == s.charAt(end) && start + 1 == end) {
-            return 2;
         }
         if (s.charAt(start) == s.charAt(end)) {
             return 2 + longestPalindromeSubseqTopDown(s, start+1, end-1, map);
@@ -92,18 +91,19 @@ public class LongestPalidromicSubsequance_516 {
     }
 
     private int longestPalindromeSubseq(String s, int start, int end) {
+        if (start > end) {
+            return 0;
+        }
         if (start == end) {
             return 1;
         }
-        if (s.charAt(start) == s.charAt(end) && start + 1 == end) {
-            return 2;
-        }
+
         if (s.charAt(start) == s.charAt(end)) {
             return 2 + longestPalindromeSubseq(s, start+1, end-1);
         }
 
-        int left = longestPalindromeSubseq(s, start + 1, end);
-        int right = longestPalindromeSubseq(s, start, end - 1);
+        int left = longestPalindromeSubseq(s, start+1, end);
+        int right = longestPalindromeSubseq(s, start, end-1);
 
         return Math.max(left, right);
     }

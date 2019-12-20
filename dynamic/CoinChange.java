@@ -58,7 +58,6 @@ public class CoinChange {
         return cache[amount];
     }
 
-
     // exponential time (C^A), C - number of coins, A = amount
     public int makeChange(int[] coins, int amount) {
         if (amount == 0) {

@@ -21,6 +21,7 @@ public class DeleteOperationForTwoStrings_583 {
 
     public static void main(String[] args) {
         DeleteOperationForTwoStrings_583 s = new DeleteOperationForTwoStrings_583();
+        System.out.println(s.minDistance("eeta", "aetka")); //2
         System.out.println(s.minDistance("sea", "eat")); //2
         System.out.println(s.minDistanceDynamicBottomUp("sea", "eat")); //2
         System.out.println(s.minDistanceTopDown("sea", "eat")); //2
@@ -28,7 +29,6 @@ public class DeleteOperationForTwoStrings_583 {
         System.out.println(s.minDistance("seadpck", "")); //7
         System.out.println(s.minDistance("adg", "abcdefg")); //4
         System.out.println(s.minDistanceTopDown("adg", "abcdefg")); //4
-
     }
 
     // O(2^n) - time, O(max(m,n)) - space

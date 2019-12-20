@@ -2,9 +2,8 @@ package dynamic;
 
 // https://leetcode.com/problems/decode-ways/
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** M
  * A message containing letters from A-Z is being encoded to numbers using the following mapping:
@@ -28,6 +27,8 @@ public class DecodeWays_91 {
 
     public static void main(String[] args) {
         DecodeWays_91 s = new DecodeWays_91();
+        System.out.println(s.numDecodings2("12131")); //5
+
         System.out.println(s.numDecodings("0")); //0
         System.out.println(s.numDecodingsDynamicTopDown("0")); //0
 
@@ -38,6 +39,30 @@ public class DecodeWays_91 {
 
         System.out.println(s.numDecodings("12131")); //5
         System.out.println(s.numDecodingsDynamicTopDown("12131")); //5
+    }
+
+    private int numDecodings2(String str) {
+        return numDecodingsHelper2(str, 0, str.length(), new AtomicInteger(0));
+    }
+
+    private int numDecodingsHelper2(String str, int i, int length, AtomicInteger counter) {
+        if (i == length) {
+            return 1;
+        }
+
+        if (i + 1 <= length) {
+            String substr = str.substring(i, i + 1);
+            if (isValid(substr)) {
+                counter.getAndAdd(numDecodingsHelper2(str, i + 1, length, counter));
+            }
+        }
+        if (i + 2 <= length) {
+            String substr = str.substring(i, i + 2);
+            if (isValid(substr)) {
+                counter.getAndAdd(numDecodingsHelper2(str, i + 2, length, counter));
+            }
+        }
+        return counter.get();
     }
 
     // O(2^n) - time, O(n) - space

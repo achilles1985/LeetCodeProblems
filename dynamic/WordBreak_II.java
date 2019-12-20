@@ -47,7 +47,7 @@ public class WordBreak_II {
         System.out.println(s.wordBreak("catsandog", Arrays.asList("cat", "cats", "and", "sand", "dog")));
     }
 
-    // O() - time, O(n) - space
+    // O(n^n) - time, O(n) - space
     public List<String> wordBreak(String s, List<String> wordDict) {
         List<String> res = new ArrayList<>();
         wordBreak(s, wordDict, "", res);

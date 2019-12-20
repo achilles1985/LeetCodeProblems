@@ -36,25 +36,64 @@ public class WordBreak_139 {
 
     public static void main(String[] args) {
         WordBreak_139 s = new WordBreak_139();
-        System.out.println(s.wordBreak("abcd", new ArrayList<>(Arrays.asList("ab", "cd")))); // true
-        System.out.println(s.wordBreak("leetcode", new ArrayList<>(Arrays.asList("le", "leet", "code")))); // true
+        System.out.println(s.wordBreak("abcde", new ArrayList<>(Arrays.asList("ab", "cd", "e")))); // true
+        System.out.println(s.wordBreak("leetcodemore", new ArrayList<>(Arrays.asList("leet", "code", "more")))); // true
+        System.out.println(s.wordBreakTopDownDynamic("leetcode", new ArrayList<>(Arrays.asList("le", "leet", "code")))); // true
 
+        System.out.println(s.wordBreak("catsandog", new ArrayList<>(Arrays.asList("cats", "dog", "sand", "sand", "and")))); // false
+        System.out.println(s.wordBreakTopDownDynamic("catsandog", new ArrayList<>(Arrays.asList("cats", "dog", "sand", "sand", "and")))); // false
+
+        System.out.println(s.wordBreak("abcd", new ArrayList<>(Arrays.asList("ab", "cd")))); // true
+        System.out.println(s.wordBreakTopDownDynamic("abcd", new ArrayList<>(Arrays.asList("ab", "cd")))); // true
+
+        // button up
+        System.out.println(s.wordBreakBottomUp("abcd", new ArrayList<>(Arrays.asList("ab", "cd")))); // true
         System.out.println(s.wordBreakBottomUp("abcd", new ArrayList<>(Arrays.asList("ab", "cd")))); // true
         System.out.println(s.wordBreakBottomUp("catsandog", new ArrayList<>(Arrays.asList("cats", "dog", "sand", "sand", "and")))); // false
     }
 
-    // O(2^n) - time, O(n) - space
+    // O(n^n) - time, O(n) - space
     public boolean wordBreak(String s, List<String> wordDict) {
-        if (s.length() == 0) {
+        return wordBreakHelper(s, new HashSet<>(wordDict));
+    }
+
+    public boolean wordBreakHelper(String s, Set<String> wordDict) {
+        if (wordDict.contains(s)) {
             return true;
         }
-        for (int i = 1; i <= s.length(); i++) {
+        for (int i = 1; i < s.length(); i++) {
             String prefix = s.substring(0, i);
-            boolean sufRes = wordBreak(s.substring(i), wordDict);
-            if (wordDict.contains(prefix) && sufRes) {
-                 return true;
-             }
+            if (wordDict.contains(prefix)) {
+                if (wordBreakHelper(s.substring(i), wordDict)) {
+                    return true;
+                }
+            }
         }
+        return false;
+    }
+
+    // O(n^2) - time, O(n) - space
+    public boolean wordBreakTopDownDynamic(String s, List<String> wordDict) {
+        Set<String> cache = new HashSet<>();
+        return wordBreakTopDownDynamic(s, new HashSet<>(wordDict), cache);
+    }
+
+    private boolean wordBreakTopDownDynamic(String str, Set<String> wordDict, Set<String> cache) {
+        if (cache.contains(str)) {
+            return false;
+        }
+        if (wordDict.contains(str)) {
+            return true;
+        }
+        for (int i = 1; i < str.length(); i++) {
+            String prefix = str.substring(0, i);
+            if (wordDict.contains(prefix)) {
+                if (wordBreakTopDownDynamic(str.substring(i), wordDict, cache)) {
+                    return true;
+                }
+            }
+        }
+        cache.add(str);
         return false;
     }
 

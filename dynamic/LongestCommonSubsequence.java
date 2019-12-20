@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Given two sequences, find the length of longest subsequence present in both of them. A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+ * Given two sequences, find the length of longest subsequence present in both of them.
+ * A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
  * For example, “abc”, “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”
  */
 public class LongestCommonSubsequence {
@@ -34,7 +35,7 @@ public class LongestCommonSubsequence {
 
     // O(n*m) - time and space, n,m - length of strings
     public int lcsDynamicTomDown(String s1, String s2) {
-        Map<Key, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         return lcsDynamicTomDownUtils(s1, s2, 0, 0, map);
     }
 
@@ -53,11 +54,11 @@ public class LongestCommonSubsequence {
         return res[s1.length()][s2.length()];
     }
 
-    private int lcsDynamicTomDownUtils(String s1, String s2, int i, int j, Map<Key, Integer> map) {
+    private int lcsDynamicTomDownUtils(String s1, String s2, int i, int j, Map<String, Integer> map) {
         if (i == s1.length() || j == s2.length()) {
             return 0;
         }
-        Key key = new Key(i, j);
+        String key = i + ":" + j;
         if (map.containsKey(key)) {
             return map.get(key);
         }
@@ -71,31 +72,4 @@ public class LongestCommonSubsequence {
         return map.get(key);
     }
 
-    private static class Key {
-        int i;
-        int j;
-
-        public Key(int i, int j) {
-            this.i = i;
-            this.j = j;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Key key = (Key) o;
-
-            if (i != key.i) return false;
-            return j == key.j;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = i;
-            result = 31 * result + j;
-            return result;
-        }
-    }
 }
