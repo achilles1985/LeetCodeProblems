@@ -20,64 +20,70 @@ public class LRUCache {
     private CacheItem head;
     private CacheItem tail;
 
-    private Map<Integer, CacheItem> map = new HashMap<>();
+    private Map<Integer, CacheItem> map;
     private int capacity;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
+        head = new CacheItem();
+        tail = new CacheItem();
+        map = new HashMap<>();
+
+        head.next = tail;
+        tail.prev = head;
     }
 
+    // O(1) - time
+    public void put(int key, int value) {
+        CacheItem oldNode = map.get(key);
+        if (oldNode == null) {
+            CacheItem newNode = new CacheItem(key, value);
+            map.put(key, newNode);
+            addFront(newNode);
+            if (map.size() > capacity) {
+                removeFromLRUCache();
+            }
+        } else {
+            oldNode.value = value;
+            map.put(key, oldNode);
+            moveToHead(oldNode);
+        }
+    }
+
+    // O(1) - time
     public int get(int key) {
         CacheItem current = map.get(key);
         if (current == null) {
             return -1;
         }
-        removeFromLinkedList(current);
-        addTail(current);
-
+        moveToHead(current);
         return current.value;
     }
 
-    private void removeFromLinkedList(CacheItem current) {
-        // remove tail
-        if (current == tail) {
-            tail = tail.prev;
-            tail.next = null;
-        } else if (current == head) {
-            head = head.next;
-            head.prev = null;
-        } else { // remove from the middle
-            CacheItem prev = current.prev;
-            CacheItem next = current.next;
-            prev.next = next;
-            if (next != null) {
-                next.prev = prev;
-            }
-        }
+    private void moveToHead(CacheItem node) {
+        removeFromList(node);
+        addFront(node);
     }
 
-    public void put(int key, int value) {
-        if (map.size() == capacity) {
-            removeHead();
-        }
-        CacheItem node = new CacheItem(key, value);
-        addTail(node);
-        map.put(key, node);
+    private void removeFromList(CacheItem node) {
+        CacheItem next = node.next;
+        CacheItem prev = node.prev;
+        prev.next = next;
+        next.prev = prev;
     }
 
-    private void addTail(CacheItem node) {
-        if (tail == null) {
-            tail = head = node;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-            tail = tail.next;
-        }
+    private void addFront(CacheItem node) {
+        node.prev = head;
+        node.next = head.next;
+
+        head.next.prev = node;
+        head.next = node;
     }
 
-    private void removeHead() {
-        map.remove(head.key);
-        head = head.next;
+    private void removeFromLRUCache() {
+        CacheItem node = tail.prev;
+        removeFromList(node);
+        map.remove(node.key);
     }
 
     private static class CacheItem {
@@ -90,19 +96,21 @@ public class LRUCache {
             this.key = key;
             this.value = value;
         }
+
+        public CacheItem() {
+        }
     }
 
     public static void main(String[] args) {
         LRUCache cache = new LRUCache(2);
-
         cache.put(1, 1);
         cache.put(2, 2);
-        System.out.println(cache.get(1));       // returns 1
-        cache.put(3, 3);    // evicts key 2
-        System.out.println(cache.get(2));       // returns -1 (not found)
+        System.out.println(cache.get(1));       // 1
+        cache.put(3, 3);                        // evicts key 2
+        System.out.println(cache.get(2));       // -1
         cache.put(4, 4);    // evicts key 1
-        System.out.println(cache.get(1));       // returns -1 (not found)
-        System.out.println(cache.get(3));       // returns 3
-        System.out.println(cache.get(4));       // returns 4
+        System.out.println(cache.get(1));       // -1
+        System.out.println(cache.get(3));       // 3
+        System.out.println(cache.get(4));       // 4
     }
 }
