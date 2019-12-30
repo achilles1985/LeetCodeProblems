@@ -77,6 +77,9 @@ import java.util.Queue;
  *     Please remember to RESET your class variables declared in class AutocompleteSystem, as static/class variables
  *     are persisted across multiple test cases. Please see here for more details.
  */
+/*
+Solution based on HashMaps: HashMap (a,b,c,...,z) each alphabeth letter corresponds to its HashMap (sentence:count) (https://leetcode.com/problems/design-search-autocomplete-system/solution/)
+ */
 public class AutocompleteSystem {
 
     private Map<String, Integer>[] root;
@@ -93,7 +96,7 @@ public class AutocompleteSystem {
         }
     }
 
-    // O(m*log(3)) - time
+    // O(m*log(k)) - time, m - size of corresponding HashMap
     public List<String> input(char c) {
         List<String> results = new ArrayList<>();
         if (c == '#') {

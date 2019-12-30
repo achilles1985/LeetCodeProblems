@@ -79,6 +79,9 @@ import javafx.util.Pair;
  *     Please remember to RESET your class variables declared in class AutocompleteSystem, as static/class variables
  *     are persisted across multiple test cases. Please see here for more details.
  */
+/*
+Solution based on Trie (https://leetcode.com/problems/design-search-autocomplete-system/solution/)
+ */
 public class AutocompleteSystem2 {
 
     private TrieNode root;
@@ -116,7 +119,7 @@ public class AutocompleteSystem2 {
         }
     }
 
-    // O(m*log(3)) - time
+    // O(p + q + m*log(3)) - time, p - prefix length, q - number of nodes under prefix, m - number of sentences in result list
     public List<String> input(char c) {
         List<String> results = new ArrayList<>();
         if (c == '#') {
