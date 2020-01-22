@@ -71,7 +71,7 @@ public class FriendCircles_547 {
                 {1,0,1,1}})); // 1
     }
 
-    // O(n*m) - time, space
+    // O(n^2) - time, O(n) - space
     public int findCircleNum2(int[][] M) {
         if (M == null || M.length == 0) {
             return 0;
@@ -94,7 +94,7 @@ public class FriendCircles_547 {
         return set.size();
     }
 
-    // O(n*m) - time, space
+    // O(n^2) - time, space
     public int findCircleNum(int[][] M) {
         if (M == null || M.length == 0) {
             return 0;

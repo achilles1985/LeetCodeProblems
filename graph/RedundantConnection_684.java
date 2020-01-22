@@ -49,7 +49,7 @@ public class RedundantConnection_684 {
         SolutionUtils.print(s.findRedundantConnection2(new int[][] {{1,2},{2,3},{3,4},{1,4},{1,5}})); // [1,4]
     }
 
-    // O(n) - time, O(n) - space
+    // O(V+E) - time, O(V) - space
     public int[] findRedundantConnection2(int[][] edges) {
         DisjointSet ds = new DisjointSet();
         for (int i = 1; i <= edges.length; i++) {

@@ -77,7 +77,7 @@ public class ReconstructItinerary_332 {
         while (!queue.isEmpty()) {
             dfs(queue.poll(), graph, result);
         }
-        result.add(0, station);
+        result.add(station);
     }
 
 }

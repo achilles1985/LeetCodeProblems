@@ -6,6 +6,8 @@ import java.util.Map;
 
 // Disjoint sets using path compression and union by rank
 // O(n) - space, O(m) - time, m - number of operations
+
+// Good explanation: https://leetcode.com/articles/redundant-connection/#
 public class DisjointSet {
 
     private Map<Integer, Node> nodes = new HashMap<>();
@@ -59,11 +61,9 @@ public class DisjointSet {
     }
 
     private Node findSet(Node node) {
-        Node parent = node.parent;
-        if (parent == node) {
-            return parent;
+        if (node.parent != node) {
+            node.parent = findSet(node.parent);
         }
-        node.parent = findSet(node.parent);
         return node.parent;
     }
 
