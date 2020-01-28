@@ -41,35 +41,48 @@ public class ConnectingCitiesWithMinimumCost_1135 {
         ConnectingCitiesWithMinimumCost_1135 s = new ConnectingCitiesWithMinimumCost_1135();
         System.out.println(s.minimumCost(3, new int[][]{{1,2,5},{1,3,6},{2,3,1}})); //6
         System.out.println(s.minimumCost(4, new int[][]{{1,2,5},{3,4,4}})); //-1
+        System.out.println(s.minimumCost(5, new int[][]{{2,1,50459},{3,2,47477},{4,2,52585},{5,3,16477}})); //166998
     }
 
     // O(n*log(n)) - time, O(n) - space
     public int minimumCost(int N, int[][] connections) {
-        int count = 0;
-        //sort edges in ascending order
-        Arrays.sort(connections, (e1, e2) -> e1[2]-e2[2]);
-        DisjointSet ds = new DisjointSet();
+        Arrays.sort(connections, (e1,e2) -> e1[2] - e2[2]);
+        DisjointSet ds = new DisjointSet(N);
+        int cost = 0;
         for (int[] edge: connections) {
-            ds.makeSet(edge[0]);;
-            ds.makeSet(edge[1]);;
-        }
-        for (int[] edge: connections) {
-            int val1 = edge[0];
-            int val2 = edge[1];
-            int p1 = ds.findSet(val1);
-            int p2 = ds.findSet(val2);
-            if (p1 != p2) {
-               ds.union(val1, val2);
-               count += edge[2];
+            if (ds.find(edge[0]) != ds.find(edge[1])) {
+                ds.union(edge[0], edge[1]);
+                cost += edge[2];
             }
         }
-        // if any of sets has different parent, graph is disconnected
-        int parent = ds.findSet(1);
-        for (int i = 2; i <= N; i++) {
-            if (parent != ds.findSet(i)) {
-                return -1;
+
+        return ds.size == 1 ? cost : -1;
+    }
+
+    private static final class DisjointSet {
+        int[] parent;
+        int size;
+
+        public DisjointSet(int size) {
+            this.size = size;
+            parent = new int[size+1];
+            for (int i = 0; i <= size; i++) {
+                parent[i] = i;
             }
         }
-        return count;
+
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        void union(int x, int y) {
+            int p1 = find(x);
+            int p2 = find(y);
+            parent[p2] = p1;
+            size--;
+        }
     }
 }
