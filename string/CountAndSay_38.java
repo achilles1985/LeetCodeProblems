@@ -24,15 +24,16 @@ public class CountAndSay_38 {
 
     public static void main(String[] args) {
         CountAndSay_38 s = new CountAndSay_38();
-        System.out.println(s.countAndSay(1)); //1
-        System.out.println(s.countAndSay(4)); //1211
-        System.out.println(s.countAndSay(8)); //1113213211
+        //System.out.println(s.countAndSay(1)); //1
+        //System.out.println(s.countAndSay(4)); //1211
+        System.out.println(s.countAndSay(22)); //1113213211
     }
 
     public String countAndSay(int n) {
         String s = "1";
         for (int i = 1; i < n; i++) {
             s = nextSequence(s);
+            System.out.println(s);
         }
 
         return s;

@@ -1,5 +1,8 @@
 package array;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import utils.SolutionUtils;
 
 /**M
@@ -44,6 +47,9 @@ import utils.SolutionUtils;
  * [[0,-1],
  * [1,2]]
  */
+/*
+    Instead of exploring started from empty cell, we start from a gate and doing BFS.
+ */
 public class WallsAndGates_286 {
 
     public static void main(String[] args) {
@@ -74,6 +80,38 @@ public class WallsAndGates_286 {
             }
         }
         SolutionUtils.print(rooms);
+    }
+
+    // BFS approach. O(rows*cols) - time, space
+    public void wallsAndGates3(int[][] rooms) {
+        if (rooms == null || rooms.length == 0) {
+            return;
+        }
+        int EMPTY = Integer.MAX_VALUE;
+        int GATE = 0;
+        int[][] directions = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+        Queue<int[]> queue = new LinkedList<>();
+        for (int i = 0; i < rooms.length; i++) {
+            for (int j = 0; j < rooms[0].length; j++) {
+                if (rooms[i][j] == GATE) {
+                    queue.add(new int[]{i,j});
+                }
+            }
+        }
+        while (!queue.isEmpty()) {
+            int[] polled = queue.poll();
+            int row = polled[0];
+            int col = polled[1];
+            for (int[] direction: directions) {
+                int nextRow = row + direction[0];
+                int nextCol = col + direction[1];
+                if (nextRow < 0 || nextRow >= rooms.length || nextCol < 0 || nextCol >= rooms[0].length || rooms[nextRow][nextCol] != EMPTY) {
+                    continue;
+                }
+                rooms[nextRow][nextCol] = rooms[row][col] + 1;
+                queue.add(new int[]{nextRow,nextCol});
+            }
+        }
     }
 
     private void dfs(int i, int j, int distance, boolean[][] visited, int[][] rooms) {

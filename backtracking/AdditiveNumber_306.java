@@ -25,8 +25,8 @@ public class AdditiveNumber_306 {
 
     public static void main(String[] args) {
         AdditiveNumber_306 s= new AdditiveNumber_306();
-        //System.out.println(s.isAdditiveNumber("112358")); // true
-        //System.out.println(s.isAdditiveNumber("199100199")); // true
+        System.out.println(s.isAdditiveNumber("112358")); // true
+        System.out.println(s.isAdditiveNumber("199100199")); // true
         System.out.println(s.isAdditiveNumber("231458")); // false
     }
 

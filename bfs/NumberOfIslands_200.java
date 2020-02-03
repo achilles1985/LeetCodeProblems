@@ -1,4 +1,7 @@
-package array;
+package bfs;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water
@@ -54,23 +57,32 @@ public class NumberOfIslands_200 {
         for (int i = 0; i < chars.length; i++) {
             for (int j = 0; j < chars[0].length; j++) {
                 if (chars[i][j] == '1') {
-                    dfs(i, j, chars);
                     count++;
+                    bfs(i,j,chars);
                 }
             }
         }
-
         return count;
     }
 
-    private void dfs(int i, int j, char[][] chars) {
-        if (i < 0 || i >= chars.length || j < 0 || j >= chars[0].length || chars[i][j] == '0') {
-            return;
+    private void bfs(int i, int j, char[][] chars) {
+        int[][] directions = new int[][]{{1,0},{-1,0},{0,-1},{0,1}};
+        Queue<int[]> adjacents = new LinkedList<>();
+        adjacents.add(new int[]{i,j});
+        while (!adjacents.isEmpty()) {
+            int[] adjacent = adjacents.poll();
+            int row = adjacent[0];
+            int col = adjacent[1];
+            for (int[] direction: directions) {
+                int nextRow = row + direction[0];
+                int nextCol = col + direction[1];
+                if (nextRow < 0 || nextRow >= chars.length || nextCol < 0 || nextCol >= chars[0].length || chars[nextRow][nextCol] == '0') {
+                    continue;
+                }
+                adjacents.add(new int[]{nextRow, nextCol});
+                chars[nextRow][nextCol] = '0';
+            }
         }
-        chars[i][j] = '0';
-        dfs(i, j+1, chars);
-        dfs(i+1, j, chars);
-        dfs(i, j-1, chars);
-        dfs(i-1, j, chars);
     }
+
 }
