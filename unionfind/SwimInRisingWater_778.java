@@ -1,5 +1,10 @@
 package unionfind;
 
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+
 /**H
  * On an N x N grid, each square grid[i][j] represents the elevation at that point (i,j).
  * Now rain starts to fall. At time t, the depth of the water everywhere is t. You can swim from a square to another
@@ -51,9 +56,10 @@ public class SwimInRisingWater_778 {
                 {10,9,8,7,6}})); //16
         System.out.println(s.swimInWater(new int[][]{
                 {0,2},
-                {1,3}})); //16
+                {1,3}})); //3
     }
 
+    // Using union find
     // O(n^2) - time, O(n^2) - space
     public int swimInWater(int[][] grid) {
         DisjointSet ds = new DisjointSet(grid.length*grid[0].length);
@@ -62,29 +68,57 @@ public class SwimInRisingWater_778 {
         int[] valueToIndex = new int[grid.length * grid.length]; // since the max number in the matrix equals the number of elements in the matrix - 1.
         for (int i = 0; i < grid.length; ++i) {
             for (int j = 0; j < grid.length; ++j) {
-                valueToIndex[grid[i][j]] = i * grid.length + j;
+                valueToIndex[grid[i][j]] = i * grid[0].length + j;
             }
         }
 
-        for (int time = 0; time < grid.length * grid.length; ++time) {
+        for (int time = 0; time < grid.length * grid[0].length; ++time) {
             int idx = valueToIndex[time];
             int row = idx / grid.length;
             int col = idx % grid.length;
-
             for (int[] direction : directions) {
                 int rr = row + direction[0];
                 int cc = col + direction[1];
                 if (rr >= 0 && rr < grid.length && cc >= 0 && cc < grid.length && grid[rr][cc] < time) {
-                   ds.union(idx, rr * grid.length + cc);
+                    int nextIdx = rr * grid.length + cc;
+                    ds.union(idx, nextIdx);
                 }
             }
-
             if (ds.connected(0, grid.length * grid.length - 1)) {
                 return time;
             }
         }
-
         return -1;
+    }
+
+    // Using min heap
+    // O(n*m*log(n*m)) - time, O(n*m) - space
+    public int swimInWater2(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int[][] directions = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+        Queue<int[]> minHeap = new PriorityQueue<>((e1,e2) -> e1[2] - e2[2]);
+        Set<Integer> seen = new HashSet<>();
+        minHeap.add(new int[]{0,0,grid[0][0]});
+        int count = 0;
+        while (!minHeap.isEmpty()) {
+            int[] cell = minHeap.poll();
+            int index = cell[0]*cols + cell[1];
+            count = Math.max(count, grid[cell[0]][cell[1]]);
+            if (cell[0] == rows-1 && cell[1] == cols-1) {
+                return count;
+            }
+            for (int[] direction: directions) {
+                int row = cell[0] + direction[0];
+                int col = cell[1] + direction[1];
+                int nextIdx = row*cols + col;
+                if (row >= 0 && row < rows && col >= 0 && col < cols && !seen.contains(nextIdx)) {
+                    minHeap.add(new int[]{row, col, grid[row][col]});
+                    seen.add(index);
+                }
+            }
+        }
+        return count;
     }
 
     private static class DisjointSet {

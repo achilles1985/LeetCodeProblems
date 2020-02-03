@@ -17,6 +17,9 @@ package unionfind;
  * Note: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0,1] is the
  * same as [1,0] and thus will not appear together in edges.
  */
+/*
+    Tree is valid if there is no cycles in a graph and it is connected.
+ */
 public class GraphValidTree_261 {
 
     public static void main(String[] args) {

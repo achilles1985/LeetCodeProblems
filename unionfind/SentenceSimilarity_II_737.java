@@ -73,10 +73,12 @@ public class SentenceSimilarity_II_737 {
 
     private static class DisjointSet {
         int[] parent;
+        int[] rank;
 
         DisjointSet(List<List<String>> pairs) {
             int size = 2 * pairs.size();
             parent = new int[size];
+            rank = new int[size];
             for (int i = 0; i < size; i++) {
                 parent[i] = i;
             }
@@ -92,7 +94,16 @@ public class SentenceSimilarity_II_737 {
         void union(int x, int y) {
             int p1 = find(x);
             int p2 = find(y);
-            parent[p2] = p1;
+            if (p1 != p2) {
+                if (rank[p1] > rank[p2]) {
+                    parent[p2] = p1;
+                } else if (rank[p1] < rank[p2]) {
+                    parent[p1] = p2;
+                } else {
+                    parent[p2] = p1;
+                    rank[p1]++;
+                }
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class FindAllPathFromTopLeftToBottomRight {
 
+    // O(2^(n+m)) - ?
     public List<List<Integer>> findAllPaths(int[][] grid) {
         List<List<Integer>> result = new ArrayList<>();
         dfs(grid, 0, 0, result, new ArrayList());
@@ -27,7 +28,7 @@ public class FindAllPathFromTopLeftToBottomRight {
         return result;
     }
 
-    public void dfs(int arr[][], int row, int col, List<List<Integer>> result, List path) {
+    private void dfs(int arr[][], int row, int col, List<List<Integer>> result, List path) {
         if (row < 0 || row > arr.length-1 || col < 0 || col > arr[0].length-1) {
             return;
         }

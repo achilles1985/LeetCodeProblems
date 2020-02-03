@@ -1,5 +1,7 @@
 package unionfind;
 
+import java.util.Random;
+
 /**H
  * Two strings X and Y are similar if we can swap two letters (in different positions) of X, so that it equals Y.
  * Also two strings X and Y are similar if they are equal.
@@ -29,6 +31,8 @@ package unionfind;
 public class SimilarStringGroups_839 {
 
     public static void main(String[] args) {
+        int n = 100000000 + new Random().nextInt(900000000);
+
         SimilarStringGroups_839 s = new SimilarStringGroups_839();
         System.out.println(s.numSimilarGroups(new String[]{"tars","rats","arts","star"})); //2
     }

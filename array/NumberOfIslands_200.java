@@ -61,7 +61,7 @@ public class NumberOfIslands_200 {
             return 0;
         }
         int count = 0;
-        boolean[][] visited = new boolean[chars.length][chars[0].length];
+        boolean[][] visited = new boolean[chars.length][chars[0].length]; // can be omitted if chars can be modified.
         for (int i = 0; i < chars.length; i++) {
             for (int j = 0; j < chars[0].length; j++) {
                 if (visited[i][j]) {

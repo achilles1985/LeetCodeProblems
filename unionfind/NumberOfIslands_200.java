@@ -22,6 +22,9 @@ package unionfind;
  * Output: 3
  */
 //https://leetcode.com/problems/number-of-islands/
+/*
+    Initially, let's treat each '1' as an island and create parent[m*n] and populate with index number only those cells that marked as '1'.
+*/
 public class NumberOfIslands_200 {
 
     public static void main(String[] args) {
