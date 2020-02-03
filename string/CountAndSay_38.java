@@ -24,34 +24,31 @@ public class CountAndSay_38 {
 
     public static void main(String[] args) {
         CountAndSay_38 s = new CountAndSay_38();
-        //System.out.println(s.countAndSay(1)); //1
-        //System.out.println(s.countAndSay(4)); //1211
-        System.out.println(s.countAndSay(22)); //1113213211
+        System.out.println(s.countAndSay2(1)); //1
+        System.out.println(s.countAndSay2(4)); //1211
+        System.out.println(s.countAndSay2(8)); //1113213211
     }
 
-    public String countAndSay(int n) {
-        String s = "1";
-        for (int i = 1; i < n; i++) {
-            s = nextSequence(s);
-            System.out.println(s);
+    public String countAndSay2(int n) {
+        if (n == 1) {
+            return "1";
         }
-
-        return s;
-    }
-
-    private String nextSequence(String s) {
+        String temp = "1";
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            int count = 1;
-            while (i+1 < s.length() && s.charAt(i) == s.charAt(i+1)) {
-                count++;
-                i++;
+        for (int i = 1; i < n; i++) {
+            int fast = 0;
+            int slow = 0;
+            sb = new StringBuilder();
+            while (fast < temp.length()) {
+                while (fast < temp.length() && temp.charAt(slow) == temp.charAt(fast)) {
+                    fast++;
+                }
+                sb.append(fast - slow).append(temp.charAt(slow));
+                slow = fast;
             }
-            sb.append(count);
-            sb.append(s.charAt(i));
-
+            temp = sb.toString();
         }
-
         return sb.toString();
     }
+
 }

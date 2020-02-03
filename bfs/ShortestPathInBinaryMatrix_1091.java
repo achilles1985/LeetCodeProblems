@@ -1,9 +1,6 @@
 package bfs;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /**M
  * In an N by N square grid, each cell is either empty (0) or blocked (1).
@@ -36,10 +33,7 @@ import java.util.Queue;
  *
  * Output: 4
  *
- *
- *
  * Note:
- *
  *     1 <= grid.length == grid[0].length <= 100
  *     grid[r][c] is 0 or 1
  */
@@ -47,33 +41,57 @@ public class ShortestPathInBinaryMatrix_1091 {
 
     public static void main(String[] args) {
         ShortestPathInBinaryMatrix_1091 s = new ShortestPathInBinaryMatrix_1091();
+        System.out.println(s.shortestPathBinaryMatrix(new int[][]{
+                {1,0,0},
+                {1,1,0},
+                {1,1,0}})); //-1
+        System.out.println(s.shortestPathBinaryMatrix(new int[][]{
+                {0,0,0},
+                {1,1,0},
+                {1,1,0}})); //4
+        System.out.println(s.shortestPathBinaryMatrix(new int[][]{
+                {0,1},
+                {1,0}})); //2
+        System.out.println(s.shortestPathBinaryMatrix(new int[][]{{0}})); //1
+
+        //[[1,0,0],[1,1,0],[1,1,0]]
     }
 
+    // O(n*m) - time, space
     public int shortestPathBinaryMatrix(int[][] grid) {
+        if (grid[0][0] != 0 || grid[grid.length-1][grid[0].length-1] != 0) {
+            return -1;
+        }
         int[][] directions = new int[][]{
                 {0,1},{1,1},{1,0},{1,-1},
                 {0,-1},{-1,-1},{-1,0},{-1,1}};
-        Map<String, String> childToParent = new HashMap<>();
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{0,0});
+        grid[0][0] = 1;
+        int count = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             while (size-- > 0) {
                 int[] cell = queue.poll();
                 int row = cell[0];
                 int col = cell[1];
+                    if (row == grid.length-1 && col == grid[0].length-1) {
+                        return count;
+                    }
                 for (int[] direction: directions) {
                     int nextRow = row + direction[0];
                     int nextCol = col + direction[1];
                     if (nextRow < 0 || nextRow >= grid.length || nextCol < 0 || nextCol >= grid[0].length || grid[nextRow][nextCol] != 0) {
                         continue;
                     }
-                    if (nextRow == grid.length-1 && nextCol == grid[0].length-1) {
-                        return
-                    }
+                    queue.add(new int[]{nextRow, nextCol});
+                    grid[nextRow][nextCol] = 1;
                 }
             }
+            count++;
         }
-        return 0;
+
+        return -1;
     }
+
 }

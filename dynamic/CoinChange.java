@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 /**
   You are given coins of different denominations and a total amount of money amount.
-  Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+  Write a function to compute the fewest number of coins that you need to make up that amount.
+ If that amount of money cannot be made up by any combination of the coins, return -1.
 
   Example 1:
   Input: coins = [1, 2, 5], amount = 11
@@ -68,9 +69,7 @@ public class CoinChange {
         for (int coin: coins) {
             if (amount - coin >= 0) {
                 int curMin = makeChange(coins, amount-coin);
-                if (curMin < min) {
-                    min = curMin;
-                }
+                min = Math.min(min, curMin);
             }
         }
         return min + 1;

@@ -45,7 +45,7 @@ public class RestoreIPAddresses_93 {
         return finalResult;
     }
 
-    public void dfs(ArrayList<ArrayList<String>> result, String s, int start, ArrayList<String> t){
+    private void dfs(ArrayList<ArrayList<String>> result, String s, int start, ArrayList<String> t){
         //if already get 4 numbers, but s is not consumed, return
         if(t.size()>=4 && start!=s.length()) {
             return;

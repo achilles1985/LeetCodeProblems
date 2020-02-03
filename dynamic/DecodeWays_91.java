@@ -27,7 +27,7 @@ public class DecodeWays_91 {
 
     public static void main(String[] args) {
         DecodeWays_91 s = new DecodeWays_91();
-        System.out.println(s.numDecodings2("12131")); //5
+        System.out.println(s.numDecodings3("12131")); //5
 
         System.out.println(s.numDecodings("0")); //0
         System.out.println(s.numDecodingsDynamicTopDown("0")); //0
@@ -41,28 +41,25 @@ public class DecodeWays_91 {
         System.out.println(s.numDecodingsDynamicTopDown("12131")); //5
     }
 
-    private int numDecodings2(String str) {
-        return numDecodingsHelper2(str, 0, str.length(), new AtomicInteger(0));
+    // O(2^n) - time, O(n) - space. Time can be improved with memoization.
+    public int numDecodings3(String s) {
+        return numDecodings3(s, 0);
     }
 
-    private int numDecodingsHelper2(String str, int i, int length, AtomicInteger counter) {
-        if (i == length) {
+    private int numDecodings3(String s, int decodePointer) {
+        if (decodePointer >= s.length()) {
             return 1;
         }
-
-        if (i + 1 <= length) {
-            String substr = str.substring(i, i + 1);
-            if (isValid(substr)) {
-                counter.getAndAdd(numDecodingsHelper2(str, i + 1, length, counter));
+        int count = 0;
+        for (int i = 1; i <= 2; i++) {
+            if (decodePointer + i <= s.length()) {
+                String snippet = s.substring(decodePointer, decodePointer + i);
+                if (isValid(snippet)) {
+                    count += numDecodings3(s, decodePointer + i);
+                }
             }
         }
-        if (i + 2 <= length) {
-            String substr = str.substring(i, i + 2);
-            if (isValid(substr)) {
-                counter.getAndAdd(numDecodingsHelper2(str, i + 2, length, counter));
-            }
-        }
-        return counter.get();
+        return count;
     }
 
     // O(2^n) - time, O(n) - space
