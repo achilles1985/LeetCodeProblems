@@ -26,7 +26,7 @@ public class KnightsTour {
             return true;
         }
 
-        if (!canMakeStep(i, j, tour)) {
+        if (i < 0 || i >= tour.length || j < 0 || j >= tour[0].length || tour[i][j] != 0) {
             return false;
         }
 
@@ -47,10 +47,4 @@ public class KnightsTour {
         return false;
     }
 
-    private boolean canMakeStep(int row, int col, int[][] tour) {
-        if (row < 0 || row > tour.length-1 || col < 0 || col > tour[0].length-1 || tour[row][col] != 0) {
-            return false;
-        }
-        return true;
-    }
 }

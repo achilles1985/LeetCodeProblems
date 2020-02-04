@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,19 +20,26 @@ public class ParseXml {
         String path = "utils/text.xml";
 
         Parser parser = new Parser();
-        String text = parser.parseXml(path);
-        Set<String> distinct = parser.getText(text);
+        String text = parser.getContent(path);
+        Set<String> distinct = parser.getDistinctWords(text);
+        System.out.println(distinct);
+
+        Set<String> s1 = new HashSet<>(Arrays.asList("a", "b", "c", "z"));
+        Set<String> s2 = new HashSet<>(Arrays.asList("a", "b", "n", "m"));
+        System.out.println(parser.calculateSimilarity(s1, s2));
     }
 
     private static final class Parser {
 
-        Set<String> getText(String text) throws IOException {
+        private Set<String> getDistinctWords(String text) throws IOException {
+            Set<String> stopWords = new HashSet<>(Arrays.asList("a", "the", "i", "am", "are"));
             return Arrays.stream(text.split("\\W+"))
                     .map(w -> w.toLowerCase())
+                    .filter(w -> !stopWords.contains(w))
                     .collect(Collectors.toSet());
         }
 
-        String parseXml(String path) throws IOException, SAXException, ParserConfigurationException {
+        private static String getContent(String path) throws IOException, SAXException, ParserConfigurationException {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(Paths.get(path).toFile());
@@ -40,6 +48,18 @@ public class ParseXml {
             NodeList body = document.getDocumentElement().getElementsByTagName("Body");
 
             return header.item(0).getTextContent() + body.item(0).getTextContent();
+        }
+
+        private double calculateSimilarity(Set<String> distinct1, Set<String> distinct2) {
+            long matches = 0;
+            for (String word: distinct1) {
+                if (distinct2.contains(word)) {
+                    matches++;
+                }
+            }
+            double totalDistinct = (distinct1.size() + distinct2.size()) - matches;
+
+            return totalDistinct == 0 ? 0 : matches/totalDistinct;
         }
     }
 
