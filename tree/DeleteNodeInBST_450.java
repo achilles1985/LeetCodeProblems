@@ -35,7 +35,8 @@ import utils.TreeNode;
  *     4   7
  */
 /*
- if element to be deleted has left and right subtrees, find next greater element in the right subtree, nextGreater.left = element.left, root.left = element.rightChild or root.right == element.leftChild
+ if element to be deleted has left and right subtrees, find next greater element in the right subtree,
+ nextGreater.left = element.left, root.left = element.rightChild or root.right == element.leftChild
  */
 public class DeleteNodeInBST_450 {
 

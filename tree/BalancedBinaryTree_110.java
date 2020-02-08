@@ -69,13 +69,13 @@ public class BalancedBinaryTree_110 {
             return new BalanceHolder(0, true);
         }
         BalanceHolder leftBalance = checkBalance(root.left);
-/*        if (!leftBalance.isBalanced) {
+        if (!leftBalance.isBalanced) {
             return leftBalance;
-        }*/
+        }
         BalanceHolder rightBalance = checkBalance(root.right);
-  /*      if(!rightBalance.isBalanced) {
+        if(!rightBalance.isBalanced) {
             return rightBalance;
-        }*/
+        }
         int height = Math.max(leftBalance.height, rightBalance.height) + 1;
         boolean isBalanced = Math.abs(leftBalance.height - rightBalance.height) <= 1;
 
