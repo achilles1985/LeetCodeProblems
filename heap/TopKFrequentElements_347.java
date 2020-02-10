@@ -1,5 +1,7 @@
 package heap;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,9 @@ public class TopKFrequentElements_347 {
         TopKFrequentElements_347 s = new TopKFrequentElements_347();
         System.out.println(s.topKFrequent(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
         System.out.println(s.topKFrequent(new int[] {1}, 1)); // [1]
+
+        System.out.println(s.topKFrequent2(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
+        System.out.println(s.topKFrequent2(new int[] {1}, 1)); // [1]
     }
 
     // O(n*log(k)) - time
@@ -51,5 +56,28 @@ public class TopKFrequentElements_347 {
         }
 
         return res;
+    }
+
+    // O(n) - time, space, n - array size. Bucket sort
+    public List<Integer> topKFrequent2(int[] nums, int k) {
+        Map<Integer, Integer> numberToFrequency = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            numberToFrequency.put(nums[i], numberToFrequency.getOrDefault(nums[i], 0) + 1);
+        }
+        List[] buckets = new List[nums.length + 1];
+        for (Integer number: numberToFrequency.keySet()) {
+            int frequency = numberToFrequency.get(number);
+            if (buckets[frequency] == null) {
+                buckets[frequency] = new ArrayList();
+            }
+            buckets[frequency].add(number);
+        }
+        List<Integer> result = new ArrayList<>();
+        for (int i = buckets.length - 1; i >= 0 && result.size() < k; i--) {
+            if (buckets[i] != null) {
+                result.addAll(buckets[i]);
+            }
+        }
+        return result;
     }
 }
