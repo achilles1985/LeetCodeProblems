@@ -24,16 +24,18 @@ public class CountAndSay_38 {
 
     public static void main(String[] args) {
         CountAndSay_38 s = new CountAndSay_38();
-        System.out.println(s.countAndSay2(1)); //1
-        System.out.println(s.countAndSay2(4)); //1211
-        System.out.println(s.countAndSay2(8)); //1113213211
+        //System.out.println(s.countAndSay2(1)); //1
+        //System.out.println(s.countAndSay2(4)); //1211
+        System.out.println(s.countAndSay2(10)); //1113213211
     }
 
+    // O(2^n) - time, space, since each step in worth case scenario we double the length of each entry.
     public String countAndSay2(int n) {
         if (n == 1) {
             return "1";
         }
         String temp = "1";
+        System.out.println(temp);
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < n; i++) {
             int fast = 0;
@@ -47,6 +49,7 @@ public class CountAndSay_38 {
                 slow = fast;
             }
             temp = sb.toString();
+            System.out.println(temp);
         }
         return sb.toString();
     }

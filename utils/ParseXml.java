@@ -26,6 +26,8 @@ public class ParseXml {
 
         Set<String> s1 = new HashSet<>(Arrays.asList("a", "b", "c", "z"));
         Set<String> s2 = new HashSet<>(Arrays.asList("a", "b", "n", "m"));
+        //Set<String> s1 = new HashSet<>(Arrays.asList(""));
+        //Set<String> s2 = new HashSet<>(Arrays.asList(""));
         System.out.println(parser.calculateSimilarity(s1, s2));
     }
 
@@ -59,7 +61,7 @@ public class ParseXml {
             }
             double totalDistinct = (distinct1.size() + distinct2.size()) - matches;
 
-            return totalDistinct == 0 ? 0 : matches/totalDistinct;
+            return matches/totalDistinct;
         }
     }
 
