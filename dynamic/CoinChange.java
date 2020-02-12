@@ -26,7 +26,7 @@ public class CoinChange {
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {2}, 3));
         System.out.println(s.makeChangeT(new int[] {2,5}, 3)); //-1
 
-        System.out.println(s.makeChange(new int[] {1,2,5}, 12));
+        System.out.println(s.makeChange(new int[] {1,2,5}, 8));
         System.out.println(s.makeChangeDynamicTopDown(new int[] {1,2,5}, 12));
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {1,2,5}, 12));
     }

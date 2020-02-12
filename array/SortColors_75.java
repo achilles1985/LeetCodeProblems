@@ -45,7 +45,7 @@ public class SortColors_75 {
         SolutionUtils.print(nums);
     }
 
-    // O(n) - time, O(1) - space
+    // O(n) - time, O(1) - space (similar to Bucket sort)
     public void sortColors(int[] nums) {
         if (nums == null || nums.length == 0) {
             return;

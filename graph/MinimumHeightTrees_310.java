@@ -48,10 +48,10 @@ public class MinimumHeightTrees_310 {
 
     public static void main(String[] args) {
         MinimumHeightTrees_310 s = new MinimumHeightTrees_310();
+        System.out.println(s.findMinHeightTrees(6, new int[][]{{0,3},{1,3},{2,3},{4,3},{5,4}})); //[3, 4]
         System.out.println(s.findMinHeightTrees(4, new int[][]{{1,0},{1,2},{1,3}})); //[1]
         System.out.println(s.findMinHeightTrees(11, new int[][]{{0,1},{0,2},{2,3},{0,4},{2,5},{5,6},{3,7},{6,8},{8,9},{9,10}})); //[5, 6]
         System.out.println(s.findMinHeightTrees(2, new int[][]{})); //[0,1]
-        System.out.println(s.findMinHeightTrees(6, new int[][]{{0,3},{1,3},{2,3},{4,3},{5,4}})); //[3, 4]
     }
 
     // O(n) - time, space

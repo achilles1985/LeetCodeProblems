@@ -1,99 +1,114 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
-/** M
- * There is a new alien language which uses the latin alphabet.
- However, the order among letters are unknown to you. You receive a
- list of words from the dictionary, where words are sorted lexicographically
- by the rules of this new language. Derive the order of letters in this language.
- For example,
- Given the following words in dictionary,
- [
- "wrt",
- "wrf",
- "er",
- "ett",
- "rftt"
- ]
- The correct order is: "wertf".
- Note:
- You may assume all letters are in lowercase.
- If the order is invalid, return an empty string.
- There may be multiple valid order of letters, return any one of them is fine.
+/**
+ * H
+ * There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you.
+ * You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules
+ * of this new language. Derive the order of letters in this language.
+ * <p>
+ * Example 1:
+ * Input:
+ * [
+ * "wrt",
+ * "wrf",
+ * "er",
+ * "ett",
+ * "rftt"
+ * ]
+ * Output: "wertf"
+ * <p>
+ * Example 2:
+ * Input:
+ * [
+ * "z",
+ * "x"
+ * ]
+ * Output: "zx"
+ * <p>
+ * Example 3:
+ * Input:
+ * [
+ * "z",
+ * "x",
+ * "z"
+ * ]
+ * Output: ""
+ * Explanation: The order is invalid, so return "".
+ * <p>
+ * Note:
+ * You may assume all letters are in lowercase.
+ * You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+ * If the order is invalid, return an empty string.
+ * There may be multiple valid order of letters, return any one of them is fine.
  */
 public class AlienDictionary_269 {
 
     public static void main(String[] args) {
         AlienDictionary_269 s = new AlienDictionary_269();
-        System.out.println(s.alienOrder(new String[] {"wrt", "wrf", "er", "ett", "rftt"}, 5)); // "wertf"
+        System.out.println(s.alienOrder(new String[]{"wrt", "wrf", "er", "ett", "rftt", "te"})); // "wertf"
+        System.out.println(s.alienOrder(new String[]{"za", "zb", "ca", "cb"})); // "abzc"
+        System.out.println(s.alienOrder(new String[]{"wrt", "wrf", "er", "ett", "rftt"})); // "wertf"
+        System.out.println(s.alienOrder(new String[]{"zy", "zx"})); // "yxz"
+        System.out.println(s.alienOrder(new String[]{"abc", "abc"})); // "abc"
+        System.out.println(s.alienOrder(new String[]{"z", "x"})); // "zx"
+        System.out.println(s.alienOrder(new String[]{"z", "x", "z"})); // ""
     }
 
-    // O(n*m) - time, n - number of characters, m - number of words O(n) - space
-    public String alienOrder(String[] words, int nuumberOfLetters) {
-        // create a graph
-        List<char[]> edges = new ArrayList<>();
-        for (int i = 1; i < nuumberOfLetters; i++) {
-            String w1 = words[i-1];
-            String w2 = words[i];
-            for (int j = 0; j < Math.min(w1.length(), w2.length()); j++) {
-                if (w1.charAt(j) != w2.charAt(j)) {
-                    edges.add(new char[] {w1.charAt(j), w2.charAt(j)});
+    // O(n*m) - time, O(n) - space, n - number of words, m - word length
+    public String alienOrder(String[] words) {
+        Map<Character, Set<Character>> graph = new HashMap<>();
+        for (String word: words) {
+            for (Character c: word.toCharArray()) {
+                graph.putIfAbsent(c, new HashSet<>());
+            }
+        }
+        int[] indegree = new int[26];
+        for (int i = 1; i < words.length; i++) {
+            String left = words[i - 1];
+            String right = words[i];
+            for (int j = 0; j < Math.min(left.length(), right.length()); j++) {
+                char from = left.charAt(j);
+                char to = right.charAt(j);
+                if (from != to) {
+                    if (!graph.get(from).contains(to)) {
+                        graph.computeIfAbsent(from, key -> graph.getOrDefault(key, new HashSet<>())).add(to);
+                        indegree[to - 'a']++;
+                    }
+                    break;
                 }
             }
         }
+        String res = topologicalSort(graph, indegree);
 
-        List<Character> sorted = topologicalSort(edges);
-        StringBuilder builder = new StringBuilder();
-        for (Character c: sorted) {
-            builder.append(c);
-        }
-
-        return builder.toString();
+        return res.length() != graph.size() ? "" : res;
     }
 
-    private List<Character> topologicalSort(List<char[]> edges) {
-        Map<Character, List<Character>> graph = new HashMap<>();
-        for (char[] edge: edges) {
-            char v1 = edge[0];
-            char v2 = edge[1];
-            graph.computeIfAbsent(v1, k -> new ArrayList<>()).add(v2);
-        }
-
-        Set<Character> visited = new HashSet<>();
-        Deque<Character> stack = new LinkedList<>();
-        for (Character node: graph.keySet()) {
-            if (visited.contains(node)) {
-                continue;
+    private String topologicalSort(Map<Character, Set<Character>> graph, int[] inDegree) {
+        Queue<Character> queue = new LinkedList<>();
+        for (char c : graph.keySet()) {
+            if (inDegree[c - 'a'] == 0) {
+                queue.offer(c);
             }
-
-            topologicaSortUtils(visited, node, stack, graph);
         }
 
-        List<Character> res = new ArrayList<>();
-        while (!stack.isEmpty()) {
-            res.add(stack.poll());
-        }
-        return res;
-    }
-
-    private void topologicaSortUtils(Set<Character> visited, Character node, Deque<Character> stack, Map<Character, List<Character>> graph) {
-        visited.add(node);
-        if (graph.containsKey(node)) {
-            for (Character child : graph.get(node)) {
-                if (!visited.contains(child)) {
-                    topologicaSortUtils(visited, child, stack, graph);
+        StringBuilder sb = new StringBuilder();
+        while (!queue.isEmpty()) {
+            char c = queue.poll();
+            sb.append(c);
+            for (char neighbor : graph.get(c)) {
+                inDegree[neighbor - 'a']--;
+                if (inDegree[neighbor - 'a'] == 0) {
+                    queue.offer(neighbor);
                 }
             }
         }
-
-        stack.push(node);
+        return sb.toString();
     }
 }
