@@ -1,6 +1,8 @@
 package graph;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**H
@@ -34,45 +36,32 @@ public class StringTransformsIntoAnotherString_1153 {
         System.out.println(s.canConvert("leetcode", "codeleet")); // false
     }
 
+    //O(n) - time, space
     public boolean canConvert(String str1, String str2) {
-        int[] groups = new int[26];
-        markGroups(str1, groups);
-        unmarkGroups(str2, groups);
-        for (int i = 0; i < groups.length; i++) {
-            if (groups[i] != 0) {
+        if (str1.equals(str2)) {
+            return true;
+        }
+        if (getFrequency(str2) >= 26) {
+            return false;
+        }
+
+        Map<Character, Character> map = new HashMap<>();
+        for (int i = str1.length() - 1; i >= 0; i--) {
+            char c1 = str1.charAt(i);
+            char c2 = str2.charAt(i);
+            if (map.containsKey(c1) && map.get(c1) != c2) {
                 return false;
             }
+            map.put(c1, c2);
         }
         return true;
     }
 
-    private void markGroups(String str, int[] groups) {
-        Set<Character> visited = new HashSet<>();
-        for (int i = 0; i < str.length(); i++) {
-            char letter = str.charAt(i);
-            if (!visited.contains(letter)) {
-                for (int j = i; j < str.length(); j++) {
-                    if (str.charAt(j) == letter) {
-                        groups[i]++;
-                    }
-                }
-                visited.add(letter);
-            }
+    private int getFrequency(String str) {
+        Set<Character> distinct = new HashSet<>();
+        for (final char c : str.toCharArray()) {
+            distinct.add(c);
         }
-    }
-
-    private void unmarkGroups(String str, int[] groups) {
-        Set<Character> visited = new HashSet<>();
-        for (int i = 0; i < str.length(); i++) {
-            char letter = str.charAt(i);
-            if (!visited.contains(letter)) {
-                for (int j = i; j < str.length(); j++) {
-                    if (str.charAt(j) == letter) {
-                        groups[i]--;
-                    }
-                }
-                visited.add(letter);
-            }
-        }
+        return distinct.size();
     }
 }
