@@ -2,7 +2,8 @@ package sorting;
 
 import utils.SolutionUtils;
 
-// Useful when
+// https://www.programiz.com/dsa/counting-sort
+// Assumes: input consist of integer os smaller range
 public class CountingSort {
 
     public static void main(String[] args) {
