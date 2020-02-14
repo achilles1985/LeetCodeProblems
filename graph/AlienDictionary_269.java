@@ -61,7 +61,7 @@ public class AlienDictionary_269 {
         System.out.println(s.alienOrder(new String[]{"z", "x", "z"})); // ""
     }
 
-    // O(n*m) - time, O(n) - space, n - number of words, m - word length
+    // O(n) - time, O(n) - space, n - total number of letters in the words
     public String alienOrder(String[] words) {
         Map<Character, Set<Character>> graph = new HashMap<>();
         for (String word: words) {

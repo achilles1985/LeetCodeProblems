@@ -1,7 +1,9 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**M
  Given an N x N grid containing only values 0 and 1, where 0 represents water and 1 represents land, find a water cell such that its distance to the nearest land cell is maximized and return the distance.
@@ -20,15 +22,24 @@ import java.util.List;
  Explanation:
  The cell (2, 2) is as far as possible from all the land with distance 4.
  */
+/*
+    Tips: For BFS solution, spread from all the lands at the same time.
+ */
 public class AsFarFromLandAsPossible_1162 {
 
     public static void main(String[] args) {
         AsFarFromLandAsPossible_1162 s = new AsFarFromLandAsPossible_1162();
-        System.out.println(s.maxDistance2(new int[][]{
+        System.out.println(s.maxDistance3(new int[][]{
+                {1,0,0,0,1},
+                {0,0,0,0,0},
+                {0,0,1,0,1},
+                {0,0,0,0,0},
+                {1,0,0,0,1}})); //2
+        System.out.println(s.maxDistance3(new int[][]{
                 {1,0,1},
                 {0,0,0},
-                {1,0,1}})); //2
-        System.out.println(s.maxDistance2(new int[][]{
+                {1,0,0}})); //2
+        System.out.println(s.maxDistance3(new int[][]{
                 {1,0,0},
                 {0,0,0},
                 {0,0,0}})); //4
@@ -107,6 +118,39 @@ public class AsFarFromLandAsPossible_1162 {
         }
 
         return res == 201 ? -1 : res - 1;
+    }
+
+    // O(n*m) - time, space. Do BFS from all the lands at the same time.
+    public int maxDistance3(int[][] grid) {
+        int[][] directions = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    queue.add(new int[]{i,j});
+                }
+            }
+        }
+        int level = -1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int[] cell = queue.poll();
+                int x = cell[0];
+                int y = cell[1];
+                for (int[] direction: directions) {
+                    int nextX = x + direction[0];
+                    int nextY = y + direction[1];
+                    if (nextX >=0 && nextX < grid.length && nextY >= 0 & nextY < grid[0].length && !visited[nextX][nextY] && grid[nextX][nextY] == 0) {
+                        queue.add(new int[]{nextX, nextY});
+                        visited[x][y] = true;
+                    }
+                }
+            }
+            level++;
+        }
+        return level <= 0 ? -1 : level;
     }
 
     private static class Coordinate {

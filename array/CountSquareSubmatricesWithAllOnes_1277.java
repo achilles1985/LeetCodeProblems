@@ -44,18 +44,37 @@ public class CountSquareSubmatricesWithAllOnes_1277 {
 
     public static void main(String[] args) {
         CountSquareSubmatricesWithAllOnes_1277 s = new CountSquareSubmatricesWithAllOnes_1277();
-        System.out.println(s.countSquares(new int[][]{
-                {1,0,1},
-                {1,1,0},
-                {1,1,0}
-        }));
-        System.out.println(s.countSquares(new int[][]{
+        System.out.println(s.countSquares2(new int[][]{
                 {0,1,1,1},
                 {1,1,1,1},
                 {0,1,1,1}
-        }));
+        })); //15
+        System.out.println(s.countSquares2(new int[][]{
+                {1,0,1},
+                {1,1,0},
+                {1,1,0}
+        })); //7
     }
 
+    // O(n*m) - time, O(1) - space, with existing matrix modification
+    public int countSquares2(int[][] matrix) {
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                if (matrix[i][j] != 0) {
+                    matrix[i][j] = Math.min(Math.min(matrix[i][j-1], matrix[i-1][j]), matrix[i-1][j-1]) + 1;
+                }
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                count += matrix[i][j];
+            }
+        }
+        return count;
+    }
+
+    // O(n*m) - time, space, no matrix modification
     public int countSquares(int[][] matrix) {
         int[][] dp = new int[matrix.length][matrix[0].length];
         int sum = 0;
