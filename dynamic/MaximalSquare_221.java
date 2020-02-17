@@ -43,6 +43,7 @@ public class MaximalSquare_221 {
                 {'1', '0', '0', '1', '0'}})); //4
     }
 
+    // O(m*n)^2 - time,
     public int maximalSquareBruteForce(char[][] matrix) {
         int max = 0;
         for (int i = 1; i < matrix.length; i++) {

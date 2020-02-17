@@ -1,5 +1,7 @@
 package unionfind;
 
+import java.util.Arrays;
+
 /**
  * Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water
  * and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid
@@ -91,6 +93,7 @@ public class NumberOfIslands_200 {
             int cols = grid[0].length;
             parent = new int[rows*cols];
             rank = new int[rows*cols];
+            Arrays.fill(parent, -1);
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid[0].length; j++) {
                     if (grid[i][j] == '1') {
