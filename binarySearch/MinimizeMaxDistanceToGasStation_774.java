@@ -1,5 +1,9 @@
 package binarySearch;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /** H
  On a horizontal number line, we have gas stations at positions stations[0], stations[1], ..., stations[N-1], where N = stations.length.
  Now, we add K more gas stations so that D, the maximum distance between adjacent gas stations, is minimized.
@@ -27,6 +31,19 @@ public class MinimizeMaxDistanceToGasStation_774 {
         MinimizeMaxDistanceToGasStation_774 s = new MinimizeMaxDistanceToGasStation_774();
         System.out.println(s.minmaxGasDist(new int[]{1,2,3,4,5,6,7,8,9,10}, 9)); // 0.50
         System.out.println(s.minmaxGasDist(new int[]{3,6,12,19,33,44,67,72,89,95}, 2)); // 14.00
+    }
+
+    // Create max heap of distances, take max distance and insert a new station by dividing the distance by halve. O(n*log(k)) - time, O(n) - space
+    public double minmaxGasDist2(int[] stations, int K) {
+        Queue<Double> maxHeap = new PriorityQueue<>((a,b) -> (double)b < (double)a ? -1 : 1);
+        for (int i = 1; i < stations.length; i++) {
+            maxHeap.add((double)stations[i] - stations[i-1]);
+        }
+        for (int i = 0; i < K; i++) {
+            double polled = maxHeap.poll();
+            maxHeap.add(polled/2);
+        }
+        return maxHeap.poll();
     }
 
     // O(n*log(n[n.length-1]-n[0])) - time, O(1) - space
