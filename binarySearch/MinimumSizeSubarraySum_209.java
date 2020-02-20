@@ -16,8 +16,8 @@ public class MinimumSizeSubarraySum_209 {
 
     public static void main(String[] args) {
         MinimumSizeSubarraySum_209 s = new MinimumSizeSubarraySum_209();
-        System.out.println(s.minSubArrayLen(7, new int[]{2,3,1,2,4,3})); //2
-        System.out.println(s.minSubArrayLen1(4, new int[]{1,4,4})); //1
+        System.out.println(s.minSubArrayLen2(7, new int[]{2,3,1,2,4,3})); //2
+        System.out.println(s.minSubArrayLen2(4, new int[]{1,4,4})); //1
         System.out.println(s.minSubArrayLen2(11, new int[]{1,2,3,4,5})); //3
     }
 
@@ -55,8 +55,34 @@ public class MinimumSizeSubarraySum_209 {
         return min == nums.length+1 ? 0 : min;
     }
 
-    // O(n) - time, O(1) - space
+    // O(n*log(n)) - time, O(n) - space
     public int minSubArrayLen2(int s, int[] nums) {
+        int[] sum = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            sum[i] = i == 0 ? nums[i] : sum[i-1] + nums[i];
+        }
+        int min = nums.length + 1;
+        for (int i = 0; i < nums.length; i++) {
+            int lo = i;
+            int hi = nums.length-1;
+            while (lo <= hi) {
+                int mid = (lo + hi)/2;
+                if (sum[mid] - sum[i] + nums[i] == s) {
+                    lo = mid;
+                    break;
+                } else if (sum[mid] - sum[i] + nums[i] < s) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+            min = Math.min(min, lo - i + 1);
+        }
+        return min == nums.length + 1 ? 0 : min;
+    }
+
+    // O(n) - time, O(1) - space
+    public int minSubArrayLen3(int s, int[] nums) {
         int sum = 0;
         int j = 0; int min = nums.length+1;
         for (int i = 0; i < nums.length; i++) {

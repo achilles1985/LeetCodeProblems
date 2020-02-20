@@ -17,10 +17,28 @@ package binarySearch;
 public class MaxSumOfRectangleNoLargerThanK_363 {
 
     public static void main(String[] args) {
-
+        MaxSumOfRectangleNoLargerThanK_363 s = new MaxSumOfRectangleNoLargerThanK_363();
+        System.out.println(s.maxSumSubmatrix(new int[][]{
+                {1,0,-1},
+                {0,-1,3}
+        }, 2));
     }
 
     public int maxSumSubmatrix(int[][] matrix, int k) {
-        return 0;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < rows; i++) {
+            for (int j = i; j < cols; j++) {
+                int sum = 0;
+                for (int l = j; l < rows; l++) {
+                    for (int m = l; m < cols; m++) {
+                        sum += matrix[l][m];
+                        max = Math.max(max, sum);
+                    }
+                }
+            }
+        }
+        return max;
     }
 }
