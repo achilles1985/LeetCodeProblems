@@ -57,28 +57,41 @@ public class MinimumSizeSubarraySum_209 {
 
     // O(n*log(n)) - time, O(n) - space
     public int minSubArrayLen2(int s, int[] nums) {
-        int[] sum = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            sum[i] = i == 0 ? nums[i] : sum[i-1] + nums[i];
+        if (nums.length == 0) {
+            return 0;
         }
-        int min = nums.length + 1;
+
+        int[] sums = new int[nums.length];
+        sums[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            sums[i] = sums[i - 1] + nums[i];
+        }
+        if (sums[nums.length - 1] < s) {
+            return 0;
+        }
+
+        int ans = Integer.MAX_VALUE;
         for (int i = 0; i < nums.length; i++) {
-            int lo = i;
-            int hi = nums.length-1;
-            while (lo <= hi) {
-                int mid = (lo + hi)/2;
-                if (sum[mid] - sum[i] + nums[i] == s) {
-                    lo = mid;
+            int l = i;
+            int r = nums.length - 1;
+            while (l <= r) {
+                int mid = l + (r - l)/2;
+                if (sums[mid] - sums[i] + nums[i] == s) {
+                    l = mid;
                     break;
-                } else if (sum[mid] - sum[i] + nums[i] < s) {
-                    lo = mid + 1;
+                } else if (sums[mid] - sums[i] + nums[i] < s) {
+                    l = mid + 1;
                 } else {
-                    hi = mid - 1;
+                    r = mid - 1;
                 }
             }
-            min = Math.min(min, lo - i + 1);
+            if (l >= sums.length) {
+                break;
+            }
+            ans = Math.min(ans, l - i + 1);
         }
-        return min == nums.length + 1 ? 0 : min;
+
+        return (ans == Integer.MAX_VALUE ? 0 : ans);
     }
 
     // O(n) - time, O(1) - space
