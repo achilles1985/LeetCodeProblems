@@ -33,7 +33,8 @@ import java.util.Map;
  */
 /*
 Hint:
-    Consider the graphs where each pair in "pairs" is an edge. Two words are similar if they are the same, or are in the same connected component of this graph.
+    Consider the graphs where each pair in "pairs" is an edge.
+    Two words are similar if they are the same, or are in the same connected component of this graph.
  */
 public class SentenceSimilarity_II_737 {
 

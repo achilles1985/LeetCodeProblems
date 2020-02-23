@@ -1,4 +1,4 @@
-package binarySearch;
+package array;
 
 // https://leetcode.com/problems/find-the-duplicate-number/
 
@@ -27,7 +27,7 @@ public class FindTheDuplicateNumber_287 {
     public static void main(String[] args) {
         FindTheDuplicateNumber_287 s = new FindTheDuplicateNumber_287();
         System.out.println(s.findDuplicate3(new int[] {1,3,4,2,2})); //2
-        //System.out.println(s.findDuplicate2(new int[] {3,1,3,4,2})); //3
+        System.out.println(s.findDuplicate2(new int[] {3,1,3,4,2})); //3
         System.out.println(s.findDuplicate2(new int[] {2,5,9,6,9,3,8,9,7,1})); //9
     }
 

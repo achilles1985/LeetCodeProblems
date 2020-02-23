@@ -1,7 +1,8 @@
 package binarySearch;
 
 /** H
- Given an array which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
+ Given an array which consists of non-negative integers and an integer m, you can split the array
+ into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
 
  Note:
  If n is the length of array, assume the following constraints are satisfied:
@@ -24,12 +25,38 @@ public class SplitArrayLargestSum_410 {
 
     public static void main(String[] args) {
         SplitArrayLargestSum_410 s = new SplitArrayLargestSum_410();
-        System.out.println(s.splitArray(new int[]{7,2,5,10,8}, 2)); // 18
+        System.out.println(s.splitArray(new int[]{7,2,5,4,3,1}, 4)); // 14
+        System.out.println(s.splitArray(new int[]{7,2,5,10,8}, 3)); // 14
         System.out.println(s.splitArray(new int[]{1,2147483647}, 2)); // 2147483647
     }
 
-    // O(n*log(sum(n)-max(n))) - time, O(1) - space
+    // O(n^m) - time, O(n) - space
     public int splitArray(int[] nums, int m) {
+        int n = nums.length;
+        int[] presum = new int[n+1];
+
+        for (int i = 1; i <= n; i++) {
+            presum[i] += nums[i-1] + presum[i-1];
+        }
+        return dfs(0, m, nums, presum);
+    }
+
+    private int dfs(int start, int m, int[] nums, int[] presum) {
+        if (m == 1) {
+            return presum[nums.length] - presum[start];
+        }
+        int maxSum = Integer.MAX_VALUE;
+        for (int i = start; i < nums.length-1; i++) {
+            int l = presum[i+1] - presum[start];
+            int rightIntervalMax = dfs(i+1, m-1, nums, presum);
+            maxSum = Math.min(maxSum, Math.max(l, rightIntervalMax));
+        }
+
+        return maxSum;
+    }
+
+    // O(n*log(sum(n)-max(n))) - time, O(1) - space
+    public int splitArray2(int[] nums, int m) {
         int left = 0;
         int right = 0;
         for (int num: nums) {

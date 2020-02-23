@@ -14,6 +14,9 @@ import org.omg.CORBA.INTERNAL;
 /**
  * Find top k root brands with the most number of products
  */
+/*
+Brand(id, parentId, products)
+ */
 public class CountBrands {
 
     public static void main(String[] args) {
@@ -24,7 +27,7 @@ public class CountBrands {
                         new Integer[]{2,1,4},
                         new Integer[]{3,null,3},
                         new Integer[]{4,null,3},
-                        new Integer[]{5,4,2}}, 2));
+                        new Integer[]{5,4,2}}, 2)); //[Brand{id=4, parentId=null, count=5}, Brand{id=0, parentId=null, count=13}]
     }
 
     // O(n*log(k)) - time, O(n) - space, n - number of brands
@@ -95,12 +98,12 @@ public class CountBrands {
                 return false;
             }
             Brand brand = (Brand) o;
-            return id == brand.id && parentId == brand.parentId;
+            return id == brand.id;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, parentId);
+            return Objects.hash(id);
         }
 
         @Override
@@ -117,7 +120,7 @@ public class CountBrands {
         int[] parent;
 
         public DisjointSet(int size) {
-            parent = new int[size*2];
+            parent = new int[size*2]; // size*2 in case all parentIds are unique. Probably just size would be fine.
             for (int i = 0; i < size; i++) {
                 parent[i] = i;
             }

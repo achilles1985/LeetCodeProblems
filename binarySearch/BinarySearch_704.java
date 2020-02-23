@@ -23,12 +23,13 @@ public class BinarySearch_704 {
 
     public static void main(String[] args) {
         BinarySearch_704 s = new BinarySearch_704();
-        System.out.println(s.search(new int[] {-1,0,3,5,9,12}, 9)); // 4
+        //System.out.println(s.search2(new int[] {-1,0,3,5,9,12}, 9)); // 4
         System.out.println(s.search(new int[] {-1,0,3,5,9,12}, 2)); // -1
         System.out.println(s.search(new int[] {5}, 5)); // 0
         System.out.println(s.search(new int[] {2,5}, 5)); // 1
     }
 
+    // Template 1
     // O(log(n)) - time, O(1) - space
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
@@ -53,4 +54,5 @@ public class BinarySearch_704 {
 
         return -1;
     }
+
 }
