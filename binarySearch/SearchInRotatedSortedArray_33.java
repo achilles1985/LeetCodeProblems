@@ -23,26 +23,35 @@ import java.util.Arrays;
  * Output: -1
  *
  */
+/*
+    Pay attention! Difficult question!
+ */
 public class SearchInRotatedSortedArray_33 {
 
     public static void main(String[] args) {
         SearchInRotatedSortedArray_33 s = new SearchInRotatedSortedArray_33();
+        System.out.println(s.search(new int[]{5,1,3}, 3)); //2
+        System.out.println(s.search(new int[]{3,1}, 1)); //1
         System.out.println(s.search(new int[]{1,3}, 1)); //0
         System.out.println(s.search(new int[]{1}, 1)); //0
         System.out.println(s.search(new int[]{4,5,6,7,0,1,2}, 0)); //4
         System.out.println(s.search(new int[]{4,5,6,7,0,1,2}, 3)); //-1
     }
 
+    // O(log(n)) - time, O(1) - space
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        if (nums[nums.length-1] > nums[0]) {
+        int pivot = findPivot(nums);
+        if (nums[pivot] == target) {
+            return pivot;
+        }
+        if (pivot == 0) {
             int res2 = Arrays.binarySearch(nums, target);
             return res2 < 0 ? -1 : res2;
         }
-        int pivot = findPivot(nums);
-        if (target < nums[nums.length-1]) {
+        if (target <= nums[nums.length-1]) {
             int res2 = Arrays.binarySearch(nums, pivot, nums.length, target);
             return res2 < 0 ? -1 : res2;
         } else {

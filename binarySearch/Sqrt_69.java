@@ -15,34 +15,54 @@ package binarySearch;
  Explanation: The square root of 8 is 2.82842..., and since
  the decimal part is truncated, 2 is returned.
  */
-public class Sqrt {
+public class Sqrt_69 {
 
     // We return the largest integer whose square is less than or equal to the given integer, e.g. sqr(21) = 4^2<sqr(21)<5^2, so we return 4.
     public static void main(String[] args) {
-        Sqrt s = new Sqrt();
-        System.out.println(s.mySqrt2(4)); //2
-        System.out.println(s.mySqrt2(8)); //2
-        System.out.println(s.mySqrt2(21)); //4
+        Sqrt_69 s = new Sqrt_69();
+        System.out.println(s.mySqrt(4)); //2
+        System.out.println(s.mySqrt(8)); //2
+        System.out.println(s.mySqrt(21)); //4
     }
 
     // O(log(x)) - time, O(1) - space
     public int mySqrt(int x) {
+        if (x == 0 || x == 1) {
+            return x;
+        }
         long low = 0;
-        long high = x;
+        long high = x/2;
         while (low <= high) {
             long mid = low + (high-low)/2;
             long res = mid*mid;
-            if (res <= x) {
+            if (res < x) {
                 low = mid+1;
-            } else {
+            } else if (res > x) {
                 high = mid-1;
+            } else {
+                return (int) mid;
             }
         }
 
-        return (int)low-1;
+        return (int)high;
     }
 
+    // O(log(n)) - time, O(1) - space. Newton's method
     public int mySqrt2(int x) {
+        if (x < 2) {
+            return x;
+        }
+        double x0 = x;
+        double x1 = (x0 + x / x0) / 2.0;
+        while (Math.abs(x0 - x1) >= 1) {
+            x0 = x1;
+            x1 = (x0 + x / x0) / 2.0;
+        }
+
+        return (int)x1;
+    }
+
+    public int mySqrt3(int x) {
         if (x == 0 || x == 1) {
             return x;
         }

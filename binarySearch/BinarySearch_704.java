@@ -23,7 +23,7 @@ public class BinarySearch_704 {
 
     public static void main(String[] args) {
         BinarySearch_704 s = new BinarySearch_704();
-        //System.out.println(s.search2(new int[] {-1,0,3,5,9,12}, 9)); // 4
+        System.out.println(s.search(new int[] {-1,0,3,5,9,12}, -2)); // 4
         System.out.println(s.search(new int[] {-1,0,3,5,9,12}, 2)); // -1
         System.out.println(s.search(new int[] {5}, 5)); // 0
         System.out.println(s.search(new int[] {2,5}, 5)); // 1
@@ -35,9 +35,6 @@ public class BinarySearch_704 {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        if (nums.length == 1) {
-            return nums[0] == target ? 0 : -1;
-        }
         int left = 0;
         int right = nums.length-1;
         while (left <= right) {
@@ -46,9 +43,9 @@ public class BinarySearch_704 {
                 return mid;
             }
             if (nums[mid] > target) {
-                right = mid;
+                right = mid - 1;
             } else {
-                left = mid;
+                left = mid + 1;
             }
         }
 
