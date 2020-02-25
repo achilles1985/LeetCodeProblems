@@ -1,9 +1,12 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /*
     1. private inner class is not visible from other classes except outer one. If inner class is public, class's private methods are not visible from other classes, except outer one.
@@ -28,5 +31,10 @@ public class UsefulJava {
             map2.putIfAbsent(words[i], words[i]+i); // If value for given key exists, return it, otherwise return newly inserted value (words[i]+i)
         }
         System.out.println(map2);
+
+        //////// Iterators /////////////
+        int[][] matrix = new int[][]{{1,2},{3},{4,5}};
+        Iterator<int[]> outerIterator = Arrays.stream(matrix).iterator();
+        Iterator<Integer> innerIterator = IntStream.of(matrix[0]).boxed().iterator();
     }
 }

@@ -1,11 +1,13 @@
-package stack;
+package design;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 import utils.TreeNode;
 
 // https://leetcode.com/problems/binary-search-tree-iterator/
+
 /** M
  Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
  Calling next() will return the next smallest number in the BST.
@@ -30,34 +32,34 @@ import utils.TreeNode;
  next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
  You may assume that next() call will always be valid, that is, there will be at least a next smallest number in the BST when next() is called.
  */
-public class BSTIterator {
-    private Queue<Integer> queue;
+public class BSTIterator2 {
+    private Stack<TreeNode> stack;
 
-    public BSTIterator(TreeNode root) {
-        queue = new LinkedList<>();
-        populate(queue, root);
+    public BSTIterator2(TreeNode root) {
+        stack = new Stack<>();
+        populate(root);
     }
 
-    // O(n) - time, space
-    private void populate(Queue<Integer> queue, TreeNode root) {
-        if (root == null) {
-            return;
+    // O(h) - time, space
+    private void populate(TreeNode root) {
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
         }
-        populate(queue, root.left);
-        queue.offer(root.val);
-        populate(queue, root.right);
     }
 
-    /** @return the next smallest number */
-    // O(1) - time
+    // O(1) - time, space
     public int next() {
-        return queue.poll();
+        TreeNode curr = stack.pop();
+        if (curr.right != null) {
+            populate(curr.right);
+        }
+        return curr.val;
     }
 
     /** @return whether we have a next smallest number */
-    // O(1) - time
     public boolean hasNext() {
-        return !queue.isEmpty();
+        return stack.size() > 0;
     }
 
     public static void main(String[] args) {
@@ -67,7 +69,7 @@ public class BSTIterator {
         root.right.left = new TreeNode(9);
         root.right.right = new TreeNode(20);
 
-        BSTIterator iterator = new BSTIterator(root);
+        BSTIterator2 iterator = new BSTIterator2(root);
         System.out.println(iterator.next());    // return 3
         System.out.println(iterator.next());    // return 7
         System.out.println(iterator.hasNext()); // return true
