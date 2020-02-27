@@ -1,7 +1,5 @@
 package algorithmstechniqes;
 
-import bitManipulation.MajorityElement_169.Solution;
-
 /**
  *  Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
  You may assume that the array is non-empty and the majority element always exist in the array.
@@ -16,7 +14,7 @@ import bitManipulation.MajorityElement_169.Solution;
 public class BoyerMooreVotingAlgorithm {
 
     public static void main(String[] args) {
-        Solution s = new Solution();
+        BoyerMooreVotingAlgorithm s = new BoyerMooreVotingAlgorithm();
         System.out.println(s.majorityElement(new int[] {3,2,3})); // 3
         System.out.println(s.majorityElement(new int[] {2,2,1,1,1,2,2})); // 2
     }

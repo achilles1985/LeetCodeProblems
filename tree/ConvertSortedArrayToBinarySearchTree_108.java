@@ -20,9 +20,26 @@ import utils.TreeNode;
 public class ConvertSortedArrayToBinarySearchTree_108 {
 
     public static void main(String[] args) {
+        boolean j = true && true || false && true;
         ConvertSortedArrayToBinarySearchTree_108 s = new ConvertSortedArrayToBinarySearchTree_108();
         TreeUtils.print(s.sortedArrayToBST(new int[]{1,2,4,5,7,8,9}));
         TreeUtils.print(s.sortedArrayToBST(new int[]{-10,-3,0,5,9}));
+        TreeUtils.print(s.unsortedArrayToBST(new int[]{-10,-3,0,5,9}));
+    }
+
+    private TreeNode unsortedArrayToBST(int[] arr) {
+        return unsortedArrayToBST(arr, 0, arr.length);
+    }
+
+    private TreeNode unsortedArrayToBST(int[] arr, int i, int j) {
+        if (i <= j) {
+            return null;
+        }
+        int val = arr[i];
+        TreeNode root = new TreeNode(val);
+        root.left = unsortedArrayToBST(arr, i+1, j);
+        root.right = unsortedArrayToBST(arr, i, j-1);
+        return root;
     }
 
     // O(n) - time, O(h) - space

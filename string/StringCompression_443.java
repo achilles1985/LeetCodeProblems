@@ -46,13 +46,13 @@ public class StringCompression_443 {
 
     public static void main(String[] args) {
         StringCompression_443 s = new StringCompression_443();
+        System.out.println(s.compress2(new char[]{'a','a','a','a','b','b','c','c','c'})); //6
+        System.out.println(s.compress2(new char[]{'a'})); //1
+        System.out.println(s.compress2(new char[]{'a','b','b','b','b','b','b','b','b','b','b','b','b'})); //4
+
         System.out.println(s.compress(new char[]{'a','a','b','b','c','c','c'})); //6
         System.out.println(s.compress(new char[]{'a'})); //1
         System.out.println(s.compress(new char[]{'a','b','b','b','b','b','b','b','b','b','b','b','b'})); //4
-
-        System.out.println(s.compress2(new char[]{'a','a','b','b','c','c','c'})); //6
-        System.out.println(s.compress2(new char[]{'a'})); //1
-        System.out.println(s.compress2(new char[]{'a','b','b','b','b','b','b','b','b','b','b','b','b'})); //4
     }
 
     // O(n) - time, O(1) - space
