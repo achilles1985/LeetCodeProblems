@@ -26,6 +26,9 @@ import java.util.Queue;
  *     If all integer numbers from the stream are between 0 and 100, how would you optimize it?
  *     If 99% of all integer numbers from the stream are between 0 and 100, how would you optimize it?
  */
+/*
+    Keep max and min heaps, in that case median is always on the top.
+ */
 public class FindMedianFromDataStream_295 {
 
     /** initialize your data structure here. */
@@ -37,6 +40,7 @@ public class FindMedianFromDataStream_295 {
         minHeap = new PriorityQueue<>();
     }
 
+    // log(n) - time
     public void addNum(int num) {
         maxHeap.add(num);
         minHeap.add(maxHeap.poll());
@@ -54,6 +58,17 @@ public class FindMedianFromDataStream_295 {
     }
 
     public static void main(String[] args) {
-
+        // [5,7,11,2,3,9]
+        FindMedianFromDataStream_295 s = new FindMedianFromDataStream_295();
+        s.addNum(5);
+        s.addNum(7);
+        System.out.println(s.findMedian()); //6
+        s.addNum(11);
+        System.out.println(s.findMedian()); //7
+        s.addNum(2);
+        s.addNum(3);
+        System.out.println(s.findMedian()); //5
+        s.addNum(9);
+        System.out.println(s.findMedian()); //6
     }
 }

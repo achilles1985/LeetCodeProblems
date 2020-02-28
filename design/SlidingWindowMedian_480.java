@@ -1,5 +1,10 @@
 package design;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**H
  * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value.
  * So the median is the mean of the two middle value.
@@ -34,17 +39,38 @@ package design;
 /*
 Questions:
     1. If k > arr.length or 0?
+    2. max element in an array?
+ */
+/*
+    To be improved
  */
 public class SlidingWindowMedian_480 {
 
     public static void main(String[] args) {
         SlidingWindowMedian_480 s = new SlidingWindowMedian_480();
+        System.out.println(s.medianSlidingWindow(new int[]{2147483647, 2147483647}, 2));
+        System.out.println(s.medianSlidingWindow(new int[]{1,4,2,3}, 4));
         System.out.println(s.medianSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3));
     }
 
+    // O((n-k)*log(k)*k) - time, O(1) - space
     public double[] medianSlidingWindow(int[] nums, int k) {
+        int m = 0;
+        double[] result = new double[nums.length - k + 1];
         for (int i = 0; i <= nums.length - k; i++) {
-
+            int [] arr = new int[k];
+            for (int j = 0; j < k; j++) {
+                arr[j] = nums[i+j];
+            }
+            Arrays.sort(arr);
+            if (k%2 == 0) {
+                BigDecimal res = BigDecimal.valueOf(arr[k/2]).add(BigDecimal.valueOf(arr[k/2 - 1])).divide(BigDecimal.valueOf(2.0));
+                result[m++] = res.doubleValue();
+            } else {
+                double v = arr[k/2];
+                result[m++] = v;
+            }
         }
+        return result;
     }
 }
