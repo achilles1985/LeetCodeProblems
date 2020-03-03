@@ -1,9 +1,5 @@
 package bitManipulation.FindDifference_389;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 /**M
  * Given two strings s and t which consist of only lowercase letters.
  *

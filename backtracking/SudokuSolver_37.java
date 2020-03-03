@@ -43,6 +43,7 @@ public class SudokuSolver_37 {
         }
     }
 
+    // O(9!)^9 - time, O(1) - space
     public void solveSudoku(char[][] board) {
         solveSudokuUtil(0, 0, board);
     }

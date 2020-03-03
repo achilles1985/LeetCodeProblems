@@ -36,5 +36,9 @@ public class UsefulJava {
         int[][] matrix = new int[][]{{1,2},{3},{4,5}};
         Iterator<int[]> outerIterator = Arrays.stream(matrix).iterator();
         Iterator<Integer> innerIterator = IntStream.of(matrix[0]).boxed().iterator();
+
+        ////////////// from/to binary //////////////////
+        int res1 = Integer.parseInt("0101", 2); //5
+        String res2 = Integer.toBinaryString(5); //0101
     }
 }

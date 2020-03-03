@@ -21,6 +21,9 @@ package binarySearch;
  The best way is to split it into [7,2,5] and [10,8],
  where the largest sum among the two subarrays is only 18.
  */
+/*
+    Given searching range and a target value, it is natural to apply Binary Search.
+ */
 public class SplitArrayLargestSum_410 {
 
     public static void main(String[] args) {

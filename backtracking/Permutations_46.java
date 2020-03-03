@@ -25,7 +25,7 @@ public class Permutations_46 {
 
     public static void main(String[] args) {
         Permutations_46 s = new Permutations_46();
-        System.out.println(s.permute(new int[]{1,2,3,4}));
+        System.out.println(s.permute(new int[]{1,2,3}));
         System.out.println(s.permute(new int[]{1,1,2}));
     }
 
