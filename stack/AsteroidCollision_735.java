@@ -1,13 +1,16 @@
 package stack;
 
+import java.util.Iterator;
 import java.util.Stack;
 
 import utils.SolutionUtils;
 
 /** M
  We are given an array asteroids of integers representing asteroids in a row.
- For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.
- Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
+ For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left).
+ Each asteroid moves at the same speed.
+ Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode.
+ Two asteroids moving in the same direction will never meet.
 
  Example 1:
  Input:
@@ -42,28 +45,44 @@ import utils.SolutionUtils;
  The length of asteroids will be at most 10000.
  Each asteroid will be a non-zero integer in the range [-1000, 1000]..
  */
+/*
+Questions:
+    1. What if 2 asteroids have equal mass?
+    2. Do we care about output order?
+ */
 public class AsteroidCollision_735 {
 
     public static void main(String[] args) {
         AsteroidCollision_735 s = new AsteroidCollision_735();
 
+        SolutionUtils.print(s.asteroidCollision(new int[]{1,2,1,-2})); //[1]
         SolutionUtils.print(s.asteroidCollision(new int[]{-2,2,1,-2})); //[-2]
+        SolutionUtils.print(s.asteroidCollision(new int[]{-2,-2,1,-2})); //[-2,-2,-2]
+        SolutionUtils.print(s.asteroidCollision(new int[]{8,-8})); //[]
         SolutionUtils.print(s.asteroidCollision(new int[]{-2,-1,1,2})); //[-2,-1,1,2]
         SolutionUtils.print(s.asteroidCollision(new int[]{5,10,-5})); //[5, 10]
         SolutionUtils.print(s.asteroidCollision(new int[]{10,2,-5})); //[10]
-        SolutionUtils.print(s.asteroidCollision(new int[]{8,-8})); //[]
     }
 
     // O(n) - time, O(n) - space
     public int[] asteroidCollision(int[] asteroids) {
         Stack<Integer> stack = new Stack<>();
         for (int num: asteroids) {
+            boolean fullDistroy = false;
             if (!stack.isEmpty() && stack.peek() > 0 && num < 0 && stack.peek() == Math.abs(num)) {
                 stack.pop();
                 continue;
             }
             while (!stack.isEmpty() && stack.peek() > 0 && num < 0 && Math.abs(num) >= stack.peek()) {
-                  stack.pop();
+                if (Math.abs(num) == Math.abs(stack.peek())) {
+                    stack.pop();
+                    fullDistroy = true;
+                    break;
+                }
+                stack.pop();
+            }
+            if (fullDistroy) {
+                continue;
             }
             if (stack.isEmpty() || stack.peek() < 0 && num < 0 || stack.peek() > 0 && num > 0 || stack.peek() < 0 && num > 0) {
                 stack.push(num);

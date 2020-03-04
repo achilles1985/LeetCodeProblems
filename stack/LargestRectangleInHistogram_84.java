@@ -20,10 +20,33 @@ public class LargestRectangleInHistogram_84 {
     public static void main(String[] args) {
         LargestRectangleInHistogram_84 s = new LargestRectangleInHistogram_84();
 
-        System.out.println(s.maxHistogram(new int[]{4,2,0,3,2,5})); // 6
-        System.out.println(s.largestRectangleArea(new int[]{4,2,0,3,2,5})); // 6
-        System.out.println(s.largestRectangleArea(new int[]{2,1,2})); // 3
-        System.out.println(s.largestRectangleArea(new int[]{2,1,5,6,2,3})); // 10
+        System.out.println(s.largestRectangleArea3(new int[]{3,2,1})); // 4
+        System.out.println(s.largestRectangleArea3(new int[]{1,2,3})); // 4
+        System.out.println(s.largestRectangleArea3(new int[]{1,2,3,2,1})); // 6
+        System.out.println(s.largestRectangleArea3(new int[]{4,2,0,3,2,5})); // 6
+        System.out.println(s.largestRectangleArea3(new int[]{4,2,0,3,2,5})); // 6
+        System.out.println(s.largestRectangleArea3(new int[]{2,1,2})); // 3
+        System.out.println(s.largestRectangleArea3(new int[]{2,1,5,6,2,3})); // 10
+    }
+
+    public int largestRectangleArea3(int[] heights) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        int maxArea = 0;
+        for (int i = 0; i < heights.length; i++) {
+            while (stack.peek() != -1 && heights[i] <= heights[stack.peek()]) {
+                Integer popped = stack.pop();
+                int area = heights[popped]*(i - stack.peek()-1);
+                maxArea = Math.max(maxArea, area);
+            }
+            stack.push(i);
+        }
+        while (stack.peek() != -1) {
+            Integer popped = stack.pop();
+            int area = heights[popped]*(heights.length - stack.peek()-1);
+            maxArea = Math.max(maxArea, area);
+        }
+        return maxArea;
     }
 
     // O(n^2) - time, O(1) - space

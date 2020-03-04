@@ -28,6 +28,7 @@ public final class SolutionUtils {
 
     public static void print(int[] arr) {
         if (arr == null || arr.length == 0) {
+            System.out.println("[]");
             return;
         }
         System.out.print(arr[0]);
