@@ -1,5 +1,6 @@
 package stack;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -7,7 +8,8 @@ import java.util.Set;
 import java.util.Stack;
 
 /** H
- Given a string which contains only lowercase letters, remove duplicate letters so that every letter appears once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+ Given a string which contains only lowercase letters, remove duplicate letters so that every letter appears once and only once.
+ You must make sure your result is the smallest in lexicographical order among all possible results.
 
  Example 1:
  Input: "bcabc"
@@ -16,6 +18,9 @@ import java.util.Stack;
  Example 2:
  Input: "cbacdcbc"
  Output: "acdb"
+ */
+/*
+    Maintain ascending ordered string of unique characters. The character can be removed if the same one exists further in the string.
  */
 public class RemoveDuplicateLetters_316 {
 

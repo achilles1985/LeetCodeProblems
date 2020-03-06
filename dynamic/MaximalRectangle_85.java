@@ -30,7 +30,7 @@ public class MaximalRectangle_85 {
         int[] histogram = new int[matrix[0].length];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                histogram[j] += matrix[i][j] - '0';
+                histogram[j] = matrix[i][j] == '0' ? 0 : histogram[j] + (matrix[i][j] - '0'); // set cell to 0 all add 1 to a prev value.
             }
             int localMax = maximalRectangleInHistogram(histogram);
             max = Math.max(max, localMax);

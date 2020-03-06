@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.stream.IntStream;
 
 /*
@@ -40,5 +41,20 @@ public class UsefulJava {
         ////////////// from/to binary //////////////////
         int res1 = Integer.parseInt("0101", 2); //5
         String res2 = Integer.toBinaryString(5); //0101
+    }
+
+    // start from second element from the last
+    public static void workWithArrays(int[] arr) {
+        int i = arr.length-2;
+        while (i >= 0 && arr[i] > arr[i+1]) {
+            i--;
+        }
+    }
+
+    public static void traverseStackFromBegin(Stack<Integer> stack) { // or use iterator
+        StringBuilder sb = new StringBuilder();
+        for (int item: stack) {
+            sb.append(item);
+        }
     }
 }

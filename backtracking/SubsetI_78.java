@@ -25,12 +25,12 @@ public class SubsetI_78 {
 
     public static void main(String[] args) {
         SubsetI_78 s = new SubsetI_78();
-        System.out.println(s.subsets(new int[] {1,2,3}));
-        System.out.println(s.subsets(new int[] {2,1,3}));
-        System.out.println(s.subsets(new int[] {4,4,4,1,4}));
+        System.out.println(s.subsets3(new int[] {1,2,3,4,5}));
+        System.out.println(s.subsets3(new int[] {2,1,3}));
+        System.out.println(s.subsets3(new int[] {4,4,4,1,4}));
     }
 
-    // O(2^n) - time, space
+    // O(2^n) - time, space, since we either add an item to the set or not.
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
@@ -57,13 +57,14 @@ public class SubsetI_78 {
         return resultSet;
     }
 
+    // O(n*2^n) - time, O(2^n) - space
+    // Bit manipulation
     public List<List<Integer>> subsets3(int[] nums) {
         List<List<Integer>> output = new ArrayList();
         int n = nums.length;
         for (int i = 1 << n; i < 1 << (n + 1); i++) {
             // generate bitmask, from 0..00 to 1..11
-            String binary = Integer.toBinaryString(i);
-            String bitmask = binary.substring(1);
+            String bitmask = Integer.toBinaryString(i).substring(1);
             // append subset corresponding to that bitmask
             List<Integer> curr = new ArrayList();
             for (int j = 0; j < n; ++j) {

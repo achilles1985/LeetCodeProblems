@@ -14,6 +14,7 @@ package binarySearch;
  *     The rectangle inside the matrix must have an area > 0.
  *     What if the number of rows is much larger than the number of columns?
  */
+// http://buttercola.blogspot.com/2018/10/leetcode-363-max-sum-of-rectangle-no.html
 public class MaxSumOfRectangleNoLargerThanK_363 {
 
     public static void main(String[] args) {

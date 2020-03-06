@@ -12,11 +12,15 @@ import utils.SolutionUtils;
  3,2,1 → 1,2,3
  1,1,5 → 1,5,1
  */
+/*
+    One should observe a patten. Find the first number smaller to the left then last number. Find the next greater number for that number and swap them. Then reverse subarray.
+ */
 public class NextPermutation_31 {
 
     public static void main(String[] args) {
         NextPermutation_31 s = new NextPermutation_31();
 
+        s.nextPermutation(new int[]{1,2,5,4,7,6}); // 125647
         s.nextPermutation(new int[]{1,1}); // 1,1
         s.nextPermutation(new int[]{1,2,3}); // 1,3,2
         s.nextPermutation(new int[]{2,1,5,4,3}); // 2,3,1,4,5

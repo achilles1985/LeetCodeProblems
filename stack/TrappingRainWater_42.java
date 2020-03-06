@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /** H
  Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
- The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
+ The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
 
  Example:
  Input: [0,1,0,2,1,0,1,3,2,1,2,1]
@@ -24,8 +24,8 @@ public class TrappingRainWater_42 {
         System.out.println(s.trap2(new int[]{3,2,1,2,3})); //4
     }
 
-    // O(n^2) - time, O(1) - space
-    public int trapBF(int[] height) {
+    // O(n^2) - time, O(1) - space. Moving from current position go to left and right and find max height on the left and right. Then min(leftMax, rightMax), area = minHeight - height[1]
+    public int trapBruteForce(int[] height) {
         int ans = 0;
         for (int i = 0; i < height.length; i++) {
             int leftMax = height[i];

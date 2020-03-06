@@ -1,8 +1,6 @@
 package stack;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.Stack;
@@ -30,15 +28,54 @@ import java.util.TreeSet;
  Output: "0"
  Explanation: Remove all the digits from the number and it is left with nothing which is 0.
  */
+/*
+ Corner cases:
+    1. k == 0 or k >= str.length
+    2. If all digits in ascending order and k != 0, remove last k digits.
+ */
 public class RemoveKDigits {
 
     public static void main(String[] args) {
         RemoveKDigits s = new RemoveKDigits();
         String s1 = "000001230012300".replaceFirst("^0*", "");
-        System.out.println(s.removeKdigits("10200", 1)); // 200
-        System.out.println(s.removeKdigits("1107", 1)); //0
-        System.out.println(s.removeKdigits("1432219", 3)); // 1219
-        System.out.println(s.removeKdigits("10", 2)); //0
+
+        System.out.println(s.removeKdigitsBF2("112", 1)); // 11
+        System.out.println(s.removeKdigitsBF2("100", 1)); // 0
+        System.out.println(s.removeKdigitsBF2("10200", 1)); // 200
+        System.out.println(s.removeKdigitsBF2("1107", 1)); //107
+        System.out.println(s.removeKdigitsBF2("1432219", 3)); // 1219
+        System.out.println(s.removeKdigitsBF2("10", 2)); //0
+    }
+
+    // O(n) - time, space
+    public String removeKdigitsBF2(String num, int k) {
+        if (k == 0) {
+            return num;
+        }
+        if (k >= num.length()) {
+            return "0";
+        }
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < num.length(); i++) {
+            while (!stack.isEmpty() && num.charAt(i) < stack.peek() && k > 0) {
+                stack.pop();
+                k--;
+            }
+            stack.push(num.charAt(i));
+        }
+        if (stack.isEmpty()) {
+            return "0";
+        }
+        while (!stack.isEmpty() && k-- > 0) {
+            stack.pop();
+        }
+        StringBuilder sb = new StringBuilder();
+        Iterator<Character> it = stack.iterator();
+        while (it.hasNext()) {
+            sb.append(it.next());
+        }
+        String result = sb.toString().replaceFirst("^0+", "");
+        return result.length() == 0 ? "0" : result;
     }
 
     // O(n^n) - time, O(n) - space
