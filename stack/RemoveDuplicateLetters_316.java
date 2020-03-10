@@ -29,6 +29,8 @@ public class RemoveDuplicateLetters_316 {
 
         System.out.println(s.removeDuplicateLetters("bcabc")); //abc
         System.out.println(s.removeDuplicateLetters("cbacdcbc")); //acdb
+
+        System.out.println(s.removeDuplicateConsequitiveLetters("aabbbcdeeeffghaab")); //abcdefghab
     }
 
     // O(n) - time, O(n) - space
@@ -55,6 +57,25 @@ public class RemoveDuplicateLetters_316 {
             sb.append(c);
         }
 
+        return sb.toString();
+    }
+
+    // O(n) - time, space
+    public String removeDuplicateConsequitiveLetters(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (stack.isEmpty()) {
+                stack.push(s.charAt(i));
+                continue;
+            }
+            if (!stack.isEmpty() & stack.peek() != s.charAt(i)) {
+                stack.push(s.charAt(i));
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c: stack) {
+            sb.append(c);
+        }
         return sb.toString();
     }
 }

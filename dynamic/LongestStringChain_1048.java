@@ -1,8 +1,14 @@
 package dynamic;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeMap;
 
 /** M
  Given a list of words, each word consists of English lowercase letters.
@@ -29,14 +35,15 @@ public class LongestStringChain_1048 {
 
     public static void main(String[] args) {
         LongestStringChain_1048 s = new LongestStringChain_1048();
-        System.out.println(s.longestStrChain2(new String[] {"ba","a","b","bca","bda","bdca"})); // 4 (example 1)
+        System.out.println(s.longestStrChain4(new String[] {"ba","a","b","bca","bda","bdca"})); // 4 (example 1)
         System.out.println(s.longestStrChainTopDown(new String[] {"a","b","ba","bca","bda","bdca"})); // 4
 
-        System.out.println(s.longestStrChain2(new String[] {"ksqvsyq","ks","kss","czvh","zczpzvdhx","zczpzvh","zczpzvhx","zcpzvh","zczvh","gr","grukmj","ksqvsq","gruj","kssq","ksqsq","grukkmj","grukj","zczpzfvdhx","gru"})); // 7
+        System.out.println(s.longestStrChainBF(new String[] {"ba","a","b","bca","bda","bdca"})); // 4 (example 1)
+        System.out.println(s.longestStrChainBF(new String[] {"ksqvsyq","ks","kss","czvh","zczpzvdhx","zczpzvh","zczpzvhx","zcpzvh","zczvh","gr","grukmj","ksqvsq","gruj","kssq","ksqsq","grukkmj","grukj","zczpzfvdhx","gru"})); // 7
     }
 
     // O(2^n) - time
-    public int longestStrChain(String[] words) {
+    public int longestStrChainBF(String[] words) {
         Map<String, Integer> map = new HashMap<>();
         for(int i=0; i<words.length; i++) {
             map.put(words[i], i);
@@ -48,7 +55,7 @@ public class LongestStringChain_1048 {
         return max;
     }
 
-    // O(n) - time, space
+    // O(n^2) - time, space
     public int longestStrChainTopDown(String[] words) {
         int n = words.length, max = 0;
         int[] cache = new int[n];
@@ -63,11 +70,79 @@ public class LongestStringChain_1048 {
         return max;
     }
 
+    // BFS
+    // O(n^2) - time, O(n) - space
+    public int longestStrChain3(String[] words) {
+        TreeMap<Integer, Set<String>> map = new TreeMap<>(Collections.reverseOrder());
+        for (String word : words) {
+            int len = word.length();
+            if (!map.containsKey(len)) {
+                map.put(len, new HashSet<>());
+            }
+            map.get(len).add(word);
+        }
+
+        Queue<String> q = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        int maxChain = 0;
+
+        for (int len : map.keySet()) {
+            Set<String> wordsWithCurrentLen = map.get(len);
+            for (String word : wordsWithCurrentLen) {
+                if (visited.contains(word)) {
+                    continue;
+                }
+                visited.add(word);
+                q.offer(word);
+            }
+
+            int chainLen = 0;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                chainLen++;
+                int currLevelWordLen = q.peek().length();
+                Set<String> wordsWithPrevLen = map.get(currLevelWordLen - 1);
+                if (wordsWithPrevLen == null || wordsWithPrevLen.size() == 0) {
+                    break;
+                }
+                while (size > 0) {
+                    String currStr = q.poll();
+                    for (int i = 0; i < currStr.length(); i++) {
+                        String cand = currStr.substring(0, i) + currStr.substring(i + 1);
+                        if (wordsWithPrevLen.contains(cand) && !visited.contains(cand)) {
+                            visited.add(cand);
+                            q.offer(cand);
+                        }
+                    }
+                    size--;
+                }
+            }
+            maxChain = Math.max(maxChain, chainLen);
+        }
+
+        return maxChain;
+    }
+
+    public int longestStrChain4(String[] words) {
+        Map<String, Integer> dp = new HashMap<>();
+        Arrays.sort(words, (a, b)->a.length() - b.length());
+        int res = 0;
+        for (String word : words) {
+            int best = 0;
+            for (int i = 0; i < word.length(); ++i) {
+                String prev = word.substring(0, i) + word.substring(i + 1);
+                best = Math.max(best, dp.getOrDefault(prev, 0) + 1);
+            }
+            dp.put(word, best);
+            res = Math.max(res, best);
+        }
+        return res;
+    }
+
     private int longestStrChainUtils(String[] words, int i, Map<String, Integer> map) {
         if (words[i].length() == 1) {
             return 1;
         }
-
         int localMax = 1;
         for(int j=0; j<words[i].length(); j++) {
             StringBuilder sb = new StringBuilder(words[i]);
@@ -98,7 +173,7 @@ public class LongestStringChain_1048 {
         return cache[i];
     }
 
-    // incorrect
+/*    // incorrect
     public int longestStrChain2(String[] words) {
         Arrays.sort(words, (w1, w2) -> w1.length() - w2.length());
         int max = 0;
@@ -129,5 +204,5 @@ public class LongestStringChain_1048 {
             }
         }
         return false;
-    }
+    }*/
 }
