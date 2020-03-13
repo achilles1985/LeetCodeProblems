@@ -1,5 +1,7 @@
 package dynamic;
 
+import java.util.Arrays;
+
 /** M
  * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
  The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
@@ -25,6 +27,10 @@ public class UniquePaths_62 {
 
     public static void main(String[] args) {
         UniquePaths_62 s = new UniquePaths_62();
+        System.out.println(s.uniquePathsDynamic2(3,4)); //10
+        System.out.println(s.uniquePathsDynamic2(4,4)); //20
+        System.out.println(s.uniquePathsDynamic2(3,2)); //3
+
         System.out.println(s.uniquePaths(3,2)); //3
         System.out.println(s.uniquePathsDynamic(3,2)); //3
 
@@ -68,6 +74,30 @@ public class UniquePaths_62 {
         }
 
         return dp[m-1][n-1];
+    }
+
+    // O(m*n) - time, O(n) - space
+    // Optimized space complexity moved from matrix to 2 one-dimentional arrays because we work only with 2 rows at a time.
+    public int uniquePathsDynamic2(int m, int n) {
+        int[] odd = new int[n];
+        int[] even = new int[n];
+        Arrays.fill(odd, 1);
+        Arrays.fill(even, 1);
+        for (int row = 1; row < m; row++) {
+            int[] current;
+            int[] previous;
+            if (row%2 == 1) {
+                current = odd;
+                previous = even;
+            } else {
+                current = even;
+                previous = odd;
+            }
+            for (int col = 1; col < n; col++) {
+                current[col] = current[col-1] + previous[col];
+            }
+        }
+        return m%2 == 1 ? even[n-1] : odd[n-1];
     }
 
 }

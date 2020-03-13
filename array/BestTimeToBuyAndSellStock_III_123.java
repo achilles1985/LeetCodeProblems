@@ -27,6 +27,7 @@ public class BestTimeToBuyAndSellStock_III_123 {
 
     public static void main(String[] args) {
         BestTimeToBuyAndSellStock_III_123 s = new BestTimeToBuyAndSellStock_III_123();
+        System.out.println(s.maxProfit(new int[]{7,1,3,5,6,4})); //5
         System.out.println(s.maxProfit(new int[]{3,3,5,0,0,3,1,4})); //6
         System.out.println(s.maxProfit(new int[]{1,2,3,4,5})); //4
         System.out.println(s.maxProfit(new int[]{7,6,4,3,1})); //0

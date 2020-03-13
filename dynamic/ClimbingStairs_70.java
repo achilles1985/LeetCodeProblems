@@ -55,7 +55,7 @@ public class ClimbingStairs_70 {
         return climbStairsDynamicMemoization(n, cache);
     }
 
-    // O(n-2) - time, O(n) - space
+    // O(n) - time, O(n) - space
     public int climbStairsDynamicBottomUp(int n) {
         if (n <= 2) {
             return n;
@@ -71,7 +71,7 @@ public class ClimbingStairs_70 {
         return cache[n];
     }
 
-    // O(n-2) - time, O(1) - space
+    // O(n) - time, O(1) - space
     public int climbStairsDynamicBottomUp2(int n) {
         if (n <= 2) {
             return n;
