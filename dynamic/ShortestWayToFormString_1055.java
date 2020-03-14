@@ -1,9 +1,6 @@
 package dynamic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**M
  * From any string, we can form a subsequence of that string by deleting some number of characters (possibly no
@@ -38,9 +35,41 @@ public class ShortestWayToFormString_1055 {
 
     public static void main(String[] args) {
         ShortestWayToFormString_1055 s = new ShortestWayToFormString_1055();
-        System.out.println(s.shortestWay2("xyz", "xzyxz")); //3 xz + y + xz
-        System.out.println(s.shortestWay2("abc", "abcbc")); //2 abc + bc
-        System.out.println(s.shortestWay2("abc", "acdbc")); //-1
+        System.out.println(s.shortestWay3("xyz", "xzyxz")); //3 xz + y + xz
+        System.out.println(s.shortestWay3("abc", "abcbc")); //2 abc + bc
+        System.out.println(s.shortestWay3("abc", "acdbc")); //-1
+        System.out.println(s.shortestWay3("adbsc", "addddddddddddsbc")); //13
+    }
+
+    // O(m*n) - time, O(1) - space the same as shortsWay2
+    public int shortestWay3(String source, String target) {
+        if (source.length() == 0 || target.length() == 0) {
+            return 0;
+        }
+        Map<Integer, List<Integer>> indexesByChar = new HashMap<>();
+        for (int i = 0; i < source.length(); i++) {
+            indexesByChar.computeIfAbsent(source.charAt(i)-'a', key -> indexesByChar.getOrDefault(key, new ArrayList<>())).add(i);
+        }
+        int j = 0;
+        int result = 1;
+        for (int i = 0; i < target.length(); ) {
+            List<Integer> indexes = indexesByChar.getOrDefault(target.charAt(i) - 'a', new ArrayList<>());
+            if (indexes.isEmpty()) {
+                return -1;
+            }
+            int foundPosition = Collections.binarySearch(indexes, j);
+            if (foundPosition < 0) {
+                foundPosition = -foundPosition - 1;
+            }
+            if (foundPosition == indexes.size()) {
+                result++;
+                j = 0;
+            } else {
+                j = indexes.get(foundPosition) + 1;
+                i++;
+            }
+        }
+        return result;
     }
 
     // O(m*n) - time, O(1) - space
@@ -69,8 +98,6 @@ public class ShortestWayToFormString_1055 {
 
     // O(m*log(n)) - time, O(1) - space
     public int shortestWay2(String source, String target) {
-        int[] arr = new int[]{2,4,5,7,9};
-        int re = Arrays.binarySearch(arr, 8);
         char[] cs = source.toCharArray(), ts = target.toCharArray();
         int res = 1;
         List<Integer>[] idx = new List[26];
