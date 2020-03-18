@@ -1,12 +1,6 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /*
@@ -41,6 +35,12 @@ public class UsefulJava {
         ////////////// from/to binary //////////////////
         int res1 = Integer.parseInt("0101", 2); //5
         String res2 = Integer.toBinaryString(5); //0101
+
+        // List<Integer> to int[]
+        List<Integer> nums = Arrays.asList(1,2,3);
+        nums.stream()
+                .mapToInt(n -> n)
+                .toArray();
     }
 
     // start from second element from the last
