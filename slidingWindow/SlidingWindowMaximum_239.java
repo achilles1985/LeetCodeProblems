@@ -31,6 +31,8 @@ public class SlidingWindowMaximum_239 {
 
     public static void main(String[] args) {
         SlidingWindowMaximum_239 s = new SlidingWindowMaximum_239();
+        SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-2,-3,-4,-5,-6}, 3)); //[3,3,5,5,6,7]
+        SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
         SolutionUtils.print(s.maxSlidingWindowDP(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
 
         SolutionUtils.print(s.maxSlidingWindowBF(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
@@ -38,6 +40,7 @@ public class SlidingWindowMaximum_239 {
         SolutionUtils.print(s.maxSlidingWindowBF(new int[]{1}, 1)); //[1]
     }
 
+    // O(n) - time, O(n) - space
     public int[] maxSlidingWindowDP(int[] nums, int k) {
         int length = nums.length;
         int[] left = new int[nums.length];
@@ -60,12 +63,14 @@ public class SlidingWindowMaximum_239 {
         }
         int[] result = new int[length];
         for (int i = 0; i <= length - k; i++) {
-
+            result[i] = Math.max(left[i + k - 1], right[i]);
         }
 
-        return null;
+        return result;
     }
 
+    // O(n) - time, O(n) - space
+    // Solution based on dequeue
     public int[] maxSlidingWindow2(int[] a, int k) {
         if (a == null || k <= 0) {
             return new int[0];
@@ -78,7 +83,7 @@ public class SlidingWindowMaximum_239 {
         for (int i = 0; i < a.length; i++) {
             // remove numbers out of range k
             while (!q.isEmpty() && q.peek() < i - k + 1) {
-                q.poll();
+                q.pollFirst();
             }
             // remove smaller numbers in k range as they are useless
             while (!q.isEmpty() && a[q.peekLast()] < a[i]) {

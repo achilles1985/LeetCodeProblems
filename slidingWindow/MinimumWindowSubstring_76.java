@@ -1,4 +1,4 @@
-package string;
+package slidingWindow;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +21,9 @@ public class MinimumWindowSubstring_76 {
         MinimumWindowSubstring_76 s = new MinimumWindowSubstring_76();
         System.out.println(s.minWindow("bba", "ab")); //ba
         System.out.println(s.minWindow("ADOBECODEBANC", "ABC")); //BANC
+
+        System.out.println(s.minWindowBF("bba", "ab")); //ba
+        System.out.println(s.minWindowBF("ADOBECODEBANC", "ABC")); //BANC
     }
 
     // O(s^2) - time, O(t) - space
