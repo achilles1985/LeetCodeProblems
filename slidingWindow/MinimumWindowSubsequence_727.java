@@ -1,5 +1,10 @@
 package slidingWindow;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.TreeSet;
+
 /**H
  * Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.
  *
@@ -23,12 +28,65 @@ public class MinimumWindowSubsequence_727 {
 
     public static void main(String[] args) {
         MinimumWindowSubsequence_727 s = new MinimumWindowSubsequence_727();
-        System.out.println(s.minWindow("abcdebdde", "bde")); //bcde
-        System.out.println(s.minWindow("bstl", "l")); //l
+        System.out.println(s.minWindow4("abcdebdde", "bde")); //bcde
+        System.out.println(s.minWindow4("bstl", "l")); //l
+
+        System.out.println(s.minWindow3("abcdebdde", "bde")); //bcde
+        System.out.println(s.minWindow3("bstl", "l")); //l
 
         System.out.println(s.minWindowDP("abcdebdde", "bde")); //bcde
         System.out.println(s.minWindowDP("bstl", "l")); //l
+
+        System.out.println(s.minWindow("abcdebdde", "bde")); //bcde
+        System.out.println(s.minWindow("bstl", "l")); //l
+
     }
+
+    public String minWindow4(String S, String T) {
+        Map<Character, NavigableSet<Integer>> charOccurrence = new HashMap<>();
+        for (int i = 0; i < S.length(); i++) {
+            charOccurrence.computeIfAbsent(S.charAt(i), key -> charOccurrence.getOrDefault(key, new TreeSet<>())).add(i);
+        }
+        String result = "";
+        for (int sIdx: charOccurrence.get(T.charAt(0))) {
+            int tIdx = charOccurrence.get(T.charAt(T.length()-1)).higher(sIdx);
+            String sub = S.substring(sIdx, tIdx+1);
+            result = sub;
+        }
+        return result;
+    }
+
+    public String minWindow3(String S, String T) {
+        Map<Character, TreeSet<Integer>> charOccurrence = new HashMap<>();
+        for(int i = 0; i < 26; i++) {// init
+            charOccurrence.put((char) ('a' + i), new TreeSet<>());
+        }
+        for(int i = 0; i < S.length(); i++) { // create a charOccurrence of all characters and their index
+            charOccurrence.get(S.charAt(i)).add(i);
+        }
+        int diff = Integer.MAX_VALUE;
+        String result = "";
+        for(int s : charOccurrence.get(T.charAt(0))) { // for all occurrences of first char of T
+            int e = getEndIndex(charOccurrence, s-1, T, 0); // get end char
+            if(e != -1 && (diff > e - s)) {
+                diff = e - s;
+                result = S.substring(s, e + 1);
+            }
+        }
+        return result;
+    }
+
+    private int getEndIndex(Map<Character, TreeSet<Integer>> charOccurrence, Integer prev, String target, int tIdx) {
+        Integer cur = charOccurrence.get(target.charAt(tIdx)).higher(prev); // find index of target(tIdx) greater than prev
+        if(cur == null || cur == -1) {
+            return -1;
+        }
+        if(tIdx == target.length() -1) {
+            return cur;
+        }
+        return getEndIndex(charOccurrence, cur, target, tIdx+1);
+    }
+
 
     public String minWindowDP(String S, String T) {
         int m = T.length(), n = S.length();
