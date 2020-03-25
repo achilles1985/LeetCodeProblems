@@ -1,4 +1,4 @@
-package string;
+package slidingWindow;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +21,10 @@ import java.util.Set;
  Output: 3
  Explanation: The answer is "wke", with the length of 3.
  Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+ */
+/*
+We have left and right pointers. Move forward right pointer till set contains its char.
+If set contains char at s[right], move left pointer ahead and remote it from set.
  */
 public class LongestSubstringWithoutRepeatingCharacters_3 {
 

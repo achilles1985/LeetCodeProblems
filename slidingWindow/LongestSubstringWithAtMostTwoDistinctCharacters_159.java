@@ -33,12 +33,33 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters_159 {
         int right = 0;
         int max = 0;
         while (right < s.length()) {
-            if (charCounter.size() < 3) {
+            if (charCounter.size() <= 2) {
                 charCounter.put(s.charAt(right), right++);
             }
             if (charCounter.size() == 3) {
                 int idxToRemove = Collections.min(charCounter.values());
                 charCounter.remove(s.charAt(idxToRemove));
+                left = idxToRemove + 1;
+            }
+            max = Math.max(max, right - left);
+        }
+        return max;
+    }
+
+    public int lengthOfLongestSubstringTwoDistinct2(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int left = 0, right = 0;
+        int max = 0;
+        Map<Character, Integer> charToLastIndex = new HashMap<>();
+        while(right < s.length()) {
+            if (charToLastIndex.size() <= 2) {
+                charToLastIndex.put(s.charAt(right), right);
+                right++;
+            } else {
+                int idxToRemove = Collections.min(charToLastIndex.values());
+                charToLastIndex.remove(s.charAt(idxToRemove));
                 left = idxToRemove + 1;
             }
             max = Math.max(max, right - left);

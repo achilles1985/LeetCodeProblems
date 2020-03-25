@@ -36,19 +36,19 @@ public class MaxConsecutiveOnes_III_1004 {
     }
 
     // O(n) - time, O(1) - space
-    public int longestOnes(int[] nums, int k) {
-        int zeroCount = 0, start = 0, res = 0;
-        for (int end=0; end<nums.length; end++){
-            if (nums[end] == 0) {
+    public int longestOnes(int[] A, int k) {
+        int zeroCount = 0, left = 0, res = 0;
+        for (int right=0; right<A.length; right++){
+            if (A[right] == 0) {
                 zeroCount++;
             }
             while (zeroCount > k){
-                if (nums[start] == 0) {
+                if (A[left] == 0) {
                     zeroCount--;
                 }
-                start++;
+                left++;
             }
-            res = Math.max(res, end-start + 1);
+            res = Math.max(res, right-left + 1);
         }
         return res;
     }
