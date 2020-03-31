@@ -8,7 +8,7 @@ import utils.SolutionUtils;
  In the maze matrix, 0 means the block is a dead end and 1 means the block can be used in the path from source to destination.
  Note that this is a simple version of the typical Maze problem.
  */
-// 0(2^N*M) - We have N*M cells and from each cell we need to make 2 choices.
+// 0(2^(N*M)) - We have N*M cells and from each cell we need to make 2 choices.
 public class RatInMaze {
 
     public static void main(String[] args) {

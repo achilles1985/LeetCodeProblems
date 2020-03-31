@@ -3,6 +3,7 @@ package backtracking;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 import utils.SolutionUtils;
 
@@ -33,10 +34,38 @@ public class BraceExpansion_1087 {
 
     public static void main(String[] args) {
         BraceExpansion_1087 s = new BraceExpansion_1087();
-        SolutionUtils.print(s.expand("{a,b}c{d,e}f")); //["acdf","acef","bcdf","bcef"]
         SolutionUtils.print(s.expand("abcde")); // ["abcd"]
+        SolutionUtils.print(s.expand("{a,b}c{d,e}f")); //["acdf","acef","bcdf","bcef"]
         SolutionUtils.print(s.expand("{a,b}{z,x,y}")); // ["ax","ay","az","bx","by","bz"]
     }
+
+    public List<List<Character>> tokenize2(String S) {
+        Stack<Character> stack = new Stack<>();
+        List<List<Character>> result = new ArrayList<>();
+        for (char c: S.toCharArray()) {
+            if (Character.isLetter(c)) {
+                stack.push(c);
+            } else if ('{' == c || '}' == c) {
+                List<Character> words = new ArrayList<>();
+                while (!stack.isEmpty()) {
+                    words.add(stack.pop());
+                }
+                if (!words.isEmpty()) {
+                    result.add(words);
+                }
+            }
+        }
+        List<Character> words = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            words.add(stack.pop());
+        }
+        if (!words.isEmpty()) {
+            result.add(words);
+        }
+
+        return result;
+    }
+
 
     // O(n^n) - time, O(n) - space - number of tokens in input string
     public String[] expand(String S) {

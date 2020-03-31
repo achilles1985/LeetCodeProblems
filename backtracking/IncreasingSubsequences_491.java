@@ -18,10 +18,14 @@ import java.util.Set;
  The range of integer in the given array is [-100,100].
  The given array may contain duplicates, and two equal integers should also be considered as a special case of increasing sequence.
  */
+/*
+    1.Should be contiguous?
+ */
 public class IncreasingSubsequences_491 {
 
     public static void main(String[] args) {
         IncreasingSubsequences_491 s = new IncreasingSubsequences_491();
+        System.out.println(s.findSubsequences(new int[] {4,3,7,6})); //[[4, 6], [4, 7], [3, 6], [3, 7]]
         System.out.println(s.findSubsequences(new int[] {4,6,7,7})); // [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
     }
 
@@ -32,11 +36,11 @@ public class IncreasingSubsequences_491 {
         return new ArrayList(res);
     }
 
-    private void findSubsequencesHelper(Set<List<Integer>> res, List<Integer> curr, int[] nums, int pos) {
+    private void findSubsequencesHelper(Set<List<Integer>> res, List<Integer> curr, int[] nums, int start) {
         if (curr.size() > 1) {
             res.add(new ArrayList(curr));
         }
-        for (int i = pos; i < nums.length; i++) {
+        for (int i = start; i < nums.length; i++) {
             if (curr.size() > 0 && curr.get(curr.size() - 1) > nums[i]) {
                 continue;
             }

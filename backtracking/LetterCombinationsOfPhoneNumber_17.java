@@ -21,7 +21,8 @@ public class LetterCombinationsOfPhoneNumber_17 {
 
     public static void main(String[] args) {
         LetterCombinationsOfPhoneNumber_17 s = new LetterCombinationsOfPhoneNumber_17();
-        System.out.println(s.letterCombinations("234"));
+        System.out.println(s.letterCombinations("12"));
+        System.out.println(s.letterCombinations("234")); //[adg, adh, adi, aeg, aeh, aei, afg, afh, afi, bdg, bdh, bdi, beg, beh, bei, bfg, bfh, bfi, cdg, cdh, cdi, ceg, ceh, cei, cfg, cfh, cfi]
         System.out.println(s.letterCombinations("23")); // ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
     }
 
@@ -43,10 +44,12 @@ public class LetterCombinationsOfPhoneNumber_17 {
         lettersMap.put('9', new char[]{'w', 'x', 'y', 'z'});
 
         List<String> result = new ArrayList<>();
-        dfs(digits, new StringBuilder(), result, lettersMap);
+        //dfs(digits,new StringBuilder(), result, lettersMap);
+        dfs2(digits,0,new StringBuilder(), result, lettersMap);
 
         return result;
     }
+
 
     private void dfs(String digits, StringBuilder sb, List<String> result, Map<Character, char[]> map) {
         if (sb.length() == digits.length()) {
@@ -57,6 +60,19 @@ public class LetterCombinationsOfPhoneNumber_17 {
         for (char c: map.get(digits.charAt(sb.length()))) {
             sb.append(c);
             dfs(digits, sb, result, map);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+
+    private void dfs2(String digits, int row, StringBuilder sb, List<String> result, Map<Character, char[]> map) {
+        if (digits.length() == sb.length()) {
+            result.add(sb.toString());
+            return;
+        }
+        for (int i = 0; i < map.get(digits.charAt(row)).length; i++) {
+            char[] chars = map.get(digits.charAt(row));
+            sb.append(chars[i]);
+            dfs2(digits, row+1, sb, result, map);
             sb.deleteCharAt(sb.length()-1);
         }
     }

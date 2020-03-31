@@ -19,7 +19,8 @@ public class NextPermutation_31 {
 
     public static void main(String[] args) {
         NextPermutation_31 s = new NextPermutation_31();
-
+        s.nextPermutation(new int[]{1,5,8,4,7,6,5,3,1,9,5}); //
+        s.nextPermutation(new int[]{1,3,2,6,5,7,9}); // 1326579
         s.nextPermutation(new int[]{1,2,5,4,7,6}); // 125647
         s.nextPermutation(new int[]{1,1}); // 1,1
         s.nextPermutation(new int[]{1,2,3}); // 1,3,2
@@ -31,7 +32,7 @@ public class NextPermutation_31 {
     // O(n) - time, O(1) - space
     public void nextPermutation(int[] nums) {
         int i = nums.length-2;
-        while (i >= 0 && nums[i] > nums[i+1]) {
+        while (i >= 0 && nums[i] >= nums[i+1]) {
             i--;
         }
         int j = nums.length-1;

@@ -34,8 +34,8 @@ public class CombinationSumIII_216 {
         return res;
     }
 
-    private void combinationSum3Utils(int start, int target, int lenght, List<List<Integer>> res, List<Integer> list) {
-        if (target == 0 && lenght == 0) {
+    private void combinationSum3Utils(int start, int target, int length, List<List<Integer>> res, List<Integer> list) {
+        if (target == 0 && length == 0) {
             res.add(new ArrayList<>(list));
         }
 
@@ -45,7 +45,7 @@ public class CombinationSumIII_216 {
             }
             list.add(i);
             int newTarget = target - i;
-            int newLength = lenght - 1;
+            int newLength = length - 1;
             combinationSum3Utils(i+1, newTarget, newLength, res, list);
             list.remove(list.size()-1);
         }

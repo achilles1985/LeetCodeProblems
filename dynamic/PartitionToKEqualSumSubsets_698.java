@@ -12,12 +12,15 @@ package dynamic;
  1 <= k <= len(nums) <= 16.
  0 < nums[i] < 10000.
  */
+/*
+    1. Should it be contiguous partitions?
+ */
 public class PartitionToKEqualSumSubsets_698 {
 
     public static void main(String[] args) {
         PartitionToKEqualSumSubsets_698 s = new PartitionToKEqualSumSubsets_698();
-        System.out.println(s.canPartitionKSubsets(new int[]{1,2,3,4,5,1}, 4)); // false
         System.out.println(s.canPartitionKSubsets(new int[]{4,3,2,3,5,2,1}, 4)); // true
+        System.out.println(s.canPartitionKSubsets(new int[]{1,2,3,4,5,1}, 4)); // false
     }
 
     public boolean canPartitionKSubsets(int[] nums, int k) {

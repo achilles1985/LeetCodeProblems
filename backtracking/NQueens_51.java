@@ -39,6 +39,7 @@ public class NQueens_51 {
         return result;
     }
 
+    // O(n!) - time
     private void solveNQueens(int n, int row, List<Integer> colPlacements, List<List<String>> result) {
         if (row == n) {
             result.add(generateBoardFromPlacements(colPlacements, n));
@@ -46,20 +47,23 @@ public class NQueens_51 {
         }
         for (int col = 0; col < n; col++) {
             colPlacements.add(col);
-            if (isValid1(colPlacements)) {
+            if (isValid(colPlacements)) {
                 solveNQueens(n, row + 1, colPlacements, result);
             }
             colPlacements.remove(colPlacements.size() - 1);
         }
     }
 
-    private boolean isValid1(List<Integer> colPlacements) {
+    // On the same diaginal: (x-y) or (x+y) must be equal to (rowValidated-colValidated) or (rowValidated + colValidated)
+    private boolean isValid(List<Integer> colPlacements) {
         int rowWeAreValidatingOn = colPlacements.size() - 1;
         Integer columnWeAreValidatingOn = colPlacements.get(colPlacements.size() - 1);
         for (int ithQueenRow = 0; ithQueenRow < rowWeAreValidatingOn; ithQueenRow++) {
             Integer ithQueueColumn = colPlacements.get(ithQueenRow);
-            if (columnWeAreValidatingOn == ithQueueColumn || // on the same column
-               (ithQueenRow-ithQueueColumn) == (rowWeAreValidatingOn-columnWeAreValidatingOn) || (ithQueenRow+ithQueueColumn) == (rowWeAreValidatingOn+columnWeAreValidatingOn)) { // on the same diagonal
+            if (columnWeAreValidatingOn == ithQueueColumn ) { // on the same column
+                return false;
+            }
+            if ((ithQueenRow-ithQueueColumn) == (rowWeAreValidatingOn-columnWeAreValidatingOn) || (ithQueenRow+ithQueueColumn) == (rowWeAreValidatingOn+columnWeAreValidatingOn)) { // on the same diagonal)
                 return false;
             }
         }

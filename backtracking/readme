@@ -3,9 +3,13 @@ Permutations with/without repetitions
 Combinations with/without repetitions
 Subsets
 
+WordCombination
 LetterCombinationsOfPhoneNumber
-SplitArrayIntoFibonacciSequence
+
 RestoreIPAddresses
+SplitArrayIntoFibonacciSequence
+IncreasingSubsequences_491
+PalindromePartitioning_131
 
 https://www.mathsisfun.com/combinatorics/combinations-permutations.html
 https://leetcode.com/problems/permutations/discuss/18239/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partioning

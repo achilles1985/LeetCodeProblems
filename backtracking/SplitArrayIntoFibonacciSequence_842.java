@@ -39,21 +39,50 @@ import java.util.List;
  1 <= S.length <= 200
  S contains only digits.
  */
+/*
+    1. Try to expand the the last element in the list till end of the string. Then remove last element from the list and try to expand it.
+ */
 public class SplitArrayIntoFibonacciSequence_842 {
 
     public static void main(String[] args) {
         SplitArrayIntoFibonacciSequence_842 s = new SplitArrayIntoFibonacciSequence_842();
+        System.out.println(s.splitIntoFibonacci("123446")); // [12,34,46]
         System.out.println(s.splitIntoFibonacci("123456579")); // [123,456,579]
         System.out.println(s.splitIntoFibonacci("11235813")); // [1,1,2,3,5,8,13]
         System.out.println(s.splitIntoFibonacci("112358130")); // []
     }
 
     // O(exponential) - time, O(n) - space
+    // return type boolean
     public List<Integer> splitIntoFibonacci(String str) {
         List<Integer> res = new ArrayList<>();
         split(str, 0, res);
 
         return res;
+    }
+
+    // return type void
+    public List<Integer> splitIntoFibonacci2(String str) {
+        List<Integer> res = new ArrayList<>();
+        split2(str, 0, res, new ArrayList<>());
+
+        return res;
+    }
+
+    private void split2(String str, int pos, List<Integer> res, List<Integer> temp) {
+        if (pos == str.length() && temp.size() >= 3) {
+            res.addAll(temp);
+            return;
+        }
+        long num = 0;
+        for (int i = pos; i < str.length(); i++) {
+            num = num * 10 + str.charAt(i) - '0';
+            if (isValidNum(num, str, pos, i, temp)) {
+                temp.add((int)num);
+                split2(str, i + 1, res, temp);
+                temp.remove(temp.size() - 1);
+            }
+        }
     }
 
     private boolean split(String str, int pos, List<Integer> res) {

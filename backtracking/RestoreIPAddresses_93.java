@@ -14,9 +14,9 @@ public class RestoreIPAddresses_93 {
 
     public static void main(String[] args) {
         RestoreIPAddresses_93 s = new RestoreIPAddresses_93();
-        System.out.println(s.restoreIpAddresses("25523412343"));
-        System.out.println(s.restoreIpAddresses("010010"));
-        System.out.println(s.restoreIpAddresses2("25525511135"));
+        System.out.println(s.restoreIpAddresses("25523412343")); //[255.234.123.43]
+        System.out.println(s.restoreIpAddresses("010010")); //[0.10.0.10, 0.100.1.0]
+        System.out.println(s.restoreIpAddresses("25525511135")); //["255.255.11.135", "255.255.111.35"]
     }
 
     public List<String> restoreIpAddresses(String s) {
@@ -97,7 +97,7 @@ public class RestoreIPAddresses_93 {
             }
             String sub = input.substring(start, i+1);
             if (Integer.valueOf(sub) > 255) {
-                continue;
+                break;
             }
             list.add(sub);
             restoreIpAddressesHelper(i+1, count+1, input, list, result);
