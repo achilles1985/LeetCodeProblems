@@ -35,13 +35,16 @@ public class CombinationSumII_40 {
 
     public static void main(String[] args) {
         CombinationSumII_40 s = new CombinationSumII_40();
-        System.out.println(s.combinationSum2(new int[] {1,2,2,2,3}, 4)); //[[1, 2, 2], [5]]
+        System.out.println(s.combinationSum2(new int[] {1,3,2,1,4,5}, 5)); //[[1, 1, 3], [1, 4], [2, 3], [5]]
+
         System.out.println(s.combinationSum2(new int[] {2,5,2,1}, 3)); //[[1, 2, 2], [5]]
+        System.out.println(s.combinationSum2(new int[] {1,2,2,2,3}, 4)); //[[1, 2, 2], [5]]
         System.out.println(s.combinationSum2(new int[] {2,3,5}, 8)); //[[3, 5]]
         System.out.println(s.combinationSum2(new int[] {10,1,2,7,6,1,5}, 8)); //[[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]
         System.out.println(s.combinationSum2(new int[] {2,3,5}, 8)); //[[3, 5]]
     }
 
+    // O(n*2^n) - time, space
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return Collections.emptyList();

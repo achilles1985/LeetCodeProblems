@@ -36,17 +36,17 @@ public class IncreasingSubsequences_491 {
         return new ArrayList(res);
     }
 
-    private void findSubsequencesHelper(Set<List<Integer>> res, List<Integer> curr, int[] nums, int start) {
-        if (curr.size() > 1) {
-            res.add(new ArrayList(curr));
+    private void findSubsequencesHelper(Set<List<Integer>> res, List<Integer> temp, int[] nums, int start) {
+        if (temp.size() > 1) {
+            res.add(new ArrayList(temp));
         }
         for (int i = start; i < nums.length; i++) {
-            if (curr.size() > 0 && curr.get(curr.size() - 1) > nums[i]) {
+            if (temp.size() > 0 && nums[i] < temp.get(temp.size() - 1)) {
                 continue;
             }
-            curr.add(nums[i]);
-            findSubsequencesHelper(res, curr, nums, i + 1);
-            curr.remove(curr.size() - 1);
+            temp.add(nums[i]);
+            findSubsequencesHelper(res, temp, nums, i + 1);
+            temp.remove(temp.size() - 1);
         }
     }
 }

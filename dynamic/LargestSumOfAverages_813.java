@@ -37,13 +37,13 @@ public class LargestSumOfAverages_813 {
         return dfs(A, K, sum, A.length, 0);
     }
 
-    public double dfs(int[] A, int k, int[] sum, int len, int s) {
+    public double dfs(int[] A, int k, int[] sum, int len, int start) {
         if (k == 1) {
-            return ((double)(sum[len-1]-sum[s]+A[s])/(len-s));
+            return ((double)(sum[len-1]-sum[start]+A[start])/(len-start));
         }
         double num = 0;
-        for (int i = s; i + k <= len ; i++) {
-            double avarage = (double) (sum[i] - sum[s] + A[s]) / (i - s + 1);
+        for (int i = start; i + k <= len ; i++) {
+            double avarage = (double) (sum[i] - sum[start] + A[start]) / (i - start + 1);
             double dfs = dfs(A, k - 1, sum, len, i + 1);
             num = Math.max(num, avarage + dfs);
         }

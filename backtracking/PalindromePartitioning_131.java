@@ -3,17 +3,18 @@ package backtracking;
 import java.util.LinkedList;
 import java.util.List;
 
-/** M
+/**
+ * M
  * Given a string s, partition s such that every substring of the partition is a palindrome.
- Return all possible palindrome partitioning of s.
-
- Example:
- Input: "aab"
- Output:
- [
- ["aa","b"],
- ["a","a","b"]
- ]
+ * Return all possible palindrome partitioning of s.
+ * <p>
+ * Example:
+ * Input: "aab"
+ * Output:
+ * [
+ * ["aa","b"],
+ * ["a","a","b"]
+ * ]
  */
 public class PalindromePartitioning_131 {
 
@@ -31,26 +32,26 @@ public class PalindromePartitioning_131 {
         return partitions;
     }
 
-    private void backtrack(String s, List<List<String>> partitions, List<String> part, int start){
-        if(start == s.length()){
+    private void backtrack(String s, List<List<String>> partitions, List<String> part, int start) {
+        if (start == s.length()) {
             partitions.add(new LinkedList(part));
             return;
         }
-        for(int i = start+1; i<=s.length(); i++){
-            String prefix = s.substring(start, i);
-            if(isPalindrome(prefix)) {
+        for (int i = start; i < s.length(); i++) {
+            String prefix = s.substring(start, i + 1);
+            if (isPalindrome(prefix)) {
                 part.add(prefix);
-                backtrack(s, partitions, part, i);
-                part.remove(part.size()-1);
+                backtrack(s, partitions, part, i + 1);
+                part.remove(part.size() - 1);
             }
         }
     }
 
-    private boolean isPalindrome(String word){
+    private boolean isPalindrome(String word) {
         int i = 0;
-        int j = word.length()-1;
-        while(i<j){
-            if(word.charAt(i++) != word.charAt(j--)) {
+        int j = word.length() - 1;
+        while (i < j) {
+            if (word.charAt(i++) != word.charAt(j--)) {
                 return false;
             }
         }
