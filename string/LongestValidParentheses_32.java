@@ -27,6 +27,7 @@ public class LongestValidParentheses_32 {
         System.out.println(s.longestValidParentheses2("(()")); //2
     }
 
+    // O(n) - time, space
     public int longestValidParentheses2(String s) {
         if (s == null || s.isEmpty()) {
             return 0;
