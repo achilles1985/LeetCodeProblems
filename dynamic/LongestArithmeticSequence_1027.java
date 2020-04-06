@@ -1,6 +1,8 @@
 package dynamic;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**M
  * Given an array A of integers, return the length of the longest arithmetic subsequence in A.
@@ -37,31 +39,81 @@ public class LongestArithmeticSequence_1027 {
 
     public static void main(String[] args) {
         LongestArithmeticSequence_1027 s = new LongestArithmeticSequence_1027();
-        System.out.println(s.longestArithSeqLength(new int[]{7,6,5,4,3,2,1})); //7
-        System.out.println(s.longestArithSeqLength(new int[]{9,4,7,2,10})); //3
-        System.out.println(s.longestArithSeqLength(new int[]{3,6,9,12})); //4
-        System.out.println(s.longestArithSeqLength(new int[]{20,1,15,3,10,5,8})); //4
+        System.out.println(s.longestArithSeqLength2(new int[]{9,4,7,2,10})); //3
+        System.out.println(s.longestArithSeqLength2(new int[]{83,20,17,43,52,78,68,45})); //2
+        System.out.println(s.longestArithSeqLength2(new int[]{7,6,5,4,3,2,1})); //7
+        System.out.println(s.longestArithSeqLength2(new int[]{3,6,9,12})); //4
+        System.out.println(s.longestArithSeqLength2(new int[]{20,1,15,3,10,5,8})); //4
     }
 
     // O(n^2) - time, space
-    public int longestArithSeqLength(int[] A) {
-        if (A == null || A.length == 0) {
-            return 0;
+    public int longestArithSeqLengthBF(int[] A) {
+        Integer max = 1;
+        for(int i = 0;i<A.length;i++) {
+            max = Math.max(max, helper(i, A, null));
         }
-        // create an array of map, each array[i] key is the diff, value is the seqence length of this diff up to i
-        HashMap<Integer, Integer>[] dp = new HashMap[A.length];
-        dp[0] = new HashMap();
-        int res = 1;
-        for (int i = 1; i < A.length; i++) {
-            dp[i] = new HashMap();
-            for (int j = 0; j < i; j++) {
-                int diff = A[i] - A[j];
-                int prev = dp[j].getOrDefault(diff, 0) + 1;
-                int cur = Math.max(dp[i].getOrDefault(diff, 0), prev);
-                dp[i].put(diff, cur);
-                res = Math.max(res, cur);
+        return max;
+    }
+
+    private int helper(int index, int[] A, Integer diff) {
+        if(index >= A.length) return 0;
+        Integer max = 0;
+        if(diff == null) {
+            for(int j = index+1;j<A.length;j++) {
+                max = Math.max(max, helper(j, A, A[j]-A[index]));
+            }
+        } else {
+            for(int j = index+1; j<A.length;j++) {
+                if(A[j]-A[index] == diff) {
+                    max = Math.max(max, helper(j, A, diff));
+                }
             }
         }
-        return res + 1;
+        return 1+max;
+    }
+
+    // https://leetcode.com/problems/longest-arithmetic-sequence/discuss/429042/Java-DP-array-explained
+    // O(n^2) - time, space
+    public int longestArithSeqLength2(int[] A) {
+        int res = 0;
+        int[][] dp = new int[A.length][20000];
+        for (int i = 0; i < A.length; i++) {
+            for (int j = 0; j < i; j++) {
+                //get the difference i and j elements, apply 10,000 shift so we can use array indexes
+                int dif = (A[i] - A[j]) + 10000;
+                //int dif = Math.abs(A[i] - A[j]);
+                dp[i][dif] = (dp[j][dif] == 0 ? 1 : dp[j][dif]) + 1;
+                res = Math.max(res, dp[i][dif]);
+            }
+        }
+        return res;
+    }
+
+    // Wrong+
+    public int longestArithSeqLength3(int[] A) {
+        Set<Integer> diffs = new HashSet<>();
+        for (int i = 1; i < A.length; i++) {
+            for (int j = 0; j < A.length; j++) {
+                diffs.add(A[i] - A[j]);
+            }
+        }
+        int max = 0;
+        for (Integer diff: diffs) {
+            int localMax = dfs(diff, A[0], 1, A);
+            max = Math.max(max, localMax);
+        }
+        return max;
+    }
+
+    private int dfs(Integer diff, int prevValue, int index, int[] nums) {
+        if (index >= nums.length) {
+            return 0;
+        }
+        int taken = 0;
+        if (nums[index] - prevValue == diff) {
+            taken = 1 + dfs(diff, nums[index],index + 1, nums);
+        }
+        int notTaken = dfs(diff, prevValue,index + 1, nums);
+        return Math.max(taken, notTaken);
     }
 }

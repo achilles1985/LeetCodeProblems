@@ -1,5 +1,7 @@
 package dynamic;
 
+import java.util.Arrays;
+
 /**M
  Given an array of integers nums and a positive integer k, find whether it's possible to divide this array into k non-empty subsets whose sums are all equal.
 
@@ -23,37 +25,33 @@ public class PartitionToKEqualSumSubsets_698 {
         System.out.println(s.canPartitionKSubsets(new int[]{1,2,3,4,5,1}, 4)); // false
     }
 
+    // O(n!)?? - time, O(n) - space??
     public boolean canPartitionKSubsets(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k > nums.length || k == 0) {
+        int totalSum = Arrays.stream(nums).sum();
+        if (totalSum%k != 0) {
             return false;
         }
-        int sum = 0;
-        for (int num: nums) {
-            sum += num;
-        }
-        if (sum%k != 0) {
-            return false;
-        }
-        int bucketSum = sum/k;
+        int bucketSum = totalSum/k;
         boolean[] used = new boolean[nums.length];
-        return canPartitionKSubsets(0, 0, nums, k, bucketSum, used);
+        return dfs(0, 0, bucketSum, used, nums, k);
     }
 
-    private boolean canPartitionKSubsets(int index, int sum, int[] nums, int k, int targetSum, boolean[] used) {
+    private boolean dfs(int start, int sum, int bucketSum, boolean[] used, int[] nums, int k) {
         if (k == 1) {
             return true;
         }
-        if (sum == targetSum) {
-            return canPartitionKSubsets(0, 0, nums, k-1, targetSum, used);
+        if (sum == bucketSum) {
+            return dfs(0, 0, bucketSum, used, nums, k - 1);
         }
-        for (int i = index; i < nums.length; i++) {
-            if (!used[i] && sum + nums[i] <= targetSum) {
-                used[i] = true;
-                if (canPartitionKSubsets(i + 1, sum + nums[i], nums, k, targetSum, used)) {
-                    return true;
-                }
-                used[i] = false;
+        for (int i = start; i < nums.length; i++) {
+            if (sum + nums[i] > bucketSum || used[i]) {
+                continue;
             }
+            used[i] = true;
+            if (dfs(i+1, sum + nums[i], bucketSum, used, nums, k)) {
+                return true;
+            }
+            used[i] = false;
         }
         return false;
     }

@@ -1,6 +1,8 @@
 package dynamic;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**M
  * Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets

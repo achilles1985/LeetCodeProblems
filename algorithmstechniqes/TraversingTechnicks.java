@@ -5,6 +5,7 @@ public class TraversingTechnicks {
     public static void main(String[] args) {
         TraversingTechnicks s = new TraversingTechnicks();
         s.first(new int[]{1,2,3,4,5}); //
+        System.out.println("Second technic");
         s.second(new int[]{1,2,3,4,5}); //
     }
 
