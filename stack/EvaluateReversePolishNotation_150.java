@@ -1,8 +1,8 @@
-package stack.EvaluateReversePolishNotation_150;
+package stack;
 
 import java.util.Stack;
 
-/**
+/**M
  Evaluate the value of an arithmetic expression in Reverse Polish Notation.
  Valid operators are +, -, *, /. Each operand may be an integer or another expression.
 
@@ -32,7 +32,50 @@ import java.util.Stack;
  = 17 + 5
  = 22
  */
-public class Solution {
+public class EvaluateReversePolishNotation_150 {
+
+    public static void main(String[] args) {
+        EvaluateReversePolishNotation_150 s = new EvaluateReversePolishNotation_150();
+        System.out.println(s.evalRPN(new String[] { "2", "1", "+", "3", "*" })); // 9
+        System.out.println(s.evalRPN(new String[] { "4", "13", "5", "/", "+" })); // 6
+        System.out.println(s.evalRPN(new String[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" })); // 22
+    }
+
+    public static double evaluate(String expr) {
+        String[] tokens = expr.split(" ");
+        Stack<Double> stack = new Stack<>();
+        for(String token : tokens) {
+            switch(token) {
+                case "+" : {
+                    double val1 = stack.pop();
+                    double val2 = stack.pop();
+                    stack.push(val1 + val2);
+                    break;
+                }
+                case "-" : {
+                    double val2 = stack.pop();
+                    double val1 = stack.pop();
+                    stack.push(val1 - val2);
+                    break;
+                }
+                case "*" : {
+                    double val1 = stack.pop();
+                    double val2 = stack.pop();
+                    stack.push(val1 * val2);
+                    break;
+                }
+                case "/" : {
+                    double val2 = stack.pop();
+                    double val1 = stack.pop();
+                    stack.push(val1 / val2);
+                    break;
+                }
+                default :
+                    stack.push(Double.parseDouble(token));
+            }
+        }
+        return stack.pop();
+    }
 
     // O(n) - time, O(n) - space because of the stack
     public int evalRPN(String[] tokens) {

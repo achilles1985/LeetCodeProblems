@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Suppose n people are sitting in a circular table with names A, B, C, D,…. Given a name, we need to print all n people (in order) starting from given name.
+ * Suppose n people are sitting in a circular table with names A, B, C, D,….
+ * Given a name, we need to print all n people (in order) starting from given name.
  */
 public class CircularArray {
 
