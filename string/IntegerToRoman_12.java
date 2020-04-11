@@ -64,7 +64,7 @@ public class IntegerToRoman_12 {
         System.out.println(s.intToRoman(58)); // LVIII
     }
 
-    // O(d*log(k)) - time, O(1) - space, where d - number of digits in a number, k - map size
+    // O(1) - time (there is a limited set of numbers <= 3999), O(1) - space
     public String intToRoman(int num) {
         if (num < 0 || num > 3999) {
             return "";

@@ -1,5 +1,7 @@
 package design;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -39,8 +41,8 @@ Mistakes: Handle 0 capacity, LinkedHashSet has O(1) - remove time.
  */
 public class LFUCache {
 
-    private Map<Integer, CachItem> nodes = new HashMap<>(); // to store (key, value, freq) and have O(1) - get, put
-    private Map<Integer, LinkedHashSet<Integer>> keysByFrequency = new HashMap<>(); // to store frequency -> {key1, key2, ..., keyN} and have O(1) - remove LFU
+    private Map<Integer, CachItem> keyToCacheItem = new HashMap<>(); // to store (key, value, freq) and have O(1) - get, put
+    private Map<Integer, LinkedHashSet<Integer>> frequencyToKeys = new HashMap<>(); // to store frequency -> {key1, key2, ..., keyN} and have O(1) - remove LFU
     private int leastFrequency = 1;
     private int maxCapacity;
     private int capacity = 0;
@@ -50,18 +52,19 @@ public class LFUCache {
     }
 
     public int get(int key) {
-        if (!nodes.containsKey(key)) {
+        LinkedHashSet<Integer> lh = new LinkedHashSet<>();
+        if (!keyToCacheItem.containsKey(key)) {
             return -1;
         }
-        CachItem oldItem = nodes.get(key);
-        keysByFrequency.get(oldItem.frequency).remove(oldItem.key);
-        if (keysByFrequency.get(oldItem.frequency).isEmpty()) {
-            keysByFrequency.remove(oldItem.frequency);
+        CachItem oldItem = keyToCacheItem.get(key);
+        frequencyToKeys.get(oldItem.frequency).remove(oldItem.key);
+        if (frequencyToKeys.get(oldItem.frequency).isEmpty()) {
+            frequencyToKeys.remove(oldItem.frequency);
             leastFrequency++;
         }
         oldItem.frequency++;
-        nodes.put(key, oldItem);
-        keysByFrequency.computeIfAbsent(oldItem.frequency, k -> new LinkedHashSet<>()).add(key);
+        keyToCacheItem.put(key, oldItem);
+        frequencyToKeys.computeIfAbsent(oldItem.frequency, k -> new LinkedHashSet<>()).add(key);
 
         return oldItem.value;
     }
@@ -71,30 +74,30 @@ public class LFUCache {
         if (maxCapacity == 0) {
             return;
         }
-        if (!nodes.containsKey(key)) {
+        if (!keyToCacheItem.containsKey(key)) {
             if (capacity == maxCapacity) {
                 // remove LFU item from both maps
-                Integer keyToRemove = keysByFrequency.get(leastFrequency).iterator().next();
-                keysByFrequency.get(leastFrequency).remove(keyToRemove);
-                nodes.remove(keyToRemove);
-                if (keysByFrequency.get(leastFrequency).isEmpty()) {
-                    keysByFrequency.remove(leastFrequency);
+                Integer keyToRemove = frequencyToKeys.get(leastFrequency).iterator().next();
+                frequencyToKeys.get(leastFrequency).remove(keyToRemove);
+                keyToCacheItem.remove(keyToRemove);
+                if (frequencyToKeys.get(leastFrequency).isEmpty()) {
+                    frequencyToKeys.remove(leastFrequency);
                 }
 
                 // add a new item
                 CachItem item = new CachItem(key, value, 1);
-                nodes.put(key, item);
-                keysByFrequency.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key);
+                keyToCacheItem.put(key, item);
+                frequencyToKeys.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key);
             } else {
                 add(key, value, 1);
                 capacity++;
             }
         } else {
-            CachItem oldItem = nodes.get(key);
-            keysByFrequency.get(oldItem.frequency).remove(key);
-            nodes.remove(oldItem.key);
-            if (keysByFrequency.get(oldItem.frequency).isEmpty()) {
-                keysByFrequency.remove(oldItem.frequency);
+            CachItem oldItem = keyToCacheItem.get(key);
+            frequencyToKeys.get(oldItem.frequency).remove(key);
+            keyToCacheItem.remove(oldItem.key);
+            if (frequencyToKeys.get(oldItem.frequency).isEmpty()) {
+                frequencyToKeys.remove(oldItem.frequency);
             }
 
             // new item
@@ -105,8 +108,8 @@ public class LFUCache {
 
     private void add(int key, int value, int frequency) {
         CachItem item = new CachItem(key, value, frequency);
-        nodes.put(key, item);
-        keysByFrequency.computeIfAbsent(item.frequency, k -> new LinkedHashSet<>()).add(key);
+        keyToCacheItem.put(key, item);
+        frequencyToKeys.computeIfAbsent(item.frequency, k -> new LinkedHashSet<>()).add(key);
     }
 
     public static void main(String[] args) {
