@@ -39,15 +39,6 @@ public class Solution {
         return builder.toString();
     }
 
-    private int find(char[] chars, char target, int start) {
-        for (int i = start; i < chars.length; i++) {
-            if (chars[i] == target) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     private String reverse(String sentence) {
         int i = 0;
         int j = sentence.length() - 1;
@@ -85,6 +76,15 @@ public class Solution {
             i++;
             j--;
         }
+    }
+
+    private int find(char[] chars, char target, int start) {
+        for (int i = start; i < chars.length; i++) {
+            if (chars[i] == target) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

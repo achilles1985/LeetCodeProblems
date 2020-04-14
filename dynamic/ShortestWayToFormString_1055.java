@@ -29,7 +29,7 @@ import java.util.*;
  *     The lengths of source and target string are between 1 and 1000.
  */
 /*
-    Traverse through source several times. each time we reach end of source, increment counter.
+    Traverse through source several times. Each time we reach end of source, increment counter.
  */
 public class ShortestWayToFormString_1055 {
 
@@ -37,8 +37,8 @@ public class ShortestWayToFormString_1055 {
         ShortestWayToFormString_1055 s = new ShortestWayToFormString_1055();
         System.out.println(s.shortestWay3("xyz", "xzyxz")); //3 xz + y + xz
         System.out.println(s.shortestWay3("abc", "abcbc")); //2 abc + bc
-        System.out.println(s.shortestWay3("abc", "acdbc")); //-1
         System.out.println(s.shortestWay3("adbsc", "addddddddddddsbc")); //13
+        System.out.println(s.shortestWay3("abc", "acdbc")); //-1
     }
 
     // O(m*n) - time, O(1) - space the same as shortsWay2
@@ -46,14 +46,14 @@ public class ShortestWayToFormString_1055 {
         if (source.length() == 0 || target.length() == 0) {
             return 0;
         }
-        Map<Integer, List<Integer>> indexesByChar = new HashMap<>();
+        Map<Integer, List<Integer>> charToIndexes = new HashMap<>();
         for (int i = 0; i < source.length(); i++) {
-            indexesByChar.computeIfAbsent(source.charAt(i)-'a', key -> indexesByChar.getOrDefault(key, new ArrayList<>())).add(i);
+            charToIndexes.computeIfAbsent(source.charAt(i)-'a', key -> charToIndexes.getOrDefault(key, new ArrayList<>())).add(i);
         }
         int j = 0;
         int result = 1;
         for (int i = 0; i < target.length(); ) {
-            List<Integer> indexes = indexesByChar.getOrDefault(target.charAt(i) - 'a', new ArrayList<>());
+            List<Integer> indexes = charToIndexes.getOrDefault(target.charAt(i) - 'a', new ArrayList<>());
             if (indexes.isEmpty()) {
                 return -1;
             }

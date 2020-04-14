@@ -41,6 +41,8 @@ public class UsefulJava {
         nums.stream()
                 .mapToInt(n -> n)
                 .toArray();
+        // NavigatableSet extends SortedSet
+        NavigableSet<Integer> navigableSet = new TreeSet<>();
     }
 
     // start from second element from the last

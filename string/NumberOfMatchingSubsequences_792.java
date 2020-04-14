@@ -20,6 +20,7 @@ import java.util.List;
  * The length of words will be in the range of [1, 5000].
  * The length of words[i] will be in the range of [1, 50].
  */
+//https://leetcode.com/problems/number-of-matching-subsequences/discuss/117634/Efficient-and-simple-go-through-words-in-parallel-with-explanation/
 public class NumberOfMatchingSubsequences_792 {
 
     public static void main(String[] args) {
@@ -44,7 +45,7 @@ public class NumberOfMatchingSubsequences_792 {
         return result;
     }
 
-    // O(words + S) - time, O(words) - space
+    // O(words + S) - time, O(words) - space, words - sum length of all words.
     public int numMatchingSubseq2(String S, String[] words) {
         if (S == null || S.length() == 0 || words == null || words.length == 0) {
             return 0;
