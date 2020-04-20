@@ -1,11 +1,6 @@
 package design;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**M
  * Design and implement an iterator to flatten a 2d vector. It should support the following operations: next and
@@ -32,54 +27,39 @@ import java.util.Queue;
  */
 public class Flatten_2DVector_251_2 {
 
-    private Iterator<List<Integer>> outer;
-    private Iterator<Integer> inner;
+    private int outer;
+    private int inner;
+    private int[][] origin;
 
     public Flatten_2DVector_251_2(int[][] v) {
-        List<List<Integer>> outerList = new ArrayList<>();
-        for (int i = 0; i < v.length; i++) {
-            List<Integer> innerList = new ArrayList<>();
-            if (v[i] != null && v[i].length != 0) {
-                for (int j = 0; j < v[i].length; j++) {
-                    innerList.add(v[i][j]);
-                }
-                outerList.add(innerList);
-            }
-        }
-        outer = outerList.iterator();
-        advanceListIterator();
+        origin = v;
     }
 
     // O(1) - time, space
     public int next() {
         if (!hasNext()) {
-            throw new java.util.NoSuchElementException();
+            throw new NoSuchElementException();
         }
-        Integer ret = inner.next();
-        if (!inner.hasNext()) {
-            advanceListIterator();
-        }
-        return ret;
+        return origin[outer][inner++];
     }
 
     // O(1) - time, space
     public boolean hasNext() {
-        return inner != null && inner.hasNext();
+        advanceIterator();
+        return outer < origin.length;
     }
 
-    private void advanceListIterator() {
-        while (outer.hasNext()) {
-            inner = outer.next().iterator();
-            if (inner.hasNext()) {
-                break;
-            }
+    private void advanceIterator() {
+        while (outer < origin.length && inner == origin[outer].length) {
+            inner = 0;
+            outer++;
         }
     }
 
     public static void main(String[] args) {
-        //Flatten_2DVector_251 s = new Flatten_2DVector_251(new int[][]{{1,2},{3},{4,5}});
+        Flatten_2DVector_251 s = new Flatten_2DVector_251(new int[][]{{1,2},{3},{4,5}});
         //Flatten_2DVector_251_2 s = new Flatten_2DVector_251_2(new int[][]{{},null,{}});
-        Flatten_2DVector_251_2 s = new Flatten_2DVector_251_2(new int[][]{{1}});
+        //Flatten_2DVector_251_2 s = new Flatten_2DVector_251_2(new int[][]{{1}});
         System.out.println(s.next()); //1
         System.out.println(s.next()); //2
         System.out.println(s.next()); //3

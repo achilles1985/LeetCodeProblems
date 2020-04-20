@@ -43,6 +43,15 @@ public class UsefulJava {
                 .toArray();
         // NavigatableSet extends SortedSet
         NavigableSet<Integer> navigableSet = new TreeSet<>();
+
+        // Dequeue
+        Deque<Integer> stack = new ArrayDeque<>(Arrays.asList(1,2,3,4,5));
+        stack.pollFirst();
+        stack.pollLast();
+        stack.addFirst(1);
+        stack.addLast(2);
+        stack.peekFirst();
+        stack.peekLast();
     }
 
     // start from second element from the last
