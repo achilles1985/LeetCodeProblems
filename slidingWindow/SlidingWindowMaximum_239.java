@@ -31,8 +31,10 @@ public class SlidingWindowMaximum_239 {
 
     public static void main(String[] args) {
         SlidingWindowMaximum_239 s = new SlidingWindowMaximum_239();
-        SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-2,-3,-4,-5,-6}, 3)); //[3,3,5,5,6,7]
         SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
+        SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,1,2,0,5}, 3)); //[3,3,2,5]
+        SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-2,-3,-4,-5,-6}, 3)); //[3,3,5,5,6,7]
+
         SolutionUtils.print(s.maxSlidingWindowDP(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
 
         SolutionUtils.print(s.maxSlidingWindowBF(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]

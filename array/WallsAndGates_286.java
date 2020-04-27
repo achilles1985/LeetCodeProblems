@@ -66,24 +66,8 @@ public class WallsAndGates_286 {
         s.wallsAndGates(rooms2); // [[0,-1],[1,2]]
     }
 
-    // O(rows*cols) - time, space
-    public void wallsAndGates(int[][] rooms) {
-        if (rooms == null || rooms.length == 0) {
-            return;
-        }
-        boolean[][] visited = new boolean[rooms.length][rooms[0].length];
-        for (int i = 0; i < rooms.length; i++) {
-            for (int j = 0; j < rooms[0].length; j++) {
-                if (rooms[i][j] == 0) {
-                    dfs(i,j,0,visited,rooms);
-                }
-            }
-        }
-        SolutionUtils.print(rooms);
-    }
-
     // BFS approach. O(rows*cols) - time, space
-    public void wallsAndGates3(int[][] rooms) {
+    public void wallsAndGatesBFS(int[][] rooms) {
         if (rooms == null || rooms.length == 0) {
             return;
         }
@@ -114,6 +98,22 @@ public class WallsAndGates_286 {
         }
     }
 
+    // O(rows*cols) - time, space
+    public void wallsAndGates(int[][] rooms) {
+        if (rooms == null || rooms.length == 0) {
+            return;
+        }
+        boolean[][] visited = new boolean[rooms.length][rooms[0].length];
+        for (int i = 0; i < rooms.length; i++) {
+            for (int j = 0; j < rooms[0].length; j++) {
+                if (rooms[i][j] == 0) {
+                    dfs(i,j,0,visited,rooms);
+                }
+            }
+        }
+        SolutionUtils.print(rooms);
+    }
+
     private void dfs(int i, int j, int distance, boolean[][] visited, int[][] rooms) {
         if (i < 0 || i >= rooms.length || j < 0 || j >= rooms[0].length || rooms[i][j] == -1) {
             return;
@@ -135,7 +135,7 @@ public class WallsAndGates_286 {
 
     // A bit optimized version, got rid of visited[][]
     // O(rows*cols) - time, O(w) - space, w - max stack depth
-    public void wallsAndGates2(int[][] rooms) {
+    public void wallsAndGatesDFS(int[][] rooms) {
         if (rooms == null || rooms.length == 0) {
             return;
         }

@@ -4,7 +4,6 @@ import java.util.*;
 
 /**H
  * Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.
- *
  * If there is no such window in S that covers all characters in T, return the empty string "". If there are multiple
  * such minimum-length windows, return the one with the left-most starting index.
  *
@@ -25,63 +24,63 @@ public class MinimumWindowSubsequence_727 {
 
     public static void main(String[] args) {
         MinimumWindowSubsequence_727 s = new MinimumWindowSubsequence_727();
-        System.out.println(s.minWindow("abcdebdde", "bde")); //deb
-        System.out.println(s.minWindow("ADOBECODEBANC", "ABC")); //BANC
+        System.out.println(s.minWindow("abcdebdde", "bde")); //bcde
+        System.out.println(s.minWindow("ADOBECODEBANC", "ABC")); //ADOBEC
         System.out.println(s.minWindow("bstl", "l")); //l
+        System.out.println(s.minWindow("jmeqksfrsdcmsiwvaovztaqenprpvnbstl", "u")); //""
+        System.out.println(s.minWindow("wcbsuiyzacfgrqsqsnodwmxzkz", "xwqe")); //""
+        System.out.println(s.minWindow("cnhczmccqouqadqtmjjzl", "mm")); //mccqouqadqtm
 
-        System.out.println(s.minWindowBF("abcdebdde", "bde")); //deb
-        System.out.println(s.minWindowBF("ADOBECODEBANC", "ABC")); //BANC
-        System.out.println(s.minWindowBF("bstl", "l")); //l
+        //System.out.println(s.minWindowBF("abcdebdde", "bde")); //deb
+        //System.out.println(s.minWindowBF("ADOBECODEBANC", "ABC")); //BANC
+        //System.out.println(s.minWindowBF("bstl", "l")); //l
     }
 
-    // O(s + t) - time, space
-    public String minWindow(String s, String t) {
-        Map<Character, Integer> sourceToCounter = new HashMap<>();
-        Map<Character, Integer> targetToCounter = new HashMap<>();
-        for (int i = 0; i < t.length(); i++) {
-            char c = t.charAt(i);
-            targetToCounter.put(c, targetToCounter.getOrDefault(c, 0) + 1);
+    // O(S*T) - time, O(S) - space
+    public String minWindow(String S, String T) {
+        if (S == null || S.length() == 0 || T == null || T.length() == 0) {
+            return "";
         }
-
-        int targetSize = targetToCounter.size();
-        int currentSize = 0;
-        int right = 0, left = 0;
-        int min = Integer.MAX_VALUE;
-        String result = "";
-        while (right < s.length()) {
-            char rightChar = s.charAt(right);
-            sourceToCounter.put(rightChar, sourceToCounter.getOrDefault(rightChar, 0) + 1);
-            if (targetToCounter.containsKey(rightChar) && targetToCounter.get(rightChar) == sourceToCounter.get(rightChar)) {
-                currentSize++;
-            }
-            while (left <= right && currentSize == targetSize) {
-                char leftChar = s.charAt(left);
-                if (right - left + 1 < min) {
-                    min = right - left + 1;
-                    result = s.substring(left, right + 1);
-                }
-                sourceToCounter.put(leftChar, sourceToCounter.getOrDefault(leftChar, 0) - 1);
-                if (targetToCounter.containsKey(leftChar) && sourceToCounter.get(leftChar) < targetToCounter.get(leftChar)) {
-                    currentSize--;
-                }
-                left++;
-            }
-            right++;
+        int[][] dp = new int[S.length() + 1][T.length() + 1];
+        for (int i = 1; i <= T.length(); i++) {
+            dp[0][i] = -1;
         }
-        return result;
+        for (int i = 1; i <= S.length(); i++) {
+            dp[i][0] = i;
+        }
+        int minLen = Integer.MAX_VALUE;
+        int startPos = -1;
+        for (int i = 1; i <= S.length(); i++) {
+            for (int j = 1; j <= T.length(); j++) {
+                dp[i][j] = -1;
+                if (S.charAt(i - 1) == T.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+            if (dp[i][T.length()] != -1) {
+                int len = i - dp[i][T.length()];
+                if (len < minLen) {
+                    startPos = dp[i][T.length()];
+                    minLen = len;
+                }
+            }
+        }
+        return startPos == -1? "" : S.substring(startPos, startPos + minLen);
     }
 
     // O(n^3) - time, O(1) - space
-    public String minWindowBF(String s, String t) {
-        if (s == null || s.length() == 0 || t == null || t.length() == 0) {
+    public String minWindowBF(String S, String T) {
+        if (S == null || S.length() == 0 || T == null || T.length() == 0) {
             return "";
         }
         int min = Integer.MAX_VALUE;
         String result = "";
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i; j <= s.length(); j++) {
-                String substr = s.substring(i, j);
-                if (match(substr, t)) {
+        for (int i = 0; i < S.length(); i++) {
+            for (int j = i; j <= S.length(); j++) {
+                String substr = S.substring(i, j);
+                if (match(substr, T)) {
                     if (substr.length() < min) {
                         min = substr.length();
                         result = substr;

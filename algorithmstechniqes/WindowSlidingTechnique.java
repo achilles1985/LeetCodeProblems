@@ -22,6 +22,7 @@ public class WindowSlidingTechnique {
         System.out.println(windowSliding(new int[] {1, 4, 2, 10, 23, 3, 1, 0, 20}, 4)); // 39
     }
 
+    // O(n^2) - time, O(1) - space
     private static int bruteForce(int[] arr, int k) {
         int maxSum = Integer.MIN_VALUE;
         for (int i = 0; i <= arr.length - k; i++) {
