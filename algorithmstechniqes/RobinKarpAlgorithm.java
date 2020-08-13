@@ -34,9 +34,9 @@ public class RobinKarpAlgorithm {
         return false;
     }
 
-    // val1 = text[0]*3^0 + text[1]*3^1 + text[2]*3^2
-    // val2 = text[1]*3^1 + text[2]*3^2 - text[0]*3^0 + text[3]*3^3)
-    // val3 = val2/3, where 3 - prime number
+    // oldHash = text[0]*3^0 + text[1]*3^1 + text[2]*3^2
+    // tempHash = oldHash - text[0]*3^0 + text[3]*3^3
+    // newHash = tempHash/3 (to decrease power of each member 3->2, 2->1, 1->0), where 3 - prime number
     private int rollingHash(String text, int oldTextHash, int start, int patternLength) {
         int val1 = oldTextHash - (text.charAt(start)-'0');
         int val2 = val1 + (text.charAt(start + patternLength)-'0')*(int)Math.pow(3, patternLength);

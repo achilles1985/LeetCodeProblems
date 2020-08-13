@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ArrayListTest {
@@ -54,5 +55,6 @@ public class ArrayListTest {
         // first index of specified element
         int item = l1.indexOf(2);
         System.out.println(item);
+
     }
 }

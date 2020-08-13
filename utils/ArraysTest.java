@@ -1,10 +1,21 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class ArraysTest {
 
     public static void main(String[] args) {
+        Map<String, String> s1 = new HashMap();
+        s1.put(null, "abs");
+        s1.put("abc", "123");
+        s1.put(null, "njk");
         int[] arr = new int[]{12,5,17};
         String[] arr2 = new String[]{"t", "a", "b"};
         SolutionUtils.print(arr);
@@ -12,9 +23,7 @@ public class ArraysTest {
 
         // copyOf
         int[] copy = Arrays.copyOf(arr, 5);
-        String[] strCopy1 = Arrays.copyOf(arr2, 5);
         SolutionUtils.print(copy);
-        SolutionUtils.print(strCopy1);
 
         // copyOfRange
         String[] strCopy2 = Arrays.copyOfRange(arr2, 2, 3);
@@ -32,5 +41,7 @@ public class ArraysTest {
         // binarySearch
         System.out.println(Arrays.binarySearch(arr, 12));
         System.out.println(Arrays.binarySearch(arr, 6));
+
+        List<Integer> l = new ArrayList<>();
     }
 }
