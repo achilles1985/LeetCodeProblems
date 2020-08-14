@@ -1,7 +1,6 @@
-package string;
+package string.medium;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /** M
  Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
@@ -23,8 +22,8 @@ public class MultiplyStrings_43 {
 
     public static void main(String[] args) {
         MultiplyStrings_43 s = new MultiplyStrings_43();
-        System.out.println(s.multiply("2", "3")); // 6
         System.out.println(s.multiply("123", "456")); // 56088
+        System.out.println(s.multiply("2", "3")); // 6
         System.out.println(s.multiply("999", "999")); // 56088
     }
 

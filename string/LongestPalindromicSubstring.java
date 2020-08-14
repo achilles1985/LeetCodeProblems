@@ -1,6 +1,6 @@
 package string;
 
-/**
+/** M
  * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
  *
  * Example 1:
@@ -16,9 +16,9 @@ public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring s = new LongestPalindromicSubstring();
-        System.out.println(s.longestPalindrome("bb")); // bb
-        System.out.println(s.longestPalindrome("babad")); // bab
-        System.out.println(s.longestPalindrome("cbbd")); // bb
+        System.out.println(s.longestPalindromeBF("bb")); // bb
+        System.out.println(s.longestPalindromeBF("babad")); // bab
+        System.out.println(s.longestPalindromeBF("cbbd")); // bb
     }
 
     // O(n^2) - time, O(1) - space, https://leetcode.com/problems/longest-palindromic-substring/solution/ (Approach 4: Expand Around Center)
@@ -52,7 +52,7 @@ public class LongestPalindromicSubstring {
     }
 
     // O(n^3) - time, O(1) - space
-    public String longestPalindrome(String s) {
+    public String longestPalindromeBF(String s) {
         if (s == null || s.isEmpty() || s.length() == 1) {
             return s;
         }

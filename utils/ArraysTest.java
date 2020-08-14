@@ -16,17 +16,17 @@ public class ArraysTest {
         s1.put(null, "abs");
         s1.put("abc", "123");
         s1.put(null, "njk");
-        int[] arr = new int[]{12,5,17};
-        String[] arr2 = new String[]{"t", "a", "b"};
+        int[] arr = new int[]{1,2,3,4,5,6,7,8};
+        String[] arr2 = new String[]{"a","b","c","d","e"};
         SolutionUtils.print(arr);
         SolutionUtils.print(arr2);
 
         // copyOf
-        int[] copy = Arrays.copyOf(arr, 5);
+        int[] copy = Arrays.copyOf(arr, 3); // [1,2,3]
         SolutionUtils.print(copy);
 
         // copyOfRange
-        String[] strCopy2 = Arrays.copyOfRange(arr2, 2, 3);
+        String[] strCopy2 = Arrays.copyOfRange(arr2, 1, 3); //[b,c]
         SolutionUtils.print(strCopy2);
 
         // System.arraycopy()

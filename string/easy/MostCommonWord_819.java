@@ -1,4 +1,4 @@
-package string;
+package string.easy;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,12 +32,44 @@ import java.util.Set;
  There are no hyphens or hyphenated words.
  Words only consist of letters, never apostrophes or other punctuation symbols.
  */
+/*
+    \\W+ - non-word character
+    \\S+ - non-white space character
+
+    \\w+ - word character (a-zA-Z_0-9)
+    \\s+ - white space character (\t\n\x0B\f\r)
+ */
 public class MostCommonWord_819 {
 
     public static void main(String[] args) {
         MostCommonWord_819 s = new MostCommonWord_819();
-        System.out.println(s.mostCommonWord("Bob hit a ball, the hit BALL flew far after it was hit.", new String[]{"hit"})); // ball
-        System.out.println(s.mostCommonWord("Bob", new String[]{})); // ball
+        System.out.println(s.mostCommonWord2("Bob hit a ball, the hit BALL flew far after it was hit.", new String[]{"hit"})); // ball
+        System.out.println(s.mostCommonWord2("Bob", new String[]{})); //
+    }
+
+    // O(n+m) - time, space; n - number of words in paragraph, m - number of banned words
+    public String mostCommonWord2(String paragraph, String[] banned) {
+        if (paragraph == null || paragraph.isEmpty()) {
+            return "";
+        }
+        Set<String> bannedWords = new HashSet<>();
+        for (String word: banned) {
+            bannedWords.add(word);
+        }
+        final String[] words = paragraph.split("\\W+");
+        Map<String, Integer> frequency = new HashMap<>();
+        for (String word: words) {
+            frequency.put(word.toLowerCase(), frequency.getOrDefault(word.toLowerCase(), 1) + 1);
+        }
+        String result = "";
+        int count = 0;
+        for (Map.Entry<String, Integer> entry: frequency.entrySet()) {
+            if (entry.getValue() > count && !bannedWords.contains(entry.getKey())) {
+                count = entry.getValue();
+                result = entry.getKey();
+            }
+        }
+        return result;
     }
 
     // O(n + m) - time, O(n+m) - space, n - number of chars in paragraph, m - number of banned

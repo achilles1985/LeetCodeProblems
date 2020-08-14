@@ -1,6 +1,6 @@
 package string;
 
-/** M
+/** E
  Given two strings S and T, determine if they are both one edit distance apart.
 
  Example
@@ -47,13 +47,12 @@ public class OneEditDistance {
         while (i < s1.length() && j < s2.length()) {
             if (s1.charAt(i) == s2.charAt(j)) {
                 i++;
-                j++;
             } else {
                 if (i != j) {
                     return false;
                 }
-                j++;
             }
+            j++;
         }
         return true;
     }

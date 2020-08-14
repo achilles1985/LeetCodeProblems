@@ -1,4 +1,4 @@
-package string;
+package string.easy;
 
 /**E
  *  Given two strings s and t which consist of only lowercase letters.
@@ -9,8 +9,7 @@ package string;
  * Input:
  * s = "abcd"
  * t = "abcde"
- * Output:
- * e
+ * Output: e
  *
  * Explanation:
  * 'e' is the letter that was added.
