@@ -7,49 +7,58 @@ public class RobinKarpAlgorithm {
 
     public static void main(String[] args) {
         RobinKarpAlgorithm s = new RobinKarpAlgorithm();
-        System.out.println(s.patternSearch("arp", "robinkarp")); // true
-        System.out.println(s.patternSearch("bin", "robinkarp")); // true
-        System.out.println(s.patternSearch("lol", "robinkarp")); // false
-        System.out.println(s.patternSearch("ro", "robinkarp")); // true
+        System.out.println(s.patternSearchBF("ro", "robinkarp")); // 0
+        System.out.println(s.patternSearchBF("arp", "robinkarp")); // 6
+        System.out.println(s.patternSearchBF("bin", "robinkarp")); // 2
+        System.out.println(s.patternSearchBF("lol", "robinkarp")); // -1
+
+        System.out.println(s.patternSearch("ro", "robinkarp")); // 0
+        System.out.println(s.patternSearch("arp", "robinkarp")); // 6
+        System.out.println(s.patternSearch("bin", "robinkarp")); // 2
+        System.out.println(s.patternSearch("lol", "robinkarp")); // -1
     }
 
-    // O(n) - time, O(1) - space
-    public boolean patternSearch(String pattern, String text) {
-        int patternHash = newHash(pattern, 0, pattern.length());
-        int textHash = newHash(text, 0, pattern.length());
+    // O(p*t) - time, O(1) - space
+    public int patternSearchBF(String pattern, String text) {
         for (int i = 0; i <= text.length() - pattern.length(); i++) {
-            if (patternHash == textHash) {
+            String sub = text.substring(i,  i + pattern.length());
+            if (pattern.equals(sub)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // O(p+t) - time, O(1) - space
+    public int patternSearch(String pattern, String text) {
+        if (pattern == null || pattern.isEmpty()) {
+            return 0;
+        }
+        if (text == null || text.isEmpty() || text.length() < pattern.length()) {
+            return -1;
+        }
+        int pHash = 0;
+        // pHash = p[0]*3^0 + p[1]*3^1 + p[2]*s^2
+        for (int i = 0; i < pattern.length(); i++) {
+            pHash = pHash + (pattern.charAt(i) - 'a') * (int) Math.pow(3.0, i);
+        }
+        int tHash = 0;
+        for (int i = 0; i <= text.length() - pattern.length(); i++) {
+            // hash of first pLength substr in text
+            if (i == 0) {
                 for (int j = 0; j < pattern.length(); j++) {
-                    if (pattern.charAt(j) != text.charAt(i+j)) {
-                        return false;
-                    }
+                    tHash = tHash + (text.charAt(j) - 'a') * (int) Math.pow(3.0, j);
                 }
-                return true;
+            } else {
+                //                               first substr char    last substr char
+                // rollingHash: tHash = (tHash - text[i - 1] * 3^0      + text[i+patternL-1] * 3^patternL)/3
+                tHash = (tHash - (text.charAt(i - 1) - 'a') + (text.charAt(i + pattern.length() - 1) - 'a') * (int) Math.pow(3.0, pattern.length()))/3;
             }
-            if (i + pattern.length() <= text.length()-1) {
-                textHash = rollingHash(text, textHash, i, pattern.length());
+            if (pHash == tHash) {
+                return i;
             }
         }
-
-        return false;
+        return -1;
     }
 
-    // oldHash = text[0]*3^0 + text[1]*3^1 + text[2]*3^2
-    // tempHash = oldHash - text[0]*3^0 + text[3]*3^3
-    // newHash = tempHash/3 (to decrease power of each member 3->2, 2->1, 1->0), where 3 - prime number
-    private int rollingHash(String text, int oldTextHash, int start, int patternLength) {
-        int val1 = oldTextHash - (text.charAt(start)-'0');
-        int val2 = val1 + (text.charAt(start + patternLength)-'0')*(int)Math.pow(3, patternLength);
-        int newHash = val2/3;
-        return newHash;
-    }
-
-    // text[0]*3^0 + text[1]*3^1 + text[2]*3^2 ... + text[i]*3^i
-    private int newHash(String str, int start, int end) {
-        int hash = 0;
-        for (int i = start; i < end; i++) {
-            hash += (str.charAt(i)-'0')*Math.pow(3, i);
-        }
-        return hash;
-    }
 }
