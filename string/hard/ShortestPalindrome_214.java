@@ -1,7 +1,4 @@
-package string;
-
-import java.util.ArrayList;
-import java.util.List;
+package string.hard;
 
 /** H
  * Given a string s, you are allowed to convert it to a palindrome by adding characters in front of it. Find and
@@ -24,8 +21,21 @@ public class ShortestPalindrome_214 {
         System.out.println(s.shortestPalindrome("aacecaaa")); //aaacecaaa
         System.out.println(s.shortestPalindrome("abcd")); //dcbabcd
         System.out.println(s.shortestPalindrome("abaklm")); //mlkabaklm
+    }
 
-        List<String> l = new ArrayList<>();
+    // O(n^2) - time, O(n) - space, to store reverse string
+    public String shortestPalindromeBF(String s) {
+        if (s == null || s.isEmpty() || s.length() == 1) {
+            return s;
+        }
+        String reverse = reverse(s);
+        int size = s.length();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.substring(0, size - i).equals(reverse.substring(i))) {
+                return reverse.substring(0, i) + s;
+            }
+        }
+        return "";
     }
 
     // O(n^2) - time, O(1) - space
@@ -47,21 +57,6 @@ public class ShortestPalindrome_214 {
             sb.append(s.charAt(i));
         }
         return sb.toString();
-    }
-
-    // O(n^2) - time, O(n) - space, to store reverse string
-    public String shortestPalindrome2(String s) {
-        if (s == null || s.isEmpty() || s.length() == 1) {
-            return s;
-        }
-        String reverse = reverse(s);
-        int size = s.length();
-        for (int i = 0; i < s.length(); i++) {
-            if (s.substring(0, size - i).equals(reverse.substring(i))) {
-                return reverse.substring(0, i) + s;
-            }
-        }
-        return "";
     }
 
     private String reverse(String s) {

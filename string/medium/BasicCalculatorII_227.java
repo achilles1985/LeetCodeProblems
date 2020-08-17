@@ -1,4 +1,4 @@
-package string;
+package string.medium;
 
 import java.util.Stack;
 
@@ -33,6 +33,7 @@ public class BasicCalculatorII_227 {
         System.out.println(s.calculate("3+5/2")); //5
     }
 
+    // O(n) - time, space
     public int calculate(String s) {
         int len;
         if(s==null || (len = s.length())==0) {

@@ -1,8 +1,8 @@
-package string;
+package string.hard;
 
 import java.util.Stack;
 
-/** H
+/** H [MARKED] (left path than right path)
  * Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed)
  * parentheses substring.
  *
@@ -20,15 +20,30 @@ public class LongestValidParentheses_32 {
 
     public static void main(String[] args) {
         LongestValidParentheses_32 s = new LongestValidParentheses_32();
-        System.out.println(s.longestValidParentheses(")()())")); //4
         System.out.println(s.longestValidParentheses2(")()())")); //4
-
-        System.out.println(s.longestValidParentheses("(()")); //2
         System.out.println(s.longestValidParentheses2("(()")); //2
     }
 
+    // O(n^3) - time, O(n) - space
+    public int longestValidParenthesesBF(String s) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+        int max = 0;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i+1; j <= s.length(); j++) {
+                String sub = s.substring(i, j);
+                if (isValid(sub)) {
+                    int localMax = sub.length();
+                    max = Math.max(localMax, max);
+                }
+            }
+        }
+        return max;
+    }
+
     // O(n) - time, space
-    public int longestValidParentheses2(String s) {
+    public int longestValidParentheses(String s) {
         if (s == null || s.isEmpty()) {
             return 0;
         }
@@ -50,21 +65,43 @@ public class LongestValidParentheses_32 {
         return max;
     }
 
-    // O(n^3) - time, O(n) - space
-    public int longestValidParentheses(String s) {
+    // O(n) - time, O(1) - space
+    public int longestValidParentheses2(String s) {
         if (s == null || s.isEmpty()) {
             return 0;
         }
+        int left = 0;
+        int right = 0;
         int max = 0;
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i+1; j <= s.length(); j++) {
-                String sub = s.substring(i, j);
-                if (isValid(sub)) {
-                    int localMax = sub.length();
-                    max = Math.max(localMax, max);
-                }
+            if (s.charAt(i) == '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left == right) {
+                max = Math.max(max, 2*left);
+            } else if (right > left) {
+                left = 0;
+                right = 0;
             }
         }
+        left = 0;
+        right = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left == right) {
+                max = Math.max(max, 2*right);
+            } else if (left > right) {
+                left = 0;
+                right = 0;
+            }
+        }
+
         return max;
     }
 

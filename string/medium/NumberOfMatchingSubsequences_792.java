@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**M [marked]
+/**M [MARKED] (one path via string, one simultaneous path via entries in array of words)
  * Given string S and a dictionary of words words, find the number of words[i] that is a subsequence of S.
  *
  * Example :
