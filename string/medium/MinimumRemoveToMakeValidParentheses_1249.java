@@ -1,0 +1,82 @@
+package string.medium;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
+
+/**
+ * M
+ * Given a string s of '(' , ')' and lowercase English characters.
+ * Your task is to remove the minimum number of parentheses ( '(' or ')', in any positions )
+ * so that the resulting parentheses string is valid and return any valid string.
+ * Formally, a parentheses string is valid if and only if:
+ * It is the empty string, contains only lowercase characters, or
+ * It can be written as AB (A concatenated with B), where A and B are valid strings, or
+ * It can be written as (A), where A is a valid string.
+ * <p>
+ * Example 1:
+ * Input: s = "lee(t(c)o)de)"
+ * Output: "lee(t(c)o)de"
+ * Explanation: "lee(t(co)de)" , "lee(t(c)ode)" would also be accepted.
+ * <p>
+ * Example 2:
+ * Input: s = "a)b(c)d"
+ * Output: "ab(c)d"
+ * <p>
+ * Example 3:
+ * Input: s = "))(("
+ * Output: ""
+ * Explanation: An empty string is also valid.
+ * <p>
+ * Example 4:
+ * Input: s = "(a(b(c)d)"
+ * Output: "a(b(c)d)"
+ * <p>
+ * Constraints:
+ * 1 <= s.length <= 10^5
+ * s[i] is one of  '(' , ')' and lowercase English letters.
+ */
+public class MinimumRemoveToMakeValidParentheses_1249 {
+
+    public static void main(String[] args) {
+        MinimumRemoveToMakeValidParentheses_1249 s = new MinimumRemoveToMakeValidParentheses_1249();
+        System.out.println(s.minRemoveToMakeValid("lee(t(c)o)de)")); // lee(t(c)o)de
+        System.out.println(s.minRemoveToMakeValid("a)b(c)d")); // ab(c)d
+        System.out.println(s.minRemoveToMakeValid("))((")); // ""
+        System.out.println(s.minRemoveToMakeValid("(a(b(c)d)")); // a(b(c)d)
+    }
+
+    // O(n) - time, space
+    public String minRemoveToMakeValid(String s) {
+        if (s == null || s.isEmpty()) {
+            return s;
+        }
+        Set<Integer> toRemove = new HashSet<>();
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                stack.push(i);
+            }
+            if (c == ')') {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                } else {
+                    toRemove.add(i);
+                }
+            }
+        }
+        while (!stack.isEmpty()) {
+            toRemove.add(stack.pop());
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (!toRemove.contains(i)) {
+                sb.append(s.charAt(i));
+            }
+        }
+
+        return sb.toString();
+    }
+}

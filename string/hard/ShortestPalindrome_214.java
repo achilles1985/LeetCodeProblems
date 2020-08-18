@@ -23,6 +23,8 @@ public class ShortestPalindrome_214 {
         System.out.println(s.shortestPalindrome("abaklm")); //mlkabaklm
     }
 
+    // O(n) - time (Manacher's algo to find longest palindrome)
+
     // O(n^2) - time, O(n) - space, to store reverse string
     public String shortestPalindromeBF(String s) {
         if (s == null || s.isEmpty() || s.length() == 1) {

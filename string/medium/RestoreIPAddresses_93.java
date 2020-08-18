@@ -1,18 +1,29 @@
-package string.RestoreIPAddresses_93;
+package string.medium;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/** Medium
+/** M [MARKED]
  Given a string containing only digits, restore it by returning all possible valid IP address combinations.
-
+Отсчет с 17.07.2020
  Example:
  Input: "25525511135"
  Output: ["255.255.11.135", "255.255.111.35"]
  */
-public class Solution {
+public class RestoreIPAddresses_93 {
 
+    public static void main(String[] args) {
+        RestoreIPAddresses_93 s = new RestoreIPAddresses_93();
+        System.out.println(s.restoreIpAddresses("25525511135")); //["255.255.11.135", "255.255.111.35"]
+        System.out.println(s.restoreIpAddresses("1232342341223")); //[] - too large string
+        System.out.println(s.restoreIpAddresses("0000")); //["0.0.0.0"]
+    }
+
+    // O(1) - time (no more then 3*3*3 iterations), O(1) - space
     public List<String> restoreIpAddresses(String s) {
+        if (s == null || s.isEmpty() || s.length() > 12) {
+            return new ArrayList<>();
+        }
         List<String> res = new ArrayList<>();
         for (int i = 1; i < 4 && i < s.length(); i++) {
             String first = s.substring(0, i);

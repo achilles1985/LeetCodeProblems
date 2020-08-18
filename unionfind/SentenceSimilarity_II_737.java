@@ -38,6 +38,8 @@ Hint:
  */
 public class SentenceSimilarity_II_737 {
 
+    private int field;
+
     public static void main(String[] args) {
         SentenceSimilarity_II_737 s = new SentenceSimilarity_II_737();
         System.out.println(s.areSentencesSimilarTwo(new String[]{"great", "acting", "skills"}, new String[]{"fine", "drama", "talent"},
@@ -73,8 +75,8 @@ public class SentenceSimilarity_II_737 {
     }
 
     private static class DisjointSet {
-        int[] parent;
-        int[] rank;
+        private int[] parent;
+        private int[] rank;
 
         DisjointSet(List<List<String>> pairs) {
             int size = 2 * pairs.size();
@@ -89,6 +91,7 @@ public class SentenceSimilarity_II_737 {
             if (parent[x] != x) {
                 parent[x] = find(parent[x]);
             }
+
             return parent[x];
         }
 
