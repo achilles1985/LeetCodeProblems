@@ -52,6 +52,8 @@ public class UsefulJava {
         stack.addLast(2);
         stack.peekFirst();
         stack.peekLast();
+
+        Set<String> set1 = new LinkedHashSet<>();
     }
 
     // start from second element from the last

@@ -2,6 +2,7 @@ package utils;
 
 /**
  * Inner non-static class can access to outer class's static and non-static methods and fields.
+ * Inner non-static cannot have static fields or methods.
  *
  * Inner static class can access to outer class's static methods and fields.
  * To access non-static ones, inner class should create an instance of outer class.
@@ -16,52 +17,54 @@ public class InnerClassTest {
     private String name1;
     private static String name2;
 
-    private void printOuter() {
-        new InnerNonStatic().print2(); //can access Inner class method only via its instance
+    private void printOuterNonStatic() {
+        new InnerNonStatic().innerNonStatic(); //can access Inner class method only via its instance
 
-        new InnerStatic().print1(); //can access Inner class method only via its instance
-        new InnerStatic().printStatic1();
+        new InnerStatic().innerNonStatic(); //can access Inner class method only via its instance
+        new InnerStatic().innerStatic();
     }
 
     private static void printOuterStatic() {
-        new InnerStatic().printStatic1();
-        new InnerStatic().print1();
+        new InnerStatic().innerStatic();
+        new InnerStatic().innerNonStatic();
     }
 
     private static class InnerStatic {
         int age1;
         static int age2;
 
-        public InnerStatic() {
+        InnerStatic() {
             this.age1 = 25;
         }
 
-        private void print1() {
+        void innerNonStatic() {
             System.out.println(name2);
-            new InnerClassTest().printOuter();
+            new InnerClassTest().printOuterNonStatic();
         }
 
-        private static void printStatic1() {
+        static void innerStatic() {
             System.out.println("From printStatic1");
             printOuterStatic();
         }
-
     }
 
     private class InnerNonStatic {
-        private int age2;
+        int age2;
+        //static int age3; cannot have static fields
 
-        private void print2() {
+        void innerNonStatic() {
             System.out.println(name1);
-            printOuter();
+            printOuterNonStatic();
             printOuterStatic();
         }
+
+        //static void m2() {} cannot have static methods
     }
 
     public static void main(String[] args) {
-        new InnerClassTest().new InnerNonStatic().print2();
+        new InnerClassTest().new InnerNonStatic().innerNonStatic();
         int a1 = InnerStatic.age2;
-        InnerStatic.printStatic1();
+        InnerStatic.innerStatic();
 
         int age1 = new InnerStatic().age1;
     }
