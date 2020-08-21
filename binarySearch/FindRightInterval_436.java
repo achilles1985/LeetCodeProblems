@@ -33,8 +33,8 @@ public class FindRightInterval_436 {
     public static void main(String[] args) {
         FindRightInterval_436 s = new FindRightInterval_436();
         SolutionUtils.print(s.findRightInterval(new int[][]{{1,2}}));
-        int[] res2 = s.findRightInterval(new int[][]{{3,4}, {2,3}, {1,2}});
-        int[] res3 = s.findRightInterval(new int[][]{{1,4}, {2,3}, {3,4}});
+        SolutionUtils.print(s.findRightInterval(new int[][]{{3,4}, {2,3}, {1,2}}));
+        SolutionUtils.print(s.findRightInterval(new int[][]{{1,4}, {2,3}, {3,4}}));
     }
 
     // O(n*log(n)) - time, O(n) - space

@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.easy;
 
 // https://leetcode.com/problems/intersection-of-two-arrays/
 

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**M
+/**M [MARKED]
  * Given a string S, find out the length of the longest repeating substring(s). Return 0 if no repeating substring exists.
  *
  * Example 1:
@@ -72,9 +72,9 @@ public class LongestRepeatingSubstring_1062 {
             return 0;
         }
         int L = S.length();
-        int lo = 1, hi = L, mid = 0;
+        int lo = 1, hi = L;
         while (lo <= hi) {
-            mid = (lo + hi)/2;
+            int mid = (lo + hi)/2;
             if (search(S, L, mid)) {
                 lo = mid + 1;
             } else {
@@ -83,6 +83,13 @@ public class LongestRepeatingSubstring_1062 {
         }
 
         return lo - 1;
+    }
+
+    // Binary Search + Robin Karp
+    // O(N*logN) - time, O(N) - space
+    public int longestRepeatingSubstringRK(String S) {
+        // TODO
+        return 0;
     }
 
     private boolean search(String str, int length, int n) {
