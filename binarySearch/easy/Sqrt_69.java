@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.easy;
 
 /** E
  Implement int sqrt(int x).

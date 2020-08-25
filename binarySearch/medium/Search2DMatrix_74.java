@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.medium;
 
 import java.util.Arrays;
 
@@ -57,7 +57,7 @@ public class Search2DMatrix_74 {
         return false;
     }
 
-    // O(log(rows*cols)) - time, O(1) - space
+    // O(log(rows*cols)) - time (since it's standard binary search), O(1) - space
     public boolean searchMatrix2(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0) {
             return false;

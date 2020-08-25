@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.medium;
 
 /** M
  * 240. Search a 2D Matrix II
@@ -23,7 +23,8 @@ public class SearchA2DMatrix2 {
 
     public static void main(String[] args) {
         SearchA2DMatrix2 s = new SearchA2DMatrix2();
-        System.out.println(s.searchMatrix( new int[][]{{3, 3, 8, 13,13,18},
+        System.out.println(s.searchMatrix( new int[][]{
+                        {3, 3, 8, 13,13,18},
                         {4, 5, 11,13,18,20},
                         {9, 9, 14,15,23,23},
                         {13,18,22,22,25,27},

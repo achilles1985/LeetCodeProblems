@@ -1,4 +1,4 @@
-package binarySearch;
+package array;
 
 /** E
  * Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
@@ -23,12 +23,14 @@ public class ThirdMaximumNumber_414 {
 
     public static void main(String[] args) {
         ThirdMaximumNumber_414 s = new ThirdMaximumNumber_414();
+        System.out.println(s.thirdMax(new int[]{3,5,4,1,2,7})); //4
         System.out.println(s.thirdMax(new int[]{3,2,1})); //1
         System.out.println(s.thirdMax(new int[]{1,2})); //2
         System.out.println(s.thirdMax(new int[]{2,2,3,1})); //1
         System.out.println(s.thirdMax(new int[]{1})); //1
     }
 
+    // O(n) - time, O(1) - space
     public int thirdMax(int[] nums) {
         long first = Long.MIN_VALUE;
         long second = Long.MIN_VALUE;

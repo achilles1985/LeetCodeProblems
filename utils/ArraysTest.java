@@ -3,11 +3,8 @@ package utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 
 public class ArraysTest {
 
@@ -43,5 +40,21 @@ public class ArraysTest {
         System.out.println(Arrays.binarySearch(arr, 6));
 
         List<Integer> l = new ArrayList<>();
+
+        // sorting
+        final int[] sorted = Arrays.stream(arr)
+                .boxed()
+                .sorted((a, b) -> a - b)
+                .mapToInt(i -> i)
+                .toArray();
+
+        Integer[] input = Arrays.stream(arr)
+                .boxed()
+                .toArray(Integer[]::new);
+        Arrays.sort(input, (a, b) -> b - a); // reverse order
+        final int[] sortedArr = Arrays.stream(input)
+                .mapToInt(Integer::intValue)
+                .toArray();
+
     }
 }

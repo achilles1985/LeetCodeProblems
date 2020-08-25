@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.medium;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;

@@ -1,6 +1,6 @@
-package binarySearch;
+package array;
 
-/** M
+/** M [MARKED]
  Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s.
  If there isn't one, return 0 instead.
 
@@ -22,7 +22,7 @@ public class MinimumSizeSubarraySum_209 {
     }
 
     // O(n^3) - time, O(1) - space
-    public int minSubArrayLen(int s, int[] nums) {
+    public int minSubArrayLenBF(int s, int[] nums) {
         int min = nums.length+1;
         for (int i = 0; i < nums.length; i++) {
             for (int j = i; j < nums.length; j++) {

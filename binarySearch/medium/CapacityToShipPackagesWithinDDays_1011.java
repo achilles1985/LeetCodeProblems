@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.medium;
 
 // https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
 
@@ -53,7 +53,7 @@ public class CapacityToShipPackagesWithinDDays_1011 {
         System.out.println(s.shipWithinDays(new int[] {1,2,3,1,1}, 4)); //3
     }
 
-    // O(n*log(sum(n)-max(n))) - time, O(1) - space
+    // O(n + n*log(sum(n)-max(n))) - time, O(1) - space
     public int shipWithinDays(int[] weights, int D) {
         int left = 0;
         int right = 0;
