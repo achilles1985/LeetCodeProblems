@@ -1,4 +1,4 @@
-package binarySearch.medium;
+package array;
 
 /** M
  * 240. Search a 2D Matrix II
@@ -19,10 +19,10 @@ package binarySearch.medium;
  * Given target = 5, return true.
  * Given target = 20, return false.
  */
-public class SearchA2DMatrix2 {
+public class SearchA2DMatrix2_240 {
 
     public static void main(String[] args) {
-        SearchA2DMatrix2 s = new SearchA2DMatrix2();
+        SearchA2DMatrix2_240 s = new SearchA2DMatrix2_240();
         System.out.println(s.searchMatrix( new int[][]{
                         {3, 3, 8, 13,13,18},
                         {4, 5, 11,13,18,20},
@@ -32,6 +32,8 @@ public class SearchA2DMatrix2 {
                         {21,25,28,30,35,35},
                         {24,25,33,36,37,40}}, 21));
     }
+
+    // O(rows*cols) - time for Brute Force
 
     // O(rows+cols) - time, O(1) - space
     public boolean searchMatrix(int[][] matrix, int target) {

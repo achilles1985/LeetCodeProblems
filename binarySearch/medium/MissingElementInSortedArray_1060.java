@@ -33,6 +33,7 @@ public class MissingElementInSortedArray_1060 {
 
     public static void main(String[] args) {
         MissingElementInSortedArray_1060 s = new MissingElementInSortedArray_1060();
+        System.out.println(s.missingElement(new int[] {1,2,4}, 3)); //6
         System.out.println(s.missingElement(new int[] {4,7,9,10}, 1)); //5
         System.out.println(s.missingElement(new int[] {4,7,9,10}, 3)); //8
         System.out.println(s.missingElement(new int[] {1,2,4}, 3)); //6
@@ -59,20 +60,21 @@ public class MissingElementInSortedArray_1060 {
         return 0;
     }
 
+    // O(log(N)) - time, O(1) - space
     public int missingElement(int[] nums, int k) {
-        if (missing(nums, nums.length - 1) < k) {
-            return nums[nums.length - 1] + k;
+        if (nums.length < k) {
+            return nums[nums.length - 1] + k - missing(nums, nums.length - 1);
         }
-        int left = 0;
-        int right = nums.length - 1;
+        int left = 0, right = nums.length - 1;
         while (left < right) {
-            int mid = (left + right)/2;
+            int mid = left + (right - left)/2;
             if (missing(nums, mid) < k) {
                 left = mid + 1;
             } else {
                 right = mid;
             }
         }
+
         return nums[left - 1] + k - missing(nums, left - 1);
     }
 
