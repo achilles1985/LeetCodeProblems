@@ -1,6 +1,6 @@
-package binarySearch;
+package array.hard;
 
-/**M
+/** H [TODO]
  * Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the matrix such that its
  * sum is no larger than k.
  *
@@ -25,6 +25,7 @@ public class MaxSumOfRectangleNoLargerThanK_363 {
         System.out.println(s.maxSumSubmatrix(new int[][]{{1},{2},{3},{4}}, 2)); //2
     }
 
+    // O(rows^2*cols^2) - time, O(rows*cols) - space
     public int maxSumSubmatrix(int[][] matrix, int k) {
         // 1. Find sum of all rectungles having (0,0) top-left coordinate
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0)

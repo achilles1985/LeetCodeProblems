@@ -1,6 +1,6 @@
 package binarySearch;
 
-/** H
+/** H [MARKED][TODO]
  There are two sorted arrays nums1 and nums2 of size m and n respectively.
  Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
  You may assume nums1 and nums2 cannot be both empty.
@@ -20,35 +20,35 @@ public class MedianOfTwoSortedArrays_4 {
 
     public static void main(String[] args) {
         MedianOfTwoSortedArrays_4 s = new MedianOfTwoSortedArrays_4();
-        System.out.println(s.findMedianSortedArrays(new int[]{1,3}, new int[]{2})); //2.0
-        System.out.println(s.findMedianSortedArrays(new int[]{1,2}, new int[]{3,4})); //2.5
+        System.out.println(s.findMedianSortedArraysBF(new int[]{1,3}, new int[]{2})); //2.0
+        System.out.println(s.findMedianSortedArraysBF(new int[]{1,2}, new int[]{3,4})); //2.5
     }
 
-    // O(n+m) - time, O(n+m) - space
-    public double findMedianSortedArrays(int[] a, int[] b) {
-        if (a == null || a.length == 0) {
-            return findMedianOf(b);
+    // O(n+m) - time, O(n+m) - space. Merge two sorted arrays and find median on a merged array.
+    public double findMedianSortedArraysBF(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length == 0) {
+            return findMedianOf(nums2);
         }
-        if (b == null || b.length == 0) {
-            return findMedianOf(a);
+        if (nums2 == null || nums2.length == 0) {
+            return findMedianOf(nums1);
         }
-        int size = a.length + b.length;
+        int size = nums1.length + nums2.length;
         int[] merged = new int[size];
         int i = 0;
         int j = 0;
         int k = 0;
-        while (i < a.length && j < b.length) {
-            if (a[i] < b[j]) {
-                merged[k++] = a[i++];
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] < nums2[j]) {
+                merged[k++] = nums1[i++];
             } else {
-                merged[k++] = b[j++];
+                merged[k++] = nums2[j++];
             }
         }
-        while (i < a.length) {
-            merged[k++] = a[i++];
+        while (i < nums1.length) {
+            merged[k++] = nums1[i++];
         }
-        while (j < b.length) {
-            merged[k++] = b[j++];
+        while (j < nums2.length) {
+            merged[k++] = nums2[j++];
         }
 
         return findMedianOf(merged);
@@ -60,13 +60,13 @@ public class MedianOfTwoSortedArrays_4 {
     }
 
     // O(log(min(n,m))) - time, O(1) - space. Needs to be understanded.
-    public double findMedianSortedArrays2(int input1[], int input2[]) {
+    public double findMedianSortedArrays2(int nums1[], int nums2[]) {
         //if input1 length is greater than switch them so that input1 is smaller than input2.
-        if (input1.length > input2.length) {
-            return findMedianSortedArrays2(input2, input1);
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays2(nums2, nums1);
         }
-        int x = input1.length;
-        int y = input2.length;
+        int x = nums1.length;
+        int y = nums2.length;
 
         int low = 0;
         int high = x;
@@ -76,11 +76,11 @@ public class MedianOfTwoSortedArrays_4 {
 
             //if partitionX is 0 it means nothing is there on left side. Use -INF for maxLeftX
             //if partitionX is length of input then there is nothing on right side. Use +INF for minRightX
-            int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : input1[partitionX - 1];
-            int minRightX = (partitionX == x) ? Integer.MAX_VALUE : input1[partitionX];
+            int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
+            int minRightX = (partitionX == x) ? Integer.MAX_VALUE : nums1[partitionX];
 
-            int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : input2[partitionY - 1];
-            int minRightY = (partitionY == y) ? Integer.MAX_VALUE : input2[partitionY];
+            int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
+            int minRightY = (partitionY == y) ? Integer.MAX_VALUE : nums2[partitionY];
 
             if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
                 //We have partitioned array at correct place

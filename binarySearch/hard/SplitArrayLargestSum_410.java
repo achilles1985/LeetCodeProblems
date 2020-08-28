@@ -1,4 +1,4 @@
-package binarySearch;
+package binarySearch.hard;
 
 /** H
  Given an array which consists of non-negative integers and an integer m, you can split the array
@@ -28,13 +28,14 @@ public class SplitArrayLargestSum_410 {
 
     public static void main(String[] args) {
         SplitArrayLargestSum_410 s = new SplitArrayLargestSum_410();
-        System.out.println(s.splitArray(new int[]{7,2,5,4,3,1}, 4)); // 14
-        System.out.println(s.splitArray(new int[]{7,2,5,10,8}, 3)); // 14
-        System.out.println(s.splitArray(new int[]{1,2147483647}, 2)); // 2147483647
+        System.out.println(s.splitArray(new int[]{7,2,5,4,3,1}, 6)); // 7
+        System.out.println(s.splitArrayBF(new int[]{7,2,5,4,3,1}, 4)); // 7
+        System.out.println(s.splitArrayBF(new int[]{7,2,5,10,8}, 3)); // 14
+        System.out.println(s.splitArrayBF(new int[]{1,2147483647}, 2)); // 2147483647
     }
 
     // O(n^m) - time, O(n) - space
-    public int splitArray(int[] nums, int m) {
+    public int splitArrayBF(int[] nums, int m) {
         int n = nums.length;
         int[] presum = new int[n+1];
 
@@ -59,7 +60,7 @@ public class SplitArrayLargestSum_410 {
     }
 
     // O(n*log(sum(n)-max(n))) - time, O(1) - space
-    public int splitArray2(int[] nums, int m) {
+    public int splitArray(int[] nums, int m) {
         int left = 0;
         int right = 0;
         for (int num: nums) {
