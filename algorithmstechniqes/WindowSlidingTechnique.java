@@ -36,6 +36,7 @@ public class WindowSlidingTechnique {
         return maxSum;
     }
 
+    // O(n) - time, space
     private static int windowSliding(int[] arr, int k) {
         int maxSum = 0;
         for (int i = 0; i < k; i++) {

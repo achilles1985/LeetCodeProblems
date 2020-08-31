@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,14 +23,18 @@ import java.util.Map;
  1. (0, 0, 0, 1) -> A[0] + B[0] + C[0] + D[1] = 1 + (-2) + (-1) + 2 = 0
  2. (1, 1, 0, 0) -> A[1] + B[1] + C[0] + D[0] = 2 + (-1) + (-1) + 0 = 0
  */
-public class ForSum_II_454 {
+public class FourSum_II_454 {
 
     public static void main(String[] args) {
-        ForSum_II_454 s = new ForSum_II_454();
+        FourSum_II_454 s = new FourSum_II_454();
         System.out.println(s.fourSumCount(new int[]{1,2}, new int[]{-2,-1}, new int[]{-1,2}, new int[]{0,2})); //2
+
+        System.out.println(s.kSumCount(new int[][]{{1,2,-1},{1,0,2},{1,-1,2},{0,1,-2},{1,2,2},{1,2,3}})); //10
     }
 
-    // O(n^2) - time
+    // O(n^4) - time, space
+
+    // O(n^2) - time, space
     public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
         int count = 0;
         Map<Integer,Integer> hashMap = new HashMap<>();
@@ -47,5 +51,32 @@ public class ForSum_II_454 {
             }
         }
         return count;
+    }
+
+    // O(n^(k/2)) - time, space
+    public int kSumCount(int[][] lists) {
+        Map<Integer, Integer> m = new HashMap<>();
+        addToHash(lists, m, 0, 0);
+
+        return countComplements(lists, m, lists.length / 2, 0);
+    }
+    private void addToHash(int[][] lists, Map<Integer, Integer> m, int i, int sum) {
+        if (i == lists.length / 2) {
+            m.put(sum, m.getOrDefault(sum, 0) + 1);
+        } else {
+            for (int a : lists[i]) {
+                addToHash(lists, m, i + 1, sum + a);
+            }
+        }
+    }
+    private int countComplements(int[][] lists, Map<Integer, Integer> m, int i, int complement) {
+        if (i == lists.length) {
+            return m.getOrDefault(complement, 0);
+        }
+        int cnt = 0;
+        for (int a : lists[i]) {
+            cnt += countComplements(lists, m, i + 1, complement - a);
+        }
+        return cnt;
     }
 }

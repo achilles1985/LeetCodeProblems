@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 /** M
  * 240. Search a 2D Matrix II

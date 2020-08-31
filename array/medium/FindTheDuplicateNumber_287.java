@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 // https://leetcode.com/problems/find-the-duplicate-number/
 

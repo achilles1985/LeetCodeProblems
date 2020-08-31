@@ -1,7 +1,6 @@
-package array;
+package array.medium;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**M
@@ -20,8 +19,8 @@ public class MajorityElement_II {
 
     public static void main(String[] args) {
         MajorityElement_II s = new MajorityElement_II();
-        System.out.println(s.majorityElement(new int[]{3,2,3})); //[3]
         System.out.println(s.majorityElement(new int[]{1,1,1,3,3,2,2,2})); //[1,2]
+        System.out.println(s.majorityElement(new int[]{3,2,3})); //[3]
     }
 
     // O(n) - time, O(1) - space

@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,11 +21,26 @@ public class FindAllNumbersDisappearedInArray_448 {
     public static void main(String[] args) {
         FindAllNumbersDisappearedInArray_448 s = new FindAllNumbersDisappearedInArray_448();
         System.out.println(s.findDisappearedNumbers(new int[]{4,3,2,7,8,2,3,1})); // [5,6]
-        System.out.println(s.findDisappearedNumbers2(new int[]{4,3,2,7,8,2,3,1})); // [5,6]
+    }
+
+    // O(n) - time, O(n) - space
+    public List<Integer> findDisappearedNumbersBF(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            set.add(nums[i]);
+        }
+        for (int i = 1; i <= nums.length; i++) {
+            if (!set.contains(i)) {
+                list.add(i);
+            }
+        }
+
+        return list;
     }
 
     // O(n) - time, O(1) - space
-    public List<Integer> findDisappearedNumbers2(int[] nums) {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
             int index = Math.abs(nums[i])-1;
@@ -41,19 +56,4 @@ public class FindAllNumbersDisappearedInArray_448 {
         return list;
     }
 
-    // O(n) - time, O(n) - space
-    public List<Integer> findDisappearedNumbers(int[] nums) {
-        List<Integer> list = new ArrayList<>();
-        Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < nums.length; i++) {
-            set.add(nums[i]);
-        }
-        for (int i = 1; i <= nums.length; i++) {
-            if (!set.contains(i)) {
-                list.add(i);
-            }
-        }
-
-        return list;
-    }
 }

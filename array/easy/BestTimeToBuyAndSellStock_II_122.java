@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 /** E
  Say you have an array for which the ith element is the price of a given stock on day i.
@@ -23,26 +23,23 @@ package array;
  Output: 0
  Explanation: In this case, no transaction is done, i.e. max profit = 0.
  */
+
 public class BestTimeToBuyAndSellStock_II_122 {
 
     public static void main(String[] args) {
         BestTimeToBuyAndSellStock_II_122 s = new BestTimeToBuyAndSellStock_II_122();
+        System.out.println(s.maxProfit(new int[]{1,2,3,4,5})); //4
         System.out.println(s.maxProfit(new int[]{7,1,3,5,6,4})); //5
         System.out.println(s.maxProfitBF(new int[]{7,1,5,3,6,4})); //7
-        System.out.println(s.maxProfit(new int[]{1,2,3,4,5})); //4
         System.out.println(s.maxProfit(new int[]{7,6,4,3,1})); //0
     }
 
     // O(n) - time, O(1) - space
     public int maxProfit(int[] prices) {
-        int min = Integer.MAX_VALUE;
         int profit = 0;
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] < min) {
-                min = prices[i];
-            } else {
-                profit += prices[i]-min;
-                min = prices[i];
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i-1]) {
+                profit += prices[i] - prices[i-1];
             }
         }
 

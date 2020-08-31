@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 /** E
  Say you have an array for which the ith element is the price of a given stock on day i.
@@ -20,11 +20,27 @@ public class BestTimeToBuyAnsSellStock_121 {
 
     public static void main(String[] args) {
         BestTimeToBuyAnsSellStock_121 s = new BestTimeToBuyAnsSellStock_121();
-        System.out.println(s.maxProfit2(new int[]{7,1,5,3,6,4})); //5
-        System.out.println(s.maxProfit2(new int[]{7,6,4,3,1})); // 0
+        System.out.println(s.maxProfit4(new int[]{7,1,5,3,6,4})); //5
+        System.out.println(s.maxProfit4(new int[]{7,6,4,3,1})); // 0
 
-        System.out.println(s.maxProfit3(new int[]{7,1,5,3,6,4})); //5
-        System.out.println(s.maxProfit3(new int[]{7,6,4,3,1})); // 0
+        System.out.println(s.maxProfit4(new int[]{7,1,5,3,6,4})); //5
+        System.out.println(s.maxProfit4(new int[]{7,6,4,3,1})); // 0
+    }
+
+    public int maxProfit4(int[] prices) {
+        if (prices == null || prices.length < 2) {
+            return 0;
+        }
+        int maxProfit = 0;
+        int min = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] < min) {
+                min = prices[i];
+            } else {
+                maxProfit = Math.max(maxProfit, prices[i] - min);
+            }
+        }
+        return maxProfit;
     }
 
     // O(n^2) - time, O(1) - space

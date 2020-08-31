@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 import utils.SolutionUtils;
 
@@ -10,9 +10,9 @@ public class FindMinAndMaxSimultaneously {
 
     public static void main(String[] args) {
         FindMinAndMaxSimultaneously s = new FindMinAndMaxSimultaneously();
-        SolutionUtils.print(s.findMinMax(new int[]{3,2,5,1,2,4})); // [1,5]
-        SolutionUtils.print(s.findMinMax(new int[]{3,2,5,1,2})); // [1,5]
-        SolutionUtils.print(s.findMinMax(new int[]{3,3,3,3})); // [3,3]
+        SolutionUtils.print(s.findMinMax1(new int[]{3,2,5,1,2,4})); // [1,5]
+        SolutionUtils.print(s.findMinMax1(new int[]{3,2,5,1,2})); // [1,5]
+        SolutionUtils.print(s.findMinMax1(new int[]{3,3,3,3})); // [3,3]
     }
 
     public int[] findMinMax(int[] nums) {
@@ -32,5 +32,15 @@ public class FindMinAndMaxSimultaneously {
             max = Math.max(max, localMax);
         }
         return new int[]{min,max};
+    }
+
+    public int[] findMinMax1(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            min = Math.min(min, nums[i]);
+            max = Math.max(max, nums[i]);
+        }
+        return new int[]{min, max};
     }
 }

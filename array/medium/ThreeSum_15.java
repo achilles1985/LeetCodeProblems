@@ -27,10 +27,7 @@ public class ThreeSum_15 {
 
     public static void main(String[] args) {
         ThreeSum_15 s = new ThreeSum_15();
-        System.out.println(s.threeSumBF(new int[]{-1,0,1,2,-1,-4}));
         System.out.println(s.threeSum(new int[]{-1,0,1,2,-1,-4}));
-        System.out.println(s.threeSum2(new int[]{-1,0,1,2,-1,-4}));
-        System.out.println(s.threeSum3(new int[]{-1,0,1,2,-1,-4}));
     }
 
     // O(n^3) - time, O(1) - space
@@ -142,4 +139,5 @@ public class ThreeSum_15 {
         }
         return ans;
     }
+
 }
