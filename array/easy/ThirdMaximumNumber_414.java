@@ -1,7 +1,8 @@
-package array;
+package array.easy;
 
 /** E
- * Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
+ * Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number.
+ * The time complexity must be in O(n).
 
  Example 1:
  Input: [3, 2, 1]
@@ -29,6 +30,8 @@ public class ThirdMaximumNumber_414 {
         System.out.println(s.thirdMax(new int[]{2,2,3,1})); //1
         System.out.println(s.thirdMax(new int[]{1})); //1
     }
+
+    // O(n*log(k)) - time, O(k) - space for heap solution
 
     // O(n) - time, O(1) - space
     public int thirdMax(int[] nums) {

@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 /** E
  Given a sorted array, remove the duplicates in-place such that each element appear only once and return the new length.
@@ -17,9 +17,9 @@ public class RemoveDuplicatesFromSortedArray_56 {
 
         System.out.println(s.removeDuplicates(new int[]{1,2,3,4,4,4,5,5,6})); //6
 
-        System.out.println(s.removeDuplicates2(new int[]{1,2,3,4,4,5,5,5,6})); // 8
-        System.out.println(s.removeDuplicates2(new int[]{1,1,1,2,2,3})); // 5
-        System.out.println(s.removeDuplicates2(new int[]{0,0,1,1,1,1,2,3,3})); // 7
+        System.out.println(s.removeDuplicates(new int[]{1,2,3,4,4,5,5,5,6})); // 8
+        System.out.println(s.removeDuplicates(new int[]{1,1,1,2,2,3})); // 5
+        System.out.println(s.removeDuplicates(new int[]{0,0,1,1,1,1,2,3,3})); // 7
     }
 
     // O(n) - time, O(1) - space
@@ -34,19 +34,4 @@ public class RemoveDuplicatesFromSortedArray_56 {
         return j + 1;
     }
 
-    public int removeDuplicates2(int[] nums) {
-        int j = 0;
-        int count = 0;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == nums[j]) {
-                count++;
-            }
-            if (nums[i] != nums[j] || nums[i] == nums[j] && count < 2) {
-                nums[j++] = nums[i];
-                count = 0;
-            }
-        }
-
-        return j + 1;
-    }
 }

@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 /** M [MARKED]
  Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s.
@@ -16,9 +16,9 @@ public class MinimumSizeSubarraySum_209 {
 
     public static void main(String[] args) {
         MinimumSizeSubarraySum_209 s = new MinimumSizeSubarraySum_209();
-        System.out.println(s.minSubArrayLen2(7, new int[]{2,3,1,2,4,3})); //2
-        System.out.println(s.minSubArrayLen2(4, new int[]{1,4,4})); //1
-        System.out.println(s.minSubArrayLen2(11, new int[]{1,2,3,4,5})); //3
+        System.out.println(s.minSubArrayLen4(7, new int[]{2,3,1,2,4,3})); //2
+        System.out.println(s.minSubArrayLen4(4, new int[]{1,4,4})); //1
+        System.out.println(s.minSubArrayLen4(11, new int[]{1,2,3,4,5})); //3
     }
 
     // O(n^3) - time, O(1) - space
@@ -76,10 +76,7 @@ public class MinimumSizeSubarraySum_209 {
             int r = nums.length - 1;
             while (l <= r) {
                 int mid = l + (r - l)/2;
-                if (sums[mid] - sums[i] + nums[i] == s) {
-                    l = mid;
-                    break;
-                } else if (sums[mid] - sums[i] + nums[i] < s) {
+                if (sums[mid] - sums[i] + nums[i] < s) {
                     l = mid + 1;
                 } else {
                     r = mid - 1;
@@ -108,5 +105,34 @@ public class MinimumSizeSubarraySum_209 {
         }
 
         return min == nums.length+1 ? 0 : min;
+    }
+
+    public int minSubArrayLen4(int s, int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int[] sum = new int[nums.length];
+        sum[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            sum[i] = sum[i-1] + nums[i];
+        }
+        if (sum[sum.length - 1] < s) {
+            return 0;
+        }
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            int left = i, right = nums.length - 1;
+            while (left < right) {
+                int mid = left + (right - left)/2;
+                if (sum[mid] - sum[i] + nums[i] < s) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+            min = Math.min(min, left - i + 1);
+        }
+
+        return min == Integer.MAX_VALUE ? 0 : min;
     }
 }

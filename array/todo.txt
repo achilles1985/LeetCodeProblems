@@ -1,2 +1,8 @@
 MUST KNOW:
-RemoveElement(48),MissingNumber(268),MaxContiguousSubarray/Sequence(128/53),FindDuplicate,FindAllNotInArray,LargestNumber(179),ShuffleArray,PlusOne(66)
+
+RemoveElement(48),
+MissingNumber(268),
+MaxContiguousSubarray/Sequence(128/53),
+FindDuplicate,
+FindAllNotInArray,
+LargestNumber(179),ShuffleArray,PlusOne(66)
