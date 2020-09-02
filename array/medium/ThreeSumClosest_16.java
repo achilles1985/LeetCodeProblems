@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 import java.util.Arrays;
 
@@ -13,8 +13,27 @@ public class ThreeSumClosest_16 {
 
     public static void main(String[] args) {
         ThreeSumClosest_16 s = new ThreeSumClosest_16();
-        //System.out.println(s.threeSumClosest(new int[]{-1,2,1,-4}, 1)); // 2
+        System.out.println(s.threeSumClosest(new int[]{-1,2,1,-4}, 1)); // 2
         System.out.println(s.threeSumClosest(new int[]{-3,-2,-5,3,-4}, -1)); // 2
+    }
+
+    // O(n^3) - time, O(1) - space
+    public int threeSumClosestBF(int[] nums, int target) {
+        int min = Integer.MAX_VALUE;
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                for (int m = j+1; m < nums.length; m++) {
+                    int sum = nums[i] + nums[j] + nums[m];
+                    if (Math.abs(sum - target) < min) {
+                        min = Math.abs(sum - target);
+                        res = sum;
+                    }
+                }
+            }
+        }
+
+        return res;
     }
 
     // O(n^2) - time, O(1) - space

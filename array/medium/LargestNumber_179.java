@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -38,4 +38,5 @@ public class LargestNumber_179 {
 
         return res.startsWith("0") ? "0" : res;
     }
+
 }

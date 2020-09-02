@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 /** M
  A subarray A[i], A[i+1], ..., A[j] of A is said to be turbulent if and only if:
@@ -29,9 +29,9 @@ public class LongestTurbulentSubarray_978 {
 
     public static void main(String[] args) {
         LongestTurbulentSubarray_978 s = new LongestTurbulentSubarray_978();
+        System.out.println(s.maxTurbulenceSize(new int[]{9,4,2,10,7,8,8,1,9})); //5
         System.out.println(s.maxTurbulenceSize(new int[]{4,5,3,6,5})); //5
         System.out.println(s.maxTurbulenceSize(new int[]{4,8,12,16})); //2
-        System.out.println(s.maxTurbulenceSize(new int[]{9,4,2,10,7,8,8,1,9})); //5
         System.out.println(s.maxTurbulenceSize(new int[]{100})); //1
     }
 

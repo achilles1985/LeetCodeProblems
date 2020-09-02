@@ -1,9 +1,9 @@
-package array;
+package dynamic;
 
 import java.util.Arrays;
 
 /**
- * M
+ * M [TODO]
  * Given an unsorted array of integers, find the number of longest increasing subsequence.
  * <p>
  * Example 1:

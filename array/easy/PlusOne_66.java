@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 import java.util.List;
 
@@ -23,31 +23,31 @@ public class PlusOne_66 {
 
     public static void main(String[] args) {
         PlusOne_66 s = new PlusOne_66();
-        SolutionUtils.print(s.plusOne(new int[]{1,9,9,9})); //[2,0,0,0]
-        SolutionUtils.print(s.plusOne(new int[]{1,2,3})); //[1,2,4]
-        SolutionUtils.print(s.plusOne(new int[]{4,3,2,1})); //[4,3,2,2]
+        SolutionUtils.print(s.plusOne2(new int[]{9,9,9})); //[1,0,0,0]
+        SolutionUtils.print(s.plusOne2(new int[]{1,2,3})); //[1,2,4]
+        SolutionUtils.print(s.plusOne2(new int[]{1,9,9,9})); //[2,0,0,0]
+        SolutionUtils.print(s.plusOne2(new int[]{4,3,2,1})); //[4,3,2,2]
     }
 
     // O(n) - time, O(1) - space
-    public int[] plusOne(int[] digits) {
+    public int[] plusOne2(int[] digits) {
         if (digits == null || digits.length == 0) {
             return new int[]{};
         }
-
-        int lastIndex = digits.length-1;
-        digits[lastIndex] = digits[lastIndex] + 1;
-        for (int i = lastIndex; i > 0 && digits[i] == 10; i--) {
-            digits[i] = 0;
-            digits[i-1] = digits[i-1] + 1;
+        int carry = 0;
+        digits[digits.length - 1] = digits[digits.length - 1] + 1;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            int sum = digits[i] + carry;
+            int d = sum%10;
+            carry = sum/10;
+            digits[i] = d;
         }
-        if (digits[0] == 10) {
-            int[] resized = new int[digits.length+1];
-            digits[0] = 0;
+        if (carry == 1) {
+            int[] resized = new int[digits.length + 1];
             System.arraycopy(digits, 0, resized, 1, digits.length);
             resized[0] = 1;
             digits = resized;
         }
-
         return digits;
     }
 

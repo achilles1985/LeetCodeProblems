@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 import java.util.Arrays;
 
@@ -18,11 +18,22 @@ public class ZigZagArrangement {
 
     public static void main(String[] args) {
         ZigZagArrangement s = new ZigZagArrangement();
-        s.rearrange(new int[]{4,3,7,8,6,2,1});
-        s.rearrange(new int[]{1,4,3,2});
+        s.rearrange3(new int[]{4,3,7,8,6,2,1});
+        s.rearrange3(new int[]{1,4,3,2});
+    }
 
-        s.rearrange2(new int[]{4,3,7,8,6,2,1});
-        s.rearrange2(new int[]{1,4,3,2});
+    public void rearrange3(int input[]) {
+        if (input == null || input.length == 0) {
+            return;
+        }
+        for (int i = 1; i < input.length; i+=2) {
+            if (input[i] < input[i-1]) {
+                swap(i, i-1, input);
+            }
+            if (i+1 < input.length && input[i] < input[i+1]) {
+                swap(i, i+1, input);
+            }
+        }
     }
 
     // O(n) - time, O(1) - space
