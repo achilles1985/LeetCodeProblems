@@ -13,7 +13,7 @@ public class MostCommonWord {
 
     public static void main(String[] args) {
         MostCommonWord s = new MostCommonWord();
-        System.out.println(s.mostFrequent("Rose ! , is a flower? red rose   are flower.   bob, bob, aka, aka", Arrays.asList("is", "are", "a")));
+        System.out.println(s.mostFrequent("Rose, rose ! , is a flower? red rose   are flower.   bob, bob, aka, aka", Arrays.asList("is", "are", "a")));
         System.out.println(s.mostFrequent("Rose is a flower red rose are flower", Arrays.asList("is", "are", "a")));
     }
 
@@ -37,12 +37,14 @@ public class MostCommonWord {
             Item item = new Item(entry.getKey(), entry.getValue());
             items.add(item);
         }
-        Collections.sort(items, (e1, e2) -> e1.frequency == e2.frequency ? e1.word.compareTo(e2.word) : e2.frequency - e1.frequency);
+        Collections.sort(items, (e1, e2) -> e1.frequency == e2.frequency ? e1.word.compareTo(e2.word) : e2.frequency - e1.frequency); // desending order
 
         List<String> result = new ArrayList<>();
-        result.add(items.get(0).word);
+        Item max = items.get(0);
+        result.add(max.word);
+
         int left = 1;
-        while (items.get(0).frequency == items.get(left).frequency) {
+        while (max.frequency == items.get(left).frequency) {
             result.add(items.get(left).word);
             left++;
         }

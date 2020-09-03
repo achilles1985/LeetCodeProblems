@@ -1,4 +1,4 @@
-package array;
+package binarySearch.easy;
 
 /** E
  Given a positive integer num, write a function which returns True if num is a perfect square else False.
@@ -11,6 +11,10 @@ package array;
  Example 2:
  Input: 14
  Output: false
+
+ Constraints:
+    1 <= num <= 2^31 - 1
+
  */
 public class ValidPerfectSquare_367 {
 
@@ -23,25 +27,36 @@ public class ValidPerfectSquare_367 {
     }
 
     public boolean isPerfectSquare(int num) {
-        if (num == 0 || num == 1) {
+        if (num <= 1) {
             return true;
         }
-        int left = 1;
-        int right = num/2;
-        int ans = 0;
+
+        long left = 1, right = num/2; // since while multiplying mid*mid it can be overflow.
         while (left <= right) {
-            int mid = left + (right - left)/2;
-            if (mid == num/mid) {
-                return num - mid*mid == 0;
+            long mid = left + (right - left)/2;
+            if (mid*mid == num) {
+                return true;
             }
-            if (mid < num/mid) {
-                left = mid+1;
-                ans = mid;
+            if (mid*mid < num) {
+                left = mid + 1;
             } else {
-                right = mid-1;
+                right = mid - 1;
             }
         }
 
-        return num/ans == ans ? true : false;
+        return false;
+    }
+
+    // Newton's method
+    public boolean isPerfectSquareNM(int num) {
+        if (num < 2) {
+            return true;
+        }
+        long x = num / 2;
+        while (x * x > num) {
+            x = (x + num / x) / 2;
+        }
+
+        return (x * x == num);
     }
 }

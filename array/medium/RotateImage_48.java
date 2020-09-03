@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 import utils.SolutionUtils;
 
@@ -74,4 +74,6 @@ public class RotateImage_48 {
         }
         SolutionUtils.print(matrix);
     }
+
+    // Or transpose a matrix then reverse each row.
 }

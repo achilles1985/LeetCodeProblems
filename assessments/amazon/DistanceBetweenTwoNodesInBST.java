@@ -19,39 +19,63 @@ import utils.TreeNode;
 public class DistanceBetweenTwoNodesInBST {
 
     public static void main(String[] args) {
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(3);
+        root.right = new TreeNode(6);
+        root.left.left = new TreeNode(2);
+        root.left.right = new TreeNode(4);
+        root.right.right = new TreeNode(7);
+        root.left.left.left = new TreeNode(1);
+        root.right.right.right = new TreeNode(8);
 
+        DistanceBetweenTwoNodesInBST s = new DistanceBetweenTwoNodesInBST();
+        System.out.println(s.bstDistance(root, 3,4)); //1
+        System.out.println(s.bstDistance(root, 4,8)); //5
+        System.out.println(s.bstDistance(root, 6,8)); //2
     }
 
+    // O(n) - time, space
     public int bstDistance(TreeNode root, int node1, int node2) {
         if (root == null) {
             return -1;
         }
-        TreeNode lca = lca(root, node1, node2);
+        TreeNode lca = lowestCommonAncestor(root, node1, node2);
+        int left = getDistance(lca.left, node1);
+        int right = getDistance(lca.right, node2);
 
-        return getDistance(lca, node1) + getDistance(lca, node2);
+        return left + right;
     }
 
-    private int getDistance(TreeNode src, int dest) {
-        if (src.val == dest) {
+    private int getDistance(TreeNode root, int target) {
+        if (root == null) {
             return 0;
         }
-        TreeNode node = src.left;
-        if (src.val < dest) {
-            node = src.right;
+        if (root.val == target) {
+            return 1;
         }
+        int left = getDistance(root.left, target);
+        int right = getDistance(root.right, target);
 
-        return 1 + getDistance(node, dest);
+        if (left == 0 && right == 0) {
+            return 0;
+        }
+        return Math.max(left, right) + 1;
     }
 
-    private TreeNode lca(TreeNode root, int node1, int node2) { // lowerst common ancestor
-        while (true) {
-            if (root.val > node1 && root.val > node2) {
-                root = root.left;
-            } else if (root.val < node1 && root.val < node2) {
+    // O(n) - time, O(1) - space
+    private TreeNode lowestCommonAncestor(TreeNode root, int node1, int node2) {
+        if (root == null) {
+            return null;
+        }
+        while (root != null) {
+            if (root.val < Math.min(node1, node2)) {
                 root = root.right;
+            } else if (root.val > Math.max(node1, node2)) {
+                root = root.left;
             } else {
                 return root;
             }
         }
+        return null;
     }
 }
