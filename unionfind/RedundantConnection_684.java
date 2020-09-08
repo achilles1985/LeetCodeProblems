@@ -46,9 +46,7 @@ public class RedundantConnection_684 {
     public int[] findRedundantConnection(int[][] edges) {
         DisjointSet ds = new DisjointSet(edges.length);
         for (int[] edge: edges) {
-            int p1 = ds.find(edge[0]);
-            int p2 = ds.find(edge[1]);
-            if (p1 == p2) {
+            if (ds.find(edge[0]) == ds.find(edge[1])) {
                 return new int[]{edge[0], edge[1]};
             }
             ds.union(edge[0], edge[1]);

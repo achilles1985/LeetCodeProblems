@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/**M
+/** M
  * You are given a string s, and an array of pairs of indices in the string pairs where pairs[i] = [a, b] indicates 2
  * indices(0-indexed) of the string.
  * You can swap the characters at any pair of indices in the given pairs any number of times.
@@ -46,8 +46,8 @@ public class SmallestStringWithSwaps_1202 {
 
     public static void main(String[] args) {
         SmallestStringWithSwaps_1202 s = new SmallestStringWithSwaps_1202();
-        System.out.println(s.smallestStringWithSwaps("dcab", Arrays.asList(Arrays.asList(0,3), Arrays.asList(1,2)))); //bacd
         System.out.println(s.smallestStringWithSwaps("dcab", Arrays.asList(Arrays.asList(0,3), Arrays.asList(1,2), Arrays.asList(0,2)))); //abcd
+        System.out.println(s.smallestStringWithSwaps("dcab", Arrays.asList(Arrays.asList(0,3), Arrays.asList(1,2)))); //bacd
     }
 
     // O(n*log(n)) - time, O(n) - space

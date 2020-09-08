@@ -62,29 +62,31 @@ public class SwimInRisingWater_778 {
     // Using union find
     // O(n^2) - time, O(n^2) - space
     public int swimInWater(int[][] grid) {
-        DisjointSet ds = new DisjointSet(grid.length*grid[0].length);
+        final int rows = grid.length;
+        final int cols = grid[0].length;
+        DisjointSet ds = new DisjointSet(rows * cols);
         int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-        int[] valueToIndex = new int[grid.length * grid.length]; // since the max number in the matrix equals the number of elements in the matrix - 1.
-        for (int i = 0; i < grid.length; ++i) {
-            for (int j = 0; j < grid.length; ++j) {
-                valueToIndex[grid[i][j]] = i * grid[0].length + j;
+        int[] valueToIndex = new int[rows * cols]; // since the max number in the matrix equals the number of elements in the matrix - 1.
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                valueToIndex[grid[i][j]] = i * cols + j;
             }
         }
 
-        for (int time = 0; time < grid.length * grid[0].length; ++time) {
+        for (int time = 0; time < rows * cols; ++time) {
             int idx = valueToIndex[time];
-            int row = idx / grid.length;
-            int col = idx % grid.length;
+            int row = idx / rows;
+            int col = idx % rows;
             for (int[] direction : directions) {
                 int rr = row + direction[0];
                 int cc = col + direction[1];
-                if (rr >= 0 && rr < grid.length && cc >= 0 && cc < grid.length && grid[rr][cc] < time) {
-                    int nextIdx = rr * grid.length + cc;
+                if (rr >= 0 && rr < rows && cc >= 0 && cc < rows && grid[rr][cc] < time) {
+                    int nextIdx = rr * rows + cc;
                     ds.union(idx, nextIdx);
                 }
             }
-            if (ds.connected(0, grid.length * grid.length - 1)) {
+            if (ds.connected(0, rows * rows - 1)) {
                 return time;
             }
         }

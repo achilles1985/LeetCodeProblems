@@ -25,7 +25,6 @@ import java.util.Map;
  * ["great"] can never be similar to words2 = ["doubleplus","good"].
  *
  * Note:
- *
  *     The length of words1 and words2 will not exceed 1000.
  *     The length of pairs will not exceed 2000.
  *     The length of each pairs[i] will be 2.
@@ -38,11 +37,11 @@ Hint:
  */
 public class SentenceSimilarity_II_737 {
 
-    private int field;
-
     public static void main(String[] args) {
         SentenceSimilarity_II_737 s = new SentenceSimilarity_II_737();
-        System.out.println(s.areSentencesSimilarTwo(new String[]{"great", "acting", "skills"}, new String[]{"fine", "drama", "talent"},
+        System.out.println(s.areSentencesSimilarTwo(
+                new String[]{"great", "acting", "skills"},
+                new String[]{"fine", "drama", "talent"},
                 Arrays.asList(Arrays.asList("great", "good"), Arrays.asList("fine", "good"), Arrays.asList("acting","drama"), Arrays.asList("skills","talent")))); // true
     }
 
@@ -109,5 +108,6 @@ public class SentenceSimilarity_II_737 {
                 }
             }
         }
+        // throught
     }
 }
