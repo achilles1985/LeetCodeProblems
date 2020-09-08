@@ -1,4 +1,4 @@
-package tree;
+package tree.easy;
 
 import utils.TreeNode;
 
@@ -50,12 +50,27 @@ public class LowestCommonAncestorOfBinarySearchTree_235 {
 
     // O(n) - time, space
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root.val < Math.min(p.val, q.val)) {
-            return lowestCommonAncestor(root.right, p, q);
-        } else if (root.val > Math.max(p.val, q.val)) {
-            return lowestCommonAncestor(root.left, p, q);
+        if (root == null) {
+            return null;
         }
-        return root;
+        TreeNode min = p;
+        TreeNode max = q;
+        if (p.val > q.val) {
+            min = q;
+            max = p;
+        }
+
+        return lca(root, min, max);
+    }
+
+    private TreeNode lca(TreeNode root, TreeNode min, TreeNode max) {
+        if (root.val >= min.val && root.val <= max.val) {
+            return root;
+        }
+        if (root.val < min.val) {
+            return lca(root.right, min, max);
+        }
+        return lca(root.left, min, max);
     }
 
     // O(n) - time, space

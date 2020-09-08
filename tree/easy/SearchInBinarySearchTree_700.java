@@ -1,4 +1,4 @@
-package tree;
+package tree.easy;
 
 import java.util.Stack;
 
@@ -63,15 +63,19 @@ public class SearchInBinarySearchTree_700 {
         stack.push(root);
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
+            if (node == null) {
+                return null;
+            }
             if (node.val == val) {
                 return node;
             }
-            if (val < node.val && node.left != null) {
-                stack.push(node.left);
-            } else if (val > node.val && node.right != null) {
+            if (node.val < val) {
                 stack.push(node.right);
+            } else {
+                stack.push(node.left);
             }
         }
+
         return null;
     }
 }

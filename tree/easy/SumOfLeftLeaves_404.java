@@ -1,8 +1,8 @@
-package tree;
+package tree.easy;
 
 import utils.TreeNode;
 
-/** E
+/** E [MARKED]
  * Find the sum of all left leaves in a given binary tree.
  * Example:
  *     3

@@ -1,4 +1,4 @@
-package tree;
+package tree.easy;
 
 import java.util.Stack;
 
@@ -67,9 +67,8 @@ public class SameTree_100 {
         if (p.val != q.val) {
             return false;
         }
-        boolean left = isSameTree(p.left, q.left);
-        boolean right = isSameTree(p.right, q.right);
-        return left && right;
+
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 
     // O(n) - time, O(n) space if tree is completely unbalanced, O(log(n)) - is balanced

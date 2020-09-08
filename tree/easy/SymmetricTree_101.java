@@ -1,4 +1,4 @@
-package tree;
+package tree.easy;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -37,7 +37,7 @@ public class SymmetricTree_101 {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(9);
 
-        System.out.println(s.isSymmetric2(root)); // false
+        System.out.println(s.isSymmetric(root)); // false
     }
 
     // O(n) - time, O(h) - space
@@ -83,21 +83,4 @@ public class SymmetricTree_101 {
         return q1.isEmpty();
     }
 
-    // O(n) - time, O(h) - space
-    public boolean isSymmetric2(TreeNode root) {
-        return root == null || isSymetric2Helper(root.left, root.right);
-    }
-
-    private boolean isSymetric2Helper(TreeNode r1, TreeNode r2) {
-        if (r1 == null && r2 == null) {
-            return true;
-        }
-        if (r1 == null || r2 == null) {
-            return false;
-        }
-        if (r1.val != r2.val) {
-            return false;
-        }
-        return r1.val == r2.val && isSymetric2Helper(r1.left, r2.right) && isSymetric2Helper(r1.right, r2.left);
-    }
 }

@@ -1,4 +1,4 @@
-package tree;
+package tree.easy;
 
 import java.util.Stack;
 
@@ -39,38 +39,26 @@ public class PathSum_112 {
         TreeNode root2 = new TreeNode(1);
         root2.right = new TreeNode(2);
 
-        System.out.println(s.hasPathSum2(root, 22)); // true
-        System.out.println(s.hasPathSum2(root, 1)); // false
+        System.out.println(s.hasPathSum(root, 22)); // true
+        System.out.println(s.hasPathSum(root, 1)); // false
 
         System.out.println(s.hasPathSumIterative(root, 22)); // true
         System.out.println(s.hasPathSumIterative(root, 1)); // false
     }
 
-    // O(n) - time, space
-    public boolean hasPathSum2(TreeNode root, int sum) {
-        if (root == null) {
-            return false;
-        }
-        if (root.left == null && root.right == null) {
-            if (root.val == sum) {
-                return true;
-            }
-            return false;
-        }
-
-        boolean left = hasPathSum2(root.left, sum - root.val);
-        boolean right = hasPathSum2(root.right, sum - root.val);
-        return left || right;
-    }
-
-    // O(n) - time, space
+    // O(n) - time, O(n) - space (tree is completely unbalanced); O(log(n)) - tree is balanced
     public boolean hasPathSum(TreeNode root, int sum) {
         if (root == null) {
             return false;
         }
-        return hasPathSumUtils(root, sum, 0);
+        if (root.left == null && root.right == null) {
+            return root.val == sum;
+        }
+
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 
+    // O(n) - time, space
     public boolean hasPathSumIterative(TreeNode root, int sum) {
         if (root == null) {
             return false;
@@ -99,17 +87,4 @@ public class PathSum_112 {
         return false;
     }
 
-    private boolean hasPathSumUtils(TreeNode root, int sum, int currSum) {
-        if (root == null) {
-            if (currSum == sum) {
-                return true;
-            }
-            return false;
-        }
-        currSum += root.val;
-        boolean left = hasPathSumUtils(root.left, sum, currSum);
-        boolean right = hasPathSumUtils(root.right, sum , currSum);
-
-        return left || right;
-    }
 }
