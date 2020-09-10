@@ -1,11 +1,11 @@
-package tree;
+package tree.medium;
 
 import utils.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**M
+/**M [MARKED]
  * Given a binary tree, collect a tree's nodes as if you were doing this: Collect and remove all leaves, repeat until the tree is empty.
  *
  *

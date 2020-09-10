@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import utils.TreeNode;
 
@@ -46,20 +46,17 @@ public class ValidateBinarySearchTree_98 {
 
     // O(n) - time, O(h) - space
     public boolean isValidBST(TreeNode root) {
-        return isValidBST(root, null, null);
+        return isValid(root, null, null);
     }
 
-    private boolean isValidBST(TreeNode root, Integer min, Integer max) {
+    private boolean isValid(TreeNode root, Integer min, Integer max) {
         if (root == null) {
             return true;
         }
-        if ((min != null && root.val <= min) || (max != null && root.val > max)) {
+        if (min != null && root.val <= min || max != null && root.val >= max) {
             return false;
         }
-        if (!isValidBST(root.left, min, root.val) || !isValidBST(root.right, root.val, max)) {
-            return false;
-        }
-        return true;
+        return isValid(root.left, min, root.val) && isValid(root.right, root.val, max);
     }
 
     // The problem with that solution is that if root is equal to MIN or MAX, we return false, instead of true

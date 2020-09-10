@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 /*
@@ -54,6 +55,11 @@ public class UsefulJava {
         stack.peekLast();
 
         Set<String> set1 = new LinkedHashSet<>();
+
+        // AtomicInteger
+        AtomicInteger num1 = new AtomicInteger(0);
+        num1.addAndGet(12);
+        System.out.println(num1.intValue());
     }
 
     // start from second element from the last
