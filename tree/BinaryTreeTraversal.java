@@ -35,9 +35,9 @@ public class BinaryTreeTraversal {
         root.right.right.right = new TreeNode(11);
 
         BinaryTreeTraversal s = new BinaryTreeTraversal();
-        System.out.println(s.preOrderTraversalIterative(root)); // [1, 2, 4, 5, 9, 10, 8, 3, 6, 7, 11]
-        System.out.println(s.inOrderTraversalIterative(root)); // [4, 2, 10, 9, 5, 8, 1, 6, 3, 7, 11]
-        System.out.println(s.postOrderTraversalIterative(root)); // [4, 10, 9, 8, 5, 2, 6, 11, 7, 3, 1]
+        System.out.println(s.preOrderTraversalIterative(root)); // [1, 2, 4, 5, 9, 10, 8, 3, 6, 7, 11] (root + left + right)
+        System.out.println(s.inOrderTraversalIterative(root)); // [4, 2, 10, 9, 5, 8, 1, 6, 3, 7, 11] (left + root + right)
+        System.out.println(s.postOrderTraversalIterative(root)); // [4, 10, 9, 8, 5, 2, 6, 11, 7, 3, 1] (left + right + root)
 
         System.out.println(s.preOrderTraversal(root)); // [1, 2, 4, 5, 9, 10, 8, 3, 6, 7, 11]
         System.out.println(s.inOrderTraversal(root)); // [4, 2, 10, 9, 5, 8, 1, 6, 3, 7, 11]

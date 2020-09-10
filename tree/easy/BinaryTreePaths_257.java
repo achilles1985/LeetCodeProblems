@@ -1,8 +1,11 @@
-package tree;
+package tree.easy;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
+import java.util.Queue;
 import utils.TreeNode;
 
 /** E
@@ -38,30 +41,55 @@ public class BinaryTreePaths_257 {
         root.right.left = new TreeNode(6);
 
         System.out.println(s.binaryTreePaths(root));
+        System.out.println(s.binaryTreePathsIterative(root));
     }
 
     // O(n) - time, space.
     public List<String> binaryTreePaths(TreeNode root) {
-        if (root == null) {
-            return new ArrayList<>();
-        }
         List<String> result = new ArrayList<>();
-        binaryTreePathsUtils(root, "", result);
+        helper(root, "", result);
 
         return result;
     }
 
-    private void binaryTreePathsUtils(TreeNode root, String path, List<String> result) {
+    public List<String> binaryTreePathsIterative(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        Queue<TreeNode> nodes = new LinkedList<>();
+        Queue<String> paths = new LinkedList<>();
+        nodes.add(root);
+        paths.add(String.valueOf(root.val));
+        List<String> result = new ArrayList<>();
+        while (!nodes.isEmpty()) {
+            TreeNode node = nodes.poll();
+            String path = paths.poll();
+            if (node.left == null && node.right == null) {
+                result.add(path);
+            }
+            if (node.left != null) {
+                nodes.add(node.left);
+                paths.add(path + "->" + node.left.val);
+            }
+            if (node.right != null) {
+                nodes.add(node.right);
+                paths.add(path + "->" + node.right.val);
+            }
+        }
+
+        return result;
+    }
+
+    private void helper(TreeNode root, String path, List<String> result) {
+        if (root == null) {
+            return;
+        }
         path += path.isEmpty() ? root.val : "->" + root.val;
         if (root.left == null && root.right == null) {
             result.add(path);
             return;
         }
-        if (root.left != null) {
-            binaryTreePathsUtils(root.left, path, result);
-        }
-        if (root.right != null) {
-            binaryTreePathsUtils(root.right, path, result);
-        }
+        helper(root.left, path, result);
+        helper(root.right, path, result);
     }
 }

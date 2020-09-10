@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
@@ -65,7 +65,8 @@ public class InsertIntoBinarySearchTree_701 {
         if (root == null) {
             return  new TreeNode(val);
         }
-        TreeNode prev = null; TreeNode curr = root;
+        TreeNode prev = null;
+        TreeNode curr = root;
         while (curr != null) {
             prev = curr;
             if (val < curr.val) {
