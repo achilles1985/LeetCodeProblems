@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import java.util.ArrayList;
 import java.util.Collections;

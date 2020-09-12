@@ -1,8 +1,8 @@
-package tree;
+package tree.easy;
 
 import utils.TreeNode;
 
-/** E
+/** E [MARKED]
  * Given a binary tree, determine if it is height-balanced.
  * For this problem, a height-balanced binary tree is defined as:
  *     a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
@@ -46,20 +46,13 @@ public class BalancedBinaryTree_110 {
         if (root == null) {
             return true;
         }
-        int leftH = height(root.left);
-        int rightH = height(root.right);
-        if (Math.abs(leftH - rightH) > 1) {
+        if (Math.abs(height(root.left) - height(root.right)) > 1) {
             return false;
         }
-        boolean leftBalanced = isBalanced(root.left);
-        boolean rightBalanced = isBalanced(root.right);
-        if (!leftBalanced || !rightBalanced) {
-            return false;
-        }
-        return true;
+        return isBalanced(root.left) && isBalanced(root.right);
     }
 
-    // O(n) - time, O(h) - space
+    // O(n) - time, O(n) - space (recursion stack may go up to O(n) if the tree is unbalanced)
     public boolean isBalanced2(TreeNode root) {
         return checkBalance(root).isBalanced;
     }

@@ -1,4 +1,4 @@
-package tree;
+package tree.easy;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
@@ -20,11 +20,14 @@ import utils.TreeNode;
 public class ConvertSortedArrayToBinarySearchTree_108 {
 
     public static void main(String[] args) {
-        boolean j = true && true || false && true;
         ConvertSortedArrayToBinarySearchTree_108 s = new ConvertSortedArrayToBinarySearchTree_108();
+        TreeNode root4 = s.sortedArrayToBST(new int[] {1, 2, 2, 3, 3, 4, 5});
         TreeUtils.print(s.sortedArrayToBST(new int[]{1,2,4,5,7,8,9}));
         TreeUtils.print(s.sortedArrayToBST(new int[]{-10,-3,0,5,9}));
-        TreeUtils.print(s.unsortedArrayToBST(new int[]{-10,-3,0,5,9}));
+        TreeNode root = s.sortedArrayToBST(new int[] {1,1,1,1,1,1,2,2,2,2,2,3,3,4,5,6,7});
+
+        TreeUtils.print(root);
+
     }
 
     private TreeNode unsortedArrayToBST(int[] arr) {
@@ -35,8 +38,7 @@ public class ConvertSortedArrayToBinarySearchTree_108 {
         if (i <= j) {
             return null;
         }
-        int val = arr[i];
-        TreeNode root = new TreeNode(val);
+        TreeNode root = new TreeNode(arr[i]);
         root.left = unsortedArrayToBST(arr, i+1, j);
         root.right = unsortedArrayToBST(arr, i, j-1);
         return root;

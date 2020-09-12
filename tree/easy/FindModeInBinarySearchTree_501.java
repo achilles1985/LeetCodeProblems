@@ -1,13 +1,13 @@
-package tree;
+package tree.easy;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import utils.SolutionUtils;
 import utils.TreeNode;
 
@@ -30,9 +30,6 @@ import utils.TreeNode;
  * Note: If a tree has more than one mode, you can return them in any order.
  * Follow up: Could you do that without using any extra space? (Assume that the implicit stack space incurred due to
  * recursion does not count).
- */
-/*
-
  */
 /*
     Edge cases:
@@ -69,13 +66,37 @@ public class FindModeInBinarySearchTree_501 {
         root2.right.left = new TreeNode(7);
         root2.right.left.left = new TreeNode(9);
 
-        SolutionUtils.print(s.findMode2(root)); //[3,6]
-        SolutionUtils.print(s.findMode2(root1)); //[-2]
-        SolutionUtils.print(s.findMode(root2));
+        TreeNode root3 = new TreeNode(2);
+        root3.left = new TreeNode(1);
+        root3.left.left = new TreeNode(1);
+        root3.left.left.left = new TreeNode(1);
+        root3.left.left.right = new TreeNode(1);
+        root3.left.right = new TreeNode(1);
+        root3.left.right.left = new TreeNode(1);
+        root3.left.right.right = new TreeNode(2);
+        root3.right = new TreeNode(3);
+        root3.right.right = new TreeNode(5);
+        root3.right.left = new TreeNode(2);
+        root3.right.left.left = new TreeNode(2);
+        root3.right.left.right = new TreeNode(3);
+        root3.right.right.left = new TreeNode(4);
+        root3.right.right.right = new TreeNode(6);
+
+        TreeNode root4 = new TreeNode(3);
+        root4.left = new TreeNode(2);
+        root4.left.left = new TreeNode(1);
+        root4.left.right = new TreeNode(2);
+        root4.right = new TreeNode(4);
+        root4.right.left = new TreeNode(3);
+        root4.right.right = new TreeNode(5);
+
+        SolutionUtils.print(s.findMode(root4)); //[2,3]
+        SolutionUtils.print(s.findMode(root1)); //[-2]
+        //SolutionUtils.print(s.findModeBF(root2));
     }
 
     // O(n) - time, space
-    public int[] findMode(TreeNode root) {
+    public int[] findModeBF(TreeNode root) {
         Map<Integer, Integer> frequency = new HashMap<>();
         populateFrequencyMap(root, frequency);
         int max = 0;
@@ -101,59 +122,43 @@ public class FindModeInBinarySearchTree_501 {
         populateFrequencyMap(root.right, map);
     }
 
-    // O(n) - time, O(1) - space. Incorrect solution
-    public int[] findMode2(TreeNode root) {
-        return findMode2Helper(root, null, 0).elements.stream().mapToInt(i->i).toArray();
+    // https://leetcode.com/problems/find-mode-in-binary-search-tree/discuss/98196/4ms-Java-solution-beats-100-O(1)-space(recursion-stack-space-doesn't-count)
+    // https://leetcode.com/problems/find-mode-in-binary-search-tree/discuss/130066/Java-Solution-No-extra-space
+    // O(n) - time, O(1) - space. Incorrect
+    public int[] findMode(TreeNode root) {
+        if (root == null) {
+            return new int[]{};
+        }
+        Set<Integer> modes = new HashSet<>();
+        AtomicInteger count = new AtomicInteger(1);
+        AtomicInteger maxCount = new AtomicInteger(1);
+        helper(root, modes, count, maxCount, null);
+
+        return modes.stream()
+                .mapToInt(i->i)
+                .toArray();
     }
 
-    private Holder findMode2Helper(TreeNode current, TreeNode parent, int maxFrequency) {
-        if (current == null) {
-            return new Holder(0, new HashSet<>());
+    private void helper(TreeNode root, Set<Integer> modes, AtomicInteger count, AtomicInteger maxCount, TreeNode prev) {
+        if (root == null) {
+            return;
         }
-        int localFrequency = (parent != null && parent.val == current.val) ? maxFrequency + 1 : 0;
-        Set<Integer> elements = new HashSet<>();
-        elements.add(current.val);
-        Holder holder = new Holder(localFrequency, elements);
-        Holder leftHolder = findMode2Helper(current.left, current, localFrequency);
-        Holder rightHolder = findMode2Helper(current.right, current, localFrequency);
 
-        return HolderUtils.max(holder, HolderUtils.max(leftHolder, rightHolder));
+        helper(root.left, modes, count, maxCount, root);
+        if (prev != null && prev.val == root.val) {
+            count.getAndIncrement();
+        } else {
+            count.set(1);
+        }
+        if (count.get() == maxCount.get()) {
+            modes.add(root.val);
+        } if (count.get() > maxCount.get()) {
+            maxCount.set(count.get());
+            modes.clear();
+            modes.add(root.val);
+        }
+        helper(root.right, modes, count, maxCount, root);
     }
 
-    private static class Holder implements Comparable<Holder>{
-        private int frequency;
-        private Set<Integer> elements;
 
-        public Holder(int frequency, Set<Integer> elements) {
-            this.frequency = frequency;
-            this.elements = elements;
-        }
-
-        @Override
-        public int compareTo(Holder o) {
-            if (this.frequency == o.frequency) {
-                return 0;
-            }
-            return this.frequency > o.frequency ? 1 : -1;
-        }
-    }
-
-    private static final class HolderUtils {
-
-        public static Holder max(Holder h1, Holder h2) {
-            if (h1 == null) {
-                return h2;
-            }
-            if (h2 == null) {
-                return h1;
-            }
-            if (h1.compareTo(h2) == 0) {
-                Set<Integer> merged = new HashSet<>();
-                merged.addAll(h1.elements);
-                merged.addAll(h2.elements);
-                return new Holder(h1.frequency, merged);
-            }
-            return h1.compareTo(h2) > 0 ? h1 : h2;
-        }
-    }
 }

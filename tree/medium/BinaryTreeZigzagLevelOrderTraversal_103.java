@@ -1,7 +1,9 @@
-package tree;
+package tree.medium;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -40,7 +42,20 @@ public class BinaryTreeZigzagLevelOrderTraversal_103 {
         root.left.left.left.left = new TreeNode(8);
         root.right.right.right.right = new TreeNode(9);
 
-        System.out.println(s.zigzagLevelOrder(root));
+        TreeNode root2 = new TreeNode(1);
+        root2.left = new TreeNode(2);
+        root2.right = new TreeNode(3);
+        root2.left.left = new TreeNode(4);
+        root2.right.right = new TreeNode(5);
+
+        TreeNode root3 = new TreeNode(3);
+        root3.left = new TreeNode(9);
+        root3.right = new TreeNode(20);
+        root3.right.left = new TreeNode(15);
+        root3.right.right = new TreeNode(7);
+
+        System.out.println(s.zigzagLevelOrder3(root3)); //[[3],[20,9],[15,7]]
+        System.out.println(s.zigzagLevelOrder3(root2)); //[[1],[3,2],[4,5]]
     }
 
     // O(n) - time, space
@@ -113,6 +128,47 @@ public class BinaryTreeZigzagLevelOrderTraversal_103 {
                 result.add(level2);
             }
         }
+        return result;
+    }
+
+    public List<List<Integer>> zigzagLevelOrder3(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        boolean left = true;
+        List<List<Integer>> result = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> temp = new ArrayList<>();
+            while (size-- > 0) {
+                TreeNode node = null;
+                if (left) {
+                    node = queue.pollFirst();
+                } else {
+                    node = queue.pollLast();
+                }
+                temp.add(node.val);
+                if (node.left != null) {
+                    if (left) {
+                        queue.addLast(node.left);
+                    } else {
+                        queue.addFirst(node.left);
+                    }
+                }
+                if (node.right != null) {
+                    if (left) {
+                        queue.addLast(node.right);
+                    } else {
+                        queue.addFirst(node.right);
+                    }
+                }
+            }
+            result.add(temp);
+            left = !left;
+        }
+
         return result;
     }
 }

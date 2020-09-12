@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import java.util.HashMap;
 import java.util.HashSet;

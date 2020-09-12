@@ -39,7 +39,11 @@ public class ArraysTest {
         System.out.println(Arrays.binarySearch(arr, 12));
         System.out.println(Arrays.binarySearch(arr, 6));
 
-        List<Integer> l = new ArrayList<>();
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+        // list to array
+        int[] ints = list1.stream().mapToInt(i -> i).toArray();
 
         // sorting
         final int[] sorted = Arrays.stream(arr)
@@ -52,7 +56,7 @@ public class ArraysTest {
                 .boxed()
                 .toArray(Integer[]::new);
         Arrays.sort(input, (a, b) -> b - a); // reverse order
-        final int[] sortedArr = Arrays.stream(input)
+        int[] sortedArr = Arrays.stream(input)
                 .mapToInt(Integer::intValue)
                 .toArray();
 
