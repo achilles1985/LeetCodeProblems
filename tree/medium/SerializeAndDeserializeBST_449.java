@@ -1,10 +1,8 @@
-package tree;
+package tree.medium;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+
 import tree.utils.TreeUtils;
 import utils.TreeNode;
 
@@ -89,9 +87,8 @@ public class SerializeAndDeserializeBST_449 {
     }
 
     public TreeNode deserialize2(String data) {
-        ArrayDeque<Integer> nums = new ArrayDeque<Integer>();
-        int n = data.length();
-        for (int i = 0; i < (int) (n / 4); ++i) {
+        Deque<Integer> nums = new ArrayDeque<>();
+        for (int i = 0; i < data.length() / 4; ++i) {
             nums.add(stringToInt(data.substring(4 * i, 4 * i + 4)));
         }
 
@@ -126,11 +123,12 @@ public class SerializeAndDeserializeBST_449 {
         String asStr = Arrays.toString(asBytes);
 
         // d)
+        byte[] asBytes1 = convertIntToByteArray(x);
 
         return new String(bytes);
     }
 
-    private TreeNode helper(Integer lower, Integer upper, ArrayDeque<Integer> nums) {
+    private TreeNode helper(Integer lower, Integer upper, Deque<Integer> nums) {
         if (nums.isEmpty()) {
             return null;
         }
@@ -152,8 +150,12 @@ public class SerializeAndDeserializeBST_449 {
         for (char b : bytesStr.toCharArray()) {
             result = (result << 8) + (int) b;
         }
+
         // b)
         int num = ByteBuffer.wrap(bytesStr.getBytes()).getInt();
+
+        //d
+        int num1 = convertByteArrayToInt(bytesStr.getBytes());
 
         return result;
     }

@@ -1,25 +1,26 @@
-package tree;
+package tree.medium;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
 
-/** M [MARKED]
+/**
+ * M [MARKED]
  * Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root
  * node reference (possibly updated) of the BST.
  * Basically, the deletion can be divided into two stages:
- *     Search for a node to remove.
- *     If the node is found, delete the node.
+ * Search for a node to remove.
+ * If the node is found, delete the node.
  * Note: Time complexity should be O(height of tree).
- *
+ * <p>
  * Example:
  * root = [5,3,6,2,4,null,7]
  * key = 3
- *     5
- *    / \
- *   3   6
- *  / \   \
- * 2   4   7
- *
+ *      5
+ *     / \
+ *    3   6
+ *   / \   \
+ *  2   4   7
+ * <p>
  * Given key to delete is 3. So we find the node with value 3 and delete it.
  * One valid answer is [5,4,6,2,null,null,7], shown in the following BST.
  *     5
@@ -31,8 +32,8 @@ import utils.TreeNode;
  *     5
  *    / \
  *   2   6
- *    \   \
- *     4   7
+ *   \   \
+ *   4   7
  */
 /*
  if element to be deleted has left and right subtrees, find next greater element in the right subtree,
@@ -49,7 +50,7 @@ public class DeleteNodeInBST_450 {
         root.left.right = new TreeNode(4);
         root.right.right = new TreeNode(7);
 
-        TreeUtils.print(s.deleteNode(root, 3));
+        TreeUtils.print(s.deleteNode(root, 6));
     }
 
     // O(n) - time, space
@@ -80,6 +81,56 @@ public class DeleteNodeInBST_450 {
         }
         iterator.left = leftNode;
         return rightNode;
+    }
+
+    public TreeNode deleteNode2(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+
+        if (key > root.val) {
+            root.right = deleteNode2(root.right, key);
+        }
+        else if (key < root.val) {
+            root.left = deleteNode2(root.left, key);
+        }
+        else {
+            if (root.left == null && root.right == null) {
+                root = null;
+            }
+            else if (root.right != null) {
+                root.val = successor(root);
+                root.right = deleteNode2(root.right, root.val);
+            }
+            else {
+                root.val = predecessor(root);
+                root.left = deleteNode2(root.left, root.val);
+            }
+        }
+
+        return root;
+    }
+
+    /*
+    One step right and then always left
+    */
+    private int successor(TreeNode root) {
+        root = root.right;
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root.val;
+    }
+
+    /*
+    One step left and then always right
+    */
+    private int predecessor(TreeNode root) {
+        root = root.left;
+        while (root.right != null) {
+            root = root.right;
+        }
+        return root.val;
     }
 
 }

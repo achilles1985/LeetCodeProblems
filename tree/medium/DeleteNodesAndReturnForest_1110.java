@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,7 +42,8 @@ public class DeleteNodesAndReturnForest_1110 {
         System.out.println(s.delNodes(root, new int[]{1}));
     }
 
-    // O(n) - time (we travers each node in a tree), O(n) - space (for skewed tree stack depth=number of nodes + toDelete set contains all nodes)
+    // O(n) - time (we travers each node in a tree),
+    // O(n) - space (for skewed tree stack depth=number of nodes + toDelete set contains all nodes)
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
         Set<Integer> toDelete = new HashSet<>();
         List<TreeNode> result = new ArrayList<>();

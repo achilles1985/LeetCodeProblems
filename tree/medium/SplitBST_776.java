@@ -1,9 +1,8 @@
-package tree;
+package tree.medium;
 
-import utils.SolutionUtils;
 import utils.TreeNode;
 
-/**M
+/**M [F]
  * Given a Binary Search Tree (BST) with root node root, and a target value V, split the tree into two subtrees where
  * one subtree has nodes that are all smaller or equal to the target value, while the other subtree has all nodes
  * that are greater than the target value.  It's not necessarily the case that the tree contains a node with value V.
