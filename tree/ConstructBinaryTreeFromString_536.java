@@ -1,40 +1,41 @@
 package tree;
 
-import java.util.Stack;
-
 import tree.utils.TreeUtils;
 import utils.TreeNode;
 
-/**M
+import java.util.Stack;
+
+/**
+ * M
  * You need to construct a binary tree from a string consisting of parenthesis and integers.
  * The whole input represents a binary tree. It contains an integer followed by zero, one or two pairs of parenthesis.
  * The integer represents the root's value and a pair of parenthesis contains a child binary tree with the same
  * structure.
  * You always start to construct the left child node of the parent first if it exists.
- *
- *  Note:
+ * <p>
+ * Note:
  * There will only be '(', ')', '-' and '0' ~ '9' in the input string.
  * An empty tree is represented by "" instead of "()".
- *
+ * <p>
  * Example 1:
  * Input: "-4(2(3)(1))(6(5))"
  * Output: {-4,2,6,3,1,5}
  * Explanation:
  * The output is look like this:
- *       -4
- *      /  \
- *     2    5
- *    / \   /\
- *   3   4 6  78
- *
- *  Example 2:
+ * -4
+ * /  \
+ * 2    6
+ * / \   /
+ * 3   1 5
+ * <p>
+ * Example 2:
  * Input: "1(-1)"
  * Output: {1,-1}
  * Explanation:
  * The output is look like this:
- *      1
- *     /
- *   -1
+ * 1
+ * /
+ * -1
  */
 /*
 Mistakes:
@@ -58,7 +59,7 @@ public class ConstructBinaryTreeFromString_536 {
             return null;
         }
         int i = 0, j = 0;
-        while (j < s.length() && Character.isDigit(s.charAt(j)) || j < s.length()-1 && s.charAt(j) == '-') {
+        while (j < s.length() && Character.isDigit(s.charAt(j)) || j < s.length() - 1 && s.charAt(j) == '-') {
             j++;
         }
         TreeNode node = new TreeNode(Integer.parseInt(s.substring(i, j)));
@@ -75,7 +76,7 @@ public class ConstructBinaryTreeFromString_536 {
         }
         j++;
         if (j < s.length()) {
-            node.right = str2tree(s.substring(j+1, s.length()-1));
+            node.right = str2tree(s.substring(j + 1, s.length() - 1));
         }
         return node;
     }
@@ -83,24 +84,27 @@ public class ConstructBinaryTreeFromString_536 {
     // O(n) - time, O(h) - space
     public TreeNode str2treeIterative(String s) {
         Stack<TreeNode> stack = new Stack<>();
-        for(int i = 0, j = i; i < s.length(); i++, j = i){
+        for (int i = 0, j = i; i < s.length(); i++, j = i) {
             char c = s.charAt(i);
-            if(c == ')') {
+            if (c == ')') {
                 stack.pop();
-            }
-            else if (c >= '0' && c <= '9' || c == '-'){
-                while(i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
+            } else if (c >= '0' && c <= '9' || c == '-') {
+                while (i + 1 < s.length() && s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') {
                     i++;
                 }
-                TreeNode currentNode = new TreeNode(Integer.valueOf(s.substring(j, i + 1)));
-                if(!stack.isEmpty()){
+                TreeNode currentNode = new TreeNode(Integer.parseInt(s.substring(j, i + 1)));
+                if (!stack.isEmpty()) {
                     TreeNode parent = stack.peek();
-                    if(parent.left != null)    parent.right = currentNode;
-                    else parent.left = currentNode;
+                    if (parent.left != null) {
+                        parent.right = currentNode;
+                    } else {
+                        parent.left = currentNode;
+                    }
                 }
                 stack.push(currentNode);
             }
         }
+
         return stack.isEmpty() ? null : stack.peek();
     }
 }

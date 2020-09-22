@@ -1,28 +1,29 @@
-package tree;
+package tree.medium;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
 
 /**
- 156. Binary Tree Upside Down
- https://leetcode.com/problems/binary-tree-upside-down/#/description
- Given a binary tree where all the right nodes are either leaf nodes
- with a sibling (a left node that shares the same parent node) or empty,
- flip it upside down and turn it into a tree where the original right
- nodes turned into left leaf nodes. Return the new root.
- For example:
- Given a binary tree {1,2,3,4,5},
-    1
-   / \
-  2   3
- / \
-4   5
- return the root of the binary tree [4,5,2,#,#,3,1].
-      4
-     / \
-    5   2
-   / \
-  3   1
+ Given the root of a binary tree, turn the tree upside down and return the new root.
+ You can turn a binary tree upside down with the following steps:
+
+ The original left child becomes the new root.
+ The original root becomes the new right child.
+ The original right child becomes the new left child.
+
+ The mentioned steps are done level by level, it is guaranteed that every node in the given tree has either 0 or 2 children.
+
+ Example 1:
+ Input: root = [1,2,3,4,5]
+ Output: [4,5,2,null,null,3,1]
+ Example 2:
+
+ Input: root = []
+ Output: []
+ Example 3:
+
+ Input: root = [1]
+ Output: [1]
  */
 
 public class BinaryTreeUpsideDown_156 {

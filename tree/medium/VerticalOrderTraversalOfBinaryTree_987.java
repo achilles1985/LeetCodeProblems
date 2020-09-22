@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,11 +36,11 @@ import utils.TreeNode;
  *
  * Example 2:
  * Input: [1,2,3,4,5,6,7]
- *  *  *    1
- *  *  *  /   \
- *  *  * 2     3
+ *  *  *     1
+ *  *  *  /    \
+ *  *  * 2      3
  *  *  /  \    / \
- *  * 4    5  6  7
+ *  * 4    5  6   7
  * Output: [[4],[2],[1,5,6],[3],[7]]
  * Explanation:
  * The node with value 5 and the node with value 6 have the same position according to the given scheme.
@@ -78,7 +78,7 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
         root2.right.right.left = new TreeNode(5);
         root2.right.right.left.left = new TreeNode(6);
 
-        System.out.println(s.verticalTraversal2(root)); //[[4],[2],[1,5,6],[3],[7]]
+        System.out.println(s.verticalTraversal(root)); //[[4],[2],[1,5,6],[3],[7]]
         System.out.println(s.verticalTraversal2(root1)); //[[9],[3,15],[20],[7]]
         System.out.println(s.verticalTraversal2(root2)); //[[8],[0,3,6],[1,4,5],[2,7]]
     }

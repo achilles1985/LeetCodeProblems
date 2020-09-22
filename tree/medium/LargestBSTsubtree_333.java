@@ -1,10 +1,27 @@
-package tree;
+package tree.medium;
 
 import utils.TreeNode;
 
 /** M
- * Given a binary tree, find size of largest binary search subtree in this
- * binary tree.
+ Given a binary tree, find the largest subtree which is a Binary Search Tree (BST), where largest means subtree with largest number of nodes in it.
+ Note:
+ A subtree must include all of its descendants.
+
+ Example:
+ Input: [10,5,15,1,8,null,7]
+
+      10
+     / \
+    5  15
+   / \   \
+  1   8   7
+
+ Output: 3 [1-5-8]
+ Explanation: The Largest BST Subtree in this case is the highlighted one.
+ The return value is the subtree's size, which is 3.
+ Follow up:
+ Can you figure out ways to solve it with O(n) time complexity?
+
  *
  * Traverse tree in post order fashion. Left and right nodes return 4 piece
  * of information to root which isBST, size of max BST, min and max in those

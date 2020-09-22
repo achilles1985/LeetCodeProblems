@@ -1,12 +1,13 @@
-package tree;
+package tree.medium;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
 
-/**M
+/**M [MARKED]
  * Given preorder and inorder traversal of a tree, construct the binary tree.
  * Note:
  * You may assume that duplicates do not exist in the tree.
@@ -43,27 +44,20 @@ public class ConstructBinaryTreeFromInorderAndPreorderTraversal_105 {
         for (int i = 0; i < inorder.length; i++) {
             inorderMap.put(inorder[i], i);
         }
-        return buildTree(inorder, 0, inorder.length-1, new PreorderIndex(), preorder, inorderMap);
+        return buildTree(inorder, 0, inorder.length-1, new AtomicInteger(), preorder, inorderMap);
     }
 
-    private TreeNode buildTree(int[] inorder, int inStart, int inEnd, PreorderIndex preIdx, int[] preorder, Map<Integer, Integer> inorderMap) {
+    private TreeNode buildTree(int[] inorder, int inStart, int inEnd, AtomicInteger preIdx, int[] preorder, Map<Integer, Integer> inorderMap) {
         if (inStart > inEnd) {
             return null;
         }
-        Integer rootIdx = inorderMap.get(preorder[preIdx.index]);
+        Integer rootIdx = inorderMap.get(preorder[preIdx.intValue()]);
         TreeNode root = new TreeNode(inorder[rootIdx]);
-        preIdx.increment();
+        preIdx.getAndIncrement();
         root.left = buildTree(inorder, inStart, rootIdx-1, preIdx, preorder, inorderMap);
         root.right = buildTree(inorder, rootIdx+1, inEnd, preIdx, preorder, inorderMap);
 
         return root;
     }
 
-    private static class PreorderIndex {
-        private int index;
-
-        private void increment() {
-            index++;
-        }
-    }
 }

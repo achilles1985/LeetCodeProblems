@@ -1,8 +1,8 @@
-package tree;
+package tree.easy;
 
 import utils.TreeNode;
 
-/** M
+/** E [MARKED]
  *  Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary tree is
  *  the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
  *
@@ -29,7 +29,7 @@ public class DiameterOfBinaryTree_543 {
         root.left.right = new TreeNode(5);
         root.right.left = new TreeNode(6);
 
-        System.out.println(s.diameterOfBinaryTree(root)); //4
+        System.out.println(s.diameterOfBinaryTreeBF(root)); //4
         System.out.println(s.diameterOfBinaryTree2(root)); //4
         System.out.println(s.diameterOfBinaryTree3(root)); //4
     }
@@ -53,14 +53,14 @@ public class DiameterOfBinaryTree_543 {
     }
 
     // O(n^2) - time, O(h^2) - space
-    public int diameterOfBinaryTree(TreeNode root) {
+    public int diameterOfBinaryTreeBF(TreeNode root) {
         if (root == null) {
             return 0;
         }
         int leftHeight = height(root.left);
         int rightHeight = height(root.right);
-        int leftDiameter = diameterOfBinaryTree(root.left);
-        int rightDiameter = diameterOfBinaryTree(root.right);
+        int leftDiameter = diameterOfBinaryTreeBF(root.left);
+        int rightDiameter = diameterOfBinaryTreeBF(root.right);
         return Math.max((leftHeight + rightHeight), Math.max(leftDiameter, rightDiameter));
     }
 

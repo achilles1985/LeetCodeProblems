@@ -1,7 +1,8 @@
-package tree;
+package tree.medium;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
@@ -42,30 +43,19 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal_106 {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return buildTreeHelper(postorder, new PostorderIndex(postorder.length-1), 0, inorder.length-1, map);
+        return buildTreeHelper(postorder, new AtomicInteger(postorder.length-1), 0, inorder.length-1, map);
     }
 
-    private TreeNode buildTreeHelper(int[] postorder, PostorderIndex poIdx, int inStart, int inEnd, Map<Integer, Integer> map) {
+    private TreeNode buildTreeHelper(int[] postorder, AtomicInteger poIdx, int inStart, int inEnd, Map<Integer, Integer> map) {
         if (inStart > inEnd) {
             return null;
         }
-        Integer inRoot = map.get(postorder[poIdx.index]);
-        TreeNode node = new TreeNode(postorder[poIdx.index]);
-        poIdx.decrement();
+        Integer inRoot = map.get(postorder[poIdx.intValue()]);
+        TreeNode node = new TreeNode(postorder[poIdx.intValue()]);
+        poIdx.getAndDecrement();
         node.right = buildTreeHelper(postorder, poIdx, inRoot+1, inEnd, map);
         node.left = buildTreeHelper(postorder, poIdx, inStart, inRoot-1, map);
         return node;
     }
 
-    private static class PostorderIndex {
-        private int index;
-
-        private PostorderIndex(int index) {
-            this.index = index;
-        }
-
-        private void decrement() {
-            --index;
-        }
-    }
 }
