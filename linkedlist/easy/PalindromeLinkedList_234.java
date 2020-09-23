@@ -1,10 +1,10 @@
-package linkedlist;
+package linkedlist.easy;
 
 import java.util.Stack;
 
 import linkedlist.utils.ListNode;
 
-/** E
+/** E [MARKED]
  * Given a singly linked list, determine if it is a palindrome.
  *
  * Example 1:

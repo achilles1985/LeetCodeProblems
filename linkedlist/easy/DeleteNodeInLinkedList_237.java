@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.easy;
 
 import linkedlist.utils.ListNode;
 

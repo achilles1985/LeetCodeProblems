@@ -1,9 +1,9 @@
-package linkedlist;
+package linkedlist.easy;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
 
-/** E
+/** E [MARKED]
  * Reverse a singly linked list.
  *
  * Example:
@@ -22,9 +22,11 @@ public class ReverseLinkedList_206 {
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
+        ListNode reversed2 = s.reverseList3(head);
         ListNode reversed = s.reverseList2(head);
 
         LinkedListUtils.print(reversed);
+        LinkedListUtils.print(reversed2);
     }
 
     // O(n) - time, O(1) - space
@@ -61,7 +63,7 @@ public class ReverseLinkedList_206 {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode p = reverseList2(head.next);
+        ListNode p = reverseList3(head.next);
         head.next.next = head;
         head.next = null;
         return p;

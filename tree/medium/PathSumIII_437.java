@@ -2,6 +2,9 @@ package tree.medium;
 
 import utils.TreeNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /** M
  * You are given a binary tree in which each node contains an integer value.
  * Find the number of paths that sum to a given value.
@@ -40,10 +43,33 @@ public class PathSumIII_437 {
         root.left.left.right = new TreeNode(-2);
         root.right.right.right= new TreeNode(1);
 
-        System.out.println(s.pathSum(root, 22));
+        System.out.println(s.pathSum(root, 8)); //3
     }
 
+    // O(n) - time, space
     public int pathSum(TreeNode root, int sum) {
-        return 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] counter = new int[1];
+        preorder(root, sum, 0, map, counter);
+
+        return counter[0];
+    }
+
+    private void preorder(TreeNode root, int sum, int curSum, Map<Integer, Integer> map, int[] counter) {
+        if (root == null) {
+            return;
+        }
+
+        curSum += root.val;
+        if (curSum == sum) {
+            counter[0]++;
+        }
+        counter[0] += map.getOrDefault(curSum - sum, 0);
+        map.put(curSum, map.getOrDefault(curSum, 0) + 1);
+
+        preorder(root.left, sum, curSum, map, counter);
+        preorder(root.right, sum, curSum, map, counter);
+
+        map.put(curSum, map.getOrDefault(curSum, 0) - 1);
     }
 }

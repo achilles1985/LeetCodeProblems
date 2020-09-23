@@ -1,9 +1,9 @@
-package linkedlist.CopyListWithRandomPointer_138;
+package linkedlist.medium;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
+/** M
  A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
  Return a deep copy of the list.
 
@@ -18,10 +18,10 @@ import java.util.Map;
  Note:
  You must return the copy of the given head as a reference to the cloned list.
  */
-public class Solution {
+public class CopyListWithRandomPointer_138 {
 
     public static void main(String[] args) {
-        Solution s = new Solution();
+        CopyListWithRandomPointer_138 s = new CopyListWithRandomPointer_138();
         ListNode head = new ListNode(1);
         ListNode n1 = new ListNode(2);
         ListNode n2 = new ListNode(3);
@@ -78,5 +78,23 @@ public class Solution {
         }
 
         return dummy.next;
+    }
+
+    public static class ListNode {
+        public int val;
+        public ListNode next;
+        public ListNode random;
+
+        public ListNode() {}
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+
+        public ListNode(int _val, ListNode _next, ListNode _random) {
+            val = _val;
+            next = _next;
+            random = _random;
+        }
     }
 }

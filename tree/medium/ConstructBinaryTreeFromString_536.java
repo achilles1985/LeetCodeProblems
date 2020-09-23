@@ -1,4 +1,4 @@
-package tree;
+package tree.medium;
 
 import tree.utils.TreeUtils;
 import utils.TreeNode;
@@ -22,19 +22,19 @@ import java.util.Stack;
  * Output: {-4,2,6,3,1,5}
  * Explanation:
  * The output is look like this:
- * -4
- * /  \
- * 2    6
- * / \   /
- * 3   1 5
+ *     -4
+ *    /  \
+ *   2    6
+ *  / \   /\
+ * 3   1 5  7
  * <p>
  * Example 2:
  * Input: "1(-1)"
  * Output: {1,-1}
  * Explanation:
  * The output is look like this:
- * 1
- * /
+ *    1
+ *   /
  * -1
  */
 /*
@@ -46,9 +46,11 @@ public class ConstructBinaryTreeFromString_536 {
 
     public static void main(String[] args) {
         ConstructBinaryTreeFromString_536 s = new ConstructBinaryTreeFromString_536();
+        TreeUtils.print(s.str2tree("-4(2(3)(1))(6(5)(7))"));
         TreeUtils.print(s.str2tree("-14(2(3)(4))(5(6)(78))"));
         TreeUtils.print(s.str2tree("1(-1)"));
 
+        TreeUtils.print(s.str2treeIterative("-4(2(3)(1))(6(5)(7))"));
         TreeUtils.print(s.str2treeIterative("-14(2(3)(4))(5(6)(78))"));
         TreeUtils.print(s.str2treeIterative("1(-1)"));
     }

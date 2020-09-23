@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.easy;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
@@ -25,26 +25,22 @@ public class RemoveLinkedListElements_203 {
         LinkedListUtils.print(s.removeElements(head, 6)); // 1-2-3-4-5
     }
 
-    // O(n) - time, O(1) - space
     public ListNode removeElements(ListNode head, int val) {
         if (head == null) {
             return null;
         }
-        while(head != null && head.val == val) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while (head != null) {
+            if (head.val != val) {
+                curr.next = head;
+                curr = curr.next;
+            }
             head = head.next;
         }
-        ListNode curr = head;
-        ListNode prev = null;
-        while (curr != null) {
-            if (curr.val == val) {
-               prev.next = curr.next;
-               curr = curr.next;
-               continue;
-            }
-            prev = curr;
-            curr = curr.next;
-        }
-        return head;
+        curr.next = null;
+
+        return dummy.next;
     }
 
     // O(n) - time, O(1) - space
@@ -64,4 +60,6 @@ public class RemoveLinkedListElements_203 {
 
         return head;
     }
+
+
 }

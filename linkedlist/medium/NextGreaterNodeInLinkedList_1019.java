@@ -1,6 +1,8 @@
-package linkedlist;
+package linkedlist.medium;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import linkedlist.utils.ListNode;
@@ -72,5 +74,32 @@ public class NextGreaterNodeInLinkedList_1019 {
             curr = curr.next;
         }
         return Arrays.copyOf(res, count);
+    }
+
+    public int[] nextLargerNodes2(ListNode head) {
+        if (head == null) {
+            return new int[]{};
+        }
+        ListNode cur = head;
+        Map<Integer, Integer> map = new HashMap<>();
+        int idx = 0;
+        while (cur != null) {
+            map.put(idx++, cur.val);
+            cur = cur.next;
+        }
+        Stack<Integer> stack = new Stack<>();
+        int[] result = new int[map.size()];
+        for (Integer key: map.keySet()) {
+            int val = map.get(key);
+            while (!stack.isEmpty() && map.get(stack.peek()) < val) {
+                result[stack.pop()] = val;
+            }
+            stack.push(key);
+        }
+        while (!stack.isEmpty()) {
+            result[stack.pop()] = 0;
+        }
+
+        return result;
     }
 }

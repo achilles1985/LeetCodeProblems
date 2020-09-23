@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.easy;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
@@ -36,16 +36,22 @@ public class RemoveDuplicatesFromSortedList_83 {
 
     // O(n) - time, O(1) - space
     public ListNode deleteDuplicates(ListNode head) {
-        ListNode curr = head;
-        while (curr != null && curr.next != null) {
-            ListNode temp = curr;
-            while (temp != null && temp.next != null && temp.val == temp.next.val) {
-                temp = temp.next;
-            }
-            curr.next = temp.next;
-            curr = curr.next;
+        if (head == null) {
+            return null;
         }
-        return head;
+        ListNode prev = head;
+        ListNode dummy = head;
+        ListNode cur = head;
+        while (cur != null) {
+            if (prev.val != cur.val) {
+                prev.next = cur;
+                prev = prev.next;
+            }
+            cur = cur.next;
+        }
+        prev.next = null;
+
+        return dummy;
     }
 
     public ListNode deleteDuplicates2(ListNode head) {

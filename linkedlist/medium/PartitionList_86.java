@@ -1,9 +1,9 @@
-package linkedlist;
+package linkedlist.medium;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
 
-/** M
+/** M [MARKED]
  * Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or
  * equal to x.
  * You should preserve the original relative order of the nodes in each of the two partitions.
@@ -23,11 +23,11 @@ public class PartitionList_86 {
         head.next.next.next.next = new ListNode(5);
         head.next.next.next.next.next = new ListNode(2);
 
-        LinkedListUtils.print(s.partition2(head, 3)); // 1->2->2->4->3->5
+        LinkedListUtils.print(s.partition(head, 3)); // 1->2->2->4->3->5
     }
 
     // O(n) - time, O(1) - space
-    public ListNode partition2(ListNode head, int x) {
+    public ListNode partition(ListNode head, int x) {
         if (head == null || head.next == null) {
             return head;
         }
@@ -48,33 +48,6 @@ public class PartitionList_86 {
         greaterIter.next = null;
         lessIter.next = greater.next;
 
-        return less.next;
-    }
-
-    // O(n) - time, O(n) - space
-    public ListNode partition(ListNode head, int x) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-        ListNode less = new ListNode(0);
-        ListNode greater = new ListNode(0);
-        ListNode lessIter = less;
-        ListNode greaterIter = greater;
-        ListNode curr = head;
-        while (curr != null) {
-            if (curr.val < x) {
-                lessIter.next = new ListNode(curr.val);
-                lessIter = lessIter.next;
-            }  else {
-                greaterIter.next = new ListNode(curr.val);
-                greaterIter = greaterIter.next;
-            }
-            curr = curr.next;
-        }
-/*        if (less.next == null) { // redundant, even though it's null, we connect it with not null greater list.
-            return head;
-        }*/
-        lessIter.next = greater.next;
         return less.next;
     }
 
