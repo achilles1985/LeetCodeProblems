@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.medium;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
@@ -18,7 +18,7 @@ public class SortList_148 {
 
     public static void main(String[] args) {
         SortList_148 s = new SortList_148();
-        ListNode head = new ListNode(2);
+        ListNode head = new ListNode(2); //2-3-1-4-5
         head.next = new ListNode(3);
         head.next.next = new ListNode(1);
         head.next.next.next = new ListNode(4);
@@ -27,7 +27,7 @@ public class SortList_148 {
         LinkedListUtils.print(s.sortList(head));
     }
 
-    // O(n*log(n)) - time
+    // O(n*log(n)) - time, O(log(n)) - space, to store the recursive call stack. The maximum depth of the recursion tree is log(n).
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -38,7 +38,7 @@ public class SortList_148 {
         return merge(left, right);
     }
 
-    private ListNode middle(ListNode head) {
+    private ListNode middle(ListNode head) { // actually splits the list into 2 parts and returns the head of the first part
         ListNode prevSlow = null;
         ListNode fast = head;
         ListNode slow = head;
@@ -70,4 +70,5 @@ public class SortList_148 {
 
         return head.next;
     }
+
 }

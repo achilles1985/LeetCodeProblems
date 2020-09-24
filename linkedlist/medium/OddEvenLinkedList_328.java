@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.medium;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
@@ -36,6 +36,7 @@ public class OddEvenLinkedList_328 {
         LinkedListUtils.print(s.oddEvenList(head)); //1->3->5->7->2->4->6->8
     }
 
+    // O(n) - time, O(1) - space
     public ListNode oddEvenList(ListNode head) {
         if (head == null) {
             return null;
@@ -50,6 +51,7 @@ public class OddEvenLinkedList_328 {
             even = even.next;
         }
         odd.next = evenHead;
+
         return head;
     }
 

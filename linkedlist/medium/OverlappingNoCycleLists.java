@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.medium;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,7 @@ import java.util.Set;
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
 
-/**
+/** M [MARKED]
  * Given two singly linked lists there may be list nodes that are common to both.
  * Write a program that takes two cycle-free singly linked lists, and determines if there exists a node that is common to both lists.
  */

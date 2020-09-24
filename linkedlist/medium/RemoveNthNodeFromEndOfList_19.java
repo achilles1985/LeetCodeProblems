@@ -1,4 +1,4 @@
-package linkedlist;
+package linkedlist.medium;
 
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
@@ -26,7 +26,7 @@ public class RemoveNthNodeFromEndOfList_19 {
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
 
-        LinkedListUtils.print(s.removeNthFromEnd3(head, 3));
+        LinkedListUtils.print(s.removeNthFromEnd3(head, 5));
     }
 
     // O(n) - time, O(1) - space, one path, dummy head
@@ -39,7 +39,7 @@ public class RemoveNthNodeFromEndOfList_19 {
         }
         ListNode second = dummyHead;
         while (first != null) {
-            second = second. next;
+            second = second.next;
             first = first.next;
         }
         // second points to the (k + l)-th last node, deletes its successor.
