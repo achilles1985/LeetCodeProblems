@@ -28,17 +28,18 @@ public class TopologicalSort {
 
     public static void main(String[] args) {
         TopologicalSort s = new TopologicalSort();
+        System.out.println(s.sort(new int[][]{{1,3},{2,3},{2,5},{3,4},{5,6},{4,6},{6,7}})); //[2, 5, 1, 3, 4, 6, 7], [1, 2, 3, 5, 4, 6, 7]
         System.out.println(s.sort2(new int[][]{{1,3},{2,3},{2,5},{3,4},{5,6},{4,6},{6,7}})); //[2, 5, 1, 3, 4, 6, 7], [1, 2, 3, 5, 4, 6, 7]
     }
 
     // O(V+E) - time, O(V) - space
-    public List<Integer> sort(int[][] graph) {
-        if (graph == null) {
+    public List<Integer> sort(int[][] edges) {
+        if (edges == null) {
             return new ArrayList<>();
         }
         Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < graph.length; i++) {
-            map.computeIfAbsent(graph[i][0], key -> map.getOrDefault(key, new ArrayList<>())).add(graph[i][1]);
+        for (int i = 0; i < edges.length; i++) {
+            map.computeIfAbsent(edges[i][0], key -> map.getOrDefault(key, new ArrayList<>())).add(edges[i][1]);
         }
         Set<Integer> visited = new HashSet<>();
         Stack<Integer> stack = new Stack<>();

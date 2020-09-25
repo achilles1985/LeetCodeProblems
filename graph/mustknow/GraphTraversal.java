@@ -28,14 +28,14 @@ public class GraphTraversal {
     }
 
     // O(V+E) - time, O(V) - space
-    public List<Integer> dfs(int[][] graph) {
+    public List<Integer> dfs(int[][] edges) {
         List<Integer> result = new ArrayList<>();
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < graph.length; i++) {
-            map.computeIfAbsent(graph[i][0], (key) -> new ArrayList<>()).add(graph[i][1]);
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < edges.length; i++) {
+            graph.computeIfAbsent(edges[i][0], (key) -> new ArrayList<>()).add(edges[i][1]);
         }
         Set<Integer> visited = new HashSet<>();
-        dfsHelper(map, visited, result, graph[0][0]);
+        dfsHelper(graph, visited, result, edges[0][0]);
 
         return result;
     }
@@ -52,15 +52,15 @@ public class GraphTraversal {
     }
 
     // O(V+E) - time, O(V) - space
-    public List<Integer> dfsIterative(int[][] graph) {
+    public List<Integer> dfsIterative(int[][] edges) {
         List<Integer> result = new ArrayList<>();
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < graph.length; i++) {
-            map.computeIfAbsent(graph[i][0], (key) -> new ArrayList<>()).add(graph[i][1]);
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < edges.length; i++) {
+            graph.computeIfAbsent(edges[i][0], (key) -> new ArrayList<>()).add(edges[i][1]);
         }
         Set<Integer> visited = new HashSet<>();
         Stack<Integer> stack = new Stack<>();
-        stack.push(graph[0][0]);
+        stack.push(edges[0][0]);
         while (!stack.isEmpty()) {
             Integer vertex = stack.pop();
             if (visited.contains(vertex)) {
@@ -68,7 +68,7 @@ public class GraphTraversal {
             }
             result.add(vertex);
             visited.add(vertex);
-            for (int child: map.getOrDefault(vertex, Collections.emptyList())) {
+            for (int child: graph.getOrDefault(vertex, Collections.emptyList())) {
                 stack.push(child);
             }
         }
@@ -76,21 +76,21 @@ public class GraphTraversal {
         return result;
     }
 
-    // O(V) - time, space
-    public List<Integer> bfs(int[][] graph) {
+    // O(V+E) - time, O(V) - space
+    public List<Integer> bfs(int[][] edges) {
         List<Integer> result = new ArrayList<>();
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < graph.length; i++) {
-            map.computeIfAbsent(graph[i][0], (key) -> new ArrayList<>()).add(graph[i][1]);
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < edges.length; i++) {
+            graph.computeIfAbsent(edges[i][0], (key) -> new ArrayList<>()).add(edges[i][1]);
         }
         Set<Integer> visited = new HashSet<>();
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(graph[0][0]);
-        visited.add(graph[0][0]);
+        queue.add(edges[0][0]);
+        visited.add(edges[0][0]);
         while (!queue.isEmpty()) {
             Integer vertex = queue.poll();
             result.add(vertex);
-            for (int child: map.getOrDefault(vertex, Collections.emptyList())) {
+            for (int child: graph.getOrDefault(vertex, Collections.emptyList())) {
                 if (!visited.contains(child)) {
                     queue.add(child);
                     visited.add(child);

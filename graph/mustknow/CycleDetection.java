@@ -52,7 +52,7 @@ public class CycleDetection {
         return false;
     }
 
-    // O(V + E) - time, O(V) - space
+    // O(V+E) - time, O(V) - space
     public boolean hasCycleDirectedGraph(int[][] graph) {
         if (graph == null) {
             return false;
@@ -93,7 +93,7 @@ public class CycleDetection {
         return false;
     }
 
-    // O(V + E) - time, O(V) - space
+    // O(V+E) - time, O(V) - space
     public boolean hasCycleUndirectedGraph(int[][] graph) {
         if (graph == null) {
             return false;
