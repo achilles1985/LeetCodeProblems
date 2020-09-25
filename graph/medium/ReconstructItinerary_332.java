@@ -1,4 +1,4 @@
-package graph;
+package graph.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 /**M
  * Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the
@@ -54,7 +55,7 @@ public class ReconstructItinerary_332 {
                 Arrays.asList("ATL", "SFO")))); // ["JFK","ATL","JFK","SFO","ATL","SFO"]
     }
 
-    // O(n*log(n)) - time, O(n) - space, n - number of stations
+    // O(E*log(E)) - time, O(V) - space, E - number of tickets, V - number of stations
     public List<String> findItinerary(List<List<String>> tickets) {
         if (tickets == null || tickets.isEmpty()) {
             return Collections.emptyList();
@@ -62,22 +63,26 @@ public class ReconstructItinerary_332 {
 
         List<String> result = new ArrayList<>();
         Map<String, PriorityQueue<String>> graph = new HashMap<>();
-        for (List<String> ticket: tickets) {
+        for (List<String> ticket: tickets) { // O(E*log(E))
             String from = ticket.get(0);
             String to = ticket.get(1);
             graph.computeIfAbsent(from, key -> graph.getOrDefault(key, new PriorityQueue<>())).add(to);
         }
-        dfs("JFK", graph, result);
+        Stack<String> stack = new Stack<>();
+        dfs("JFK", graph, stack); // O(V)
+        while (!stack.isEmpty()) {
+            result.add(stack.pop());
+        }
 
         return result;
     }
 
-    private void dfs(String station, Map<String, PriorityQueue<String>> graph, List<String> result) {
+    private void dfs(String station, Map<String, PriorityQueue<String>> graph, Stack<String> stack) {
         PriorityQueue<String> queue = graph.getOrDefault(station, new PriorityQueue<>());
         while (!queue.isEmpty()) {
-            dfs(queue.poll(), graph, result);
+            dfs(queue.poll(), graph, stack);
         }
-        result.add(station);
+        stack.push(station);
     }
 
 }

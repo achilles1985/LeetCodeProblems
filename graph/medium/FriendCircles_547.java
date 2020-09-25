@@ -1,4 +1,4 @@
-package graph;
+package graph.medium;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import graph.mustknow.DisjointSet;
-
-/**M
+/**M [MARKED]
  *  There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in
  *  nature. For example, if A is a direct friend of B, and B is a direct friend of C, then A is an indirect friend of
  *  C. And we defined a friend circle is a group of students who are direct or indirect friends.
@@ -46,25 +44,25 @@ public class FriendCircles_547 {
 
     public static void main(String[] args) {
         FriendCircles_547 s = new FriendCircles_547();
-        System.out.println(s.findCircleNum2(new int[][]{
+        System.out.println(s.findCircleNum(new int[][]{
                 {1},{2},{3},{0},{0}})); // 1
-        System.out.println(s.findCircleNum2(new int[][]{
+        System.out.println(s.findCircleNum(new int[][]{
                 {1,1,0},
                 {1,1,0},
                 {0,0,1}})); // 2
-        System.out.println(s.findCircleNum2(new int[][]{
+        System.out.println(s.findCircleNum(new int[][]{
                 {1,1,0},
                 {1,1,1},
                 {0,1,1}})); // 1
-        System.out.println(s.findCircleNum2(new int[][]{
+        System.out.println(s.findCircleNum(new int[][]{
                 {1,0,0,0,0},
                 {0,1,0,0,0},
                 {0,0,1,0,0},
                 {0,0,0,1,0},
                 {0,0,0,0,1}})); // 5
-        System.out.println(s.findCircleNum2(new int[][]{
+        System.out.println(s.findCircleNum(new int[][]{
                 {1,2,3,0,0}})); // 1
-        System.out.println(s.findCircleNum2(new int[][]{
+        System.out.println(s.findCircleNum(new int[][]{
                 {1,0,0,1},
                 {0,1,1,0},
                 {0,1,1,1},
@@ -72,30 +70,26 @@ public class FriendCircles_547 {
     }
 
     // O(n^2) - time, O(n) - space
-    public int findCircleNum2(int[][] M) {
+    public int findCircleNum(int[][] M) {
         if (M == null || M.length == 0) {
             return 0;
         }
-        DisjointSet ds = new DisjointSet();
-        for (int i = 0; i < M.length; i++) {
-            ds.makeSet(i);
-        }
+        UnionFind uf  = new UnionFind(M.length);
         for (int i = 0; i < M.length; i++) {
             for (int j = 0; j < M[0].length; j++) {
-                if (M[i][j] == 1) {
-                    ds.union(i,j);
+                if (i != j && M[i][j] == 1) {
+                    if (uf.find(i) != uf.find(j)) {
+                        uf.union(i, j);
+                    }
                 }
             }
         }
-        Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < M.length; i++) {
-            set.add(ds.findSet(i));
-        }
-        return set.size();
+
+        return uf.count;
     }
 
-    // O(n^2) - time, space
-    public int findCircleNum(int[][] M) {
+    // O(n^2) - time, O(n) - space
+    public int findCircleNumDFS(int[][] M) {
         if (M == null || M.length == 0) {
             return 0;
         }
@@ -117,16 +111,42 @@ public class FriendCircles_547 {
         }
         return count;
     }
-
     private void dfs(Integer node, Integer parent, Set<Integer> visited, Map<Integer, List<Integer>> graph) {
         if (visited.contains(node)) {
             return;
         }
         visited.add(node);
-        for (Integer adjacent: graph.getOrDefault(node, Collections.emptyList())) {
-            if (adjacent != parent) {
-                dfs(adjacent, node, visited, graph);
+        for (Integer child: graph.getOrDefault(node, Collections.emptyList())) {
+            if (child != parent) {
+                dfs(child, node, visited, graph);
             }
+        }
+    }
+
+    private static class UnionFind {
+        int[] parent;
+        int count;
+
+        UnionFind(int n) {
+            this.count = n;
+            parent = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        void union(int n1, int n2) {
+            int p1 = find(n1);
+            int p2 = find(n2);
+            parent[p2] = p1;
+            count--;
         }
     }
 }

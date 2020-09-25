@@ -1,4 +1,4 @@
-package graph;
+package graph.medium;
 
 
 import java.util.HashMap;
@@ -6,10 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import graph.mustknow.DisjointSet;
 import utils.SolutionUtils;
 
-/** M
+/** M  [MARKED]
  In this problem, a tree is an undirected graph that is connected and has no cycles.
  The given input is a graph that started as a tree with N nodes (with distinct values 1, 2, ..., N), with one additional edge added.
  The added edge has two different vertices chosen from 1 to N, and was not an edge that already existed.
@@ -45,31 +44,28 @@ public class RedundantConnection_684 {
 
     public static void main(String[] args) {
         RedundantConnection_684 s = new RedundantConnection_684();
-        SolutionUtils.print(s.findRedundantConnection2(new int[][] {{1,2},{1,3},{2,3}})); // [2,3]
-        SolutionUtils.print(s.findRedundantConnection2(new int[][] {{1,2},{2,3},{3,4},{1,4},{1,5}})); // [1,4]
+        SolutionUtils.print(s.findRedundantConnection(new int[][] {{1,2},{1,3},{2,3}})); // [2,3]
+        SolutionUtils.print(s.findRedundantConnection(new int[][] {{1,2},{2,3},{3,4},{1,4},{1,5}})); // [1,4]
     }
 
-    // O(V+E) - time, O(V) - space
-    public int[] findRedundantConnection2(int[][] edges) {
-        DisjointSet ds = new DisjointSet();
-        for (int i = 1; i <= edges.length; i++) {
-            ds.makeSet(i);
+    // O(E+V) - time, O(V) - space
+    public int[] findRedundantConnection(int[][] edges) {
+        if (edges == null || edges.length == 0) {
+            return new int[]{};
         }
-        for (int[] edge: edges) {
-            int node1 = edge[0];
-            int node2 = edge[1];
-            int parent1 = ds.findSet(node1);
-            int parent2 = ds.findSet(node2);
-            if (parent1 == parent2) {
+        UnionFind uf = new UnionFind(edges.length); // O(V) - when initializing parent array
+        for (int[] edge: edges) { // O(E)
+            if (uf.find(edge[0]) == uf.find(edge[1])) {
                 return edge;
             }
-            ds.union(node1, node2);
+            uf.union(edge[0], edge[1]); // O(a(E)) - Inverse-Ackermann function which boils down to O(1)
         }
+
         return new int[]{};
     }
 
     // O(n^2) - time, O(n) - space
-    public int[] findRedundantConnection(int[][] edges) {
+    public int[] findRedundantConnectionDFS(int[][] edges) {
         Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int[] edge : edges) {
             int x = edge[0], y = edge[1];
@@ -98,4 +94,27 @@ public class RedundantConnection_684 {
         return false;
     }
 
+    private static class UnionFind {
+        int[] parent;
+
+        UnionFind(int size) {
+            parent = new int[size+1];
+            for (int i = 0; i <= size; i++) {
+                parent[i] = i;
+            }
+        }
+
+        int find(int x) {
+            if (x != parent[x]) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        void union(int x, int y) {
+            int p1 = find(x);
+            int p2 = find(y);
+            parent[p1] = p2;
+        }
+    }
 }

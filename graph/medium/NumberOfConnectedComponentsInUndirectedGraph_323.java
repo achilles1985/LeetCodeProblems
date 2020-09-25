@@ -1,4 +1,4 @@
-package graph;
+package graph.medium;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,8 +40,23 @@ public class NumberOfConnectedComponentsInUndirectedGraph_323 {
         System.out.println(s.countComponents(5, new int[][] {{0, 1}, {1, 2}, {2,3}, {3, 4}})); //1
     }
 
-    // O(n) - time, space
+    // O(V+E) - time, O(V) - space
     public int countComponents(int n, int[][] edges) {
+        if (edges == null || edges.length == 0) {
+            return n;
+        }
+        UnionFind uf = new UnionFind(n);
+        for (int[] edge: edges) {
+            if (uf.find(edge[0]) != uf.find(edge[1])) {
+                uf.union(edge[0], edge[1]);
+            }
+        }
+
+        return uf.size;
+    }
+
+    // O(V+E) - time, O(V) - space
+    public int countComponentsDFS(int n, int[][] edges) {
         if (n == 0 || edges == null) {
             return 0;
         }
@@ -68,6 +83,34 @@ public class NumberOfConnectedComponentsInUndirectedGraph_323 {
         visited.add(vertex);
         for (Integer adjacent: graph.getOrDefault(vertex, Collections.emptySet())) {
             dfs(adjacent, visited, graph);
+        }
+    }
+
+    private static class UnionFind {
+        int[] parent;
+        int size;
+
+        UnionFind(int size) {
+            this.size = size;
+            parent = new int[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+            }
+        }
+
+        int find(int x) {
+            if (x != parent[x]) {
+                parent[x] = find(parent[x]);
+            }
+
+            return parent[x];
+        }
+
+        void union(int x, int y) {
+            int p1 = find(x);
+            int p2 = find(y);
+            parent[p1] = p2;
+            size--;
         }
     }
 }

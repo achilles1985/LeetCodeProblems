@@ -1,10 +1,8 @@
-package graph;
+package graph.medium;
 
 import java.util.Arrays;
 
-import graph.mustknow.DisjointSet;
-
-/**M
+/**M [MARKED]
  * There are N cities numbered from 1 to N.
  * You are given connections, where each connections[i] = [city1, city2, cost] represents the cost to connect city1
  * and city2 together.  (A connection is bidirectional: connecting city1 and city2 is the same as connecting city2
@@ -44,7 +42,7 @@ public class ConnectingCitiesWithMinimumCost_1135 {
         System.out.println(s.minimumCost(5, new int[][]{{2,1,50459},{3,2,47477},{4,2,52585},{5,3,16477}})); //166998
     }
 
-    // O(n*log(n)) - time, O(n) - space
+    // O(E*log(E)) - time, O(V) - space, where E - number of connections, V - number of cities
     public int minimumCost(int N, int[][] connections) {
         Arrays.sort(connections, (e1,e2) -> e1[2] - e2[2]);
         DisjointSet ds = new DisjointSet(N);
@@ -59,7 +57,7 @@ public class ConnectingCitiesWithMinimumCost_1135 {
         return ds.size == 1 ? cost : -1;
     }
 
-    private static final class DisjointSet {
+    private static class DisjointSet {
         int[] parent;
         int size;
 

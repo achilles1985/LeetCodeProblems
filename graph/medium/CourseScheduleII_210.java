@@ -1,4 +1,4 @@
-package graph;
+package graph.medium;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 import utils.SolutionUtils;
 
@@ -53,7 +52,7 @@ public class CourseScheduleII_210 {
         SolutionUtils.print(s.findOrder(3, new int[][]{{1,0}})); // [2,0,1]
     }
 
-    // O(n) - time, O(n) - space, n - number of courses (Topological sort)
+    // O(V+E) - time, O(V) - space, V - number of courses (Topological sort), E - number of dependents
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         if (numCourses <= 0 || prerequisites == null) {
             return new int[]{0};
@@ -69,7 +68,7 @@ public class CourseScheduleII_210 {
             if (visited.contains(i)) {
                 continue;
             }
-            if (!hasCycle(graph, visited, recursion, stack, i)) {
+            if (hasCycle(graph, visited, recursion, stack, i)) {
                 return new int[]{};
             }
         }
@@ -84,21 +83,21 @@ public class CourseScheduleII_210 {
 
     private boolean hasCycle(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> recursion, Queue<Integer> stack, Integer node) {
         if (recursion.contains(node)) {
-            return false;
+            return true;
         }
         if (visited.contains(node)) {
-            return true;
+            return false;
         }
         recursion.add(node);
         visited.add(node);
         for (Integer child: graph.getOrDefault(node, Collections.emptyList())) {
-            if (!hasCycle(graph, visited, recursion, stack, child)) {
-                return false;
+            if (hasCycle(graph, visited, recursion, stack, child)) {
+                return true;
             }
         }
         recursion.remove(node);
         stack.add(node);
 
-        return true;
+        return false;
     }
 }

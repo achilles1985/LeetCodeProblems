@@ -1,11 +1,12 @@
-package graph;
+package graph.medium;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** M
  * Given a directed, acyclic graph of N nodes.  Find all possible paths from node 0 to node N-1, and return them in any order.
- The graph is given as follows:  the nodes are 0, 1, ..., graph.length - 1.  graph[i] is a list of all nodes j for which the edge (i, j) exists.
+ The graph is given as follows:  the nodes are 0, 1, ..., graph.length - 1.
+ Graph[i] is a list of all nodes j for which the edge (i, j) exists.
 
  Example:
  Input: [[1,2], [3], [3], []]
@@ -34,7 +35,7 @@ public class AllPathsFromSourceToTarget_797 {
         System.out.println(s.allPathsSourceTarget(new int[][]{{1}, {}})); // [[0,1]]
     }
 
-    // O(n) - time,n - number of vertices, O(n) - space (depth of the stack)
+    // O(2^N*N) - time, n - number of vertices, O(N) - space (depth of the stack). 2^N - number of paths, N - copy path to result.
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
         if (graph == null || graph.length == 0) {
             return new ArrayList<>();
