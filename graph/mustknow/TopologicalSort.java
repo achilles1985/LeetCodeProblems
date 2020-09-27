@@ -65,7 +65,7 @@ public class TopologicalSort {
         for (Integer child: graph.getOrDefault(vertex, Collections.emptyList())) {
             sortHelper(graph, visited, child, stack);
         }
-        stack.add(vertex);
+        stack.push(vertex);
     }
 
     // O(E + V) - time, O(V) - space, using BFS and indegree

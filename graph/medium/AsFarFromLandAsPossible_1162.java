@@ -1,4 +1,4 @@
-package graph;
+package graph.medium;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -56,7 +56,7 @@ public class AsFarFromLandAsPossible_1162 {
     }
 
     // O(n^3) - time, O(n^2) - space
-    public int maxDistance(int[][] grid) {
+    public int maxDistanceBF(int[][] grid) {
         if (grid == null || grid.length == 0) {
             return -1;
         }
@@ -94,7 +94,7 @@ public class AsFarFromLandAsPossible_1162 {
                 if (grid[i][j] == 1) {
                     continue;
                 }
-                grid[i][j] = 201; //201 here cuz as the despription, the size won't exceed 100.
+                grid[i][j] = 201; //201 here cuz as the description, the size won't exceed 100.
                 if (i > 0) {
                     grid[i][j] = Math.min(grid[i][j], grid[i-1][j] + 1);
                 }

@@ -55,29 +55,47 @@ public class CopyListWithRandomPointer_138 {
         return map.get(head);
     }
 
-    // O(n) - time, space
+    // O(n) - time, O(1) space
     public ListNode copyRandomList(ListNode head) {
-        ListNode curr = head;
-        ListNode dummy = new ListNode(0);
-        ListNode dummyIter = dummy;
-        Map<ListNode, ListNode> map = new HashMap();
-        while (curr != null) {
-            ListNode clone = new ListNode(curr.val);
-            map.put(curr, clone);
-            dummyIter.next = clone;
-            dummyIter = dummyIter.next;
-            curr = curr.next;
+        if (head == null) {
+            return null;
+        }
+        // Creating a new weaved list of original and copied nodes.
+        ListNode ptr = head;
+        while (ptr != null) {
+            // Cloned node
+            ListNode newNode = new ListNode(ptr.val);
+
+            // Inserting the cloned node just next to the original node.
+            // If A->B->C is the original linked list,
+            // Linked list after weaving cloned nodes would be A->A'->B->B'->C->C'
+            newNode.next = ptr.next;
+            ptr.next = newNode;
+            ptr = newNode.next;
         }
 
-        ListNode cloneIter = dummy.next;
-        while (head != null) {
-            ListNode clone = map.get(head.random);
-            cloneIter.random = clone;
-            cloneIter = cloneIter.next;
-            head = head.next;
+        ptr = head;
+        // Now link the random pointers of the new nodes created.
+        // Iterate the newly created list and use the original nodes' random pointers,
+        // to assign references to random pointers for cloned nodes.
+        while (ptr != null) {
+            ptr.next.random = (ptr.random != null) ? ptr.random.next : null;
+            ptr = ptr.next.next;
         }
 
-        return dummy.next;
+        // Unweave the linked list to get back the original linked list and the cloned list.
+        // i.e. A->A'->B->B'->C->C' would be broken to A->B->C and A'->B'->C'
+        ListNode ptr_old_list = head; // A->B->C
+        ListNode ptr_new_list = head.next; // A'->B'->C'
+        ListNode head_old = head.next;
+        while (ptr_old_list != null) {
+            ptr_old_list.next = ptr_old_list.next.next;
+            ptr_new_list.next = (ptr_new_list.next != null) ? ptr_new_list.next.next : null;
+            ptr_old_list = ptr_old_list.next;
+            ptr_new_list = ptr_new_list.next;
+        }
+
+        return head_old;
     }
 
     public static class ListNode {

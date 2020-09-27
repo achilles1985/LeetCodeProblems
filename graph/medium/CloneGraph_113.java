@@ -1,20 +1,17 @@
-package graph;
+package graph.medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /** M
- * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.
+ * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
+ * Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.
  Example:
  1-2
  | |
  4-3
  Input:
- {"$id":"1","neighbors":[{"$id":"2","neighbors":[{"$ref":"1"},{"$id":"3","neighbors":[{"$ref":"2"},{"$id":"4","neighbors":[{"$ref":"3"},{"$ref":"1"}],"val":4}],"val":3}],"val":2},{"$ref":"4"}],"val":1}
+ {"$id":"1","neighbors":[{"$id":"2","neighbors":[{"$ref":"1"},{"$id":"3","neighbors":[{"$ref":"2"},
+ {"$id":"4","neighbors":[{"$ref":"3"},{"$ref":"1"}],"val":4}],"val":3}],"val":2},{"$ref":"4"}],"val":1}
 
  Explanation:
  Node 1's value is 1, and it has two neighbors: Node 2 and 4.
@@ -53,33 +50,33 @@ public class CloneGraph_113 {
         Node clone2 = s.cloneGraphIterative(n1);
     }
 
-    // O(n) - time, O(n) - space (because of visited)
+    // O(V) - time, O(V) - space (because of visited)
     public Node cloneGraph(Node node) {
         Map<Node, Node> visited = new HashMap<>();
         return cloneGraphHelper(node, visited);
     }
 
-    // O(n) - time, O(n) - space (because of visited)
+    // O(V) - time, O(V) - space (because of visited)
     public Node cloneGraphIterative(Node node) {
         if (node == null) {
             return null;
         }
-        Map<Node, Node> visited = new HashMap<>();
         Queue<Node> queue = new LinkedList<>();
+        Map<Node, Node> map = new HashMap<>();
         queue.add(node);
-        visited.put(node, new Node(node.val, new ArrayList<>()));
+        map.put(node, new Node(node.val));
         while (!queue.isEmpty()) {
-            Node curr = queue.poll();
-            for (Node neighbor: curr.neighbors) {
-                if (!visited.containsKey(neighbor)) {
-                    visited.put(neighbor, new Node(neighbor.val, new ArrayList<>()));
-                    queue.add(neighbor);
+            Node n = queue.poll();
+            for (Node child: n.neighbors) {
+                if (!map.containsKey(child)) {
+                    queue.add(child);
+                    map.put(child, new Node(child.val));
                 }
-               visited.get(curr).neighbors.add(visited.get(neighbor));
+                map.get(n).neighbors.add(map.get(child));
             }
         }
 
-        return visited.get(node);
+        return map.get(node);
     }
 
     private Node cloneGraphHelper(Node node, Map<Node, Node> visited) {
