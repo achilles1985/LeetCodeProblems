@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.easy;
 
 //https://leetcode.com/problems/delete-operation-for-two-strings/
 
@@ -90,11 +90,8 @@ public class ClimbingStairs_70 {
     }
 
     private int climbStairsDynamicMemoization(int n, int[] cache) {
-        if (n == 1 || n == 0) {
-            return 1;
-        }
-        if (n < 0) {
-            return 0;
+        if (n <= 2) {
+            return n;
         }
         if (cache[n] != -1) {
             return cache[n];

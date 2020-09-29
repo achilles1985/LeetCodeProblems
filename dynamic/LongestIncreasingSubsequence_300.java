@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
+/** M [MARKED]
  Given an unsorted array of integers, find the length of longest increasing subsequence.
  Example:
  Input: [10,9,2,5,3,7,101,18]
@@ -57,6 +57,23 @@ public class LongestIncreasingSubsequence_300 {
         }
 
         return max;
+    }
+
+    // O(n*log(n)) - time, O(n) - space
+    public int lengthOfLIS2(int[] nums) {
+        int[] dp = new int[nums.length];
+        int len = 0;
+        for (int num : nums) {
+            int i = Arrays.binarySearch(dp, 0, len, num);
+            if (i < 0) {
+                i = -(i + 1);
+            }
+            dp[i] = num;
+            if (i == len) {
+                len++;
+            }
+        }
+        return len;
     }
 
     private int lengthOfLIS(int[] nums, int prevValue, int currIdx) {
