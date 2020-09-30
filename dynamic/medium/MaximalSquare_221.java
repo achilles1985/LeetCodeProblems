@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class MaximalSquare_221 {
         int max = 0;
         for (int i = 1; i < matrix.length; i++) {
             for (int j = 1; j < matrix[0].length; j++) {
-                if (matrix[i][j] != '0') {
+                if (matrix[i][j] == '1') {
                     int localMax = dfs(i, j, matrix);
                     max = Math.max(max, localMax);
                 }

@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 /** M
  Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
@@ -21,9 +21,24 @@ public class MinimumPathSum_64 {
         MinimumPathSum_64 s = new MinimumPathSum_64();
         int[][] grid = new int[][] {{1,3,1}, {1,5,1}, {4,2,1}};
 
-        System.out.println(s.minPathSum(grid)); // 7
+        System.out.println(s.minPathSumBF(grid)); // 7
         System.out.println(s.minPathSum(new int[][] {{1}})); // 1
         System.out.println(s.minPathSum(new int[][] {{}})); // 0
+    }
+
+    // O(2^(n+m)) - time, O(n+m) - space
+    public int minPathSumBF(int[][] grid) {
+        return dfs(grid, 0, 0);
+    }
+
+    private int dfs(int[][] grid, int i, int j) {
+        if (i == grid.length || j == grid[0].length) {
+            return Integer.MAX_VALUE;
+        }
+        if (i == grid.length - 1 && j == grid[0].length - 1) {
+            return grid[i][j];
+        }
+        return grid[i][j] + Math.min(dfs(grid, i + 1, j), dfs(grid, i, j + 1));
     }
 
     // O(m*n) - time, O(1) - space

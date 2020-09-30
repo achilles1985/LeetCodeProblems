@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 // https://leetcode.com/problems/longest-palindromic-subsequence/
 
@@ -39,7 +39,7 @@ public class LongestPalidromicSubsequance_516 {
         return longestPalindromeSubseq(s, 0, s.length()-1);
     }
 
-    // O(n^2) - time, O(n) - space
+    // O(n^2) - time, space
     public int longestPalindromeSubseqTopDown(String s) {
         Map<String, Integer> map = new HashMap<>();
         return longestPalindromeSubseqTopDown(s, 0, s.length()-1, map);
@@ -47,24 +47,22 @@ public class LongestPalidromicSubsequance_516 {
 
     // O(n^2) - time, space
     public int longestPalindromeSubseqBottomUp(String s) {
-        int[][] res = new int[s.length()][s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            res[i][i] = 1;
+        int n = s.length();
+        int[][] mat = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            mat[i][i] = 1;
         }
-        for (int i = 1; i < s.length(); i++) {
-            for (int j = 0, k = i; k < s.length(); j++, k++) {
-                if (s.charAt(j) == s.charAt(k) && k-j == 1) {
-                    res[j][k] = 2;
-                }
-                else if (s.charAt(j) == s.charAt(k)) {
-                    res[j][k] = 2 + res[j+1][k-1];
+        for (int l = 2; l <= n; l++) {
+            for (int i = 0; i <= n - l; i++) {
+                int j = i + l - 1;
+                if (s.charAt(i) == s.charAt(j)) {
+                    mat[i][j] = mat[i + 1][j - 1] + 2;
                 } else {
-                    res[j][k] = Math.max(res[j+1][k], res[j][k-1]);
+                    mat[i][j] = Math.max(mat[i][j - 1], mat[i + 1][j]);
                 }
             }
         }
-
-        return res[0][s.length()-1];
+        return mat[0][n - 1];
     }
 
     private int longestPalindromeSubseqTopDown(String s, int start, int end, Map<String, Integer> map) {

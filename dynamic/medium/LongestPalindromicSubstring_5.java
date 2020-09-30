@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 // https://leetcode.com/problems/longest-palindromic-substring/
 /** M
@@ -21,8 +21,12 @@ public class LongestPalindromicSubstring_5 {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring_5 s = new LongestPalindromicSubstring_5();
-        System.out.println(s.longestPalindrome("racecar")); //bab
-        System.out.println(s.longestPalindrome2("racecar")); //bab
+        System.out.println(s.longestPalindromeDP("ac")); //a
+        System.out.println(s.longestPalindromeDP("a")); //a
+        System.out.println(s.longestPalindromeDP("cbbd")); //bb
+        System.out.println(s.longestPalindromeDP("racecar")); //racecar
+
+        System.out.println(s.longestPalindrome2("racecar")); //racecar
         System.out.println(s.longestPalindrome("nabbam")); //abba
         System.out.println(s.longestPalindrome2("nabbam")); //abba
     }
@@ -46,6 +50,42 @@ public class LongestPalindromicSubstring_5 {
         return max;
     }
 
+    // O(n^2) - time, space
+    public String longestPalindromeDP(String s) {
+        if (s == null || s.length() < 2) {
+            return s;
+        }
+
+        int max = 0;
+        String maxString = "";
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int i = 1; i <= 2; i++) {
+            for (int j = 0, k = i; k <= s.length(); k++, j++) {
+               if (s.charAt(j) == s.charAt(k-1)) {
+                   dp[j][k-1] = true;
+                   if (max < k - j) {
+                       max = k - j;
+                       maxString = s.substring(j, k);
+                   }
+               }
+            }
+        }
+        for (int i = 3; i <= s.length(); i++) {
+            for (int j = 0, k = i; k <= s.length(); k++, j++) {
+                if (s.charAt(j) == s.charAt(k-1)) {
+                    if (dp[j+1][k-2]) {
+                        dp[j][k-1] = true;
+                        if (max < k - j) {
+                            max = k - j;
+                            maxString = s.substring(j, k);
+                        }
+                    }
+                }
+            }
+        }
+
+        return maxString;
+    }
 
     // O(n^2) - time, O(1) - space
     public String longestPalindrome2(String s) {

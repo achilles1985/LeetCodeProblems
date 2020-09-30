@@ -20,7 +20,7 @@ public class DisjointSet2 {
         return x;
     }*/
 
-    // With path compression
+    // With path compression. Make node points to its parent directly.
     public int find(int x) {
         if (parent[x] != x) {
             parent[x] = find(parent[x]);
@@ -34,6 +34,8 @@ public class DisjointSet2 {
         parent[p1] = p2;
     }
 
+    // The idea of UNION BY RANK is to ensure that when we combine two trees, we try to keep the overall depth of the resulting tree small
+    // (https://www.geeksforgeeks.org/union-find-algorithm-set-2-union-by-rank/)
     public void unionWithRank(int x, int y) {
         int p1 = find(x);
         int p2 = find(y);

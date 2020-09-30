@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,12 +31,12 @@ public class LongestIncreasingSubsequence_300 {
         System.out.println(s.lengthOfLISDynamicBottomUp(new int[]{-1, 3, 4, 5, 2, 2,2,2})); // 5
     }
 
-    // Brute Force, O(2^n), O(n) - space
+    // Brute Force, O(2^n), O(n^2) - space
     public int lengthOfLIS(int[] nums) {
         return lengthOfLIS(nums, Integer.MIN_VALUE, 0);
     }
 
-    // O(n^2) - time, O(n) - space
+    // O(n^2) - time, O(n^2) - space
     public int lengthOfLISDynamicTopDown(int[] nums) {
         Map<String, Integer> cache = new HashMap<>();
         return lengthOfLISDynamicTopDownUtils(nums, Integer.MIN_VALUE, 0, cache);

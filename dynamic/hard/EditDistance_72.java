@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.hard;
 
 // https://leetcode.com/problems/edit-distance/
 
