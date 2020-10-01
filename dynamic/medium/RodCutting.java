@@ -57,7 +57,7 @@ public class RodCutting {
 
     // O(length^2) - time, O(length) - space
     public int profitDynamicBottomUp(int[] prices, int length) {
-        int max[] = new int[prices.length+1];
+        int max[] = new int[length+1];
         for(int i=1; i <= prices.length; i++){
             for(int j=i; j <= prices.length; j++){
                 max[j] = Math.max(max[j], max[j-i] + prices[i-1]);

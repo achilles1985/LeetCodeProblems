@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 /** M
  Given a string, your task is to count how many palindromic substrings in this string.

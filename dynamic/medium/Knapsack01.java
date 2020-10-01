@@ -1,5 +1,9 @@
 package dynamic.medium;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 /*
   The 0/1 Knapsack Problem solved with dynamic programming.
   Given n items, each with a weight & value, pick a subset of the items that
@@ -11,29 +15,57 @@ public class Knapsack01 {
 
     public static void main(String[] args) {
         Knapsack01 s = new Knapsack01();
-        System.out.println(s.findMaxDynamicTopDown(new int[]{1, 4, 5, 7}, new int[]{1, 3, 4, 5}, 7));
-        System.out.println(s.findMaxBruteForceRecursion(new int[]{1, 4, 5, 7}, new int[]{1, 3, 4, 5}, 7));
+        System.out.println(s.findMaxBF(new int[]{1, 4, 5, 7}, new int[]{1, 3, 4, 5}, 7)); //9
+        System.out.println(s.findMax2(new int[]{1, 4, 5, 7}, new int[]{1, 3, 4, 5}, 7)); //9
+
+        System.out.println(s.findMaxDynamicTopDown(new int[]{1, 4, 5, 7}, new int[]{1, 3, 4, 5}, 7)); //9
         System.out.println(s.findMaxDynamicBottonUp(new int[]{1, 4, 5, 7}, new int[]{1, 3, 4, 5}, 7));
     }
 
     // O(2^n) - time, where n - number of items, O(n) - height of recursion tree (n - number of items)
-    public int findMaxBruteForceRecursion(int[] profit, int[] weights, int capacity) {
-        return findMaxBruteForceRecursionHelper(profit, weights, capacity, weights.length-1);
+    public int findMaxBF(int[] profit, int[] weights, int capacity) {
+        return findMaxBF(profit, weights, capacity, 0);
     }
 
-    private int findMaxBruteForceRecursionHelper(int[] profit, int[] weights, int capacity, int itemsCount) {
-        if (capacity == 0 || itemsCount == 0) {
+    private int findMaxBF(int[] profit, int[] weights, int capacity, int i) {
+        if (i == weights.length) {
             return 0;
         }
-        int currItem = itemsCount - 1;
         // Filter out items whose weight exceeds capacity
-        if (capacity < weights[currItem]) {
-            return findMaxBruteForceRecursionHelper(profit, weights, capacity, itemsCount - 1);
+        if (weights[i] > capacity) {
+            return findMaxBF(profit, weights, capacity, i+1);
         }
-        int itemIncluded = profit[currItem] + findMaxBruteForceRecursionHelper(profit, weights, capacity - weights[currItem], itemsCount - 1);
-        int itemExcluded = findMaxBruteForceRecursionHelper(profit, weights, capacity, itemsCount - 1);
+        int include = findMaxBF(profit, weights, capacity - weights[i], i+1) + profit[i];
+        int exclude = findMaxBF(profit, weights, capacity, i+1);
 
-        return Math.max(itemIncluded, itemExcluded);
+        return Math.max(include, exclude);
+    }
+
+    // O(items*capacity) - time, space
+    public int findMax2(int[] profit, int[] weights, int capacity) {
+        Map<String, Integer> cache = new HashMap<>();
+
+        return findMax2(profit, weights, capacity, 0, cache);
+    }
+
+    private int findMax2(int[] profit, int[] weights, int capacity, int i, Map<String, Integer> cache) {
+        if (i == weights.length) {
+            return 0;
+        }
+        String key = i+":"+capacity;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        if (weights[i] > capacity) {
+            int temp = findMax2(profit, weights, capacity, i+1, cache);
+            cache.put(key, temp);
+            return cache.get(key);
+        }
+        int include = findMax2(profit, weights, capacity - weights[i], i+1, cache) + profit[i];
+        int exclude = findMax2(profit, weights, capacity, i+1, cache);
+        cache.put(key, Math.max(include, exclude));
+
+        return cache.get(key);
     }
 
     // O(n*m) - time and space, n - capacity, m - number of items

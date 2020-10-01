@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 import java.util.Arrays;
 

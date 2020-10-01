@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 /**M
  * Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner
@@ -26,7 +26,8 @@ package dynamic;
  * You may assume that row1 ≤ row2 and col1 ≤ col2.
  */
 /*
-    Tips: useful technic while creating a dp matrix to add one extra row and column. The value in current position is calculated as value on the left + value on the right - top-left value.
+    Tips: useful tecnic while creating a dp matrix to add one extra row and column.
+    The value in current position is calculated as value on the left + value on the right - top-left value.
  */
 public class RangeSumQuery2DImmutable_304 {
 

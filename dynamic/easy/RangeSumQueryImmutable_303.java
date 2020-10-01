@@ -1,8 +1,6 @@
-package dynamic;
+package dynamic.easy;
 
 // https://leetcode.com/problems/range-sum-query-immutable/
-
-import utils.SolutionUtils;
 
 /** E
  * Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
@@ -41,9 +39,4 @@ public class RangeSumQueryImmutable_303 {
         }
     }
 
-/**
- * Your NumArray object will be instantiated and called as such:
- * NumArray obj = new NumArray(nums);
- * int param_1 = obj.sumRange(i,j);
- */
 }
