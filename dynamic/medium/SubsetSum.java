@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,15 +39,15 @@ public class SubsetSum {
         return subsetSumHelper1(0, 0, arr, sum);
     }
 
-    private boolean subsetSumHelper1(int currIdx, int currSum, int[] arr, int sum) {
-        if (currSum == sum) {
+    private boolean subsetSumHelper1(int currIdx, int currSum, int[] arr, int target) {
+        if (currSum == target) {
             return true;
         }
-        if (currIdx == arr.length && currSum != sum) {
+        if (currIdx == arr.length && currSum != target) {
             return false;
         }
-        boolean include = subsetSumHelper1(currIdx + 1, currSum + arr[currIdx], arr, sum);
-        boolean exclude = subsetSumHelper1(currIdx + 1, currSum, arr, sum);
+        boolean include = subsetSumHelper1(currIdx + 1, currSum + arr[currIdx], arr, target);
+        boolean exclude = subsetSumHelper1(currIdx + 1, currSum, arr, target);
         return include || exclude;
     }
 
@@ -68,7 +68,8 @@ public class SubsetSum {
         if (currIdx == arr.length && currSum != sum) {
             return false;
         }
-        boolean result = subsetSumTopDownHelper1(currIdx + 1, currSum + arr[currIdx], arr, sum, cache) || subsetSumTopDownHelper1(currIdx + 1, currSum, arr, sum, cache);
+        boolean result = subsetSumTopDownHelper1(currIdx + 1, currSum + arr[currIdx], arr, sum, cache)
+                || subsetSumTopDownHelper1(currIdx + 1, currSum, arr, sum, cache);
         cache.put(key, result);
 
         return cache.get(key);

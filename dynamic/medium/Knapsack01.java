@@ -1,7 +1,4 @@
-package dynamic;
-
-import java.util.HashMap;
-import java.util.Map;
+package dynamic.medium;
 
 /*
   The 0/1 Knapsack Problem solved with dynamic programming.
