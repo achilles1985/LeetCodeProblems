@@ -26,6 +26,7 @@ public class GroupAnagrams_49 {
 
     public static void main(String[] args) {
         GroupAnagrams_49 s = new GroupAnagrams_49();
+        System.out.println(s.groupAnagrams2(new String[]{"bdddddddddd", "bbbbbbbbbbc"}));
         System.out.println(s.groupAnagrams2(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
     }
 
@@ -41,11 +42,12 @@ public class GroupAnagrams_49 {
         for (Map.Entry<String, List<String>> entry: map.entrySet()) {
             list.add(entry.getValue());
         }
+
         return list;
     }
 
     // O(n*(m*log(m))) - time, O(n) - space
-    public List<List<String>> groupAnagrams(String[] strs) {
+    public List<List<String>> groupAnagramsBF(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String word: strs) {
             char[] chars = word.toCharArray();
@@ -61,6 +63,9 @@ public class GroupAnagrams_49 {
         return list;
     }
 
+    // "bdddddddddd" != "bbbbbbbbbbc"
+    //010100000000000000000000000 == 010100000000000000000000000
+    //#0#1#0#10#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0 != #0#10#1#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0
     private String hash(String word) {
         int[] arr = new int[26];
         for (int i = 0; i < word.length(); i++) {
@@ -68,7 +73,7 @@ public class GroupAnagrams_49 {
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 26; i++) {
-            sb.append("#").append(arr[i]);
+            sb.append("#").append(arr[i]); //'#' - is important (see above))
         }
 
         return sb.toString();

@@ -31,6 +31,8 @@ public class CharacterCounting {
                 count = 1;
             }
         }
+
         return sb.toString();
     }
+
 }
