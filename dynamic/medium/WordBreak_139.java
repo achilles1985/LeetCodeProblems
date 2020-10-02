@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 // https://leetcode.com/problems/word-break/
-/** M
+/** M [MARKED]
  * Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
  determine if s can be segmented into a space-separated sequence of one or more dictionary words.
 
@@ -73,8 +73,9 @@ public class WordBreak_139 {
         return false;
     }
 
-
-    // O(2^n) - time, O(n) - space (recursion tree depth). T(n) = T(n-1) + T(n-2) + T(n-3) + .... + T(1)
+    // O(n^n) - time (Consider the worst case where ss = "aaaaaaa" and every prefix of ss is present in the dictionary of words,
+    // then the recursion tree can grow upto n^n,
+    // O(n) - space (recursion tree depth). T(n) = T(n-1) + T(n-2) + T(n-3) + .... + T(1)
     public boolean wordBreak(String s, List<String> wordDict) {
         return wordBreakHelper(s, new HashSet<>(wordDict));
     }

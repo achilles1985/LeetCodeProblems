@@ -1,8 +1,8 @@
-package dynamic;
+package dynamic.medium;
 
 import java.util.Arrays;
 
-/**
+/** M[MARKED]
   You are given coins of different denominations and a total amount of money amount.
   Write a function to compute the fewest number of coins that you need to make up that amount.
  If that amount of money cannot be made up by any combination of the coins, return -1.
@@ -19,16 +19,32 @@ import java.util.Arrays;
   Note:
   You may assume that you have an infinite number of each kind of coin.
  */
-public class CoinChange {
+public class CoinChange_322 {
 
     public static void main(String[] args) {
-        CoinChange s = new CoinChange();
+        CoinChange_322 s = new CoinChange_322();
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {2}, 3));
         System.out.println(s.makeChangeT(new int[] {2,5}, 3)); //-1
 
-        System.out.println(s.makeChange(new int[] {1,2,5}, 8));
+        System.out.println(s.makeChangeBF(new int[] {1,2,5}, 8));
         System.out.println(s.makeChangeDynamicTopDown(new int[] {1,2,5}, 12));
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {1,2,5}, 12));
+    }
+
+    // exponential time (A^C), C - number of coins, A = amount
+    public int makeChangeBF(int[] coins, int amount) {
+        if (amount == 0) {
+            return 0;
+        }
+
+        int min = Integer.MAX_VALUE;
+        for (int coin: coins) {
+            if (amount - coin >= 0) {
+                int curMin = makeChangeBF(coins, amount-coin);
+                min = Math.min(min, curMin);
+            }
+        }
+        return min + 1;
     }
 
     public int makeChangeT(int[] coins, int amount) {
@@ -59,22 +75,6 @@ public class CoinChange {
         return cache[amount];
     }
 
-    // exponential time (C^A), C - number of coins, A = amount
-    public int makeChange(int[] coins, int amount) {
-        if (amount == 0) {
-            return 0;
-        }
-
-        int min = Integer.MAX_VALUE;
-        for (int coin: coins) {
-            if (amount - coin >= 0) {
-                int curMin = makeChange(coins, amount-coin);
-                min = Math.min(min, curMin);
-            }
-        }
-        return min + 1;
-    }
-
     // O(amount*number of coins) - time, O(amount) - space
     public int makeChangeDynamicTopDown(int[] coins, int amount) {
         int[] cache = new int[amount+1];
@@ -88,16 +88,10 @@ public class CoinChange {
         int[] cache = new int[amount+1];
         Arrays.fill(cache, amount+1);
         cache[0] = 0;
-
-        return makeChangeDynamicButtomUpUtils(coins, amount, cache);
-    }
-
-    private int makeChangeDynamicButtomUpUtils(int[] coins, int amount, int[] cache) {
         for (int i = 1; i <= amount; i++) {
             for (int coin: coins) {
                 if ((i - coin) >= 0) {
-                    int min = Math.min(cache[i-coin] + 1, cache[i]);
-                    cache[i] = min;
+                    cache[i] = Math.min(cache[i-coin] + 1, cache[i]);
                 }
             }
         }
