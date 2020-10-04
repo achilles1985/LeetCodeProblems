@@ -1,13 +1,8 @@
-package heap;
+package heap.medium;
 
-import org.omg.CORBA.INTERNAL;
+import utils.SolutionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 /** M
  Given a non-empty array of integers, return the k most frequent elements.
@@ -33,6 +28,10 @@ public class TopKFrequentElements_347 {
 
         System.out.println(s.topKFrequent2(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
         System.out.println(s.topKFrequent2(new int[] {1}, 1)); // [1]
+
+        SolutionUtils.print(s.topKFrequent3(new int[] {4,1,-1,2,-1,2,3}, 2)); // [2,-1]
+        SolutionUtils.print(s.topKFrequent3(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
+        SolutionUtils.print(s.topKFrequent3(new int[] {1}, 1)); // [1]
     }
 
     // O(n*log(k)) - time
@@ -79,5 +78,34 @@ public class TopKFrequentElements_347 {
             }
         }
         return result;
+    }
+
+    // O(n) - time, space (bucket sort)
+    public int[] topKFrequent3(int[] nums, int k) {
+        Map<Integer, Integer> frequency = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            frequency.put(nums[i], frequency.getOrDefault(nums[i], 0) + 1);
+        }
+        int max = Collections.max(frequency.values());
+        List<List<Integer>> buckets = new ArrayList<>();
+        for (int i = 0; i <= max; i++) {
+            buckets.add(new ArrayList<>());
+        }
+        for (Map.Entry<Integer,Integer> e: frequency.entrySet()) {
+            buckets.get(e.getValue()).add(e.getKey());
+        }
+
+        int[] result = new int[k];
+        int m = 0;
+        for (int i = buckets.size()-1; i>= 0; i--) {
+            List<Integer> list = buckets.get(i);
+            for (int j = 0; j < list.size(); j++) {
+                result[m++] = list.get(j);
+                if (m == k) {
+                    return result;
+                }
+            }
+        }
+        return new int[]{};
     }
 }

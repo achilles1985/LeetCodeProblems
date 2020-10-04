@@ -1,4 +1,4 @@
-package heap;
+package heap.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,10 +32,10 @@ import java.util.Queue;
  Follow up:
  Try to solve it in O(n log k) time and O(n) extra space.
  */
-public class TopKFrequentWords {
+public class TopKFrequentWords_692 {
 
     public static void main(String[] args) {
-        TopKFrequentWords s = new TopKFrequentWords();
+        TopKFrequentWords_692 s = new TopKFrequentWords_692();
         int res = "i".compareTo("love");
         String[] str = new String[] {"love", "i", "code", "leet"};
         Arrays.sort(str);

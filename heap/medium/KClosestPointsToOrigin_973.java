@@ -1,4 +1,4 @@
-package heap;
+package heap.medium;
 
 // https://leetcode.com/problems/k-closest-points-to-origin/
 

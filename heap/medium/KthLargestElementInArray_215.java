@@ -1,13 +1,13 @@
-package heap;
+package heap.medium;
 
 // https://leetcode.com/problems/kth-largest-element-in-an-array/
 
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Random;
 
 /** M
- Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+ Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order,
+ not the kth distinct element.
 
  Example 1:
  Input: [3,2,1,5,6,4] and k = 2
@@ -20,10 +20,10 @@ import java.util.Random;
  Note:
  You may assume k is always valid, 1 ≤ k ≤ array's length.
  */
-public class KthLargestElementInArray {
+public class KthLargestElementInArray_215 {
 
     public static void main(String[] args) {
-        KthLargestElementInArray s = new KthLargestElementInArray();
+        KthLargestElementInArray_215 s = new KthLargestElementInArray_215();
         System.out.println(s.findKthLargest(new int[] {3,2,1,5,6,4}, 2)); //5
         System.out.println(s.findKthLargest(new int[] {3,2,3,1,2,4,5,5,6}, 4)); //4
 

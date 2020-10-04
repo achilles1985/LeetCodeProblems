@@ -1,4 +1,4 @@
-package heap;
+package heap.medium;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,11 +53,14 @@ public class CheapestFlightsWithinKStops_787 {
         System.out.println(s.findCheapestPrice(3, new int[][] {{0,1,100},{1,2,100},{0,2,500}}, 0, 2, 0)); // 500
     }
 
-    // O(E*log(V)) - time, E - number of flights, V - number of cities
+    // O(E + V*log(V)) - time, E - number of flights, V - number of cities, O(E+V) - space (Dijkastra algorithm)
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int stop) {
-        Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
-        for (int[] flight: flights) {
-            prices.computeIfAbsent(flight[0], f -> new HashMap<>()).put(flight[1], flight[2]);
+        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+        for (int[] flight: flights) { //O(E)
+            int from = flight[0];
+            int to = flight[1];
+            int price = flight[2];
+            graph.computeIfAbsent(from, f -> new HashMap<>()).put(to, price);
         }
 
         Queue<Item> heap = new PriorityQueue<>((i1, i2) -> i1.cost-i2.cost);
@@ -67,7 +70,7 @@ public class CheapestFlightsWithinKStops_787 {
             if (top.node == dst) {
                 return top.cost;
             }
-            Map<Integer, Integer> adjacents = prices.getOrDefault(top.node, new HashMap<>());
+            Map<Integer, Integer> adjacents = graph.getOrDefault(top.node, new HashMap<>());
             for (int adjacent: adjacents.keySet()) {
                 if (top.stopsSoFar <= stop) {
                     heap.add(new Item(adjacent, top.cost + adjacents.get(adjacent), top.stopsSoFar+1));
