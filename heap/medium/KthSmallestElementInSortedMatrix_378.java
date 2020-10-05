@@ -1,4 +1,4 @@
-package heap;
+package heap.medium;
 
 // https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/
 
@@ -21,16 +21,17 @@ import java.util.Queue;
  Note:
  You may assume k is always valid, 1 ≤ k ≤ n2.
  */
-public class KthSmallestElementInSortedMatrix {
+public class KthSmallestElementInSortedMatrix_378 {
 
     public static void main(String[] args) {
-        KthSmallestElementInSortedMatrix s = new KthSmallestElementInSortedMatrix();
-        System.out.println(s.kthSmallest(new int[][] {{1,5,9},{10,11,13},{12,13,15}}, 8)); // 13
+        KthSmallestElementInSortedMatrix_378 s = new KthSmallestElementInSortedMatrix_378();
+        System.out.println(s.kthSmallest3(new int[][] {{1,5,9},{10,11,13},{12,13,15}}, 8)); // 13
+        System.out.println(s.kthSmallestBF(new int[][] {{1,5,9},{10,11,13},{12,13,15}}, 8)); // 13
         System.out.println(s.kthSmallestMergeSort(new int[][] {{1,5,9},{10,11,13},{12,13,15}}, 8)); // 13
     }
 
-    // O(n*m), O(k) - space
-    public int kthSmallest(int[][] matrix, int k) {
+    // O(n*m*log(k), O(k) - space
+    public int kthSmallestBF(int[][] matrix, int k) {
         Queue<Integer> heap = new PriorityQueue<>((e1, e2) -> e2-e1);
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -44,7 +45,27 @@ public class KthSmallestElementInSortedMatrix {
         return heap.peek();
     }
 
-    // O(n*log(n)) - time, O(m*n) - space
+    // O(rows*log(rows) + k*log(k)) - time, O(rows) - space
+    public int kthSmallest3(int[][] matrix, int k) {
+        Queue<Node> minHeap = new PriorityQueue<>((n1, n2) -> matrix[n1.row][n1.col] - matrix[n2.row][n2.col]);
+        for (int i = 0; i < matrix.length; i++) { //O(rows*log(rows)
+            minHeap.add(new Node(i, 0));
+        }
+        int count = 0;
+        while (!minHeap.isEmpty()) { //O(k*log(k)
+            Node node = minHeap.poll();
+            if (++count == k) {
+                return matrix[node.row][node.col];
+            }
+            if (node.col + 1 < matrix[0].length){
+                node.col++;
+                minHeap.add(node);
+            }
+        }
+        return -1;
+    }
+
+    // O(?) - time, O(m*n) - space
     public int kthSmallestMergeSort(int[][] matrix, int k) {
         if (matrix == null || matrix.length == 0) {
             return -1;
@@ -84,5 +105,15 @@ public class KthSmallestElementInSortedMatrix {
         }
 
         return temp;
+    }
+
+    private static class Node {
+        int row;
+        int col;
+
+        Node(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
     }
 }
