@@ -1,4 +1,4 @@
-package stack;
+package stack.medium;
 
 import java.util.Stack;
 
@@ -54,7 +54,7 @@ public class Pattern132_456 {
         }
         Stack<Integer> stack = new Stack<>();
         int s3 = Integer.MIN_VALUE;
-        for(int i=nums.length-1;i>=0;i--){
+        for(int i = nums.length - 1; i >= 0; i--){
             if(nums[i]<s3) {
                 return true;
             }

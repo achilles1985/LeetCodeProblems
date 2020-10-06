@@ -1,4 +1,4 @@
-package stack.ValidParentheses_20;
+package stack.easy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,16 @@ import java.util.Stack;
  Input: "{[]}"
  Output: true
  */
-public class Solution {
+public class ValidParentheses_20 {
+
+    public static void main(String[] args) {
+        ValidParentheses_20 s = new ValidParentheses_20();
+        System.out.println(s.isValid("()")); // true
+        System.out.println(s.isValid("()[]{}")); // true
+        System.out.println(s.isValid("(}")); // false
+        System.out.println(s.isValid("(])]")); // false
+        System.out.println(s.isValid("{[]}")); // true
+    }
 
     // O(n) - time, O(n) - space
     public boolean isValid(String s) {

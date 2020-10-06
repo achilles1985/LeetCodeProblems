@@ -1,9 +1,9 @@
-package stack;
+package stack.easy;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
+/** E [MARKED]
  Implement the following operations of a stack using queues.
 
  push(x) -- Push element x onto stack.
@@ -50,7 +50,7 @@ public class ImplementStackUsingQueues_121 {
     /** Removes the element on top of the stack and returns that element. */
     // O(n) - time
     public int pop() {
-        while (q1.size() > 1) {
+        while (!q1.isEmpty()) {
             last = q1.poll();
             q2.add(last);
         }
