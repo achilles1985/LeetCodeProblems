@@ -1,4 +1,4 @@
-package heap;
+package heap.hard;
 
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -54,13 +54,13 @@ public class SwimInRisingWater_778 {
                 {10,9,8,7,6}})); //16
     }
 
-    // O(n^2*log(n*n)) - time, O(n^2) - space
+    // O(n^2*log(n)) - time, O(n^2) - space
     public int swimInWater(int[][] grid) {
         Queue<int[]> pq = new PriorityQueue<>((a, b) -> (grid[a[0]][a[1]] - grid[b[0]][b[1]]));
         pq.add(new int[]{0, 0});
         int level = 0;
         int n = grid.length;
-        int[][] nexts = {{0 ,1}, {0, -1},{1, 0}, {-1, 0}};
+        int[][] directions = {{0 ,1}, {0, -1},{1, 0}, {-1, 0}};
         boolean[][] isVisited = new boolean[n][n];
         while (!pq.isEmpty()){
             int[] top = pq.poll();
@@ -69,9 +69,9 @@ public class SwimInRisingWater_778 {
                 break;
             }
 
-            for (int[] next : nexts){
-                int x = top[0] + next[0];
-                int y = top[1] + next[1];
+            for (int[] direction : directions){
+                int x = top[0] + direction[0];
+                int y = top[1] + direction[1];
                 if (x >= 0 && x < n && y >= 0 && y < n && !isVisited[x][y]){
                     isVisited[top[0]][top[1]] = true;
                     pq.add(new int[]{x, y});
