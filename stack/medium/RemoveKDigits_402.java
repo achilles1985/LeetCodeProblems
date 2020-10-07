@@ -1,4 +1,4 @@
-package stack;
+package stack.medium;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -33,10 +33,10 @@ import java.util.TreeSet;
     1. k == 0 or k >= str.length
     2. If all digits in ascending order and k != 0, remove last k digits.
  */
-public class RemoveKDigits {
+public class RemoveKDigits_402 {
 
     public static void main(String[] args) {
-        RemoveKDigits s = new RemoveKDigits();
+        RemoveKDigits_402 s = new RemoveKDigits_402();
         String s1 = "000001230012300".replaceFirst("^0*", "");
 
         System.out.println(s.removeKdigitsBF2("112", 1)); // 11

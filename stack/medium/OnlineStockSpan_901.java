@@ -1,4 +1,4 @@
-package stack;
+package stack.medium;
 
 import java.util.Stack;
 
@@ -29,28 +29,30 @@ import java.util.Stack;
  There will be at most 150000 calls to StockSpanner.next across all test cases.
  The total time limit for this problem has been reduced by 75% for C++, and 50% for all other languages.
  */
-public class StockSpanner {
-    private Stack<Integer> stack;
+public class OnlineStockSpan_901 {
+    private Stack<Integer> prices;
+    private Stack<Integer> weights;
 
-    public StockSpanner() {
-        stack = new Stack<>();
+    public OnlineStockSpan_901() {
+        prices = new Stack();
+        weights = new Stack();
     }
 
     // O(n) - time, space, n - number of pushes
     public int next(int price) {
-        int weight = 1;
-        while (!stack.isEmpty() && price >= stack.peek()) {
-            stack.pop();
-            weight += stack.pop();
+        int w = 1;
+        while (!prices.isEmpty() && prices.peek() <= price) {
+            prices.pop();
+            w += weights.pop();
         }
-        stack.push(weight);
-        stack.push(price);
 
-        return weight;
+        prices.push(price);
+        weights.push(w);
+        return w;
     }
 
     public static void main(String[] args) {
-        StockSpanner s = new StockSpanner();
+        OnlineStockSpan_901 s = new OnlineStockSpan_901();
         System.out.println(s.next(100)); // 1
         System.out.println(s.next(80)); // 1
         System.out.println(s.next(60)); // 1

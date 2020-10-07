@@ -1,4 +1,4 @@
-package stack;
+package stack.medium;
 
 import java.util.Stack;
 
@@ -32,24 +32,10 @@ public class ScoreOfParentheses_856 {
 
     public static void main(String[] args) {
         ScoreOfParentheses_856 s = new ScoreOfParentheses_856();
-        System.out.println(s.scoreOfParentheses2("()")); //1
-        System.out.println(s.scoreOfParentheses2("(())")); //2
-        System.out.println(s.scoreOfParentheses2("()()")); //2
-        System.out.println(s.scoreOfParentheses2("(()(()))")); //6
-    }
-
-    public int scoreOfParentheses2(String S) {
-        Stack<Character> stack = new Stack<>();
-        int counter = 0;
-        for (char c: S.toCharArray()) {
-            if (c == '(') {
-                stack.push('(');
-            } else {
-                stack.pop();
-                counter++;
-            }
-        }
-        return counter*2;
+        System.out.println(s.scoreOfParentheses("()")); //1
+        System.out.println(s.scoreOfParentheses("(())")); //2
+        System.out.println(s.scoreOfParentheses("()()")); //2
+        System.out.println(s.scoreOfParentheses("(()(()))")); //6
     }
 
     // O(n) - time, space

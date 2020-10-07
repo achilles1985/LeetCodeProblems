@@ -1,4 +1,4 @@
-package stack;
+package stack.medium;
 
 /** M
  Given an array of integers A, find the sum of min(B), where B ranges over every (contiguous) subarray of A.
