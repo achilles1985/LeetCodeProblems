@@ -1,4 +1,4 @@
-package slidingWindow;
+package slidingWindow.medium;
 
 import java.util.Arrays;
 
@@ -23,13 +23,49 @@ import java.util.Arrays;
     Questions:
     1. What if pattern is empty?
     2. Only letters lowercase?
+
+    Tips:
+    Pay attention: we do not use int as hash , since hash(abc) == hash(bbb) 1+2+3==2+2+2, that why we use int[26].
  */
 public class PermutationInString_567 {
 
     public static void main(String[] args) {
         PermutationInString_567 s = new PermutationInString_567();
+        System.out.println(s.checkInclusion("abc", "ccccbbbbaaaa")); //false
+        System.out.println(s.checkInclusion("adc", "dcda")); //true
         System.out.println(s.checkInclusion("ab", "eidbaooo")); //true
         System.out.println(s.checkInclusion("ab", "eidboaoo")); //false
+    }
+
+    // O(s2*s1) - time, O(1) - space
+    public boolean checkInclusionBF(String s1, String s2) {
+        if (s1 == null || s2 == null || s1.isEmpty() || s2.isEmpty()) {
+            return false;
+        }
+        int s1L = s1.length();
+        int s2L = s2.length();
+        String s1Hash = hash(s1);
+        for (int i = 0; i <= s2L - s1L; i++) {
+            String sub = s2.substring(i, i + s1L);
+            String subHash = hash(sub);
+            if (s1Hash.equals(subHash)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private String hash(String str) {
+        int[] frequency = new int[26];
+        for (int i = 0; i < str.length(); i++) {
+            frequency[str.charAt(i) - 'a']++;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            sb.append(frequency[i]).append("#");
+        }
+        return sb.toString();
     }
 
     // O(n + m) - time, O(1) - space (sliding window with rehashing)

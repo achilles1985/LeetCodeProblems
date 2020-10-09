@@ -1,6 +1,4 @@
-package slidingWindow;
-
-import java.util.*;
+package slidingWindow.hard;
 
 /**H
  * Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.

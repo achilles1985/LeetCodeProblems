@@ -1,4 +1,4 @@
-package slidingWindow;
+package slidingWindow.medium;
 
 /**M
  * Your are given an array of positive integers nums.
