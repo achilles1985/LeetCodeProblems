@@ -17,20 +17,12 @@ import java.util.*;
  * Return the length of the shortest such clear path from top-left to bottom-right.  If such a path does not exist,
  * return -1.
  *
- *
- *
  * Example 1:
- *
  * Input: [[0,1],[1,0]]
- *
- *
  * Output: 2
  *
  * Example 2:
- *
  * Input: [[0,0,0],[1,1,0],[1,1,0]]
- *
- *
  * Output: 4
  *
  * Note:
@@ -75,9 +67,9 @@ public class ShortestPathInBinaryMatrix_1091 {
                 int[] cell = queue.poll();
                 int row = cell[0];
                 int col = cell[1];
-                    if (row == grid.length-1 && col == grid[0].length-1) {
-                        return count;
-                    }
+                if (row == grid.length-1 && col == grid[0].length-1) {
+                    return count;
+                }
                 for (int[] direction: directions) {
                     int nextRow = row + direction[0];
                     int nextCol = col + direction[1];

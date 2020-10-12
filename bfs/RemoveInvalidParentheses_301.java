@@ -39,7 +39,7 @@ public class RemoveInvalidParentheses_301 {
         System.out.println(s.removeInvalidParentheses(")(")); //[]
     }
 
-    // O(2^n) - time, O(n) - space
+    // O(2^n) - time, O(n^2) - space
     // https://zxi.mytechroad.com/blog/searching/leetcode-301-remove-invalid-parentheses/
     public List<String> removeInvalidParentheses(String s) {
         if (s == null || s.length() == 0) {
