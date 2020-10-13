@@ -1,11 +1,7 @@
 package design;
 
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.PrimitiveIterator;
 import java.util.Queue;
-import java.util.stream.IntStream;
 
 /**M
  * Design and implement an iterator to flatten a 2d vector. It should support the following operations: next and
@@ -34,6 +30,7 @@ public class Flatten_2DVector_251 {
 
     private Queue<Integer> queue;
 
+    // O(N) - total number of elements
     public Flatten_2DVector_251(int[][] v) {
         queue = new LinkedList<>();
         for (int i = 0; i < v.length; i++) {

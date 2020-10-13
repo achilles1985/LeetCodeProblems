@@ -1,11 +1,11 @@
-package design;
+package design.iterators;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-/**M
+/**M [MARKED]
  * Given a nested list of integers, implement an iterator to flatten it.
  * Each element is either an integer, or a list -- whose elements may also be integers or other lists.
  *
@@ -52,7 +52,7 @@ public class FlattenNestedListIterator_341 implements Iterator<Integer> {
         }
     }
 
-     public interface NestedInteger {
+     private interface NestedInteger {
         // @return true if this NestedInteger holds a single integer, rather than a nested list.
         boolean isInteger();
 

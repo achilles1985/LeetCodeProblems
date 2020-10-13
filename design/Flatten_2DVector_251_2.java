@@ -2,7 +2,7 @@ package design;
 
 import java.util.*;
 
-/**M
+/**M [MARKED]
  * Design and implement an iterator to flatten a 2d vector. It should support the following operations: next and
  * hasNext.
  *
@@ -31,6 +31,7 @@ public class Flatten_2DVector_251_2 {
     private int inner;
     private int[][] origin;
 
+    // O(1)
     public Flatten_2DVector_251_2(int[][] v) {
         origin = v;
     }
