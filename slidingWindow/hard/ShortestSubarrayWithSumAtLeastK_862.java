@@ -29,6 +29,7 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
 
     public static void main(String[] args) {
         ShortestSubarrayWithSumAtLeastK_862 s = new ShortestSubarrayWithSumAtLeastK_862();
+        System.out.println(s.shortestSubarray(new int[] {84,-37,32,40,95}, 167)); //3
         System.out.println(s.shortestSubarray(new int[] {1,1,1,3,-2,3,-1,1,1,1,1}, 4)); //3
         System.out.println(s.shortestSubarray(new int[] {2,-1,2,-3,5,4,2,2,2}, 8)); //2
         System.out.println(s.shortestSubarray(new int[] {77, 19, 35, 10, -14}, 19)); //1

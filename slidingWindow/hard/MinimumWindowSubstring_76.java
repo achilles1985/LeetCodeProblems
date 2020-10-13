@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * H
+ * H [MARKED]
  * Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
  * <p>
  * Example:
@@ -19,8 +19,8 @@ public class MinimumWindowSubstring_76 {
 
     public static void main(String[] args) {
         MinimumWindowSubstring_76 s = new MinimumWindowSubstring_76();
-        System.out.println(s.minWindow("bba", "ab")); //ba
         System.out.println(s.minWindow("ADOBECODEBANC", "ABC")); //BANC
+        System.out.println(s.minWindow("bba", "ab")); //ba
 
         System.out.println(s.minWindowBF("bba", "ab")); //ba
         System.out.println(s.minWindowBF("ADOBECODEBANC", "ABC")); //BANC
@@ -64,9 +64,9 @@ public class MinimumWindowSubstring_76 {
         if (s == null || s.length() == 0 || t == null || t.length() == 0) {
             return "";
         }
-        Map<Character, Integer> charOccurrence = new HashMap<>();
+        Map<Character, Integer> frequency = new HashMap<>();
         for (char c: t.toCharArray()) {
-            charOccurrence.put(c, charOccurrence.getOrDefault(c, 0) + 1);
+            frequency.put(c, frequency.getOrDefault(c, 0) + 1);
         }
         int left = 0, right = 0;
         int counter = t.length();
@@ -74,9 +74,9 @@ public class MinimumWindowSubstring_76 {
         String result = "";
         while (right < s.length()) {
             char rightChar = s.charAt(right);
-            if (charOccurrence.containsKey(rightChar)) {
-                charOccurrence.put(rightChar, charOccurrence.getOrDefault(rightChar, 0) - 1);
-                if (charOccurrence.get(rightChar) >= 0) {
+            if (frequency.containsKey(rightChar)) {
+                frequency.put(rightChar, frequency.getOrDefault(rightChar, 0) - 1);
+                if (frequency.get(rightChar) >= 0) {
                     counter--;
                 }
             }
@@ -87,9 +87,9 @@ public class MinimumWindowSubstring_76 {
                     result = s.substring(left, right + 1);
                 }
                 char leftChar = s.charAt(left);
-                if (charOccurrence.containsKey(leftChar)) {
-                    charOccurrence.put(leftChar, charOccurrence.get(leftChar) + 1);
-                    if (charOccurrence.get(leftChar) >= 1) {
+                if (frequency.containsKey(leftChar)) {
+                    frequency.put(leftChar, frequency.get(leftChar) + 1);
+                    if (frequency.get(leftChar) >= 1) {
                         counter++;
                     }
                 }

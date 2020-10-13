@@ -26,39 +26,26 @@ public class LongestSubstringWithAtMostKDistinctCharacters_340 {
 
     // O(n) - time, O(k) - space
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
-        if (k <= 0) {
+        if (s == null || s.isEmpty() || k <= 0) {
             return 0;
         }
-        if (k >= s.length()) {
-            return s.length();
-        }
-        Map<Character, Integer> charToOccurrence = new HashMap<>();
         int left = 0, right = 0;
-        int maxLen = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
         while (right < s.length()) {
-            Character c = s.charAt(right);
-            if (!charToOccurrence.containsKey(c)) {
-                charToOccurrence.put(c, 1);
-            } else {
-                charToOccurrence.put(c, charToOccurrence.get(c) + 1);
-            }
-            if (charToOccurrence.size() > k) {
-                // Remove characters from string until constraint is met
-                while (charToOccurrence.size() > k && left < right) {
-                    Character startChar = s.charAt(left);
-                    if (charToOccurrence.get(startChar) == 1) {
-                        charToOccurrence.remove(startChar);
-                    } else {
-                        charToOccurrence.put(startChar, charToOccurrence.get(startChar) - 1);
-                    }
-                    left++;
+            char c = s.charAt(right);
+            map.put(c, map.getOrDefault(c, 0) + 1);
+            while (map.size() > k && left < right) {
+                char c2 = s.charAt(left);
+                map.put(c2, map.get(c2) - 1);
+                if (map.get(c2) == 0) {
+                    map.remove(c2);
                 }
+                left++;
             }
-            if ((right - left + 1) > maxLen) {
-                maxLen = (right - left + 1);
-            }
+            max = Math.max(max, right - left + 1);
             right++;
         }
-        return maxLen;
+        return max;
     }
 }
