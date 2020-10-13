@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/** M
+/** M [MARKED]
  Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
  find the minimum number of conference rooms required.
 
@@ -22,10 +22,10 @@ import java.util.Queue;
  Explanation:
  Only need one meeting room
  */
-public class MeetingRooms_II_919 {
+public class MeetingRooms_II_253 {
 
     public static void main(String[] args) {
-        MeetingRooms_II_919 s = new MeetingRooms_II_919();
+        MeetingRooms_II_253 s = new MeetingRooms_II_253();
 
         System.out.println(s.minMeetingRooms(new int[][]{{0,30},{5,10},{15,20}})); //2
         System.out.println(s.minMeetingRooms(new int[][]{{2,7}})); //1

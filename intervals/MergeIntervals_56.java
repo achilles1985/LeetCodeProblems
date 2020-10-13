@@ -5,7 +5,7 @@ import utils.SolutionUtils;
 import java.util.Arrays;
 import java.util.Stack;
 
-/**M
+/**M [MARKED]
  * Given a collection of intervals, merge all overlapping intervals.
  *
  * Example 1:
