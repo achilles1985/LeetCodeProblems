@@ -1,6 +1,6 @@
-package backtracking;
+package backtracking.hard;
 
-/** H
+/** H [MARKED]
  * Write a program to solve a Sudoku puzzle by filling the empty cells.
  A sudoku solution must satisfy all of the following rules:
 
@@ -43,7 +43,7 @@ public class SudokuSolver_37 {
         }
     }
 
-    // O(9!)^9 - time, O(1) - space
+    // O(9!)^9 - time, O(1) - space. For brute force: O(9^81) - time, we have 9 choices for each cell.
     public void solveSudoku(char[][] board) {
         solveSudokuUtil(0, 0, board);
     }

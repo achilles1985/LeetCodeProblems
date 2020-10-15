@@ -1,10 +1,10 @@
-package backtracking;
+package backtracking.hard;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * H
+ * H [MARKED]
   The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
   Given an integer n, return all distinct solutions to the n-queens puzzle.
   Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
@@ -39,7 +39,7 @@ public class NQueens_51 {
         return result;
     }
 
-    // O(n!) - time
+    // O(n!) - time (there are n possibilities to put the first queen, n-1 to put the second one ... n*(n-1)*(n-2)*...*1 = N!)
     private void solveNQueens(int n, int row, List<Integer> colPlacements, List<List<String>> result) {
         if (row == n) {
             result.add(generateBoardFromPlacements(colPlacements, n));
@@ -63,7 +63,8 @@ public class NQueens_51 {
             if (columnWeAreValidatingOn == ithQueueColumn ) { // on the same column
                 return false;
             }
-            if ((ithQueenRow-ithQueueColumn) == (rowWeAreValidatingOn-columnWeAreValidatingOn) || (ithQueenRow+ithQueueColumn) == (rowWeAreValidatingOn+columnWeAreValidatingOn)) { // on the same diagonal)
+            if ((ithQueenRow-ithQueueColumn) == (rowWeAreValidatingOn-columnWeAreValidatingOn)
+                    || (ithQueenRow+ithQueueColumn) == (rowWeAreValidatingOn+columnWeAreValidatingOn)) { // on the same diagonal)
                 return false;
             }
         }

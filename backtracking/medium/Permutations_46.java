@@ -1,11 +1,9 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-/**
- * 46. Permutations
+/** M [MARKED]
  * https://leetcode.com/problems/permutations/#/description
  * Given a collection of distinct numbers, return all possible permutations.
  * For example,
@@ -29,7 +27,7 @@ public class Permutations_46 {
         System.out.println(s.permute(new int[]{1,1,2}));
     }
 
-    // O(n!*n) - time
+    // O(n!) - time (initially we have N choices, then N-1, ... 1 = N*(N-1)*(N-2)*...1 = N!, space (to keep N! solutions)
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<>(), nums, new boolean[nums.length]);

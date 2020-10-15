@@ -1,9 +1,9 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** M [MARKED]
  * Given a set of distinct integers, nums, return all possible subsets (the power set).
  Note: The solution set must not contain duplicate subsets.
 
@@ -25,12 +25,12 @@ public class SubsetI_78 {
 
     public static void main(String[] args) {
         SubsetI_78 s = new SubsetI_78();
-        System.out.println(s.subsets3(new int[] {1,2,3,4,5}));
-        System.out.println(s.subsets3(new int[] {2,1,3}));
-        System.out.println(s.subsets3(new int[] {4,4,4,1,4}));
+        System.out.println(s.subsets3(new int[] {1,2,3}));
+        System.out.println(s.subsets(new int[] {1,2,3,4,5}));
+        System.out.println(s.subsets(new int[] {4,4,4,1,4}));
     }
 
-    // O(2^n) - time, space, since we either add an item to the set or not.
+    // O(2^n) - time (since we either add an item to the set or not), O(2^n) - space (total number of sets generated, does not include recursion stack)
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();

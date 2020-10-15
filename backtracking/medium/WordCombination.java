@@ -1,9 +1,9 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** M
  * Given a list of list of Strings. Print cartesian product of lists.
  * input -> {"Hello", "World"} , {"Game"}, {"Go","Home"}
  * output ->

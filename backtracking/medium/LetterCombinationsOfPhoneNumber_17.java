@@ -1,12 +1,13 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/** M [MARKED]
  * Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
  A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
 
@@ -20,6 +21,7 @@ import java.util.Map;
 public class LetterCombinationsOfPhoneNumber_17 {
 
     public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
         LetterCombinationsOfPhoneNumber_17 s = new LetterCombinationsOfPhoneNumber_17();
         System.out.println(s.letterCombinations("12"));
         System.out.println(s.letterCombinations("234")); //[adg, adh, adi, aeg, aeh, aei, afg, afh, afi, bdg, bdh, bdi, beg, beh, bei, bfg, bfh, bfi, cdg, cdh, cdi, ceg, ceh, cei, cfg, cfh, cfi]
@@ -28,39 +30,34 @@ public class LetterCombinationsOfPhoneNumber_17 {
 
     // O((4^n)*n) - time, O(n + 4^n)-space, n - number of digits in the input, 4 - because we have at most 4 letters for each number
     public List<String> letterCombinations(String digits) {
-        if (digits == null || digits.length() == 0) {
+        if (digits == null || digits.isEmpty()) {
             return Collections.emptyList();
         }
-        Map<Character, char[]> lettersMap = new HashMap<>();
-        lettersMap.put('0', new char[]{});
-        lettersMap.put('1', new char[]{});
-        lettersMap.put('2', new char[]{'a', 'b', 'c'});
-        lettersMap.put('3', new char[]{'d', 'e', 'f'});
-        lettersMap.put('4', new char[]{'g', 'h', 'i'});
-        lettersMap.put('5', new char[]{'j', 'k', 'l'});
-        lettersMap.put('6', new char[]{'m', 'n', 'o'});
-        lettersMap.put('7', new char[]{'p', 'q', 'r', 's'});
-        lettersMap.put('8', new char[]{'t', 'u', 'v'});
-        lettersMap.put('9', new char[]{'w', 'x', 'y', 'z'});
+        Map<Character, List<Character>> map = new HashMap<>();
+        map.put('2', Arrays.asList('a','b','c'));
+        map.put('3', Arrays.asList('d','e','f'));
+        map.put('4', Arrays.asList('g','h','i'));
+        map.put('5', Arrays.asList('j','k','l'));
+        map.put('6', Arrays.asList('m','n','o'));
+        map.put('7', Arrays.asList('p','q','r','s'));
+        map.put('8', Arrays.asList('t','u','v'));
+        map.put('9', Arrays.asList('w','x','y','z'));
 
         List<String> result = new ArrayList<>();
-        //dfs(digits,new StringBuilder(), result, lettersMap);
-        dfs2(digits,0,new StringBuilder(), result, lettersMap);
+        dfs(digits, map, new StringBuilder(), result);
 
         return result;
     }
 
-
-    private void dfs(String digits, StringBuilder sb, List<String> result, Map<Character, char[]> map) {
+    private void dfs(String digits, Map<Character, List<Character>> map, StringBuilder sb, List<String> result) {
         if (sb.length() == digits.length()) {
             result.add(sb.toString());
             return;
         }
-
-        for (char c: map.get(digits.charAt(sb.length()))) {
+        for (Character c: map.get(digits.charAt(sb.length()))) {
             sb.append(c);
-            dfs(digits, sb, result, map);
-            sb.deleteCharAt(sb.length()-1);
+            dfs(digits, map, sb, result);
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
 

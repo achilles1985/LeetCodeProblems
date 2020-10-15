@@ -1,4 +1,4 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,8 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * 47. Permutations II
+/** M
  * https://leetcode.com/problems/permutations-ii/#/description
  * Given a collection of numbers that might contain duplicates, return all possible unique permutations.
  * For example,
@@ -28,6 +27,7 @@ public class Permutations2_47 {
         System.out.println(s.permuteUnique(new int[]{1,2,3})); //[[1, 1, 2], [1, 2, 1], [2, 1, 1]]
     }
 
+    // O(n!) - time, space
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> current = new ArrayList<>();
