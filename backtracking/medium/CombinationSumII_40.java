@@ -1,13 +1,13 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
+/** M
  * Given a collection of candidate numbers (candidates) and a target number (target),
- * find all unique combinations in candidates where the candidate numbers sums to target.
+ * find all UNIQUE combinations in candidates where the candidate numbers sums to target.
  * Each number in candidates may only be used once in the combination.
  * Note:
  * All numbers (including target) will be positive integers.
@@ -51,13 +51,13 @@ public class CombinationSumII_40 {
         }
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(candidates);
-        combinationSum2Helper(0, 0, target, new ArrayList<>(), result, candidates);
+        combinationSumHelper(0, 0, target, new ArrayList<>(), result, candidates);
         return result;
     }
 
-    private void combinationSum2Helper(int start, int sum, int target, List<Integer> list, List<List<Integer>> result, int[] nums) {
+    private void combinationSumHelper(int start, int sum, int target, List<Integer> list, List<List<Integer>> result, int[] nums) {
         if (sum == target) {
-            result.add(new ArrayList<>(list));
+            result.add(new ArrayList<>(list)); //O(n)
             return;
         }
         for (int i = start; i < nums.length; i++) {
@@ -67,10 +67,8 @@ public class CombinationSumII_40 {
             if (i > start && nums[i] == nums[i-1]) { // skip duplicates
                 continue;
             }
-            sum += nums[i];
             list.add(nums[i]);
-            combinationSum2Helper(i+1, sum, target, list, result, nums); // i+1 because we cannot reuse same elements
-            sum -= list.get(list.size()-1);
+            combinationSumHelper(i+1, sum + nums[i], target, list, result, nums); // i+1 because we cannot reuse same elements
             list.remove(list.size()-1);
         }
     }

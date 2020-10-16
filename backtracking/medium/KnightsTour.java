@@ -1,8 +1,8 @@
-package backtracking;
+package backtracking.medium;
 
 import utils.SolutionUtils;
 
-/**
+/** M
  * On a NxN chess board, find all legal Knight's Tours.
  */
 
@@ -14,6 +14,7 @@ public class KnightsTour {
         SolutionUtils.print(s.solveKT());
     }
 
+    // O(8^(N*N)) - time
     public int[][] solveKT() {
         int[][] tour = new int[8][8];
         solveKTUtils(0, 0, 0, tour);

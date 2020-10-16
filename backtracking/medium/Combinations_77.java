@@ -1,11 +1,9 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * https://leetcode.com/problems/combinations/description/
- * 77. Combinations
+/** M
  * Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
  * For example,
  * If n = 4 and k = 2, a solution is:
