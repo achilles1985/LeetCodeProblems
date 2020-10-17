@@ -1,4 +1,4 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +17,20 @@ public class CombinationNoRepetitions {
         return result;
     }
 
-    private void dfs(int[] n, int k, int idx, ArrayList<Integer> temp, List<List<Integer>> result) {
+    private void dfs(int[] n, int k, int start, List<Integer> temp, List<List<Integer>> result) {
         if (temp.size() == k) {
             result.add(new ArrayList<>(temp));
             return;
         }
 
-        for (int i = idx; i < n.length; i++) {
+        for (int i = start; i < n.length; i++) {
             if (temp.contains(n[i])) {
                 continue;
             }
             temp.add(n[i]);
-            dfs(n, k, ++idx, temp, result);
+            dfs(n, k, start+1, temp, result);
             temp.remove(temp.size()-1);
         }
-        int j = 0;
     }
 
 }

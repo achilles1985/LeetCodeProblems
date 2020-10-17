@@ -23,6 +23,7 @@ public class LongestIncreasingSubsequence_300 {
 
     public static void main(String[] args) {
         LongestIncreasingSubsequence_300 s = new LongestIncreasingSubsequence_300();
+        System.out.println(s.lengthOfLISDynamicBottomUp(new int[]{1,2,3,4})); // 4
         System.out.println(s.lengthOfLIS(new int[]{10,9,2,5,3,7,101,18})); // 4
         System.out.println(s.lengthOfLISDynamicTopDown(new int[]{10,9,2,5,3,7,101,18})); // 4
         System.out.println(s.lengthOfLISDynamicBottomUp(new int[]{10,9,2,5,3,7,101,18})); // 4
@@ -31,7 +32,7 @@ public class LongestIncreasingSubsequence_300 {
         System.out.println(s.lengthOfLISDynamicBottomUp(new int[]{-1, 3, 4, 5, 2, 2,2,2})); // 5
     }
 
-    // Brute Force, O(2^n), O(n^2) - space
+    // Brute Force, O(2^n), O(n) - space, recursion stack
     public int lengthOfLIS(int[] nums) {
         return lengthOfLIS(nums, Integer.MIN_VALUE, 0);
     }

@@ -1,4 +1,4 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import utils.SolutionUtils;
 
-/**M
+/**M [MARKED]
  * A string S represents a list of words.
  *
  * Each letter in the word has 1 or more options.  If there is one option, the letter is represented as is.  If there
@@ -37,33 +37,6 @@ public class BraceExpansion_1087 {
         SolutionUtils.print(s.expand("abcde")); // ["abcd"]
         SolutionUtils.print(s.expand("{a,b}c{d,e}f")); //["acdf","acef","bcdf","bcef"]
         SolutionUtils.print(s.expand("{a,b}{z,x,y}")); // ["ax","ay","az","bx","by","bz"]
-    }
-
-    public List<List<Character>> tokenize2(String S) {
-        Stack<Character> stack = new Stack<>();
-        List<List<Character>> result = new ArrayList<>();
-        for (char c: S.toCharArray()) {
-            if (Character.isLetter(c)) {
-                stack.push(c);
-            } else if ('{' == c || '}' == c) {
-                List<Character> words = new ArrayList<>();
-                while (!stack.isEmpty()) {
-                    words.add(stack.pop());
-                }
-                if (!words.isEmpty()) {
-                    result.add(words);
-                }
-            }
-        }
-        List<Character> words = new ArrayList<>();
-        while (!stack.isEmpty()) {
-            words.add(stack.pop());
-        }
-        if (!words.isEmpty()) {
-            result.add(words);
-        }
-
-        return result;
     }
 
 
@@ -103,6 +76,33 @@ public class BraceExpansion_1087 {
                 result.add(list2);
             }
         }
+        return result;
+    }
+
+    private List<List<Character>> tokenize2(String S) {
+        Stack<Character> stack = new Stack<>();
+        List<List<Character>> result = new ArrayList<>();
+        for (char c: S.toCharArray()) {
+            if (Character.isLetter(c)) {
+                stack.push(c);
+            } else if ('{' == c || '}' == c) {
+                List<Character> words = new ArrayList<>();
+                while (!stack.isEmpty()) {
+                    words.add(stack.pop());
+                }
+                if (!words.isEmpty()) {
+                    result.add(words);
+                }
+            }
+        }
+        List<Character> words = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            words.add(stack.pop());
+        }
+        if (!words.isEmpty()) {
+            result.add(words);
+        }
+
         return result;
     }
 

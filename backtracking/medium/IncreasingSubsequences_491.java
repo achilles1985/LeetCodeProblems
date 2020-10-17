@@ -1,11 +1,11 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** M
+/** M [MARKED]
  * Given an integer array, your task is to find all the different possible increasing subsequences of the given array,
  * and the length of an increasing subsequence should be at least 2.
 
@@ -20,11 +20,13 @@ import java.util.Set;
  */
 /*
     1.Should be contiguous?
+
  */
 public class IncreasingSubsequences_491 {
 
     public static void main(String[] args) {
         IncreasingSubsequences_491 s = new IncreasingSubsequences_491();
+        System.out.println(s.findSubsequences(new int[] {1,2,3,4})); //[[1, 2, 3], [1, 2], [2, 3], [1, 3]]
         System.out.println(s.findSubsequences(new int[] {4,3,7,6})); //[[4, 6], [4, 7], [3, 6], [3, 7]]
         System.out.println(s.findSubsequences(new int[] {4,6,7,7})); // [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
     }
