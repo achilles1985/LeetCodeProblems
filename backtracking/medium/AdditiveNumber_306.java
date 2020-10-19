@@ -1,4 +1,7 @@
-package backtracking;
+package backtracking.medium;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** M
  * Additive number is a string whose digits can form additive sequence.
@@ -25,47 +28,50 @@ public class AdditiveNumber_306 {
 
     public static void main(String[] args) {
         AdditiveNumber_306 s= new AdditiveNumber_306();
+        System.out.println(s.isAdditiveNumber("231458")); // false
+        System.out.println(s.isAdditiveNumber("111")); // false
         System.out.println(s.isAdditiveNumber("123446")); // true
         System.out.println(s.isAdditiveNumber("112358")); // true
         System.out.println(s.isAdditiveNumber("199100199")); // true
-        System.out.println(s.isAdditiveNumber("231458")); // false
     }
 
-    // Cannot understand how it works
+    // Similar to SplitArrayToFibonacciSequence_842
+    // O(exponential) - time, O(n) - space
     public boolean isAdditiveNumber(String num) {
-        int n = num.length();
-        for (int i = 1; i <= n/2; ++i) {
-            if (num.charAt(0) == '0' && i > 1) {
-                return false;
-            }
-            for (int j = i + 1; n - j >= Math.max(i, j - i); ++j) {
-                if (num.charAt(i) == '0' && j > i + 1) {
-                    continue;
-                }
-                long a = Long.parseLong(num.substring(0, i));
-                long b = Long.parseLong(num.substring(i, j));
-                if (backtrack(num, j, a, b)) {
+        if (num == null || num.length() < 3) {
+            return false;
+        }
+        return isAdditiveNumber(num, new ArrayList<>(), 0);
+    }
+
+    private boolean isAdditiveNumber(String str, List<Integer> list, int start) {
+        if (start == str.length()) {
+            return list.size() >= 3;
+        }
+        int num = 0;
+        for (int i = start; i < str.length(); i++) {
+            num = 10*num + (str.charAt(i) - '0');
+            if (isValidNum(str, num, list, start, i)) {
+                list.add(num);
+                if (isAdditiveNumber(str, list, i+1)) {
                     return true;
                 }
+                list.remove(list.size()-1);
             }
         }
         return false;
     }
 
-    boolean backtrack(String s, int idx, long a, long b) {
-        if (idx == s.length()) {
+    private boolean isValidNum(String str, long num, List<Integer> list, int start, int end) {
+        if (start < end && str.charAt(start) == '0') {
+            return false;
+        }
+        if (list.size() < 2) {
             return true;
         }
-        for (int i = idx; i < s.length(); ++i) {
-            if (s.charAt(idx) == '0' && i > idx){
-                break;
-            }
-            long c = Long.parseLong(s.substring(idx, i + 1));
-            if (c == a + b && backtrack(s, i + 1, b, c)) {
-                return true;
-            }
-        }
+        int last = list.size()-1;
 
-        return false;
+        return list.get(last) + list.get(last-1) == num;
     }
+
 }

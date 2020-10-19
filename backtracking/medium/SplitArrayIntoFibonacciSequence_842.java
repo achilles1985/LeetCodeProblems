@@ -1,10 +1,11 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * M
+ * M [MARKED]
  * Given a string S of digits, such as S = "123456579", we can split it into a Fibonacci-like sequence [123, 456, 579].
  * Formally, a Fibonacci-like sequence is a list F of non-negative integers such that:
  * 0 <= F[i] <= 2^31 - 1, (that is, each integer fits a 32-bit signed integer type);
@@ -47,14 +48,15 @@ public class SplitArrayIntoFibonacciSequence_842 {
 
     public static void main(String[] args) {
         SplitArrayIntoFibonacciSequence_842 s = new SplitArrayIntoFibonacciSequence_842();
-        System.out.println(s.splitIntoFibonacci2("123446")); // [12,34,46]
+        System.out.println(s.splitIntoFibonacci2("1101111")); // [11,0,11,11]
+        System.out.println(s.splitIntoFibonacci3("0123")); // []
+        System.out.println(s.splitIntoFibonacci3("123446")); // [12,34,46]
         System.out.println(s.splitIntoFibonacci2("123456579")); // [123,456,579]
         System.out.println(s.splitIntoFibonacci2("11235813")); // [1,1,2,3,5,8,13]
         System.out.println(s.splitIntoFibonacci2("112358130")); // []
     }
 
     // O(exponential) - time, O(n) - space
-    // return type boolean
     public List<Integer> splitIntoFibonacci(String str) {
         List<Integer> res = new ArrayList<>();
         split(str, 0, res);
@@ -64,26 +66,25 @@ public class SplitArrayIntoFibonacciSequence_842 {
 
     // return type void
     public List<Integer> splitIntoFibonacci2(String str) {
-        List<Integer> res = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>(); // since there can be several answers, but we need to return only the first one.
         split2(str, 0, res, new ArrayList<>());
 
-        return res;
+        return res.isEmpty() ? Collections.emptyList() : res.get(0);
     }
 
-    private void split2(String str, int pos, List<Integer> res, List<Integer> temp) {
+    private void split2(String str, int pos, List<List<Integer>> res, List<Integer> temp) {
         if (pos == str.length() && temp.size() >= 3) {
-            res.addAll(temp);
+            res.add(new ArrayList<>(temp));
             return;
         }
         long num = 0;
         for (int i = pos; i < str.length(); i++) {
             num = num * 10 + str.charAt(i) - '0';
-            if (!isValidNum(num, str, pos, i, temp)) {
-                continue;
+            if (isValidNum(num, str, pos, i, temp)) {
+                temp.add((int) num);
+                split2(str, i + 1, res, temp);
+                temp.remove(temp.size() - 1);
             }
-            temp.add((int) num);
-            split2(str, i + 1, res, temp);
-            temp.remove(temp.size() - 1);
         }
     }
 
@@ -122,4 +123,43 @@ public class SplitArrayIntoFibonacciSequence_842 {
         int last = res.size() - 1;
         return res.get(last) + res.get(last - 1) == (int) num;
     }
+
+    //////////////// alternative to fibonacci2()
+    public List<Integer> splitIntoFibonacci3(String S) {
+        if (S == null || S.length() < 3) {
+            return Collections.emptyList();
+        }
+        List<Integer> result = new ArrayList<>();
+        helper(S, new ArrayList<>(), result, 0);
+        return result;
+    }
+
+    private void helper(String str, List<Integer> temp, List<Integer> result, int start) {
+        if (start == str.length() && temp.size() >= 3) {
+            result.addAll(temp);
+            return;
+        }
+        for (int i = start; i < str.length(); i++) {
+            String sub = str.substring(start, i+1);
+            if (isValid(sub, temp)) {
+                int num = Integer.parseInt(sub);
+                temp.add(num);
+                helper(str, temp, result, i+1);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+
+    private boolean isValid(String str, List<Integer> list) {
+        if (str.length() >= 2 && str.startsWith("0")) {
+            return false;
+        }
+        if (list.size() < 2) {
+            return true;
+        }
+        int last = list.size()-1;
+
+        return (list.get(last) + list.get(last-1)) == Integer.parseInt(str);
+    }
+
 }

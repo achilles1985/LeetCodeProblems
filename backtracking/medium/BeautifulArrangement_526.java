@@ -1,6 +1,7 @@
-package backtracking;
+package backtracking.medium;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**M
@@ -28,23 +29,51 @@ public class BeautifulArrangement_526 {
 
     public static void main(String[] args) {
         BeautifulArrangement_526 s = new BeautifulArrangement_526();
-        System.out.println(s.countArrangement2(3)); //3
-        System.out.println(s.countArrangement2(2)); //2
+        System.out.println(s.countArrangementBF(3)); //3
+        System.out.println(s.countArrangementBF(2)); //2
+
+        System.out.println(s.countArrangement(3)); //3
+        System.out.println(s.countArrangement(2)); //2
+    }
+
+    // O(n!) - time (to generate all permutations), O(n) - space (recursion stack)
+    public int countArrangementBF(int N) {
+        int count = 0;
+        List<List<Integer>> permutations = generateAll(N);
+        for (List<Integer> permutation: permutations) {
+            if (isBeautifullyArranged(permutation)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private List<List<Integer>> generateAll(int N) {
+        List<List<Integer>> result = new ArrayList<>();
+        boolean[] visited = new boolean[N];
+        permute(N, new ArrayList<>(), result, visited);
+
+        return result;
+    }
+
+    private void permute(int N, List<Integer> temp, List<List<Integer>> result, boolean[] visited) {
+        if (temp.size() == N) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int i = 1; i <= N; i++) {
+            if (visited[i-1]) {
+                continue;
+            }
+            temp.add(i);
+            visited[i-1] = true;
+            permute(N, temp, result, visited);
+            temp.remove(temp.size()-1);
+            visited[i-1] = false;
+        }
     }
 
     // O(k) - time, k - number of valid permutations
-    public int countArrangement2(int N) {
-        AtomicInteger count = new AtomicInteger(0);
-        boolean[] used = new boolean[N+1];
-        int[] nums = new int[N];
-        for (int i = 1; i <= N; i++) {
-            nums[i-1] = i;
-        }
-        countArrangementHelper2(nums, new ArrayList<>(), count, used);
-        return count.get();
-    }
-
-    // O(n!) - time, O(n) - space (Brute Forth)
     public int countArrangement(int N) {
         AtomicInteger count = new AtomicInteger(0);
         boolean[] used = new boolean[N+1];
@@ -56,7 +85,19 @@ public class BeautifulArrangement_526 {
         return count.get();
     }
 
-    private void countArrangementHelper2(int[] nums, ArrayList<Integer> list, AtomicInteger count, boolean[] used) {
+    // O(n!) - time, O(n) - space (Brute Forth)
+    public int countArrangementBF2(int N) {
+        AtomicInteger count = new AtomicInteger(0);
+        boolean[] used = new boolean[N+1];
+        int[] nums = new int[N];
+        for (int i = 1; i <= N; i++) {
+            nums[i-1] = i;
+        }
+        countArrangementHelperBF2(nums, new ArrayList<>(), count, used);
+        return count.get();
+    }
+
+    private void countArrangementHelper(int[] nums, ArrayList<Integer> list, AtomicInteger count, boolean[] used) {
         if (list.size() == nums.length) {
             if (isBeautifullyArranged(list)) {
                 count.incrementAndGet();
@@ -74,13 +115,13 @@ public class BeautifulArrangement_526 {
                 continue;
             }
             used[i] = true;
-            countArrangementHelper2(nums, list, count, used);
+            countArrangementHelper(nums, list, count, used);
             list.remove(list.size()-1);
             used[i] = false;
         }
     }
 
-    private void countArrangementHelper(int[] nums, ArrayList<Integer> list, AtomicInteger count, boolean[] used) {
+    private void countArrangementHelperBF2(int[] nums, ArrayList<Integer> list, AtomicInteger count, boolean[] used) {
         if (list.size() == nums.length) {
             if (isBeautifullyArranged(list)) {
                 count.incrementAndGet();
@@ -93,13 +134,13 @@ public class BeautifulArrangement_526 {
             }
             list.add(nums[i]);
             used[i] = true;
-            countArrangementHelper(nums, list, count, used);
+            countArrangementHelperBF2(nums, list, count, used);
             list.remove(list.size()-1);
             used[i] = false;
         }
     }
 
-    private boolean isBeautifullyArranged(ArrayList<Integer> list) {
+    private boolean isBeautifullyArranged(List<Integer> list) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i)%(i+1) != 0 && (i+1)%list.get(i) != 0) {
                 return false;

@@ -128,10 +128,10 @@ public class DecodeWays_91 {
     }
 
     private boolean isValid(String str) {
-        Integer num = Integer.parseInt(str);
         if (str.charAt(0) == '0') {
             return false;
         }
+        Integer num = Integer.parseInt(str);
 
         return num >= 1 && num <= 26;
     }
