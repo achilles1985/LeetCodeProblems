@@ -1,4 +1,4 @@
-package array;
+package array.easy;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,11 +30,10 @@ public class HappyNumber_202 {
     public boolean isHappy(int n) {
         Set<Integer> set = new HashSet<>();
         while (n != 1) {
-            int cur = n;
             int sum = 0;
-            while (cur > 0) {
-                sum += (cur%10)*(cur%10);
-                cur /= 10;
+            while (n > 0) {
+                sum += (n%10)*(n%10);
+                n /= 10;
             }
             if (set.contains(sum)) {
                 return false;

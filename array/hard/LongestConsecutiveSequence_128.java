@@ -1,4 +1,4 @@
-package array;
+package array.hard;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,6 +13,7 @@ import java.util.Set;
  * Output: 4
  * Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
  */
+
 /*
 Questions to ask:
     1. Can negative, duplicate numbers might be in the array?
