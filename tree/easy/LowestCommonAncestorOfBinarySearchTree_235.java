@@ -73,7 +73,7 @@ public class LowestCommonAncestorOfBinarySearchTree_235 {
         return lca(root.left, min, max);
     }
 
-    // O(n) - time, space
+    // O(n) - time, O(1) - space
     public TreeNode lowestCommonAncestorIterative(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;

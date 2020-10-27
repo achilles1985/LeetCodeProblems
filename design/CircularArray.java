@@ -11,7 +11,7 @@ public class CircularArray {
 
     public static void main(String[] args) {
         CircularArray s = new CircularArray();
-        System.out.println(s.allNeibours(new int[]{1,2,3,4,5}, 2));
+        System.out.println(s.allNeibours(new int[]{1,2,3,4,5}, 2)); //[3, 4, 5, 1, 2]
     }
 
     public List<Integer> allNeibours(int[] arr, int start) {
