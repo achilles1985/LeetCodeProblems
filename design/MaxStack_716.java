@@ -83,8 +83,11 @@ public class MaxStack_716 {
         MaxStack_716 stack = new MaxStack_716();
         stack.push(5);
         stack.push(1);
-        System.out.println(stack.popMax()); //5
-        System.out.println(stack.peekMax()); //1
+        stack.push(6);
+        stack.push(2);
+        stack.push(3);
+        System.out.println(stack.popMax()); //6
+        System.out.println(stack.peekMax()); //6
     }
 
 }

@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 public class UsefulJava {
 
     public static void main(String[] args) {
+        final byte[] decode = Base64.getDecoder().decode("eyJraWQiOiJmZWE2ODJhYS1kYTAzLTQyODMtOWYzOC1hZmRiZDg1NmY4NWUiLCJhbGciOiJFZERTQSJ9.eyJpc3MiOiJjbXNhLWF1dGgtc2VydmVyIiwiZXhwIjoxNjA0MzQ0NTI1LCJpYXQiOjE2MDQzNDI3MjUsImp0aSI6IjY1ODE4OTg3LTdiMGMtNDYwZC1iMzAwLTBkNDZlMTkwMTNkNSJ9.p00IVrcAqJOfp8aaT6KQR6fvgYzwN5d3YtzSHJScz6JXC4A0-VnR9pgLsY_ak0YNfh84ltvxJOHo_JkgmuQNAA");
         // computeIfAbsent vs PutIfAbsent
         //computeIfAbsent takes a mapping function, that is called to obtain the value if the key is missing.
         String[] words = new String[]{"malok", "malo", "kalo", "malok", "malok", "malo"};

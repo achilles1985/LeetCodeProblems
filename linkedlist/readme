@@ -5,3 +5,25 @@ When dealing with linkedlist problems, one should remember the follows:
 2) LinkedList can be split: "Sort List", "Insertion sort list"
 3) To find the middle, slow and fast pointers are used.
 4) To reverse the list, we need 3 pointers: prev, curr, next
+
+
+/// Find node with given key
+1)
+Node temp = head;
+while (temp.next != null) {
+    if (temp.next == key) {
+        temp.next = temp.next.next;
+        return;
+    }
+    temp = temp.next;
+}
+
+Node temp = head;
+Node prev = null;
+while (temp != null) {
+    if (temp.key == key) {
+        prev.next = temp.next;
+        return
+    }
+    temp = temp.next;
+}

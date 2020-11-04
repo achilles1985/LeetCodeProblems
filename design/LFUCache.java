@@ -50,7 +50,6 @@ public class LFUCache {
     }
 
     public int get(int key) {
-        LinkedHashSet<Integer> lh = new LinkedHashSet<>();
         if (!keyToCacheItem.containsKey(key)) {
             return -1;
         }

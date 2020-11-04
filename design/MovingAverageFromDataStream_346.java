@@ -1,5 +1,6 @@
 package design;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,7 +18,7 @@ public class MovingAverageFromDataStream_346 {
 
     private int size;
     private int sum;
-    private Queue<Integer> queue;
+    private Deque<Integer> queue;
 
     public MovingAverageFromDataStream_346(int size) {
         this.size = size;
@@ -29,7 +30,7 @@ public class MovingAverageFromDataStream_346 {
         sum += val;
         queue.add(val);
         if (queue.size() > size) {
-            sum -= queue.poll();
+            sum -= queue.pollFirst();
         }
         return (double) sum / queue.size();
     }
