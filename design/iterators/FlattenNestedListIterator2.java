@@ -20,7 +20,6 @@ public class FlattenNestedListIterator2 {
             stack = new ArrayDeque(nestedList);
         }
 
-
         @Override
         public Integer next() {
             // As per java specs, throw an exception if there's no elements left.

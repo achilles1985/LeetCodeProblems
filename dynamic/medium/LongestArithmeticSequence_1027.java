@@ -1,6 +1,5 @@
-package dynamic;
+package dynamic.medium;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -87,33 +86,5 @@ public class LongestArithmeticSequence_1027 {
             }
         }
         return res;
-    }
-
-    // Wrong+
-    public int longestArithSeqLength3(int[] A) {
-        Set<Integer> diffs = new HashSet<>();
-        for (int i = 1; i < A.length; i++) {
-            for (int j = 0; j < A.length; j++) {
-                diffs.add(A[i] - A[j]);
-            }
-        }
-        int max = 0;
-        for (Integer diff: diffs) {
-            int localMax = dfs(diff, A[0], 1, A);
-            max = Math.max(max, localMax);
-        }
-        return max;
-    }
-
-    private int dfs(Integer diff, int prevValue, int index, int[] nums) {
-        if (index >= nums.length) {
-            return 0;
-        }
-        int taken = 0;
-        if (nums[index] - prevValue == diff) {
-            taken = 1 + dfs(diff, nums[index],index + 1, nums);
-        }
-        int notTaken = dfs(diff, prevValue,index + 1, nums);
-        return Math.max(taken, notTaken);
     }
 }

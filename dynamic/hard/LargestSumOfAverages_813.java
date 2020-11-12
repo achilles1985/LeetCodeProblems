@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.hard;
 
 /**M
  * We partition a row of numbers A into at most K adjacent (non-empty) groups, then our score is the sum of the

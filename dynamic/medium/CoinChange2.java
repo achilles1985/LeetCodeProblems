@@ -1,7 +1,12 @@
 package dynamic.medium;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**M [MARKED]
  * You are given coins of different denominations and a total amount of money.
@@ -37,9 +42,72 @@ public class CoinChange2 {
 
     public static void main(String[] args) {
         CoinChange2 s = new CoinChange2();
-        System.out.println(s.changeMemoization(5, new int[]{1,2,5}));
-        System.out.println(s.changeMemoization(3, new int[]{2}));
-        System.out.println(s.changeMemoization(10, new int[]{10}));
+        System.out.println(s.changeBFS(7, new int[]{1,2,5})); //2
+        System.out.println(s.changeBFS(100, new int[]{1,2,5})); //3
+
+        System.out.println(s.changeMemoization(5, new int[]{1,2,5})); //4
+        System.out.println(s.changeMemoization(3, new int[]{2})); //0
+        System.out.println(s.changeMemoization(10, new int[]{10})); //1
+    }
+
+    // O(amount*coins.length) - time (in worse case we go up to amount deep, because of memo we compute each subproblem in coins.length iterations), O(amount) - space
+    public int changeBFS(int amount, int[] coins) {
+        if (amount == 0 || coins == null || coins.length == 0) {
+            return 0;
+        }
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(amount);
+        visited.add(amount);
+        int level = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int curAmount = queue.poll();
+                if (curAmount == 0) {
+                    return level;
+                }
+                for (int coin: coins) {
+                    int nextAmount = curAmount - coin;
+                    if (nextAmount >= 0 && !visited.contains(nextAmount)) {
+                        queue.add(nextAmount);
+                        visited.add(nextAmount);
+                    }
+                }
+            }
+            level++;
+        }
+
+        return -1;
+    }
+
+    // O(amount^coins.length) - time, O(amount) - space
+    public int changeBF2(int amount, int[] coins) {
+        if (amount == 0) {
+            return 0;
+        }
+        if (coins == null || coins.length == 0) {
+            return 0;
+        }
+        AtomicInteger counter = new AtomicInteger(0);
+        helper2(amount, coins, 0, counter);
+
+        return counter.get();
+    }
+
+    private void helper2(int amount, int[] coins, int start, AtomicInteger counter) {
+        if (start >= coins.length) {
+            return;
+        }
+        if (amount == 0) {
+            counter.incrementAndGet();
+            return;
+        }
+        for (int i = start; i < coins.length; i++) {
+            if (amount - coins[i] >= 0) {
+                helper2(amount - coins[i], coins, i, counter);
+            }
+        }
     }
 
     // O(2^amount) - time , O(amount) - space
