@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import utils.TreeNode;
 
@@ -39,6 +41,7 @@ import utils.TreeNode;
 public class LowestCommonAncestorOfBinaryTree_236 {
 
     public static void main(String[] args) {
+        ExecutorService es = Executors.newFixedThreadPool(10);
         LowestCommonAncestorOfBinaryTree_236 s = new LowestCommonAncestorOfBinaryTree_236();
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(5);
