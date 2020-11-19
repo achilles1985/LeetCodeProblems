@@ -21,10 +21,10 @@ package dynamic.medium;
  Credits:
  Special thanks to @pbrother for adding this problem and creating all test cases.
  */
-public class IsSubsequence_391 {
+public class IsSubsequence_392 {
 
     public static void main(String[] args) {
-        IsSubsequence_391 s = new IsSubsequence_391();
+        IsSubsequence_392 s = new IsSubsequence_392();
         System.out.println(s.isSubsequenceIterative("abc", "ahbgdc")); // true
         System.out.println(s.isSubsequence("axc", "ahbgdc")); // false
         System.out.println(s.isSubsequence("b", "c")); // false

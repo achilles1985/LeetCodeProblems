@@ -15,6 +15,8 @@ package binarySearch.medium;
  Input: [4,5,6,7,0,1,2]
  Output: 0
  */
+// 0 1 2 3 4 5 6
+// 4,5,6,7,0,1,2
 public class FindMinimumInRotatedSortedArray_153 {
 
     public static void main(String[] args) {

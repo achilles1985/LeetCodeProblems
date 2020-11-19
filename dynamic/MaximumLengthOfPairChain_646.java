@@ -54,9 +54,7 @@ public class MaximumLengthOfPairChain_646 {
     public int findLongestChainDynamic(int[][] pairs) {
         int[] dp = new int[pairs.length];
         Arrays.sort(pairs, (a, b) -> a[0] - b[0]);
-        for (int i = 0; i < dp.length; i++) {
-            dp[i] = 1;
-        }
+        Arrays.fill(dp, 1);
 
         int max = 0;
         for (int i = 1; i < dp.length; i++) {

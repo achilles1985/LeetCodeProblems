@@ -3,7 +3,7 @@ package array.medium;
 import java.util.ArrayList;
 import java.util.List;
 
-/** M
+/** M [zalando]
  * Given the following details of a matrix with n columns and 2 rows :
  *
  * The matrix is a binary matrix, which means each element in the matrix can be 0 or 1.

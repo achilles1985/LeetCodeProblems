@@ -3,9 +3,10 @@ package binarySearch.medium;
 // https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
 
 /**
- * M
+ * M [MARKED]
  A conveyor belt has packages that must be shipped from one port to another within D days.
- The i-th package on the conveyor belt has a weight of weights[i].  Each day, we load the ship with packages on the conveyor belt (in the order given by weights).
+ The i-th package on the conveyor belt has a weight of weights[i].
+ Each day, we load the ship with packages on the conveyor belt (in the order given by weights).
  We may not load more weight than the maximum weight capacity of the ship.
  Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
 
@@ -20,7 +21,8 @@ package binarySearch.medium;
  4th day: 9
  5th day: 10
 
- Note that the cargo must be shipped in the order given, so using a ship of capacity 14 and splitting the packages into parts like (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) is not allowed.
+ Note that the cargo must be shipped in the order given, so using a ship of capacity 14 and splitting the packages
+ into parts like (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) is not allowed.
 
  Example 2:
  Input: weights = [3,2,2,4,1,4], D = 3

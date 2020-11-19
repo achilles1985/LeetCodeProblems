@@ -35,24 +35,17 @@ public class SearchInRotatedSortedArray_33 {
 
     // O(log(n)) - time, O(1) - space
     public int search(int[] nums, int target) {
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
         int pivot = findPivot(nums);
-        if (nums[pivot] == target) {
-            return pivot;
-        }
         if (pivot == 0) {
-            int res2 = Arrays.binarySearch(nums, target);
-            return res2 < 0 ? -1 : res2;
+            int res = Arrays.binarySearch(nums, 0, nums.length, target);
+            return res < 0 ? -1 : res;
         }
-        if (target <= nums[nums.length-1]) {
-            int res2 = Arrays.binarySearch(nums, pivot, nums.length, target);
-            return res2 < 0 ? -1 : res2;
-        } else {
-            int res1 = Arrays.binarySearch(nums, 0, pivot + 1, target);
-            return res1 < 0 ? -1 : res1;
+        if (target > nums[nums.length-1]) {
+            int res = Arrays.binarySearch(nums, 0, pivot, target);
+            return res < 0 ? -1 : res;
         }
+        int res = Arrays.binarySearch(nums, pivot, nums.length, target);
+        return res < 0 ? -1 : res;
     }
 
     private int findPivot(int[] nums) {

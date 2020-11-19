@@ -1,6 +1,8 @@
 package binarySearch.medium;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /** M
@@ -33,31 +35,29 @@ public class MissingElementInSortedArray_1060 {
 
     public static void main(String[] args) {
         MissingElementInSortedArray_1060 s = new MissingElementInSortedArray_1060();
+        System.out.println(s.missingElement(new int[] {4,7,9,10}, 3)); //8
         System.out.println(s.missingElement(new int[] {1,2,4}, 3)); //6
         System.out.println(s.missingElement(new int[] {4,7,9,10}, 1)); //5
-        System.out.println(s.missingElement(new int[] {4,7,9,10}, 3)); //8
         System.out.println(s.missingElement(new int[] {1,2,4}, 3)); //6
     }
 
     // O(n+k) - time, O(n) - space
     public int missingElementBF(int[] nums, int k) {
-        Set<Integer> unique = new HashSet<>();
-        for (int i = 0; i < nums.length; i++) { //N
-            unique.add(nums[i]);
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            set.add(num);
         }
-
-        for (int i = 0; i < nums.length; i++) { // N
-            int count = 1;
-            while (!unique.contains(nums[i] + count)) { //K
+        int min = nums[0];
+        int max = nums[nums.length-1];
+        for (int i = min; i <= max; i++) {
+            if (!set.contains(i)) {
                 k--;
-                if (k == 0) {
-                    return nums[i] + count;
-                }
-                count++;
+            }
+            if (k == 0) {
+                return i;
             }
         }
-
-        return 0;
+        return max + k;
     }
 
     // O(log(N)) - time, O(1) - space

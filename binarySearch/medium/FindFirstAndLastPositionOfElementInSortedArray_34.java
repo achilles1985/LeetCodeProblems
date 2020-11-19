@@ -19,6 +19,8 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
 
     public static void main(String[] args) {
         FindFirstAndLastPositionOfElementInSortedArray_34 s = new FindFirstAndLastPositionOfElementInSortedArray_34();
+        SolutionUtils.print(s.searchRange4(new int[]{5,7,7,8,8,10}, 8)); //[3,4]
+
         SolutionUtils.print(s.searchRange(new int[]{7,7,7,8,8,10}, 7)); //[0,2]
         SolutionUtils.print(s.searchRange(new int[]{1,2,3,7,7,7}, 7)); //[3,5]
         SolutionUtils.print(s.searchRange(new int[]{7,7,7,7,7,7}, 7)); //[0,5]
@@ -87,6 +89,42 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
             }
         }
         if (right >= 0 && nums[right] == target) { // for [2,2,2,2,2], 1 - right can go beyond 0
+            range[1] = right;
+        }
+
+        return range;
+    }
+
+
+    public int[] searchRange4(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return new int[]{-1,-1};
+        }
+
+        int[] range = new int[]{-1,-1};
+        int left = 0, right = nums.length-1;
+        while (left < right) {
+            int mid = left + (right-left)/2;
+            if (nums[mid] <= target) {
+                left = mid;
+            } else {
+                right = mid-1;
+            }
+        }
+        if (nums[left] == target) {
+            range[0] = left;
+        }
+        left = 0;
+        right = nums.length-1;
+        while (left < right) {
+            int mid = left + (right-left)/2;
+            if (nums[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid+1;
+            }
+        }
+        if (nums[right] == target) {
             range[1] = right;
         }
 

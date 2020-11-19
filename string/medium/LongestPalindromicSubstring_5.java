@@ -79,8 +79,6 @@ public class LongestPalindromicSubstring_5 {
                     dp[j][k] = true;
                 } else if (s.charAt(j) == s.charAt(k) && dp[j+1][k-1]) {
                     dp[j][k] = true;
-                } else {
-                    dp[j][k] = false;
                 }
                 String substr = s.substring(j, k+1);
                 if (dp[j][k] && substr.length() > res.length()) {

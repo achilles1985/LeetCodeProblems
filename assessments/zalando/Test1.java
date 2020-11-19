@@ -12,14 +12,43 @@ public class Test1 {
         System.out.println(s.solution3(3,2, new int[]{2,1,1,0,1}));
     }
 
+    public List<List<Integer>> reconstructMatrix(int upper, int lower, int[] colsum) {
+        List<Integer> u = new ArrayList<>();
+        List<Integer> l = new ArrayList<>();
+        for (int col: colsum) {
+            if (col == 0) {
+                u.add(0);
+                l.add(0);
+            } else if (col == 2) {
+                u.add(1);
+                l.add(1);
+                upper--;
+                lower--;
+            } else if (lower == 0 && upper == 0) {
+                return new ArrayList<>();
+            } else {
+                if (upper > lower) {
+                    u.add(1);
+                    l.add(0);
+                    upper--;
+                } else {
+                    u.add(0);
+                    l.add(1);
+                    lower--;
+                }
+            }
+        }
+        if (upper != 0 || lower != 0) {
+            return new ArrayList<>();
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(u);
+        result.add(l);
+
+        return result;
+    }
+
     public String solution3(int U, int L, int[] C) {
-        int colSum = 0;
-        for (int i = 0; i < C.length; i++) {
-            colSum += C[i];
-        }
-        if (U + L != colSum) {
-            return "IMPOSSIBLE";
-        }
         StringBuilder upper = new StringBuilder();
         StringBuilder lower = new StringBuilder();
         for (int col: C) {
@@ -42,6 +71,9 @@ public class Test1 {
                     L--;
                 }
             }
+        }
+        if (U != 0 || L != 0) {
+            return "IMPOSSIBLE";
         }
         return upper.toString() + "," + lower.toString();
     }

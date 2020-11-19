@@ -1,17 +1,19 @@
 package dynamic.medium;
 
 // https://leetcode.com/problems/longest-palindromic-substring/
-/** M
+
+/**
+ * M
  * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
-
- Example 1:
- Input: "babad"
- Output: "bab"
- Note: "aba" is also a valid answer.
-
- Example 2:
- Input: "cbbd"
- Output: "bb"
+ * <p>
+ * Example 1:
+ * Input: "babad"
+ * Output: "bab"
+ * Note: "aba" is also a valid answer.
+ * <p>
+ * Example 2:
+ * Input: "cbbd"
+ * Output: "bb"
  */
 /*
 Since whether string is a palindrom depends on where we start expending. We need to try 2 ways.
@@ -50,43 +52,6 @@ public class LongestPalindromicSubstring_5 {
         return max;
     }
 
-    // O(n^2) - time, space
-    public String longestPalindromeDP(String s) {
-        if (s == null || s.length() < 2) {
-            return s;
-        }
-
-        int max = 0;
-        String maxString = "";
-        boolean[][] dp = new boolean[s.length()][s.length()];
-        for (int i = 1; i <= 2; i++) {
-            for (int j = 0, k = i; k <= s.length(); k++, j++) {
-               if (s.charAt(j) == s.charAt(k-1)) {
-                   dp[j][k-1] = true;
-                   if (max < k - j) {
-                       max = k - j;
-                       maxString = s.substring(j, k);
-                   }
-               }
-            }
-        }
-        for (int i = 3; i <= s.length(); i++) {
-            for (int j = 0, k = i; k <= s.length(); k++, j++) {
-                if (s.charAt(j) == s.charAt(k-1)) {
-                    if (dp[j+1][k-2]) {
-                        dp[j][k-1] = true;
-                        if (max < k - j) {
-                            max = k - j;
-                            maxString = s.substring(j, k);
-                        }
-                    }
-                }
-            }
-        }
-
-        return maxString;
-    }
-
     // O(n^2) - time, O(1) - space
     public String longestPalindrome2(String s) {
         if (s == null || s.length() < 1) {
@@ -105,6 +70,38 @@ public class LongestPalindromicSubstring_5 {
         return s.substring(start, end + 1);
     }
 
+    // O(n^2) - time, space
+    public String longestPalindromeDP(String s) {
+        if (s == null || s.length() < 2) {
+            return s;
+        }
+
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        String max = s.substring(0,1);
+        for (int i = 0; i < s.length(); i++) {
+            dp[i][i] = true;
+        }
+        for (int i = 1; i < s.length(); i++) {
+            for (int j = 0, k = i; k < s.length(); j++, k++) {
+                char start = s.charAt(j);
+                char end = s.charAt(k);
+                if (start == end && k-j == 1) {
+                    dp[j][k] = true;
+                } else if (start == end && dp[j + 1][k - 1]) {
+                    dp[j][k] = true;
+                }
+                if (dp[j][k]) {
+                    String sub = s.substring(j, k+1);
+                    if (sub.length() > max.length()) {
+                        max = sub;
+                    }
+                }
+            }
+        }
+        return max;
+    }
+
+
     private int expandAroundCenter(String s, int left, int right) {
         int L = left, R = right;
         while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
@@ -116,7 +113,7 @@ public class LongestPalindromicSubstring_5 {
 
     private boolean isPolindrom(String str) {
         int i = 0;
-        int j = str.length()-1;
+        int j = str.length() - 1;
         while (i < j) {
             if (str.charAt(i) != str.charAt(j)) {
                 return false;

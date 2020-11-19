@@ -28,6 +28,9 @@ public class MaximumLengthOfRepeatedSubarray_718 {
 
     public static void main(String[] args) {
         MaximumLengthOfRepeatedSubarray_718 s = new MaximumLengthOfRepeatedSubarray_718();
+        System.out.println(s.findLength(new int[] {0,0,0,0,0}, new int[] {0,0,0,0,0})); //5
+        System.out.println(s.findLength(new int[] {4,5,1,2,3,6}, new int[] {3,2,1,2,3,7})); //3
+
         System.out.println(s.findLengthDP(new int[] {4,5,1,2,3,6}, new int[] {3,2,1,2,3,7})); //3
         System.out.println(s.findLengthRK(new int[] {1,2,3,2,1}, new int[] {3,2,1,2,5,6,1,2,3,7})); //3
         System.out.println(s.findLengthRK(new int[] {0,0,0,0,1}, new int[] {1,0,0,0,0})); //4
@@ -57,7 +60,7 @@ public class MaximumLengthOfRepeatedSubarray_718 {
 
     // O((A+B)*min(A,B)*log(min(A,B))), O(A) - space
     public int findLength(int[] A, int[] B) {
-        int left = 0, right = Math.min(A.length, B.length) + 1;
+        int left = 0, right = Math.min(A.length, B.length)+1; // to be possible to construct hash of the length == min(A,B)
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (search(A, B, mid)) {
@@ -66,7 +69,6 @@ public class MaximumLengthOfRepeatedSubarray_718 {
                 right = mid;
             }
         }
-
         return left - 1;
     }
 
