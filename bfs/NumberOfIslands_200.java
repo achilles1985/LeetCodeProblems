@@ -48,7 +48,7 @@ public class NumberOfIslands_200 {
         System.out.println(s.numIslands(new char[][] {{}, {}})); // 0
     }
 
-    // O(rows*columns) - time, space
+    // O(rows*columns) - time, O(min(rows,cols)) - space
     public int numIslands(char[][] chars) {
         if (chars == null || chars.length == 0) {
             return 0;

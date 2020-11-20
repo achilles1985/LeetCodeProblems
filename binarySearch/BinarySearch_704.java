@@ -69,7 +69,7 @@ public class BinarySearch_704 {
         }
         int left = 0;
         int right = nums.length - 1;
-        while (left <= right) {
+        while (left <= right) { // break when left becomes > right
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
                 return mid;
@@ -90,7 +90,7 @@ public class BinarySearch_704 {
             return -1;
         }
         int start = 0, end = nums.length - 1;
-        while (start < end) {
+        while (start < end) { // break when left == right
             int mid = start + (end - start) / 2;
             if (nums[mid] < target) {
                 start = mid + 1;

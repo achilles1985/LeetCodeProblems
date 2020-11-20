@@ -1,5 +1,7 @@
 package algorithmstechniqes;
 
+import java.util.Random;
+
 /**
  * Quickselect is a selection algorithm to find the k-th smallest/largest element in an unordered list.
  */
@@ -52,17 +54,17 @@ public class QuickSelect {
     }
 
     private int pivot(int[] nums, int start, int end) {
-        int i = start;
-        int j = start;
-        int pivot = end;
+        int i = start; // all element that are behind i are less than a pivot
+        int j = start; // scanner
+        int pivot = nums[end];
         while (j < end) {
-            if (nums[j] <= nums[pivot]) {
+            if (nums[j] <= pivot) {
                 swap(nums, i, j);
                 i++;
             }
             j++;
         }
-        swap(nums, i, pivot);
+        swap(nums, i, end);
 
         return i;
     }

@@ -3,6 +3,10 @@ package sorting;
 import utils.SolutionUtils;
 
 // https://www.geeksforgeeks.org/quick-sort/
+/*
+    Has O(n^2) in worse case when pivot is end of the array and the array is sorted desc. 9,8,7,6,5
+    n+(n-1)+(n+2)+...1 = n(n-1)/2 = n^2
+ */
 public class QuickSort {
 
     // O(n*log(n)) - time, O(1) - space

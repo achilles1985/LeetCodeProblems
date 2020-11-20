@@ -28,8 +28,8 @@ public class MaximumLengthOfRepeatedSubarray_718 {
 
     public static void main(String[] args) {
         MaximumLengthOfRepeatedSubarray_718 s = new MaximumLengthOfRepeatedSubarray_718();
-        System.out.println(s.findLength(new int[] {0,0,0,0,0}, new int[] {0,0,0,0,0})); //5
         System.out.println(s.findLength(new int[] {4,5,1,2,3,6}, new int[] {3,2,1,2,3,7})); //3
+        System.out.println(s.findLength(new int[] {0,0,0,0,0}, new int[] {0,0,0,0,0})); //5
 
         System.out.println(s.findLengthDP(new int[] {4,5,1,2,3,6}, new int[] {3,2,1,2,3,7})); //3
         System.out.println(s.findLengthRK(new int[] {1,2,3,2,1}, new int[] {3,2,1,2,5,6,1,2,3,7})); //3

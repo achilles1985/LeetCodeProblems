@@ -19,7 +19,8 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
 
     public static void main(String[] args) {
         FindFirstAndLastPositionOfElementInSortedArray_34 s = new FindFirstAndLastPositionOfElementInSortedArray_34();
-        SolutionUtils.print(s.searchRange4(new int[]{5,7,7,8,8,10}, 8)); //[3,4]
+        SolutionUtils.print(s.searchRange(new int[]{1,2,3,5,5,6,7}, 5)); //[3,4]
+        SolutionUtils.print(s.searchRange2(new int[]{5,7,7,8,8,10}, 8)); //[3,4]
 
         SolutionUtils.print(s.searchRange(new int[]{7,7,7,8,8,10}, 7)); //[0,2]
         SolutionUtils.print(s.searchRange(new int[]{1,2,3,7,7,7}, 7)); //[3,5]
@@ -95,8 +96,7 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         return range;
     }
 
-
-    public int[] searchRange4(int[] nums, int target) {
+    public int[] searchRange2(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return new int[]{-1,-1};
         }
@@ -105,8 +105,10 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         int left = 0, right = nums.length-1;
         while (left < right) {
             int mid = left + (right-left)/2;
-            if (nums[mid] <= target) {
-                left = mid;
+            if (nums[mid] == target) {
+                right = mid;
+            } else if (nums[mid] < target) {
+                left = mid+1;
             } else {
                 right = mid-1;
             }
@@ -117,9 +119,11 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         left = 0;
         right = nums.length-1;
         while (left < right) {
-            int mid = left + (right-left)/2;
-            if (nums[mid] >= target) {
-                right = mid;
+            int mid = left + (right-left)/2 + 1; // +1 so that l = mid; doesn't result in an infinite loop when l + 1 == r.
+            if (nums[mid] == target) {
+                left = mid;
+            } else if (nums[mid] > target) {
+                right = mid-1;
             } else {
                 left = mid+1;
             }

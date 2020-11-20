@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 /**M
  Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
@@ -52,7 +52,7 @@ public class CountSquareSubmatricesWithAllOnes_1277 {
     }
 
     // O(n*m) - time, O(1) - space, with existing matrix modification
-    public int countSquares2(int[][] matrix) {
+    public int countSquares(int[][] matrix) {
         for (int i = 1; i < matrix.length; i++) {
             for (int j = 1; j < matrix[0].length; j++) {
                 if (matrix[i][j] != 0) {
@@ -69,8 +69,30 @@ public class CountSquareSubmatricesWithAllOnes_1277 {
         return count;
     }
 
+    public int countSquares2(int[][] matrix) {
+        if (matrix == null || matrix.length == 0) {
+            return 0;
+        }
+        int sum = 0;
+        for (int i = 0; i < matrix[0].length; i++) {
+            sum += matrix[0][i];
+        }
+        for (int i = 1; i < matrix.length; i++) {
+            sum += matrix[i][0];
+        }
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                if (matrix[i][j] != 0) {
+                    matrix[i][j] = Math.min(Math.min(matrix[i-1][j], matrix[i][j-1]), matrix[i-1][j-1]) + 1;
+                    sum += matrix[i][j];
+                }
+            }
+        }
+        return sum;
+    }
+
     // O(n*m) - time, space, no matrix modification
-    public int countSquares(int[][] matrix) {
+    public int countSquaresDP(int[][] matrix) {
         int[][] dp = new int[matrix.length][matrix[0].length];
         int sum = 0;
         for (int i = 0; i < matrix[0].length; i++) {
