@@ -30,7 +30,8 @@ public class SubsetI_78 {
         System.out.println(s.subsets(new int[] {4,4,4,1,4}));
     }
 
-    // O(2^n) - time (since we either add an item to the set or not), O(2^n) - space (total number of sets generated, does not include recursion stack)
+    // O(2^n) - time (since we either add an item to the set or not),
+    // O(2^n) - space (total number of sets generated, does not include recursion stack)
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();

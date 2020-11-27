@@ -64,37 +64,20 @@ public class LargestBSTsubtree_333 {
         root1.right.left.left = new TreeNode(10);
         root1.right.left.right = new TreeNode(13);
 
+        System.out.println(s.largestBST_BF(root)); //3
         System.out.println(s.largestBST(root)); //3
-        System.out.println(s.largestBST2(root)); //3
-        System.out.println(s.largestBST3(root)); //3
-    }
-
-    // O(n^2) - time
-    public int largestBST3(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int leftSize = 0;
-        int rightSize = 0;
-        if (isBST(root.left)) {
-            leftSize = size(root.left);
-        }
-        if (isBST(root.right)) {
-            rightSize = size(root.right);
-        }
-        return Math.max(leftSize, rightSize);
     }
 
     // O(n^2) - time for skewed tree
-    public int largestBST(TreeNode root){
+    public int largestBST_BF(TreeNode root){
         if (isBST(root)) {
             return size(root);
         }
-        return Math.max(largestBST(root.left), largestBST(root.right));
+        return Math.max(largestBST_BF(root.left), largestBST_BF(root.right));
     }
 
     // O(n) - time for skewed tree
-    public int largestBST2(TreeNode root){
+    public int largestBST(TreeNode root){
         return largest(root).size;
     }
 
@@ -106,7 +89,7 @@ public class LargestBSTsubtree_333 {
         MinMax rightMinMax = largest(root.right);
 
         MinMax m = new MinMax();
-        if(!leftMinMax.isBST || !rightMinMax.isBST || ((leftMinMax.max != null && root.val < leftMinMax.max) || (rightMinMax.min != null && root.val > rightMinMax.min))){
+        if(!leftMinMax.isBST || !rightMinMax.isBST || ((leftMinMax.max != null && root.val >= leftMinMax.max) || (rightMinMax.min != null && root.val <= rightMinMax.min))){
             m.isBST = false;
             m.size = Math.max(leftMinMax.size, rightMinMax.size);
             return m;
@@ -129,7 +112,7 @@ public class LargestBSTsubtree_333 {
         if (root == null) {
             return 0;
         }
-        return size(root.left) + size(root.left) + 1;
+        return size(root.left) + size(root.right) + 1;
     }
 
     private boolean isBST(TreeNode root) {
@@ -140,7 +123,7 @@ public class LargestBSTsubtree_333 {
         if (root == null) {
             return true;
         }
-        if ((min != null && root.val <= min) || (max != null && root.val > max)) {
+        if ((min != null && root.val <= min) || (max != null && root.val >= max)) {
             return false;
         }
         if (!isValidBST(root.left, min, root.val) || !isValidBST(root.right, root.val, max)) {

@@ -3,7 +3,9 @@ package backtracking.medium;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /** M
   Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
@@ -40,12 +42,12 @@ public class SubsetII_90 {
 
     // O(2^N*N*logN) - time, O(2^N) - space
     public List<List<Integer>> subsetsWithDup2(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
+        Set<List<Integer>> result = new HashSet<>();
         dfs(nums, new ArrayList<>(), result, 0);
 
-        return result;
+        return new ArrayList<>(result);
     }
-    private void dfs(int[] nums, List<Integer> temp, List<List<Integer>> result, int start) {
+    private void dfs(int[] nums, List<Integer> temp, Set<List<Integer>> result, int start) {
         List<Integer> check = new ArrayList<>(temp);
         Collections.sort(check);
         if (!result.contains(check)) {

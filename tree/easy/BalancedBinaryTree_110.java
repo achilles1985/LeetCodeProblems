@@ -37,23 +37,23 @@ public class BalancedBinaryTree_110 {
         root.right.right = new TreeNode(7);
         //root.right.right.right = new TreeNode(8);
 
+        System.out.println(s.isBalancedBF(root));
         System.out.println(s.isBalanced(root));
-        System.out.println(s.isBalanced2(root));
     }
 
     // O(n*log(n)) - time (height() called repeatedly on the same nodes), O(n) - space
-    public boolean isBalanced(TreeNode root) {
+    public boolean isBalancedBF(TreeNode root) {
         if (root == null) {
             return true;
         }
         if (Math.abs(height(root.left) - height(root.right)) > 1) {
             return false;
         }
-        return isBalanced(root.left) && isBalanced(root.right);
+        return isBalancedBF(root.left) && isBalancedBF(root.right);
     }
 
     // O(n) - time, O(n) - space (recursion stack may go up to O(n) if the tree is unbalanced)
-    public boolean isBalanced2(TreeNode root) {
+    public boolean isBalanced(TreeNode root) {
         return checkBalance(root).isBalanced;
     }
 

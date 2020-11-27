@@ -31,28 +31,10 @@ public class DiameterOfBinaryTree_543 {
 
         System.out.println(s.diameterOfBinaryTreeBF(root)); //4
         System.out.println(s.diameterOfBinaryTree2(root)); //4
-        System.out.println(s.diameterOfBinaryTree3(root)); //4
+        System.out.println(s.diameterOfBinaryTree(root)); //4
     }
 
-    // O(n) - time, O(h) - space
-    public int diameterOfBinaryTree3(TreeNode root) {
-        return  diameterOfBinaryTree3Helper(root).diameter;
-    }
-
-    private BinaryTreeInfo diameterOfBinaryTree3Helper(TreeNode root) {
-        if (root == null) {
-            return new BinaryTreeInfo(0, 0);
-        }
-        BinaryTreeInfo leftInfo = diameterOfBinaryTree3Helper(root.left);
-        BinaryTreeInfo rightInfo = diameterOfBinaryTree3Helper(root.right);
-        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-        int diameter = leftInfo.height + rightInfo.height;
-        BinaryTreeInfo currentInfo = new BinaryTreeInfo(height, diameter);
-
-        return BinaryTreeInfoUtils.max(currentInfo, BinaryTreeInfoUtils.max(leftInfo, rightInfo));
-    }
-
-    // O(n^2) - time, O(h^2) - space
+    // O(n^2) - time, O(n) - space
     public int diameterOfBinaryTreeBF(TreeNode root) {
         if (root == null) {
             return 0;
@@ -62,6 +44,11 @@ public class DiameterOfBinaryTree_543 {
         int leftDiameter = diameterOfBinaryTreeBF(root.left);
         int rightDiameter = diameterOfBinaryTreeBF(root.right);
         return Math.max((leftHeight + rightHeight), Math.max(leftDiameter, rightDiameter));
+    }
+
+    // O(n) - time, O(h) - space
+    public int diameterOfBinaryTree(TreeNode root) {
+        return helper(root).diameter;
     }
 
     // O(n) - time, O(h) - space
@@ -93,26 +80,31 @@ public class DiameterOfBinaryTree_543 {
         return Math.max(left, right) + 1;
     }
 
-    private static class Height {
-        private int height;
+    private HeightDiameter helper(TreeNode root) {
+        if (root == null) {
+            return new HeightDiameter(0,0);
+        }
+        HeightDiameter leftHD = helper(root.left);
+        HeightDiameter rightHD = helper(root.right);
+        int height = Math.max(leftHD.height, rightHD.height) + 1;
+        int diameter = leftHD.height+rightHD.height;
+        int maxDiameter = Math.max(diameter, Math.max(leftHD.diameter, rightHD.diameter));
+
+        return new HeightDiameter(height, maxDiameter);
     }
 
-    private static class BinaryTreeInfo {
-        private int height;
-        private int diameter;
+    private static class HeightDiameter {
+        int height;
+        int diameter;
 
-        public BinaryTreeInfo(int height, int diameter) {
+        HeightDiameter(int height, int diameter) {
             this.height = height;
             this.diameter = diameter;
         }
     }
 
-    public static final class BinaryTreeInfoUtils {
-        public static BinaryTreeInfo max(BinaryTreeInfo i1, BinaryTreeInfo i2) {
-            if (i1.diameter == i2.diameter) {
-                return i1;
-            }
-            return i1.diameter > i2.diameter ? i1 : i2;
-        }
+    private static class Height {
+        private int height;
     }
+
 }

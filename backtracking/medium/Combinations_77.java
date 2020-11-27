@@ -50,12 +50,12 @@ public class Combinations_77 {
         return lists;
     }
 
-    private void backtrack(int c, int k, int n, List<Integer> curr, List<List<Integer>> res) {
+    private void backtrack(int start, int k, int n, List<Integer> curr, List<List<Integer>> res) {
         if (curr.size() == k) {
             res.add(new ArrayList<>(curr));
             return;
         }
-        for (int i = c; i <= n; i++) {
+        for (int i = start; i <= n; i++) {
             curr.add(i);
             backtrack(i + 1, k, n, curr, res);
             curr.remove(curr.size() - 1);

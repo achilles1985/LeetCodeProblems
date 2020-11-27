@@ -42,6 +42,7 @@ import utils.TreeNode;
 public class AllNodesDistanceKInBinaryTree_863 {
 
     public static void main(String[] args) {
+        Queue<Integer> q = new LinkedList<>();
         AllNodesDistanceKInBinaryTree_863 s = new AllNodesDistanceKInBinaryTree_863();
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(5);

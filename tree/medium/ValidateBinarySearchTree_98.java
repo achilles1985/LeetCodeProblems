@@ -2,7 +2,7 @@ package tree.medium;
 
 import utils.TreeNode;
 
-/** M
+/** M [MARKED]
  * Given a binary tree, determine if it is a valid binary search tree (BST).
  * Assume a BST is defined as follows:
  *     The left subtree of a node contains only nodes with keys less than the node's key.
@@ -59,6 +59,7 @@ public class ValidateBinarySearchTree_98 {
         return isValid(root.left, min, root.val) && isValid(root.right, root.val, max);
     }
 
+    // incorrect
     // The problem with that solution is that if root is equal to MIN or MAX, we return false, instead of true
     public boolean isValidBST2(TreeNode root) {
         return isValidBST2(root, Integer.MIN_VALUE, Integer.MAX_VALUE);

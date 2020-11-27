@@ -43,7 +43,8 @@ public class PathSum_II_113 {
         System.out.println(s.pathSum(root, 22));
     }
 
-    // O(n^2) - time (because of copying temp list into the result one in case of complete BT number of leaves = N/2), O(n) - space (in case of a span tree)
+    // O(n^2) - time (because of copying temp list into the result one in case of complete BT number of leaves = N/2),
+    // O(n) - space (in case of a span tree)
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         if (root == null) {
             return new ArrayList<>();

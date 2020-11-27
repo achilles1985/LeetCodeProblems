@@ -24,7 +24,9 @@ public class TrappingRainWater_42 {
         System.out.println(s.trap2(new int[]{3,2,1,2,3})); //4
     }
 
-    // O(n^2) - time, O(1) - space. Moving from current position go to left and right and find max height on the left and right. Then min(leftMax, rightMax), area = minHeight - height[1]
+    // O(n^2) - time, O(1) - space.
+    // Moving from current position go to left and right and find max height on the left and right.
+    // Then min(leftMax, rightMax), area = minHeight - height[1]
     public int trapBruteForce(int[] height) {
         int ans = 0;
         for (int i = 0; i < height.length; i++) {

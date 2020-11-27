@@ -17,7 +17,10 @@ import java.util.List;
  * [3,2,1]
  * ]
  */
-
+/*
+    Questions:
+    1. All numbers are distinct?
+ */
 // https://discuss.leetcode.com/topic/46162/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partioning
 public class Permutations_46 {
 

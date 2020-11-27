@@ -65,6 +65,7 @@ public class LRUCache {
         addFront(node);
     }
 
+    // important
     private void removeFromList(CacheItem node) {
         CacheItem next = node.next;
         CacheItem prev = node.prev;
@@ -72,6 +73,7 @@ public class LRUCache {
         next.prev = prev;
     }
 
+    // important
     private void addFront(CacheItem node) {
         node.prev = head;
         node.next = head.next;
