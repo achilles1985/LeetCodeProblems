@@ -36,8 +36,8 @@ public class LongestRepeatingSubstring_1062 {
 
     public static void main(String[] args) {
         LongestRepeatingSubstring_1062 s = new LongestRepeatingSubstring_1062();
-        System.out.println(s.longestRepeatingSubstring("abbaba")); //2
         System.out.println(s.longestRepeatingSubstring("aabcaabdaab")); //3
+        System.out.println(s.longestRepeatingSubstring("abbaba")); //2
         System.out.println(s.longestRepeatingSubstring("abcd")); //0
         System.out.println(s.longestRepeatingSubstring("aaaaa")); //4
     }
@@ -66,7 +66,8 @@ public class LongestRepeatingSubstring_1062 {
         return result.length();
     }
 
-    // O(N*logN) - time, O(n^2) - space (to reduce space to O(N), one can store string hashes instead of strings themselves)
+    // O(N*logN) - time,
+    // O(n^2) - space (to reduce space to O(N), one can store string hashes (int) instead of strings (String) themselves).
     public int longestRepeatingSubstring(String S) {
         if (S == null || S.isEmpty()) {
             return 0;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
+/** M
  * All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, for example: "ACGAATTCCG".
  * When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.
  * Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.
@@ -31,7 +31,7 @@ public class RepeatedDNASequences_187 {
         System.out.println(s.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT")); //["AAAAACCCCC", "CCCCCAAAAA"]
     }
 
-    // O((s-10)*10) - time, space
+    // O((s-l)*l) - time, space; l = 10
     public List<String> findRepeatedDnaSequencesBF(String s) {
         if (s == null || s.isEmpty()) {
             throw new IllegalArgumentException("Input cannot be empty!");
@@ -39,8 +39,8 @@ public class RepeatedDNASequences_187 {
         Set<String> results = new HashSet<>();
         Set<String> unique = new HashSet<>();
         unique.add(s.substring(0, 10));
-        for (int i = 1; i <= s.length() - 10; i++) {
-            String sub = s.substring(i, i + 10);
+        for (int i = 1; i <= s.length() - 10; i++) { //n-l
+            String sub = s.substring(i, i + 10); //l
             if (unique.contains(sub)) {
                 results.add(sub);
             }
@@ -49,7 +49,7 @@ public class RepeatedDNASequences_187 {
         return new ArrayList<>(results);
     }
 
-    // O(n) - time, space (to keep set of hashes)
+    // O(n-l) - time, space (to keep set of hashes). O(1) to generate
     public List<String> findRepeatedDnaSequences(String s) {
         if (s == null || s.isEmpty() || s.length() < 10) {
             return new ArrayList<>();

@@ -5,8 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Medium
+/** M
  * Given an input string, reverse the string word by word.
  * <p>
  * Example 1:
@@ -47,8 +46,7 @@ public class ReverseWordsInString_151 {
             return s;
         }
         String trimmed = s.trim();
-        String[] split = trimmed.split("\\s++");
-        List<String> list = Arrays.asList(split);
+        List<String> list = Arrays.asList(trimmed.split("\\s+"));
         Collections.reverse(list);
 
         return list.stream().collect(Collectors.joining(" "));

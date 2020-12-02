@@ -16,14 +16,17 @@ public class ShortestPalindrome_214 {
 
     public static void main(String[] args) {
         ShortestPalindrome_214 s = new ShortestPalindrome_214();
+        System.out.println(s.shortestPalindromeBF("abc")); //cbabc
+        System.out.println(s.shortestPalindromeBF("rotor")); //rotor
+
+        System.out.println(s.shortestPalindrome("abc")); //cbabc
         System.out.println(s.shortestPalindrome("abcdad")); //dadcbabcdad
-        System.out.println(s.shortestPalindrome("abc")); //cbaabc
         System.out.println(s.shortestPalindrome("aacecaaa")); //aaacecaaa
         System.out.println(s.shortestPalindrome("abcd")); //dcbabcd
         System.out.println(s.shortestPalindrome("abaklm")); //mlkabaklm
     }
 
-    // O(n) - time (Manacher's algo to find longest palindrome)
+    // O(n) - time (Manacher's or KMP algo to find longest palindrome)
 
     // O(n^2) - time, O(n) - space, to store reverse string
     public String shortestPalindromeBF(String s) {
@@ -40,13 +43,14 @@ public class ShortestPalindrome_214 {
         return "";
     }
 
+    // TLE (time limit exceeded)
     // O(n^2) - time, O(1) - space
     public String shortestPalindrome(String s) {
         if (s == null || s.isEmpty() || s.length() == 1) {
             return s;
         }
         int anchor = -1;
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) { // O(N^2) to find the longest palindrome with KMP algo it can be done in O(N) time
             if (isPalidrom(s.substring(0, i+1))) {
                 anchor = i;
             }

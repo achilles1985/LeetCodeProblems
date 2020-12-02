@@ -54,21 +54,19 @@ public class StringCompression_443 {
 
     // O(n) - time, O(1) - space
     public int compress(char[] chars) {
-        int write = 0;
-        int anchor = 0; // beginning of the sequence
+        int write = 0, anchor = 0;
         for (int read = 0; read < chars.length; read++) {
-            if (read + 1 == chars.length || chars[read + 1] != chars[anchor]) {
-                chars[write++] = chars[read];
-                if (read - anchor + 1 > 1) {
-                    for (char c : String.valueOf(read - anchor + 1).toCharArray()) {
+            if (read + 1 == chars.length || chars[read+1] != chars[anchor]) {
+                chars[write++] = chars[anchor];
+                int count = read - anchor + 1;
+                if (count > 1) {
+                    for (char c : String.valueOf(count).toCharArray()) {
                         chars[write++] = c;
                     }
                 }
                 anchor = read + 1;
             }
         }
-
         return write;
     }
-
 }

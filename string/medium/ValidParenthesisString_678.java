@@ -1,6 +1,6 @@
 package string.medium;
 
-/** M
+/** M [marked]
  *  Given a string containing only three types of characters: '(', ')' and '*', write a function to check whether this string is valid.
  *  We define the validity of a string by these rules:
  *     Any left parenthesis '(' must have a corresponding right parenthesis ')'.
@@ -32,6 +32,26 @@ public class ValidParenthesisString_678 {
         System.out.println(s.checkValidString("()")); //true
         System.out.println(s.checkValidString("(*)")); //true
         System.out.println(s.checkValidString("(*))")); //true
+    }
+
+    // O(3^n) - time, O(n) - space, we have 3 choices (skip * symbol or substitute it with either closing or opening bracket)
+    public boolean checkValidStringBF(String s) {
+        return helper(s, 0, 0);
+    }
+
+    private boolean helper(String s, int index, int open) {
+        if (index == s.length()) {
+            return open == 0;
+        }
+        if (s.charAt(index) == '(') {
+            return helper(s, index + 1, open + 1);
+        } else if (s.charAt(index) == ')') {
+            return open != 0 && helper(s, index + 1, open - 1);
+        } else {
+            return helper(s, index + 1, open)
+                    || helper(s, index + 1, open + 1)
+                    || open != 0 && helper(s, index + 1, open - 1);
+        }
     }
 
     // O(n) - time, O(1) - space

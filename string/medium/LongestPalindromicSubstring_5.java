@@ -12,6 +12,9 @@ package string.medium;
  * Input: "cbbd"
  * Output: "bb"
  */
+/*
+ Edge cases: "a", ""
+ */
 public class LongestPalindromicSubstring_5 {
 
     public static void main(String[] args) {
@@ -87,6 +90,11 @@ public class LongestPalindromicSubstring_5 {
             }
         }
         return res;
+    }
+
+    // O(n) - time, Manacher's algorithms
+    public String longestPalindromeMA(String s) {
+        return "";
     }
 
     private boolean isPalindrom(String substr) {

@@ -1,7 +1,7 @@
 package string.easy;
 
 /**
- * Easy
+ * E
  * Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.
  * <p>
  * Example 1:
@@ -20,6 +20,7 @@ public class ValidPalindromeII_680 {
 
     public static void main(String[] args) {
         ValidPalindromeII_680 s = new ValidPalindromeII_680();
+        System.out.println(s.validPalindrome("abcdaaaecba")); // true
         System.out.println(s.validPalindrome("cbbcc")); // true
         System.out.println(s.validPalindrome("abc")); // false
         System.out.println(s.validPalindrome("aba")); // true

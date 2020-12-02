@@ -1,5 +1,7 @@
 package string.easy;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -59,17 +61,14 @@ public class MostCommonWord_819 {
         final String[] words = paragraph.split("\\W+");
         Map<String, Integer> frequency = new HashMap<>();
         for (String word: words) {
-            frequency.put(word.toLowerCase(), frequency.getOrDefault(word.toLowerCase(), 1) + 1);
-        }
-        String result = "";
-        int count = 0;
-        for (Map.Entry<String, Integer> entry: frequency.entrySet()) {
-            if (entry.getValue() > count && !bannedWords.contains(entry.getKey())) {
-                count = entry.getValue();
-                result = entry.getKey();
+            if (!bannedWords.contains(word)) {
+                frequency.put(word.toLowerCase(), frequency.getOrDefault(word.toLowerCase(), 1) + 1);
             }
         }
-        return result;
+        //Map.Entry<String, Integer> entry = Collections.max(frequency.entrySet(), (e1,e2) -> e1.getValue().compareTo(e2.getValue()));
+        Map.Entry<String, Integer> entry = Collections.max(frequency.entrySet(), Comparator.comparing(Map.Entry::getValue));
+
+        return entry.getKey();
     }
 
     // O(n + m) - time, O(n+m) - space, n - number of chars in paragraph, m - number of banned
