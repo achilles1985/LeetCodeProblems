@@ -3,7 +3,7 @@ package dynamic.medium;
 import java.util.HashMap;
 import java.util.Map;
 
-/** M
+/** M [marked]
  * Given two strings text1 and text2, return the length of their longest common subsequence.
  * A subsequence of a string is a new string generated from the original string with some characters(can be none)
  * deleted without changing the relative order of the remaining characters. (eg, "ace" is a subsequence of "abcde" while "aec" is not).
@@ -34,6 +34,10 @@ public class LongestCommonSubsequence_1143 {
 
     public static void main(String[] args) {
         LongestCommonSubsequence_1143 s = new LongestCommonSubsequence_1143();
+        System.out.println(s.longestCommonSubsequence("bl", "yby")); //1
+        System.out.println(s.longestCommonSubsequence("abcde", "ace")); //3
+        System.out.println(s.longestCommonSubsequence("psnw", "vozsh")); //1
+
         System.out.println(s.lcsBF("abcde", "ace")); //3
         System.out.println(s.lcsBF("abc", "abc")); //3
         System.out.println(s.lcsBF("abc", "def")); //0
@@ -43,7 +47,7 @@ public class LongestCommonSubsequence_1143 {
         System.out.println(s.lcsDynamicBottomUp("abcdefg", "acbdfghe"));
     }
 
-    // O(2^n) - time, O(n) - space, where n - the length of the longest string
+    // O(2^(n+m)) - time, O(n) - space, where n - the length of the longest string
     public int lcsBF(String s1, String s2) {
         return lcsBFUtils(s1, s2, 0, 0);
     }
@@ -97,6 +101,28 @@ public class LongestCommonSubsequence_1143 {
         map.put(key, max);
 
         return map.get(key);
+    }
+
+
+    // Incorrect
+    public int longestCommonSubsequence(String text1, String text2) {
+        if (text1 == null || text2 == null) {
+            return 0;
+        }
+        String min = text1;
+        String max = text2;
+        if (text2.length() < text1.length()) {
+            min = text2;
+            max = text1;
+        }
+        int iMax = 0, iMin = 0;
+        while (iMax < max.length() && iMin < min.length()) {
+            if (max.charAt(iMax) == min.charAt(iMin)) {
+                iMin++;
+            }
+            iMax++;
+        }
+        return iMin;
     }
 
 }

@@ -25,45 +25,15 @@ public class IsSubsequence_392 {
 
     public static void main(String[] args) {
         IsSubsequence_392 s = new IsSubsequence_392();
-        System.out.println(s.isSubsequenceIterative("abc", "ahbgdc")); // true
-        System.out.println(s.isSubsequence("axc", "ahbgdc")); // false
-        System.out.println(s.isSubsequence("b", "c")); // false
 
+        System.out.println(s.isSubsequenceIterative("b", "c")); // false
         System.out.println(s.isSubsequenceRecursion("abc", "ahbgdc")); // true
         System.out.println(s.isSubsequenceRecursion("axc", "ahbgdc")); // false
     }
 
     // O((t.length) - time, O(1) - space
-    public boolean isSubsequence(String s, String t) {
-        if (s.isEmpty()) {
-            return true;
-        }
-        if (t.isEmpty()) {
-            return false;
-        }
-        if (s.length() == 1 && t.length() == 1) {
-            return s.charAt(0) == t.charAt(0);
-        }
-
-        int i = 0;
-        int j = 0;
-        while (i < s.length()-1 && j < t.length()-1) {
-            if (s.charAt(i) == t.charAt(j)) {
-                i++;
-            }
-            j++;
-        }
-
-        return i == s.length()-1 ? true : false;
-    }
-
-    public boolean isSubsequenceRecursion(String s, String t) {
-        return isSubsequenceRecursion(s, t, 0, 0);
-    }
-
     public boolean isSubsequenceIterative(String s, String t) {
-        int i;
-        int j = 0;
+        int i, j = 0;
         int m = s.length();
         for (i = 0; i < t.length() && j < s.length(); i++) {
             if (t.charAt(i) == s.charAt(j)) {
@@ -72,6 +42,10 @@ public class IsSubsequence_392 {
         }
 
         return j == m;
+    }
+
+    public boolean isSubsequenceRecursion(String s, String t) {
+        return isSubsequenceRecursion(s, t, 0, 0);
     }
 
     private boolean isSubsequenceRecursion(String s, String t, int i, int j) {

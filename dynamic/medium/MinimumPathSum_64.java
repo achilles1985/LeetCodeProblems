@@ -1,5 +1,9 @@
 package dynamic.medium;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /** M
  Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
  Note: You can only move either down or right at any point in time.
@@ -38,7 +42,10 @@ public class MinimumPathSum_64 {
         if (i == grid.length - 1 && j == grid[0].length - 1) {
             return grid[i][j];
         }
-        return grid[i][j] + Math.min(dfs(grid, i + 1, j), dfs(grid, i, j + 1));
+        final int down = dfs(grid, i + 1, j);
+        final int right = dfs(grid, i, j + 1);
+
+        return grid[i][j] + Math.min(down, right);
     }
 
     // O(m*n) - time, O(1) - space
@@ -62,5 +69,31 @@ public class MinimumPathSum_64 {
         }
 
         return grid[rows-1][columns-1];
+    }
+
+    // O((n+m)*(n+m)log(n+m)) - time, O(m+n) - space
+    public int minPathSumBFS(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        int[][] directions = new int[][]{{0,1}, {1,0}};
+        Queue<int[]> minHeap = new PriorityQueue<>(Comparator.comparingInt(e -> e[2]));
+        minHeap.add(new int[]{0,0,grid[0][0]});
+        while (!minHeap.isEmpty()) {
+            int[] item = minHeap.poll();
+            for (int[] direction: directions) {
+                int i = item[0] + direction[0];
+                int j = item[1] + direction[1];
+                if (i >= 0 && j >= 0 && i < rows && j < cols && !visited[i][j]) {
+                    int[] next = new int[]{i,j,item[2] + grid[i][j]};
+                    if (i == rows - 1 && j == cols-1) {
+                        return next[2];
+                    }
+                    minHeap.add(next);
+                    visited[i][j] = true;
+                }
+            }
+        }
+        return grid[0][0];
     }
 }

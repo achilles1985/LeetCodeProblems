@@ -20,8 +20,8 @@ public class TrappingRainWater_42 {
         System.out.println(s.trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); //6
         System.out.println(s.trap(new int[]{3,2,1,2,3})); //4
 
+        System.out.println(s.trap2(new int[]{3,2,1,0,1,2,3})); //4
         System.out.println(s.trap2(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); //6
-        System.out.println(s.trap2(new int[]{3,2,1,2,3})); //4
     }
 
     // O(n^2) - time, O(1) - space.

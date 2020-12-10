@@ -38,16 +38,37 @@ import java.util.concurrent.atomic.AtomicInteger;
  * the number of coins is less than 500
  * the answer is guaranteed to fit into signed 32-bit integer
  */
-public class CoinChange2 {
+public class CoinChangeII_518 {
 
     public static void main(String[] args) {
-        CoinChange2 s = new CoinChange2();
+        CoinChangeII_518 s = new CoinChangeII_518();
+        System.out.println(s.coinChange(new int[]{1,2,5}, 5)); //4
         System.out.println(s.changeBFS(7, new int[]{1,2,5})); //2
         System.out.println(s.changeBFS(100, new int[]{1,2,5})); //3
 
         System.out.println(s.changeMemoization(5, new int[]{1,2,5})); //4
         System.out.println(s.changeMemoization(3, new int[]{2})); //0
         System.out.println(s.changeMemoization(10, new int[]{10})); //1
+    }
+
+    // O(amount^coins) - time, O(amount) - space
+    public int coinChange(int[] coins, int amount) {
+        return helper(coins, amount, 0);
+    }
+
+    private int helper(int[] coins, int amount, int start) {
+        if (amount == 0) {
+            return 1;
+        }
+        if (amount < 0) {
+            return 0;
+        }
+
+        int count = 0;
+        for (int i = start; i < coins.length; i++) {
+            count += helper(coins, amount - coins[i], i);
+        }
+        return count;
     }
 
     // O(amount*coins.length) - time (in worse case we go up to amount deep, because of memo we compute each subproblem in coins.length iterations), O(amount) - space

@@ -49,39 +49,42 @@ public class CourseScheduleI_207 {
 
     // O(V+E) - time, O(V) - space (Cycle detection)
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if (prerequisites == null || numCourses == 0) {
+        if (numCourses == 0) {
             return true;
         }
         Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int i = 0; i < prerequisites.length; i++) {
-            graph.computeIfAbsent(prerequisites[i][0], key -> graph.getOrDefault(key, new ArrayList<>())).add(prerequisites[i][1]);
+        for (int[] edge: prerequisites) {
+            int vertex = edge[0];
+            int child = edge[1];
+            graph.computeIfAbsent(vertex, (v) -> new ArrayList<>()).add(child);
         }
         Set<Integer> visited = new HashSet<>();
         Set<Integer> stack = new HashSet<>();
-        for (Integer node: graph.keySet()) {
-            if (visited.contains(node)) {
+        for (int course = 0; course < numCourses; course++) {
+            if (visited.contains(course)) {
                 continue;
             }
-            if (!canFinishHelper(graph, visited, stack, node)) {
+            if (hasCycle(graph, visited, stack, course)) {
                 return false;
             }
         }
-
         return true;
     }
 
-    private boolean canFinishHelper(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> stack, Integer node) {
+    private boolean hasCycle(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> stack, int node) {
         if (stack.contains(node)) {
-            return false;
+            return true;
         }
+
         stack.add(node);
         visited.add(node);
-        for (Integer adjacent: graph.getOrDefault(node, Collections.emptyList())) {
-            if (!canFinishHelper(graph, visited, stack, adjacent)) {
-                return false;
+        for (int child: graph.getOrDefault(node, Collections.emptyList())) {
+            if (hasCycle(graph, visited, stack, child)) {
+                return true;
             }
         }
         stack.remove(node);
-        return true;
+
+        return false;
     }
 }

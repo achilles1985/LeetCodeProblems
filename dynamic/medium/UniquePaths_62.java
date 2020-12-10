@@ -1,6 +1,8 @@
 package dynamic.medium;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /** M
  * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
@@ -27,34 +29,55 @@ public class UniquePaths_62 {
 
     public static void main(String[] args) {
         UniquePaths_62 s = new UniquePaths_62();
+        System.out.println(s.uniquePathsBF(3,2)); //3
+
         System.out.println(s.uniquePathsDynamic2(3,4)); //10
         System.out.println(s.uniquePathsDynamic2(4,4)); //20
         System.out.println(s.uniquePathsDynamic2(3,2)); //3
 
-        System.out.println(s.uniquePaths(3,2)); //3
+        System.out.println(s.uniquePathsBF(3,2)); //3
         System.out.println(s.uniquePathsDynamic(3,2)); //3
 
-        System.out.println(s.uniquePaths(7,3)); //28
+        System.out.println(s.uniquePathsBF(7,3)); //28
         System.out.println(s.uniquePathsDynamic(7,3)); // 28
     }
 
     // O(2^(max(m,n)))- time, O(max{m, n}) - space
-    public int uniquePaths(int m, int n) {
-        return uniquePaths(m, n, 0, 0);
+    public int uniquePathsBF(int m, int n) {
+        return helper(m-1, n-1);
     }
 
-    private int uniquePaths(int m, int n, int i, int j) {
-        if (i < 0 || i > m-1 || j < 0 || j > n-1) {
+    private int helper(int i, int j) {
+        if (i < 0 || j < 0) {
             return 0;
         }
-        if (i == m-1 && j == n-1) {
+        if (i == 0 && j == 0) {
             return 1;
         }
 
-        int right = uniquePaths(m, n, i+1, j);
-        int down = uniquePaths(m, n, i, j+1);
+        return helper(i-1, j) + helper(i, j-1);
+    }
 
-        return right + down;
+    // O(m*n) - time, O(m*n) - space
+    public int uniquePathsDP(int m, int n) {
+        return helperDP(m-1, n-1, new HashMap<>());
+    }
+
+    private int helperDP(int i, int j, Map<String, Integer> cache) {
+        String key = i+","+j;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        if (i < 0 || j < 0) {
+            return 0;
+        }
+        if (i == 0 && j == 0) {
+            return 1;
+        }
+        int count = helperDP(i+1, j, cache) + helperDP(i, j+1, cache);
+        cache.put(key, count);
+
+        return count;
     }
 
     // O(m*n) - time, space

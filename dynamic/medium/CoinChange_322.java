@@ -1,6 +1,10 @@
 package dynamic.medium;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 /** M[MARKED]
   You are given coins of different denominations and a total amount of money amount.
@@ -23,12 +27,43 @@ public class CoinChange_322 {
 
     public static void main(String[] args) {
         CoinChange_322 s = new CoinChange_322();
+        System.out.println(s.coinChange(new int[] {2,5}, 3)); //-1
+
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {2}, 3));
-        System.out.println(s.makeChangeT(new int[] {2,5}, 3)); //-1
 
         System.out.println(s.makeChangeBF(new int[] {1,2,5}, 8));
         System.out.println(s.makeChangeDynamicTopDown(new int[] {1,2,5}, 12));
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {1,2,5}, 12));
+    }
+
+    // O(amount*coins) - time, ?O(amount) - space
+    public int coinChange(int[] coins, int amount) {
+        if (amount == 0 || coins.length == 0) {
+            return 0;
+        }
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(amount);
+        visited.add(amount);
+        int level = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int currAmount = queue.poll();
+                if (currAmount == 0) {
+                    return level;
+                }
+                for (int coin: coins) {
+                    int newAmount = currAmount - coin;
+                    if (newAmount >= 0 && !visited.contains(newAmount)) {
+                        queue.add(newAmount);
+                        visited.add(newAmount);
+                    }
+                }
+            }
+            level++;
+        }
+        return -1;
     }
 
     // exponential time (A^C), C - number of coins, A = amount
@@ -119,4 +154,5 @@ public class CoinChange_322 {
 
         return cache[amount];
     }
+
 }

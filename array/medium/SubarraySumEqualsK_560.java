@@ -15,18 +15,22 @@ import java.util.Map;
  *     The range of numbers in the array is [-1000, 1000] and the range of the integer k is [-1e7, 1e7].
  */
 /*
+    Contiguous?
     Sliding window cannot be used because an array might contain negative numbers, e.x. ([-1,-1,1], 1) - will return 0, but 1 must the the answer.
  */
 public class SubarraySumEqualsK_560 {
 
     public static void main(String[] args) {
         SubarraySumEqualsK_560 s = new SubarraySumEqualsK_560();
+        System.out.println(s.subarraySum(new int[]{1,2,1,2,1,3}, 3)); //4
+        System.out.println(s.subarraySum(new int[]{1,2,3}, 3)); //2 (1,2), (3)
+        System.out.println(s.subarraySum(new int[]{1,1,1}, 2)); //2 (1,1), (1,1)
+
         System.out.println(s.subarraySum2(new int[]{1,3,2,1,4,5}, 4)); //2 (1,3) (4)
         System.out.println(s.subarraySum(new int[]{-1,-1,1}, 1)); //1
         System.out.println(s.subarraySum(new int[]{1,2,1,2,1}, 3)); //4 (1,2), (2,1), (1,2), (2,1)
         System.out.println(s.subarraySum(new int[]{1}, 0)); //0
         System.out.println(s.subarraySum(new int[]{-1,-1,1}, 1)); //1
-        System.out.println(s.subarraySum(new int[]{1,1,1}, 2)); //2 (1,1), (1,1)
     }
 
     // O(n^2) - time, O(1) - space
@@ -83,4 +87,5 @@ public class SubarraySumEqualsK_560 {
         }
         return count;
     }
+
 }

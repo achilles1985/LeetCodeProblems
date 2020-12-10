@@ -51,6 +51,11 @@ public class WordSearch_79 {
         return false;
     }
 
+    // O(s) - time, O(s) - space if using Trie
+    public boolean exist2(char[][] board, String word) {
+        return true;
+    }
+
     private boolean findPath(int i, int j, String word, char[][] board, int counter) {
         if (word.length() == counter) {
             return true;

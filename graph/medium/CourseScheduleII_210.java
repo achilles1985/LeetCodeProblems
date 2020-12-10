@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import java.util.Stack;
 import utils.SolutionUtils;
 
 /**M
@@ -39,7 +40,7 @@ Test:
     DAG, DCG, empty prerequisites, zero numCourses
 Mistakes:
     Pay attention to description (numCourses must not be equal to prerequisite.length)
-Related to cycle detection
+    Related to cycle detection and topological sort
  */
 public class CourseScheduleII_210 {
 
@@ -50,6 +51,13 @@ public class CourseScheduleII_210 {
         SolutionUtils.print(s.findOrder(4, new int[][]{{1,0},{2,0},{3,1},{3,2}})); //[0,1,2,3] or [0,2,1,3]
         SolutionUtils.print(s.findOrder(2, new int[][]{{1,0}})); //[0,1]
         SolutionUtils.print(s.findOrder(3, new int[][]{{1,0}})); // [2,0,1]
+
+        Stack<Integer> stack = new Stack<>();
+        stack.push(1);
+        stack.push(2);
+        for (int num: stack) {
+            int a = num;
+        }
     }
 
     // O(V+E) - time, O(V) - space, V - number of courses (Topological sort), E - number of dependents
@@ -63,7 +71,7 @@ public class CourseScheduleII_210 {
         }
         Set<Integer> visited = new HashSet<>();
         Set<Integer> recursion = new HashSet<>();
-        Queue<Integer> stack = new LinkedList<>();
+        Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < numCourses; i++) {
             if (visited.contains(i)) {
                 continue;
@@ -75,13 +83,13 @@ public class CourseScheduleII_210 {
         int size = stack.size();
         int[] result = new int[size];
         int i = 0;
-        while (!stack.isEmpty()) {
-            result[i++] = stack.poll();
+        for (int num: stack) {
+            result[i++] = num;
         }
         return result;
     }
 
-    private boolean hasCycle(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> recursion, Queue<Integer> stack, Integer node) {
+    private boolean hasCycle(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> recursion, Stack<Integer> stack, Integer node) {
         if (recursion.contains(node)) {
             return true;
         }
@@ -96,7 +104,7 @@ public class CourseScheduleII_210 {
             }
         }
         recursion.remove(node);
-        stack.add(node);
+        stack.push(node);
 
         return false;
     }
