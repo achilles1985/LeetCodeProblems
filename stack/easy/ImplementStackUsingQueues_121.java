@@ -3,7 +3,7 @@ package stack.easy;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/** E [MARKED]
+/** E [marked]
  Implement the following operations of a stack using queues.
 
  push(x) -- Push element x onto stack.

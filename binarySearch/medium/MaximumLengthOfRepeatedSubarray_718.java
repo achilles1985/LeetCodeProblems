@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * M [MARKED*]
+ * M [marked*]
  * Given two integer arrays A and B, return the maximum length of an subarray that appears in both arrays.
  * <p>
  * Example 1:

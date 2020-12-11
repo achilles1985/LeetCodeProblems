@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** M [MARKED]
+/** M [marked]
  Given a string containing only digits, restore it by returning all possible valid IP address combinations.
 
  Example:

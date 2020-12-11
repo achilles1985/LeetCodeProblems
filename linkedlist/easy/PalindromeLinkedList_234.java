@@ -4,7 +4,7 @@ import java.util.Stack;
 
 import linkedlist.utils.ListNode;
 
-/** E [MARKED]
+/** E [marked]
  * Given a singly linked list, determine if it is a palindrome.
  *
  * Example 1:

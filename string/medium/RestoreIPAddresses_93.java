@@ -3,7 +3,7 @@ package string.medium;
 import java.util.ArrayList;
 import java.util.List;
 
-/** M [MARKED]
+/** M [marked]
  Given a string containing only digits, restore it by returning all possible valid IP address combinations.
 Отсчет с 17.07.2020
  Example:

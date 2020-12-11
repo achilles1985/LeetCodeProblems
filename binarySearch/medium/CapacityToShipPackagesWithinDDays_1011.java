@@ -3,7 +3,7 @@ package binarySearch.medium;
 // https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
 
 /**
- * M [MARKED]
+ * M [marked]
  A conveyor belt has packages that must be shipped from one port to another within D days.
  The i-th package on the conveyor belt has a weight of weights[i].
  Each day, we load the ship with packages on the conveyor belt (in the order given by weights).

@@ -5,7 +5,7 @@ package dynamic.medium;
 import java.util.HashMap;
 import java.util.Map;
 
-/** M
+/** M [marked]
  *  Given a string s, find the longest palindromic subsequence's length in s. You may assume that the maximum length of s is 1000.
 
  Example 1:
@@ -19,6 +19,12 @@ import java.util.Map;
  "cbbd"
  Output: 2
  One possible longest palindromic subsequence is "bb".
+ */
+/*
+    Questions:
+    should it be contiguous?
+
+     Manacher's Algorithm runs in O(n) time
  */
 public class LongestPalidromicSubsequance_516 {
 

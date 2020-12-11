@@ -1,13 +1,11 @@
 package dynamic.medium;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
 
-/**
- * Given a rod of length n inches and a table of prices pi, i=1,2,…,n, write an algorithm to find the maximum revenue rn obtainable by cutting up the rod and selling the pieces.
+/** M
+ * Given a rod of length n inches and a table of prices pi, i=1,2,…,n,
+ * write an algorithm to find the maximum revenue rn obtainable by cutting up the rod and selling the pieces.
+ *
  * Example:
  * length: 1,2,3,4
  * price: 2,5,7,8
@@ -16,46 +14,21 @@ public class RodCutting {
 
     public static void main(String[] args) {
         RodCutting s = new RodCutting();
-        //System.out.println(s.profitBFS(new int[] {2,5,7,8}, 4)); //10
+        System.out.println(s.profitBF(new int[] {2,5,7,8}, 4)); //10
 
-        System.out.println(s.profitBruteForce(new int[] {2,5,7,8}, 4)); //10
+        System.out.println(s.profitBF(new int[] {2,5,7,8}, 4)); //10
         System.out.println(s.profitTopDown(new int[] {2,5,7,8}, 4)); //10
         System.out.println(s.profitDynamicBottomUp(new int[] {2,5,7,8}, 4)); //10
     }
 
-/*    public int profitBFS(int[] prices, int length) {
-        Set<Integer> visited = new HashSet<>();
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{length, 0});
-        int max = 0;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            while (size-- > 0) {
-                int[] entry = queue.poll();
-                int len = entry[0];
-                int profit = entry[1];
-                max = Math.max(profit, max);
-                for (int i = 0; i < length; i++) {
-                    int newLen = len - i + 1;
-                    int newProfit = profit + prices[i];
-                    if (!visited.contains(newLen) && newLen >= 0) {
-                        queue.add(new int[]{newLen, newProfit});
-                        visited.add(newLen);
-                    }
-                }
-            }
-        }
-        return max;
-    }*/
-
     // O(length^length) - time, O(length) - space
-    public int profitBruteForce(int[] prices, int length) {
+    public int profitBF(int[] prices, int length) {
         if (length <= 0) {
             return 0;
         }
         int max = 0;
         for (int i = 0; i < length; i++) {
-            int localMax = profitBruteForce(prices, length-i-1) + prices[i];
+            int localMax = profitBF(prices, length-i-1) + prices[i];
             max = Math.max(max, localMax);
         }
         return max;
@@ -97,4 +70,28 @@ public class RodCutting {
         return max[prices.length];
     }
 
+    /*    public int profitBFS(int[] prices, int length) {
+            Set<Integer> visited = new HashSet<>();
+            Queue<int[]> queue = new LinkedList<>();
+            queue.add(new int[]{length, 0});
+            int max = 0;
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                while (size-- > 0) {
+                    int[] entry = queue.poll();
+                    int len = entry[0];
+                    int profit = entry[1];
+                    max = Math.max(profit, max);
+                    for (int i = 0; i < length; i++) {
+                        int newLen = len - i + 1;
+                        int newProfit = profit + prices[i];
+                        if (!visited.contains(newLen) && newLen >= 0) {
+                            queue.add(new int[]{newLen, newProfit});
+                            visited.add(newLen);
+                        }
+                    }
+                }
+            }
+            return max;
+        }*/
 }

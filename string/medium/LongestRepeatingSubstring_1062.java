@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**M [MARKED]
+/**M [marked]
  * Given a string S, find out the length of the longest repeating substring(s). Return 0 if no repeating substring exists.
  *
  * Example 1:

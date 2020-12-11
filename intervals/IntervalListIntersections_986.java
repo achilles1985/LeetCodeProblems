@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import utils.SolutionUtils;
 
-/**M [MARKED]
+/**M [marked]
  * Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
  * Return the intersection of these two interval lists.
  * (Formally, a closed interval [a, b] (with a <= b) denotes the set of real numbers x with a <= x <= b.

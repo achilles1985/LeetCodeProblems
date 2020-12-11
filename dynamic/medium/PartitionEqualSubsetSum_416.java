@@ -2,7 +2,7 @@ package dynamic.medium;
 
 import java.util.HashMap;
 
-/**M [MARKED]
+/**M [marked]
  * Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets
  * such that the sum of elements in both subsets is equal.
  *

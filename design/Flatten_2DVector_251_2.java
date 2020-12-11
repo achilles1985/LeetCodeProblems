@@ -2,7 +2,7 @@ package design;
 
 import java.util.*;
 
-/**M [MARKED]
+/**M [marked]
  * Design and implement an iterator to flatten a 2d vector. It should support the following operations: next and
  * hasNext.
  *

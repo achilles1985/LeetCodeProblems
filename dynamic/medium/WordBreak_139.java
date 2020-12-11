@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 // https://leetcode.com/problems/word-break/
-/** M [MARKED]
+/** M [marked]
  * Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
  determine if s can be segmented into a space-separated sequence of one or more dictionary words.
 

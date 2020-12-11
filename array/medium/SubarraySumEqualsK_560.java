@@ -3,7 +3,7 @@ package array.medium;
 import java.util.HashMap;
 import java.util.Map;
 
-/**M [MARKED]
+/**M [marked]
  * Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.
  *
  * Example 1:

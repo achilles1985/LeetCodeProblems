@@ -2,7 +2,7 @@ package graph.medium;
 
 import java.util.Arrays;
 
-/**M [MARKED]
+/**M [marked]
  * There are N cities numbered from 1 to N.
  * You are given connections, where each connections[i] = [city1, city2, cost] represents the cost to connect city1
  * and city2 together.  (A connection is bidirectional: connecting city1 and city2 is the same as connecting city2

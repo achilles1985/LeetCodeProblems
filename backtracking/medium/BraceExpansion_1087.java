@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import utils.SolutionUtils;
 
-/**M [MARKED]
+/**M [marked]
  * A string S represents a list of words.
  *
  * Each letter in the word has 1 or more options.  If there is one option, the letter is represented as is.  If there

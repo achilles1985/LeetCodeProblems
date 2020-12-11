@@ -2,7 +2,7 @@ package string.hard;
 
 import java.util.Stack;
 
-/** H [MARKED] (left path than right path)
+/** H [marked] (left path than right path)
  * Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed)
  * parentheses substring.
  *

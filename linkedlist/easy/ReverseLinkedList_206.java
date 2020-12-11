@@ -3,7 +3,7 @@ package linkedlist.easy;
 import linkedlist.utils.LinkedListUtils;
 import linkedlist.utils.ListNode;
 
-/** E [MARKED]
+/** E [marked]
  * Reverse a singly linked list.
  *
  * Example:

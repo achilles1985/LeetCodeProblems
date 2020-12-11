@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** M [MARKED]
+/** M [marked]
  * Given an integer array, your task is to find all the different possible increasing subsequences of the given array,
  * and the length of an increasing subsequence should be at least 2.
 
@@ -26,12 +26,12 @@ public class IncreasingSubsequences_491 {
 
     public static void main(String[] args) {
         IncreasingSubsequences_491 s = new IncreasingSubsequences_491();
-        System.out.println(s.findSubsequences(new int[] {1,2,3,4})); //[[1, 2, 3], [1, 2], [2, 3], [1, 3]]
-        System.out.println(s.findSubsequences(new int[] {4,3,7,6})); //[[4, 6], [4, 7], [3, 6], [3, 7]]
-        System.out.println(s.findSubsequences(new int[] {4,6,7,7})); // [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
+        System.out.println(s.findSubsequences(new int[] {4,3,2,1})); //[]
+        System.out.println(s.findSubsequences(new int[] {4,6,7,7})); //[[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
+        System.out.println(s.findSubsequences(new int[] {1,2,3,4})); //[[1, 2, 3], [1, 3, 4], [1, 2], [1, 2, 4], [2, 3], [2, 3, 4], [3, 4], [1, 3], [2, 4], [1, 4], [1, 2, 3, 4]]
     }
 
-    // O(2^n) - time
+    // O(n*2^n) - time, O(n^2) - space
     public List<List<Integer>> findSubsequences(int[] nums) {
         Set<List<Integer>> res = new HashSet<>();
         findSubsequencesHelper(res, new ArrayList<>(), nums, 0);
@@ -40,7 +40,7 @@ public class IncreasingSubsequences_491 {
 
     private void findSubsequencesHelper(Set<List<Integer>> res, List<Integer> temp, int[] nums, int start) {
         if (temp.size() > 1) {
-            res.add(new ArrayList(temp));
+            res.add(new ArrayList(temp)); //n
         }
         for (int i = start; i < nums.length; i++) {
             if (temp.size() > 0 && nums[i] < temp.get(temp.size() - 1)) {

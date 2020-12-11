@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * M [MARKED]
+ * M [marked]
  * Given a string S of digits, such as S = "123456579", we can split it into a Fibonacci-like sequence [123, 456, 579].
  * Formally, a Fibonacci-like sequence is a list F of non-negative integers such that:
  * 0 <= F[i] <= 2^31 - 1, (that is, each integer fits a 32-bit signed integer type);

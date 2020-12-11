@@ -2,7 +2,7 @@ package stack.easy;
 
 import java.util.Stack;
 
-/** E [MARKED]
+/** E [marked]
  * Implement the following operations of a queue using stacks.
  * push(x) -- Push element x to the back of queue.
  * pop() -- Removes the element from in front of queue.

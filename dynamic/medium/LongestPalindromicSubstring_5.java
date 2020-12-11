@@ -16,6 +16,9 @@ package dynamic.medium;
  * Output: "bb"
  */
 /*
+Pitfols:
+    1) if j-k == 1, dp[j][k] = true;
+    2) s.substring(j, k+1)
 Since whether string is a palindrom depends on where we start expending. We need to try 2 ways.
 If the string is odd, start from left==right, even - left, right = left+1 (rotor -> odd, abba - even)
  */
@@ -23,6 +26,8 @@ public class LongestPalindromicSubstring_5 {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring_5 s = new LongestPalindromicSubstring_5();
+        System.out.println(s.longestPalindrome3("cbbd")); //a
+
         System.out.println(s.longestPalindromeDP("ac")); //a
         System.out.println(s.longestPalindromeDP("a")); //a
         System.out.println(s.longestPalindromeDP("cbbd")); //bb
@@ -31,6 +36,33 @@ public class LongestPalindromicSubstring_5 {
         System.out.println(s.longestPalindrome2("racecar")); //racecar
         System.out.println(s.longestPalindrome("nabbam")); //abba
         System.out.println(s.longestPalindrome2("nabbam")); //abba
+    }
+
+    public String longestPalindrome3(String s) {
+        if (s == null || s.isEmpty()) {
+            return "";
+        }
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            dp[i][i] = true;
+        }
+        String result = s.substring(0, 1);
+        for (int i = 1; i < s.length(); i++) {
+            for (int j = 0, k = i; k < s.length(); j++, k++) {
+                char start = s.charAt(j);
+                char end = s.charAt(k);
+                if (start == end && k-j == 1) {
+                    dp[j][k] = true;
+                } else if (start == end && dp[j+1][k-1]) {
+                    dp[j][k] = true;
+                    String temp = s.substring(j,k+1);
+                    if (temp.length() > result.length()) {
+                        result = temp;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     // O(n^3) - time, O(1) - space

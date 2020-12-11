@@ -3,7 +3,7 @@ package array.medium;
 import java.util.HashMap;
 import java.util.Map;
 
-/** M [MARKED]
+/** M [marked]
  * Given an array nums and a target value k, find the maximum length of a subarray that sums to k. If there isn't one, return 0 instead.
  * Note:
  * The sum of the entire nums array is guaranteed to fit within the 32-bit signed integer range.
