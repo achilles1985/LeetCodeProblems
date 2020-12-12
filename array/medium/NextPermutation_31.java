@@ -13,7 +13,9 @@ import utils.SolutionUtils;
  1,1,5 → 1,5,1
  */
 /*
-    One should observe a patten. Find the first number smaller to the left then last number. Find the next greater number for that number and swap them. Then reverse subarray.
+    One should observe a patten.
+    Find the first number smaller to the left then last number.
+    Find the next greater number for that number and swap them. Then reverse subarray.
  */
 public class NextPermutation_31 {
 

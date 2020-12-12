@@ -14,13 +14,12 @@ public class SubsetSum {
 
     public static void main(String[] args) {
         SubsetSum s = new SubsetSum();
-        System.out.println(s.subsetSumBF(new int[] {2,4,5}, 9)); // true
-        System.out.println(s.subsetSumBF(new int[] {2,4,5}, 8)); // false
-        System.out.println(s.subsetSumBF(new int[] {7, 3, 2, 5, 8}, 122)); // false
 
-        System.out.println(s.subsetSumDP(new int[] {2,4,5}, 9)); // true
-        System.out.println(s.subsetSumDP(new int[] {2,4,5}, 8)); // false
-        System.out.println(s.subsetSumDP(new int[] {7, 3, 2, 5, 8}, 122)); // false
+        System.out.println(s.subsetSumBF(new int[] {2,4,5}, 9)); // true
+        System.out.println(s.subsetSumBF(new int[] {2,4,5}, 3)); // false
+
+        System.out.println(s.subsetSumMemo(new int[] {2,4,5}, 9)); // true
+        System.out.println(s.subsetSumMemo(new int[] {2,4,5}, 3)); // false
 
         System.out.println(s.subsetSum1(new int[] {2,4,5}, 9)); // true
         System.out.println(s.subsetSumTopDown1(new int[] {2,4,5}, 9)); // true
@@ -42,43 +41,44 @@ public class SubsetSum {
         System.out.println(s.subsetSumDynamicTopDown(new int[] {7, 3, 2, 5, 8}, 122)); // false
     }
 
-    // O(sum^arr) - time, O(sum) - space
+    // O(length^sum) - time, O(sum) - space
     public boolean subsetSumBF(int[] arr, int sum) {
-        return helper(arr, sum, 0);
-    }
-
-    public boolean helper(int[] arr, int sum, int start) {
         if (sum == 0) {
             return true;
         }
-        for (int i = start; i < arr.length; i++) {
-            if (helper(arr, sum - arr[i], i+1)) {
+        if (sum < 0) {
+            return false;
+        }
+        for (int num: arr) {
+            if (subsetSumBF(arr, sum - num)) {
                 return true;
             }
         }
         return false;
     }
 
-    // O(sum*arr) - time, O(sum) - space
-    public boolean subsetSumDP(int[] arr, int sum) {
-        return helperDP(arr, sum, 0, new HashMap<>());
+    // O(length*sum) - time, O(sum) - space
+    public boolean subsetSumMemo(int[] arr, int sum) {
+        return helper(arr, sum, new HashMap<>());
     }
 
-    public boolean helperDP(int[] arr, int sum, int start, Map<String, Boolean> cache) {
-        String key = start + "," + sum; // if we cannot use the same index
-        if (cache.containsKey(key)) {
-            return cache.get(key);
+    private boolean helper(int[] arr, int sum, HashMap<Integer, Boolean> cache) {
+        if (cache.containsKey(sum)) {
+            return cache.get(sum);
         }
         if (sum == 0) {
             return true;
         }
-        for (int i = start; i < arr.length; i++) {
-            if (helperDP(arr, sum - arr[i], i+1, cache)) {
+        if (sum < 0) {
+            return false;
+        }
+        for (int num: arr) {
+            if (helper(arr, sum - num, cache)) {
+                cache.put(sum-num, true);
                 return true;
             }
         }
-        cache.put(key, false);
-
+        cache.put(sum, false);
         return false;
     }
 
