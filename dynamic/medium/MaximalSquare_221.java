@@ -28,12 +28,12 @@ public class MaximalSquare_221 {
 
     public static void main(String[] args) {
         MaximalSquare_221 s = new MaximalSquare_221();
-        System.out.println(s.maximalSquareBruteForce(new char[][]{
+        System.out.println(s.maximalSquareBF(new char[][]{
                 {'1', '0', '1', '0', '0'},
                 {'1', '0', '1', '1', '1'},
                 {'1', '1', '1', '1', '1'},
                 {'1', '0', '0', '1', '0'}})); //4
-        System.out.println(s.maximalSquareBruteForce(new char[][]{
+        System.out.println(s.maximalSquareBF(new char[][]{
                 {'0', '0', '0'},
                 {'0', '0', '0'},
                 {'0', '0', '0'},
@@ -58,13 +58,40 @@ public class MaximalSquare_221 {
     }
 
     // O(m*n)^2 - time,
-    public int maximalSquareBruteForce(char[][] matrix) {
+    public int maximalSquareBF(char[][] matrix) {
         int max = 0;
         for (int i = 1; i < matrix.length; i++) {
             for (int j = 1; j < matrix[0].length; j++) {
                 if (matrix[i][j] == '1') {
                     int localMax = dfs(i, j, matrix);
                     max = Math.max(max, localMax);
+                }
+            }
+        }
+        return max*max;
+    }
+
+    // O(n^2) - time, O(1) - space
+    public int maximalSquareDP(char[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int max = 0;
+        for (int i = 0; i < rows; i++) {
+            if (matrix[i][0] == '1') {
+                max = 1;
+            }
+        }
+        for (int i = 0; i < cols; i++) {
+            if (matrix[0][i] == '1') {
+                max = 1;
+            }
+        }
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (matrix[i][j] == '1') {
+                    int value = (Math.min(Math.min(matrix[i-1][j]-'0', matrix[i][j-1]-'0'), matrix[i-1][j-1]-'0') + 1);
+                    matrix[i][j] = (char) (value + '0');
+                    max = Math.max(max, value);
                 }
             }
         }

@@ -1,6 +1,7 @@
 package dynamic.medium;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**M [marked]
  * Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets
@@ -51,6 +52,41 @@ public class PartitionEqualSubsetSum_416 {
             return false;
         }
         return canPartition(index + 1, sum + nums[index], nums, total) || canPartition(index + 1, sum, nums, total);
+    }
+
+    // BF - O(len^sum) - time, O(sum) - space
+    // DP - O(len*sum) - time, O(sum*len)
+    public boolean canPartitionDP(int[] nums) {
+        int sum = 0;
+        for (int num: nums) {
+            sum += num;
+        }
+        if (sum %2 != 0) {
+            return false;
+        }
+
+        return helper(nums, 0, 0, sum/2, new HashMap<>());
+    }
+
+    private boolean helper(int[] nums, int start, int sum, int target, Map<String, Boolean> cache) {
+        String key = start + "," + sum;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        if (sum == target) {
+            return true;
+        }
+        for (int i = start; i < nums.length; i++) {
+            if (sum + nums[i] > target) {
+                continue;
+            }
+            if (helper(nums, i+1, sum + nums[i], target, cache)) {
+                return true;
+            }
+        }
+        cache.put(key, false);
+
+        return false;
     }
 
     // O(nums*total) - time

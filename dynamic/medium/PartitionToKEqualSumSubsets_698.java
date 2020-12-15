@@ -16,6 +16,7 @@ import java.util.Arrays;
  */
 /*
     1. Should it be contiguous partitions?
+    2. max number, array size, k always < nums.length?
  */
 public class PartitionToKEqualSumSubsets_698 {
 
@@ -32,8 +33,7 @@ public class PartitionToKEqualSumSubsets_698 {
             return false;
         }
         int bucketSum = totalSum/k;
-        boolean[] used = new boolean[nums.length];
-        return dfs(0, 0, bucketSum, used, nums, k);
+        return dfs(0, 0, bucketSum, new boolean[nums.length], nums, k);
     }
 
     private boolean dfs(int start, int sum, int bucketSum, boolean[] used, int[] nums, int k) {
@@ -55,4 +55,5 @@ public class PartitionToKEqualSumSubsets_698 {
         }
         return false;
     }
+
 }

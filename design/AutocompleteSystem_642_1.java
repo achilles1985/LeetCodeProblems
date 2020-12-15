@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import javafx.util.Pair;
-
 /**H
  * Design a search autocomplete system for a search engine. Users may input a sentence (at least one word and end
  * with a special character '#'). For each character they type except '#', you need to return the top 3 historical
@@ -80,109 +78,56 @@ import javafx.util.Pair;
  *     are persisted across multiple test cases. Please see here for more details.
  */
 /*
-Solution based on Trie (https://leetcode.com/problems/design-search-autocomplete-system/solution/)
+Solution based on HashMaps: HashMap (a,b,c,...,z) each alphabeth letter corresponds to its HashMap (sentence:count)
+(https://leetcode.com/problems/design-search-autocomplete-system/solution/)
  */
-public class AutocompleteSystem2 {
+public class AutocompleteSystem_642_1 {
 
-    private TrieNode root;
+    private Map<String, Integer>[] root;
     private String str = "";
 
-    private static class TrieNode {
-        int time;
-        TrieNode[] children = new TrieNode[27];
-    }
-
-    private static class NodeInfo {
-        String sentence;
-        int time;
-
-        public NodeInfo(String sentence, int time) {
-            this.sentence = sentence;
-            this.time = time;
+    public AutocompleteSystem_642_1(String[] sentences, int[] times) {
+        root = new HashMap[26];
+        for (int i = 0; i < 26; i++) {
+            root[i] = new HashMap<>();
         }
-    }
-
-    // O(m*n) - time, m - number of sentences, n - number of words in a sentence
-    public AutocompleteSystem2(String[] sentences, int[] times) {
-        root = new TrieNode();
-        TrieNode curr = root;
         for (int i = 0; i < sentences.length; i++) {
-            String sentence = sentences[i];
-            for (int j = 0; j < sentence.length(); j++) {
-                if (curr.children[index(sentence.charAt(j))] == null) {
-                    curr.children[index(sentence.charAt(j))] = new TrieNode();
-                    curr = curr.children[index(sentence.charAt(j))];
-                }
-            }
-            curr.time = times[i];
-            curr = root;
+            String sentence  = sentences[i];
+            root[sentence.charAt(0)-'a'].put(sentence, times[i]);
         }
     }
 
-    // O(p + q + m*log(3)) - time, p - prefix length, q - number of nodes under prefix, m - number of sentences in result list
+    // O(m*log(k)) - time, m - size of corresponding HashMap
     public List<String> input(char c) {
         List<String> results = new ArrayList<>();
         if (c == '#') {
-            insert(str, root);
-            str = "";
+            root[str.charAt(0)-'a'].put(str, root[str.charAt(0)-'a'].getOrDefault(str, 0) + 1);
+            str  = "";
         } else {
             str += c;
-            TrieNode curr = find(str);
-            List<NodeInfo> nodes = new ArrayList<>();
-            dfs(str, curr, nodes);
-            Queue<NodeInfo> minHeap = new PriorityQueue<>((n1, n2) -> n1.time == n2.time ? n2.sentence.compareTo(n1.sentence) : n1.time - n2.time);
-            for (NodeInfo node: nodes) {
-                minHeap.add(node);
-                if (minHeap.size() > 3) {
-                    minHeap.poll();
+            Queue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>((e1, e2) ->
+                    e1.getValue().equals(e2.getValue())
+                            ? e2.getKey().compareTo(e1.getKey())
+                            : e1.getValue() - e2.getValue());
+            for (Map.Entry<String, Integer> entry : root[str.charAt(0) - 'a'].entrySet()) {
+                if (entry.getKey().indexOf(str) == 0) {
+                    minHeap.add(entry);
+                    if (minHeap.size() > 3) {
+                        minHeap.remove();
+                    }
                 }
             }
             while (!minHeap.isEmpty()) {
-                results.add(0, minHeap.poll().sentence);
+                results.add(0, minHeap.poll().getKey());
             }
         }
+
         return results;
-    }
-    private void dfs(String str, TrieNode root, List<NodeInfo> result) {
-        if (root.time > 0) {
-            result.add(new NodeInfo(str, root.time));
-            return;
-        }
-        for (int i = 0; i <= 26; i++) {
-            if (root.children[i] != null) {
-                dfs(str + (char)(i + 'a'), root.children[i], result);
-            }
-        }
-    }
-
-    private TrieNode find(String str) {
-        TrieNode curr = root;
-        for (int i = 0; i < str.length(); i++) {
-            if (curr.children[index(str.charAt(i))] == null) {
-                return curr;
-            }
-            curr = curr.children[index(str.charAt(i))];
-        }
-        return curr;
-    }
-
-    private void insert(String str, TrieNode root) {
-        for (int i = 0; i < str.length(); i++) {
-            if (root.children[index(str.charAt(i))] == null) {
-                root.children[index(str.charAt(i))] = new TrieNode();
-            }
-            root = root.children[index(str.charAt(i))];
-        }
-        root.time++;
-    }
-
-    private int index(char c) {
-        return c == ' ' ? 26 : c - 'a';
     }
 
     public static void main(String[] args) {
         //int iron = "i love".compareTo("iron");
-        AutocompleteSystem2 s = new AutocompleteSystem2(new String[]{"i love you", "island","ironman", "i love leetcode"}, new int[]{5,3,2,2});
+        AutocompleteSystem_642_1 s = new AutocompleteSystem_642_1(new String[]{"i love you", "island","ironman", "i love leetcode"}, new int[]{5,3,2,2});
         System.out.println(s.input('i'));
         System.out.println(s.input(' '));
         System.out.println(s.input('a'));

@@ -26,7 +26,10 @@ public class DecodeWays_91 {
 
     public static void main(String[] args) {
         DecodeWays_91 s = new DecodeWays_91();
-        System.out.println(s.numDecodings3("12131")); //5
+        System.out.println(s.numDecodings4("10")); //1
+        System.out.println(s.numDecodings4("12131")); //5
+        System.out.println(s.numDecodings4("226")); //3
+        System.out.println(s.numDecodings4("12")); //2
 
         System.out.println(s.numDecodings("0")); //0
         System.out.println(s.numDecodingsDynamicTopDown("0")); //0
@@ -133,6 +136,31 @@ public class DecodeWays_91 {
         Integer num = Integer.parseInt(str);
 
         return num >= 1 && num <= 26;
+    }
+
+    // Incorrect
+    public int numDecodings4(String s) {
+        return helper(s, 0);
+    }
+
+    private int helper(String s, int i) {
+        if (s.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        if (i+1 <= s.length()) {
+            String prefix = s.substring(i, i + 1);
+            if (isValid(prefix)) {
+                count += helper(s.substring(i+1), i+1) + 1;
+            }
+        }
+        if (i+2 <= s.length()) {
+            String prefix2 = s.substring(i, i + 2);
+            if (isValid(prefix2)) {
+                count += helper(s.substring(i+2), i+2) + 1;
+            }
+        }
+        return count;
     }
 
 }

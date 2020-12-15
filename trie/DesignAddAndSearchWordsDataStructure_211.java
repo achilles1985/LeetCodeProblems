@@ -63,8 +63,9 @@ public class DesignAddAndSearchWordsDataStructure_211 {
         curr.isWord = true;
     }
 
-    // O(M) for the "well-defined" words without dots, where M is the key length,
-    // and N is a number of keys, and O(M*N) for the "undefined" words if there are dots '.', O(1) - space
+    // O(M) for the "well-defined" words without dots, where M is the key length, and N is a number of keys,
+    // O(N*26^M) for the "undefined" words if there are dots '.'. We should try each children under '.' which is (N) and for each we have 26 choices to take for kye M.
+    // O(1) - space
     /**
      * Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
      */
@@ -85,9 +86,8 @@ public class DesignAddAndSearchWordsDataStructure_211 {
                     }
                 }
                 return false;
-            } else {
-                node = node.children.get(c);
             }
+            node = node.children.get(c);
         }
         return node.isWord;
     }
@@ -97,7 +97,4 @@ public class DesignAddAndSearchWordsDataStructure_211 {
         boolean isWord;
     }
 
-    public static void main(String[] args) {
-
-    }
 }
