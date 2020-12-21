@@ -33,6 +33,11 @@ public class NumberOfIslands_200 {
 
     public static void main(String[] args) {
         NumberOfIslands_200 s = new NumberOfIslands_200();
+        System.out.println(s.numIslands(new char[][]{
+                {'1','1','1','1'},
+                {'1','1','1','1'},
+                {'1','1','1','1'},
+                {'1','1','1','1'}})); //1
         System.out.println(s.numIslands(new char[][] {
                 {'1','0','0','1','0'},
                 {'1','0','1','1','0'},
@@ -53,7 +58,7 @@ public class NumberOfIslands_200 {
         System.out.println(s.numIslands(new char[][] {{}, {}})); // 0
     }
 
-    // O(rows*columns) - time, space
+    // O(rows*columns) - time, space (since if all are '1', we keep the stack of m*n)
     public int numIslands(char[][] chars) {
         if (chars == null || chars.length == 0) {
             return 0;

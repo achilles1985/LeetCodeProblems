@@ -45,6 +45,11 @@ public class NumberOfDistinctIslands_694 {
     public static void main(String[] args) {
         NumberOfDistinctIslands_694 s = new NumberOfDistinctIslands_694();
         System.out.println(s.numDistinctIslands(new int[][]{
+                {1,1,1,1},
+                {1,1,1,1},
+                {1,1,1,1},
+                {1,1,1,1}})); //1
+        System.out.println(s.numDistinctIslands(new int[][]{
                 {1,1,0,0,0},
                 {1,1,0,0,0},
                 {0,0,0,1,1},
