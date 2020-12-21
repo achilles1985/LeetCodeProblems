@@ -3,9 +3,11 @@ package backtracking.medium;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-/** M
+/** M [marked]
  * Given a collection of candidate numbers (candidates) and a target number (target),
  * find all UNIQUE combinations in candidates where the candidate numbers sums to target.
  * Each number in candidates may only be used once in the combination.
@@ -31,27 +33,57 @@ import java.util.List;
  * [5]
  * ]
  */
+/*
+    1. All nums are unique, positive, sorted?
+    2. max value for target, num and array size?
+ */
 public class CombinationSumII_40 {
 
     public static void main(String[] args) {
         CombinationSumII_40 s = new CombinationSumII_40();
-        System.out.println(s.combinationSum2(new int[] {1,3,2,1,4,5}, 5)); //[[1, 1, 3], [1, 4], [2, 3], [5]]
+        System.out.println(s.combinationSum2_II(new int[] {1,3,2,1,4,5}, 5)); //[[1, 1, 3], [1, 4], [2, 3], [5]]
 
-        System.out.println(s.combinationSum2(new int[] {2,5,2,1}, 3)); //[[1, 2, 2], [5]]
-        System.out.println(s.combinationSum2(new int[] {1,2,2,2,3}, 4)); //[[1, 2, 2], [5]]
-        System.out.println(s.combinationSum2(new int[] {2,3,5}, 8)); //[[3, 5]]
-        System.out.println(s.combinationSum2(new int[] {10,1,2,7,6,1,5}, 8)); //[[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]
-        System.out.println(s.combinationSum2(new int[] {2,3,5}, 8)); //[[3, 5]]
+        System.out.println(s.combinationSum2_II(new int[] {2,5,2,1}, 3)); //[[1, 2, 2], [5]]
+        System.out.println(s.combinationSum2_II(new int[] {1,2,2,2,3}, 4)); //[[1, 2, 2], [5]]
+        System.out.println(s.combinationSum2_II(new int[] {2,3,5}, 8)); //[[3, 5]]
+        System.out.println(s.combinationSum2_II(new int[] {10,1,2,7,6,1,5}, 8)); //[[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]
+        System.out.println(s.combinationSum2_II(new int[] {2,3,5}, 8)); //[[3, 5]]
     }
 
-    // O(n*2^n) - time, space
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    // O(nums*nums^target) - time, O(target*nums) - space
+    // Because of a set, it's not full backtracking, to make if full, go with combinationSum2_II
+    public List<List<Integer>> combinationSum2_I(int[] candidates, int target) {
+        Set<List<Integer>> result = new HashSet<>();
+        Arrays.sort(candidates);
+        helper(candidates, target, 0, new ArrayList<>(), 0, result);
+
+        return new ArrayList<>(result);
+    }
+
+    private void helper(int[] nums, int target, int sum, List<Integer> list, int start, Set<List<Integer>> result) {
+        if (sum == target) {
+            result.add(new ArrayList<>(list)); // nums
+            return;
+        }
+        for (int i = start; i < nums.length; i++) {
+            if (sum + nums[i] > target) {
+                continue;
+            }
+            list.add(nums[i]);
+            helper(nums, target, sum + nums[i], list, i+1, result);
+            list.remove(list.size()-1);
+        }
+    }
+
+    // O(nums*nums^target) - time, O(target*nums) - space
+    public List<List<Integer>> combinationSum2_II(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return Collections.emptyList();
         }
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(candidates);
         combinationSumHelper(0, 0, target, new ArrayList<>(), result, candidates);
+
         return result;
     }
 
@@ -64,7 +96,7 @@ public class CombinationSumII_40 {
             if (sum + nums[i] > target) { //no go deeper if condition true
                 continue;
             }
-            if (i > start && nums[i] == nums[i-1]) { // skip duplicates
+            if (i > start && nums[i] == nums[i-1]) { // skip duplicates (or go with Set)
                 continue;
             }
             list.add(nums[i]);

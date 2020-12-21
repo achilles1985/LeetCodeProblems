@@ -20,7 +20,6 @@ import java.util.Set;
  */
 /*
     1.Should be contiguous?
-
  */
 public class IncreasingSubsequences_491 {
 
@@ -48,6 +47,33 @@ public class IncreasingSubsequences_491 {
             }
             temp.add(nums[i]);
             findSubsequencesHelper(res, temp, nums, i + 1);
+            temp.remove(temp.size() - 1);
+        }
+    }
+
+    // more efficient
+    public List<List<Integer>> findSubsequences2(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        findSubsequencesHelper2(res, new ArrayList<>(), nums, 0);
+
+        return new ArrayList(res);
+    }
+
+    private void findSubsequencesHelper2(List<List<Integer>> res, List<Integer> temp, int[] nums, int start) {
+        if (temp.size() > 1) {
+            res.add(new ArrayList(temp)); //n
+        }
+        Set<Integer> used = new HashSet<>();
+        for (int i = start; i < nums.length; i++) {
+            if (used.contains(nums[i])) {
+                continue;
+            }
+            if (temp.size() > 0 && nums[i] < temp.get(temp.size() - 1)) {
+                continue;
+            }
+            temp.add(nums[i]);
+            used.add(nums[i]);
+            findSubsequencesHelper2(res, temp, nums, i + 1);
             temp.remove(temp.size() - 1);
         }
     }

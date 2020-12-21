@@ -43,7 +43,8 @@ public class SudokuSolver_37 {
         }
     }
 
-    // O(9!)^9 - time, O(1) - space. For brute force: O(9^81) - time, we have 9 choices for each cell.
+    // O(9!^9) - time, O(1) - space. For one row, we have 9! choices to choose from. since we have 9 rows -> 9!^9.
+    // For brute force: O(9^81) - time, we have 9 choices for each cell.
     public void solveSudoku(char[][] board) {
         solveSudokuUtil(0, 0, board);
     }
@@ -68,10 +69,9 @@ public class SudokuSolver_37 {
                 if (solveSudokuUtil(row, col+1, board)) {
                     return true;
                 }
+                board[row][col] = '.';
             }
         }
-
-        board[row][col] = '.';
 
         return false;
     }

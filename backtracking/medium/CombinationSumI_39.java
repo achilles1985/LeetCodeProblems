@@ -1,10 +1,13 @@
 package backtracking.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-/**M
+/**M [marked]
  * https://leetcode.com/problems/combination-sum/solution/
  Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
  find all UNIQUE combinations in candidates where the candidate numbers sums to target.
@@ -34,21 +37,21 @@ public class CombinationSumI_39 {
 
     public static void main(String[] args) {
         CombinationSumI_39 s = new CombinationSumI_39();
-        System.out.println(s.combinationSum2(new int[] {2,3,6,7}, 7)); //[[2, 2, 3], [7]]
-        System.out.println(s.combinationSum2(new int[] {2,3,5}, 8)); //[[2, 2, 2, 2], [2, 3, 3], [3, 5]]
         System.out.println(s.combinationSum(new int[] {2,3,5}, 8)); //[[2, 2, 2, 2], [2, 3, 3], [3, 5]]
+        System.out.println(s.combinationSum(new int[] {2,3,6,7}, 7)); //[[2, 2, 3], [7]]
     }
 
-    // O(n*2^n) - time, space
+    // O(len^target) - time, O(target) - space
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         dfs(candidates, 0, target, new ArrayList<>(), result, 0);
 
-        return result;
+        return new ArrayList<>(result);
     }
 
-    private void dfs(int[] nums, int sum, int target, List<Integer> list, List<List<Integer>> result, int start) {
+    private void dfs(int[] nums, int sum, int target, List<Integer> list,  List<List<Integer>>  result, int start) {
         if (sum == target) {
+            //Collections.sort(list); // if all the numbers are unique, there will be no duplicate tuples (like, 2,2,3; 3,2,2, etc.)
             result.add(new ArrayList<>(list));
             return;
         }
@@ -66,7 +69,7 @@ public class CombinationSumI_39 {
 
 
 
-    // Incorrect since int i = 0 and we process already processed nums
+    // Incorrect since int i = 0 and we start from the beginning of the array instead of from the current index
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return Collections.emptyList();

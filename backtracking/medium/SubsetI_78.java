@@ -21,16 +21,21 @@ import java.util.List;
  []
  ]
  */
+/*
+    1. All number are distinct, sorted?
+    2. Do we count result as a space taken
+ */
 public class SubsetI_78 {
 
     public static void main(String[] args) {
         SubsetI_78 s = new SubsetI_78();
+        System.out.println(s.subsets(new int[] {3,1,5,4}));
         System.out.println(s.subsets3(new int[] {1,2,3}));
         System.out.println(s.subsets(new int[] {1,2,3,4,5}));
         System.out.println(s.subsets(new int[] {4,4,4,1,4}));
     }
 
-    // O(2^n) - time (since we either add an item to the set or not),
+    // O(n*2^n) - time (since we either add an item to the set or not),
     // O(2^n) - space (total number of sets generated, does not include recursion stack)
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
@@ -79,7 +84,7 @@ public class SubsetI_78 {
     }
 
     private void dfs(int[] nums, int start, List<Integer> list, List<List<Integer>> result) {
-        result.add(new ArrayList<>(list));
+        result.add(new ArrayList<>(list)); //n to copy
         for (int i = start; i < nums.length; i++) {
             list.add(nums[i]);
             dfs(nums, i+1, list, result);

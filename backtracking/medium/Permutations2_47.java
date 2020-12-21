@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** M
+/** M [marked]
  * https://leetcode.com/problems/permutations-ii/#/description
  * Given a collection of numbers that might contain duplicates, return all possible unique permutations.
  * For example,
@@ -16,6 +16,9 @@ import java.util.Set;
  * [1,2,1],
  * [2,1,1]
  * ]
+ */
+/*
+    1. distinct, sorted?
  */
 //https://discuss.leetcode.com/topic/31445/really-easy-java-solution-much-easier-than-the-solutions-with-very-high-vote
 // https://discuss.leetcode.com/topic/46162/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partioning
@@ -27,12 +30,14 @@ public class Permutations2_47 {
         System.out.println(s.permuteUnique(new int[]{1,2,3})); //[[1, 1, 2], [1, 2, 1], [2, 1, 1]]
     }
 
-    // O(n!) - time, space
+    // O(n*log(n) + n*n!) - time, O(n^2) - space (if result is not counted, if it does - n*n!)
+    // if you do not used Set, you need sorting because of duplicates
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> current = new ArrayList<>();
         Arrays.sort(nums);
         backtrack(result, current, nums, new boolean[nums.length]);
+
         return result;
     }
 
@@ -55,8 +60,8 @@ public class Permutations2_47 {
             used[i] = true;
             list.add(nums[i]);
             backtrack(result, list, nums, used);
-            used[i] = false;
             list.remove(list.size() - 1);
+            used[i] = false;
         }
     }
 

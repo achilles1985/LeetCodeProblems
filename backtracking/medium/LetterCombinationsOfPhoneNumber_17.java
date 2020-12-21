@@ -21,7 +21,6 @@ import java.util.Map;
 public class LetterCombinationsOfPhoneNumber_17 {
 
     public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder();
         LetterCombinationsOfPhoneNumber_17 s = new LetterCombinationsOfPhoneNumber_17();
         System.out.println(s.letterCombinations("12"));
         System.out.println(s.letterCombinations("234")); //[adg, adh, adi, aeg, aeh, aei, afg, afh, afi, bdg, bdh, bdi, beg, beh, bei, bfg, bfh, bfi, cdg, cdh, cdi, ceg, ceh, cei, cfg, cfh, cfi]
@@ -51,7 +50,7 @@ public class LetterCombinationsOfPhoneNumber_17 {
 
     private void dfs(String digits, Map<Character, List<Character>> map, StringBuilder sb, List<String> result) {
         if (sb.length() == digits.length()) {
-            result.add(sb.toString());
+            result.add(sb.toString()); //n
             return;
         }
         for (Character c: map.get(digits.charAt(sb.length()))) {

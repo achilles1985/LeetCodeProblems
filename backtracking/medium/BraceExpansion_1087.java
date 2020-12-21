@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-
 import utils.SolutionUtils;
 
 /**M [marked]
@@ -30,15 +29,20 @@ import utils.SolutionUtils;
  *     There are no nested curly brackets.
  *     All characters inside a pair of consecutive opening and ending curly brackets are different.
  */
+/*
+    1. Any special chars except '{},"?
+    2. Can string be without special chars like, "abcd"?
+    3. "{a,b,c}
+ */
 public class BraceExpansion_1087 {
 
     public static void main(String[] args) {
         BraceExpansion_1087 s = new BraceExpansion_1087();
-        SolutionUtils.print(s.expand("abcde")); // ["abcd"]
+        SolutionUtils.print(s.expand("abcde")); // ["abcde"]
+        SolutionUtils.print(s.expand("{a,b}")); // ["a,b"]
         SolutionUtils.print(s.expand("{a,b}c{d,e}f")); //["acdf","acef","bcdf","bcef"]
         SolutionUtils.print(s.expand("{a,b}{z,x,y}")); // ["ax","ay","az","bx","by","bz"]
     }
-
 
     // O(n^n) - time, O(n) - space - number of tokens in input string
     public String[] expand(String S) {
@@ -117,4 +121,5 @@ public class BraceExpansion_1087 {
             sb.deleteCharAt(sb.length()-1);
         }
     }
+
 }
