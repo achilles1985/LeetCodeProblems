@@ -43,6 +43,8 @@ public class TopKFrequentWords_692 {
         System.out.println(s.topKFrequent(new String[] {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}, 4)); // ["the", "is", "sunny", "day"]
     }
 
+    // BF O(n*log(n)) - time, frequence map + sorting
+
     // O(n*log(k)) - time, O(n) - space
     public List<String> topKFrequent(String[] words, int k) {
         Map<String, Integer> map = new HashMap<>();

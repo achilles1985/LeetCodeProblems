@@ -23,17 +23,77 @@ import java.util.Map;
  * Input: 1234567891
  * Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
  */
+/*
+    Questions:
+    1. max number? positive?
+ */
 public class IntegerToEnglishWords_273 {
 
     public static void main(String[] args) {
         IntegerToEnglishWords_273 s = new IntegerToEnglishWords_273();
+        System.out.println(s.numberToWords(12346789));
+
         System.out.println(s.numberToWords2(40345));
-        System.out.println(s.numberToWords2(12345));
         System.out.println(s.numberToWords2(1_123_456_789));
         System.out.println(s.numberToWords2(32));
         System.out.println(s.numberToWords2(123));
         System.out.println(s.numberToWords2(123_456));
         System.out.println(s.numberToWords(123_456_789));
+    }
+
+    // O(d) - time, O(d/3) - space
+    public String numberToWords(int num) {
+        Map<Integer, String> map = buildNumbersMap();
+        return numberToWords(num, map).trim();
+    }
+
+    private String numberToWords(int num, Map<Integer, String> map) {
+        if (num == 0) {
+            return "Zero";
+        }
+        StringBuilder result = new StringBuilder();
+        int base;
+        // billion
+        base = num / 1_000_000_000;
+        num = num % 1_000_000_000;
+        if (base > 0) {
+            result.append(numberToWords(base, map));
+            result.append(" Billion");
+        }
+        // million
+        base = num / 1_000_000;
+        num = num % 1_000_000;
+        if (base > 0) {
+            result.append(numberToWords(base, map));
+            result.append(" Million");
+        }
+        // thousand
+        base = num / 1000;
+        num = num % 1000;
+        if (base > 0) {
+            result.append(numberToWords(base, map));
+            result.append(" Thousand");
+        }
+        // hunderd
+        base = num / 100;
+        num = num % 100;
+        if (base > 0) {
+            result.append(numberToWords(base, map));
+            result.append(" Hundred");
+        }
+        // tens
+        if (num >= 20) {
+            base = num / 10;
+            num = num % 10;
+            result.append(" ");
+            result.append(map.get(base * 10));
+        }
+        // ones
+        if (num > 0) {
+            result.append(" ");
+            result.append(map.get(num));
+        }
+        return result.toString();
     }
 
     public String numberToWords2(int num) {
@@ -59,14 +119,6 @@ public class IntegerToEnglishWords_273 {
         }
     }
 
-    private Map<Integer, String> buildWordMap() {
-        Map<Integer, String> words = new HashMap<>();
-        words.put(1, " Thousand");
-        words.put(2, " Million");
-        words.put(3, " Billion");
-        return words;
-    }
-
     private void parser(StringBuilder sb, int number, Map<Integer, String> map, Map<Integer, String> words) {
         if (number == 0) {
             return;
@@ -86,9 +138,12 @@ public class IntegerToEnglishWords_273 {
         }
     }
 
-    public String numberToWords(int num) {
-        Map<Integer, String> map = buildNumbersMap();
-        return numberToWords(num, map).trim();
+    private Map<Integer, String> buildWordMap() {
+        Map<Integer, String> words = new HashMap<>();
+        words.put(1, " Thousand");
+        words.put(2, " Million");
+        words.put(3, " Billion");
+        return words;
     }
 
     private Map<Integer, String> buildNumbersMap() {
@@ -122,54 +177,5 @@ public class IntegerToEnglishWords_273 {
         map.put(90, "Ninety");
 
         return map;
-    }
-
-    private String numberToWords(int num, Map<Integer, String> map) {
-        if (num == 0) {
-            return "Zero";
-        }
-        StringBuilder result = new StringBuilder();
-        int base;
-        // billion
-        base = num / 1_000_000_000;
-        num = num % 1_000_000_000;
-        if (base > 0) {
-            result.append(numberToWords(base, map));
-            result.append("Billion ");
-        }
-        // million
-        base = num / 1_000_000;
-        num = num % 1_000_000;
-        if (base > 0) {
-            result.append(numberToWords(base, map));
-            result.append("Million ");
-        }
-        // thousand
-        base = num / 1000;
-        num = num % 1000;
-        if (base > 0) {
-            result.append(numberToWords(base, map));
-            result.append("Thousand ");
-        }
-        // hunderd
-        base = num / 100;
-        num = num % 100;
-        if (base > 0) {
-            result.append(numberToWords(base, map));
-            result.append("Hundred ");
-        }
-        // tens
-        if (num >= 20) {
-            base = num / 10;
-            num = num % 10;
-            result.append(map.get(base * 10));
-            result.append(" ");
-        }
-        // ones
-        if (num > 0) {
-            result.append(map.get(num));
-            result.append(" ");
-        }
-        return result.toString();
     }
 }

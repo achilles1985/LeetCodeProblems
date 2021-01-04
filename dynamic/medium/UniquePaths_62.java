@@ -29,6 +29,7 @@ public class UniquePaths_62 {
 
     public static void main(String[] args) {
         UniquePaths_62 s = new UniquePaths_62();
+        System.out.println(s.uniquePathsTopDown(5,3)); //3
         System.out.println(s.uniquePathsBF(3,2)); //3
 
         System.out.println(s.uniquePathsDynamic2(3,4)); //10
@@ -42,7 +43,39 @@ public class UniquePaths_62 {
         System.out.println(s.uniquePathsDynamic(7,3)); // 28
     }
 
-    // O(2^(max(m,n)))- time, O(max{m, n}) - space
+    // BF - O(2^n+m) - time, O(m+n) - space
+    // Optimized - O(m*n) - time, space
+    public int uniquePathsTopDown(int m, int n) {
+        if (m < 0 || n < 0) {
+            return 0;
+        }
+        if (m == 0 || n == 0) {
+            return 1;
+        }
+
+        return helper(m,n,0,0, new HashMap<>());
+    }
+    private int helper(int m, int n, int i, int j, Map<String, Integer> cache) {
+        String key = i + "," + j;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        if (i < 0 || i == m || j < 0 || j == n) {
+            return 0;
+        }
+        if (i == m-1 && j == n-1) {
+            return 1;
+        }
+        int left = helper(m,n,i,j+1,cache);
+        int right = helper(m,n,i+1,j, cache);
+
+        int res = left + right;
+        cache.put(key, res);
+
+        return res;
+    }
+
+    // O(2^m+n)- time, O(m+n) - space
     public int uniquePathsBF(int m, int n) {
         return helper(m-1, n-1);
     }

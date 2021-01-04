@@ -25,10 +25,10 @@ import java.util.*;
  Since the graph is undirected, if node p has node q as neighbor, then node q must have node p as neighbor too.
  You must return the copy of the given node as a reference to the cloned graph.
  */
-public class CloneGraph_113 {
+public class CloneGraph_133 {
 
     public static void main(String[] args) {
-        CloneGraph_113 s = new CloneGraph_113();
+        CloneGraph_133 s = new CloneGraph_133();
         Node n1 = new Node(1);
         Node n2 = new Node(2);
         Node n3 = new Node(3);

@@ -6,7 +6,7 @@ import utils.TreeNode;
 import java.util.Stack;
 
 /**
- * M
+ * M [marked]
  * You need to construct a binary tree from a string consisting of parenthesis and integers.
  * The whole input represents a binary tree. It contains an integer followed by zero, one or two pairs of parenthesis.
  * The integer represents the root's value and a pair of parenthesis contains a child binary tree with the same
@@ -18,7 +18,7 @@ import java.util.Stack;
  * An empty tree is represented by "" instead of "()".
  * <p>
  * Example 1:
- * Input: "-4(2(3)(1))(6(5))"
+ * Input: "-4(2(3)(1))(6(5)(7)))"
  * Output: {-4,2,6,3,1,5}
  * Explanation:
  * The output is look like this:
@@ -38,6 +38,9 @@ import java.util.Stack;
  * -1
  */
 /*
+Questions:
+    1. Only positive? Only '(',')','-' and number?
+    2. Max string length? Max number?
 Mistakes:
     1. Be careful with start/end substring indexes.
     2. stack is not always must be empty at the end. At the end it contains the root of the tree.
@@ -61,7 +64,7 @@ public class ConstructBinaryTreeFromString_536 {
             return null;
         }
         int i = 0, j = 0;
-        while (j < s.length() && Character.isDigit(s.charAt(j)) || j < s.length() - 1 && s.charAt(j) == '-') {
+        while (j < s.length() && Character.isDigit(s.charAt(j)) || j < s.length() && s.charAt(j) == '-') {
             j++;
         }
         TreeNode node = new TreeNode(Integer.parseInt(s.substring(i, j)));
@@ -109,4 +112,5 @@ public class ConstructBinaryTreeFromString_536 {
 
         return stack.isEmpty() ? null : stack.peek();
     }
+
 }

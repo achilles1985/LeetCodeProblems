@@ -17,6 +17,9 @@ public class TrappingRainWater_42 {
     public static void main(String[] args) {
         TrappingRainWater_42 s = new TrappingRainWater_42();
 
+        System.out.println(s.trapBruteForce(new int[]{5,2,1,0,4})); //9
+        System.out.println(s.trap4(new int[]{5,2,1,0,4})); //9
+
         System.out.println(s.trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); //6
         System.out.println(s.trap(new int[]{3,2,1,2,3})); //4
 
@@ -24,7 +27,7 @@ public class TrappingRainWater_42 {
         System.out.println(s.trap2(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); //6
     }
 
-    // O(n^2) - time, O(1) - space.
+    // O(n^2) - time, O(1) - space. (Calculate the area of column at the current position)
     // Moving from current position go to left and right and find max height on the left and right.
     // Then min(leftMax, rightMax), area = minHeight - height[1]
     public int trapBruteForce(int[] height) {
@@ -82,7 +85,7 @@ public class TrappingRainWater_42 {
                     break;
                 }
                 int w = i - stack.peek()-1;
-                int h = Math.min(height[i], height[stack.peek()]) - height[popped];
+                int h = Math.min(height[i], height[stack.peek()]) - height[popped]; // calculate the area of row between 2 points
                 ans += w*h;
             }
             stack.push(i);
@@ -95,23 +98,23 @@ public class TrappingRainWater_42 {
     public int trap4(int[] height) {
         int result = 0;
         int left_max = 0, right_max = 0;
-        int lo = 0, hi = height.length-1;
-        while (lo <= hi) {
-            if (height[lo] < height[hi]) {
-                if (height[lo] > left_max) {
-                   left_max = height[lo];
+        int left = 0, right = height.length-1;
+        while (left <= right) {
+            if (height[left] < height[right]) {
+                if (height[left] > left_max) {
+                   left_max = height[left];
                 } else {
-                  result += left_max - height[lo];
+                  result += left_max - height[left];
                 }
-                lo++;
+                left++;
             }
             else {
-                if (height[hi] > right_max) {
-                    right_max = height[hi];
+                if (height[right] > right_max) {
+                    right_max = height[right];
                 } else {
-                    result += right_max - height[hi];
+                    result += right_max - height[right];
                 }
-                hi--;
+                right--;
             }
         }
 

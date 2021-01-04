@@ -60,12 +60,12 @@ public class EncodeAndDecodeStrings_271 {
             return new ArrayList<>();
         }
         d = Character.toString((char)257);
-        return Arrays.asList(s.split(d));
+        return Arrays.asList(s.split(d,-1)); // limit=-1 to keep trailing ""
     }
 
     public static void main(String[] args) {
         EncodeAndDecodeStrings_271 s = new EncodeAndDecodeStrings_271();
-        System.out.println(s.decode(s.encode(Arrays.asList("", "")))); //["", ""]
+        System.out.println(s.decode(s.encode(Arrays.asList("", "","")))); //["", ""]
         System.out.println(s.decode(s.encode(new ArrayList<>()))); // []
         String encoded = s.encode(Arrays.asList("abc", "def", "ghi"));
         System.out.println(s.decode(encoded));

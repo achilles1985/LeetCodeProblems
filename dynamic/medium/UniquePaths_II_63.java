@@ -1,5 +1,8 @@
 package dynamic.medium;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /** M
  * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
  The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
@@ -22,10 +25,17 @@ package dynamic.medium;
  1. Right -> Right -> Down -> Down
  2. Down -> Down -> Right -> Right
  */
+/*
+    1. What if rows-1 && cols-1 is an obstacle?
+    2. max size of the grid?
+ */
 // https://leetcode.com/problems/unique-paths-ii/submissions/
 public class UniquePaths_II_63 {
 
     public static void main(String[] args) {
+        int[][] max1 = new int[][]{{1,2,3}};
+        int[][] max2 = new int[][]{{1},{2},{3}};
+
         UniquePaths_II_63 s = new UniquePaths_II_63();
         int[][] grid = new int[][] {{0,0,0}, {0,1,0}, {0,0,0}};
 
@@ -37,7 +47,37 @@ public class UniquePaths_II_63 {
         System.out.println(s.uniquePathsWithObstaclesDynamic(new int[][] {{1}, {0}})); // 0
     }
 
-    // O(2^(max(m,n))) - time, O(max(m,n)) - space
+    // O(m*n) - time, space
+    public int uniquePathsWithObstaclesDP(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0) {
+            return 0;
+        }
+        return helper(obstacleGrid, 0, 0, new HashMap<>());
+    }
+
+    private int helper(int[][] obstacleGrid, int i, int j, Map<String, Integer> cache) {
+        String key = i + "," + j;
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        int rows = obstacleGrid.length;
+        int cols = obstacleGrid[0].length;
+        if (i < 0 || i == obstacleGrid.length || j < 0 || j == obstacleGrid[0].length || obstacleGrid[i][j] == 1) {
+            return 0;
+        }
+        if (i == rows-1 && j == cols-1) {
+            return 1;
+        }
+        int left = helper(obstacleGrid, i, j+1, cache);
+        int right = helper(obstacleGrid, i+1, j, cache);
+
+        int res = left + right;
+        cache.put(key, res);
+
+        return res;
+    }
+
+    // O(2^m+n)) - time, O(m+n) - space
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         return uniquePathsWithObstacles(obstacleGrid, obstacleGrid.length, obstacleGrid[0].length, 0, 0);
     }

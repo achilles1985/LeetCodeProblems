@@ -44,6 +44,11 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
         System.out.println(s.minRemoveToMakeValid("a)b(c)d")); // ab(c)d
         System.out.println(s.minRemoveToMakeValid("))((")); // ""
         System.out.println(s.minRemoveToMakeValid("(a(b(c)d)")); // a(b(c)d)
+
+        System.out.println(s.minRemoveToMakeValid2("((())")); // "(())"
+        System.out.println(s.minRemoveToMakeValid2("(()))")); // "(())"
+        System.out.println(s.minRemoveToMakeValid2("))((")); // ""
+        System.out.println(s.minRemoveToMakeValid2("(a(b(c)d)")); // a(b(c)d)
     }
 
     // O(n) - time, space
@@ -78,5 +83,42 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
         }
 
         return sb.toString();
+    }
+
+    // without stacks
+    public String minRemoveToMakeValid2(String s) {
+        // Parse 1: Remove all invalid ")"
+        StringBuilder sb = new StringBuilder();
+        int openSeen = 0;
+        int balance = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                openSeen++;
+                balance++;
+            } if (c == ')') {
+                if (balance == 0) {
+                    continue;
+                }
+                balance--;
+            }
+            sb.append(c);
+        }
+
+        // Parse 2: Remove the rightmost "("
+        StringBuilder result = new StringBuilder();
+        int openToKeep = openSeen - balance;
+        for (int i = 0; i < sb.length(); i++) {
+            char c = sb.charAt(i);
+            if (c == '(') {
+                openToKeep--;
+                if (openToKeep < 0) {
+                    continue;
+                }
+            }
+            result.append(c);
+        }
+
+        return result.toString();
     }
 }

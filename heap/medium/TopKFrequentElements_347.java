@@ -23,6 +23,7 @@ public class TopKFrequentElements_347 {
 
     public static void main(String[] args) {
         TopKFrequentElements_347 s = new TopKFrequentElements_347();
+
         System.out.println(s.topKFrequent(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
         System.out.println(s.topKFrequent(new int[] {1}, 1)); // [1]
 
@@ -34,7 +35,7 @@ public class TopKFrequentElements_347 {
         SolutionUtils.print(s.topKFrequent3(new int[] {1}, 1)); // [1]
     }
 
-    // O(n*log(k)) - time
+    // O(n*log(k)) - time, O(n+k) - space
     public List<Integer> topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num: nums) {

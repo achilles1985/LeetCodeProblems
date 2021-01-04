@@ -35,12 +35,31 @@ import utils.TreeNode;
  */
 public class SerializeAndDeserializeBinaryTree_297 {
 
+    // O(n^2) - time (because of string immutability)
+    public String serializeBF(TreeNode root) {
+        if (root == null) {
+            return "null";
+        }
+        return root.val + "," + serializeBF(root.left) + "," + serializeBF(root.right);
+    }
+
     // O(n) - time
     public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        helper(root, sb);
+        sb.deleteCharAt(sb.length()-1);
+
+        return sb.toString();
+    }
+
+    private void helper(TreeNode root, StringBuilder sb) {
         if (root == null) {
-            return "X";
+            sb.append("null").append(",");
+            return;
         }
-        return root.val + "," + serialize(root.left) + "," + serialize(root.right);
+        sb.append(root.val).append(",");
+        helper(root.left, sb);
+        helper(root.right, sb);
     }
 
     // O(n) - time

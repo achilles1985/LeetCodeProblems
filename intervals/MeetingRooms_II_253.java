@@ -1,6 +1,7 @@
 package intervals;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -34,13 +35,13 @@ public class MeetingRooms_II_253 {
 
     // O(n*log(n)) - time, O(n)- space
     public int minMeetingRooms(int[][] intervals) {
-        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0],b[0]));
+        Arrays.sort(intervals, Comparator.comparingInt(e -> e[0]));
         Queue<Integer> heap = new PriorityQueue<>();
         for (int i = 0; i < intervals.length; i++) {
-            if (!heap.isEmpty() && intervals[i][0] >= heap.peek()) {
+            if (!heap.isEmpty() && intervals[i][0] >= heap.peek()) { // If there is no overlap, remove room
                 heap.poll();
             }
-            heap.add(intervals[i][1]);
+            heap.add(intervals[i][1]); // if there is overlap, add room
         }
 
         return heap.size();

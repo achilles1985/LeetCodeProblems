@@ -8,6 +8,11 @@ import utils.TreeNode;
 
 /**
  * M [marked]
+ *          10
+ *         /  \
+ *        5    20
+ *       / \   / \
+ *      1   7 15  30
  * Serialization is the process of converting a data structure or object into a sequence of bits so that it can be
  * stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in
  * the same or another computer environment.
@@ -21,88 +26,132 @@ import utils.TreeNode;
  * Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms
  * should be stateless.
  */
+/*
+    Questions:
+    1. Max size of the tree and max val in it?
+    2. Only positive numbers?
+    3. Duplicates?
+ */
 public class SerializeAndDeserializeBST_449 {
 
     public static void main(String[] args) {
         SerializeAndDeserializeBST_449 s = new SerializeAndDeserializeBST_449();
-        TreeNode root = new TreeNode(4);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(7);
+        TreeNode root = new TreeNode(10);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(20);
         root.left.left = new TreeNode(1);
-        root.left.right = new TreeNode(3);
-        root.right.left = new TreeNode(5);
+        root.left.right = new TreeNode(7);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(30);
 
         TreeNode root2 = new TreeNode(12345);
         root2.left = new TreeNode(12344);
         root2.right = new TreeNode(12346);
 
-        TreeNode root3 = new TreeNode(1757700657); //
+        String s1 = s.serializeBF(root);
+        TreeUtils.print(s.deserializeBF(s1));
 
-        String s3 = s.serialize2(root3);
-        TreeUtils.print(s.deserialize(s3));
-
-        String s1 = s.serialize(root);
-        TreeUtils.print(s.deserialize(s1));
-
-        String s2 = s.serialize2(root2);
-        TreeUtils.print(s.deserialize2(s2));
+        String s2 = s.serialize(root);
+        TreeUtils.print(s.deserialize(s2));
     }
 
-    // Encodes a tree to a single string. Do preorder traversal
-    // O(n) - time, O(h) - space
-    public String serialize(TreeNode root) {
+    // O(n) - time, O(h) - space (only stack, result does not count. If it does, n+(n-1), where n - number of nodes, n-1 - number of delimeters)
+    // The problem that if the val becomes larger, it start taking more space in the serialized string.
+    // To make it occupy always the same space (4 bytes for int)+no delimiters and 'X'.
+    public String serializeBF(TreeNode root) {
         if (root == null) {
             return "X";
         }
-
-        final String left = serialize(root.left);
-        final String right = serialize(root.right);
-        return root.val + "," + left + "," + right;
+        return root.val + "," + serializeBF(root.left) + ',' + serializeBF(root.right);
     }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
+    public TreeNode deserializeBF(String data) {
         Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
-        return buildTree(queue);
+        return buildTreeBF(queue);
     }
 
     // O(n) - time, O(h) - space
-    private TreeNode buildTree(Queue<String> queue) {
+    private TreeNode buildTreeBF(Queue<String> queue) {
         String val = queue.poll();
         if ("X".equals(val)) {
             return null;
         }
-        TreeNode node = new TreeNode(Integer.valueOf(val));
-        node.left = buildTree(queue);
-        node.right = buildTree(queue);
+        TreeNode node = new TreeNode(Integer.parseInt(val));
+        node.left = buildTreeBF(queue);
+        node.right = buildTreeBF(queue);
 
         return node;
     }
 
-    // Optimized on space (no delimeters, each number as 4 byte string)
-    public String serialize2(TreeNode root) {
+    // Most optimal solution
+    public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
-        postorder(root, sb);
+        helper(root, sb);
+
         return sb.toString();
     }
 
-    public TreeNode deserialize2(String data) {
-        Deque<Integer> nums = new ArrayDeque<>();
-        for (int i = 0; i < data.length() / 4; ++i) {
-            nums.add(stringToInt(data.substring(4 * i, 4 * i + 4)));
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        LinkedList<Integer> nums = new LinkedList<>();
+        for (int i = 0; i < data.length()/4; i++) {
+            String numAsString = data.substring(i*4, 4 + i*4);
+            int num = convertToInt(numAsString);
+            nums.add(num);
         }
 
-        return helper(Integer.MIN_VALUE, Integer.MAX_VALUE, nums);
+        return buildTree(nums, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    // Encodes a tree to a list.
-    private void postorder(TreeNode root, StringBuilder sb) {
+    private void helper(TreeNode root, StringBuilder sb) {
         if (root == null) {
             return;
         }
-        postorder(root.left, sb);
-        postorder(root.right, sb);
-        sb.append(intToString(root.val));
+        sb.append(convertToString(root.val));
+        helper(root.left,sb);
+        helper(root.right,sb);
+    }
+
+    private String convertToString(int num) {
+        byte[] asBytes = convertToByteArray(num);
+
+        return new String(asBytes);
+    }
+
+    private TreeNode buildTree(LinkedList<Integer> nums, int min, int max) {
+        if (nums.isEmpty()) {
+            return null;
+        }
+        int val = nums.getFirst();
+        if (val < min || val > max) {
+            return null;
+        }
+        nums.removeFirst();
+        TreeNode node = new TreeNode(val);
+        node.left = buildTree(nums, min, val);
+        node.right = buildTree(nums, val, max);
+
+        return node;
+    }
+
+    // https://stackoverflow.com/questions/11380062/what-does-value-0xff-do-in-java#:~:text=The%20hex%20literal%200xFF%20is,...
+    private int convertToInt(String str) {
+        byte[] asByteArr = str.getBytes();
+        //return ByteBuffer.wrap(asByteArr).getInt();
+
+        return ((0xFF & asByteArr[0]) << 24) |
+                ((0xFF & asByteArr[1]) << 16) |
+                ((0xFF & asByteArr[2]) << 8) |
+                ((0xFF & asByteArr[3]));
+    }
+
+    private byte[] convertToByteArray(int num) {
+        // return ByteBuffer.allocate(4).putInt(x).array();
+        return new byte[] {
+                (byte) (num >> 24),
+                (byte) (num >> 16),
+                (byte) (num >> 8),
+                (byte) num};
     }
 
     // Encodes integer to bytes string
@@ -123,25 +172,9 @@ public class SerializeAndDeserializeBST_449 {
         String asStr = Arrays.toString(asBytes);
 
         // d)
-        byte[] asBytes1 = convertIntToByteArray(x);
+        byte[] bytes3 = convertToByteArray(x);
 
-        return new String(bytes);
-    }
-
-    private TreeNode helper(Integer lower, Integer upper, Deque<Integer> nums) {
-        if (nums.isEmpty()) {
-            return null;
-        }
-        int val = nums.getLast();
-        if (val < lower || val > upper) {
-            return null;
-        }
-        nums.removeLast();
-        TreeNode root = new TreeNode(val);
-        root.right = helper(val, upper, nums);
-        root.left = helper(lower, val, nums);
-
-        return root;
+        return new String(bytes3);
     }
 
     private int stringToInt(String bytesStr) {
@@ -155,24 +188,9 @@ public class SerializeAndDeserializeBST_449 {
         int num = ByteBuffer.wrap(bytesStr.getBytes()).getInt();
 
         //d
-        int num1 = convertByteArrayToInt(bytesStr.getBytes());
+        int num2 = convertToInt(bytesStr);
 
-        return result;
-    }
-
-    // alternative
-    public static byte[] convertIntToByteArray(int value) {
-        return new byte[] {
-                (byte) (value >> 24),
-                (byte) (value >> 16),
-                (byte) (value >> 8),
-                (byte) value};
-    }
-    public static int convertByteArrayToInt(byte[] bytes) { // https://stackoverflow.com/questions/11380062/what-does-value-0xff-do-in-java#:~:text=The%20hex%20literal%200xFF%20is,...
-        return ((bytes[0] & 0xFF) << 24) |
-                ((bytes[1] & 0xFF) << 16) |
-                ((bytes[2] & 0xFF) << 8) |
-                ((bytes[3] & 0xFF) << 0);
+        return num2;
     }
 
 }
