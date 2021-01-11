@@ -10,7 +10,12 @@ import java.util.Map;
  *
  * val: an integer representing Node.val
  * random_index: the index of the node (in the input) where the random pointer points to, or null if it does not point to any node.
- * You will be given the tree in class Node and you should return the cloned tree in class NodeCopy. NodeCopy class is just a clone of Node class with the same attributes and constructors.
+ * You will be given the tree in class Node and you should return the cloned tree in class NodeCopy.
+ * NodeCopy class is just a clone of Node class with the same attributes and constructors.
+ */
+/*
+Questions
+    1. the same node values? tree size?
  */
 public class CloneBinaryTreeWithRandomPointer_1485 {
 

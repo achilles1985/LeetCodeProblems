@@ -1,6 +1,9 @@
 package heap.medium;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -25,27 +28,70 @@ public class ReorganizeString_767 {
 
     public static void main(String[] args) {
         ReorganizeString_767 s = new ReorganizeString_767();
-        System.out.println(s.reorganizeString2("aab")); // "aba"
+        System.out.println(s.reorganizeString("aab")); // "aba"
+
         System.out.println(s.reorganizeString("aaab")); // ""
-        System.out.println(s.reorganizeString("a")); // "a"
+        System.out.println(s.reorganizeString("aaaabcd")); // "abacada"
         System.out.println(s.reorganizeString("vvvlo")); // "vovlv"
     }
 
-    // O(n*log(n)) - time, O(n) - space
+    // O(n) - time, O(1) - space
     public String reorganizeString(String S) {
-        Map<Character, Integer> map = new HashMap<>();
+        if (S == null || S.isEmpty()) {
+            return "";
+        }
+        Map<Character, Integer> freq = new HashMap<>();
         for (int i = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            freq.put(c, freq.getOrDefault(c,0)+1);
+        }
+
+        int max = Collections.max(freq.values());
+        if (max > (S.length() + 1)/2) {
+            return "";
+        }
+
+        Queue<FreqEntry> maxHeap = new PriorityQueue<>((e1,e2) -> e2.count-e1.count);
+        for (Map.Entry<Character, Integer> entry: freq.entrySet()) {
+            maxHeap.add(new FreqEntry(entry.getKey(), entry.getValue()));
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!maxHeap.isEmpty()) {
+            FreqEntry entry = maxHeap.poll(); //in this case we use most frequent char
+            if (sb.length() == 0 || sb.charAt(sb.length()-1) != entry.symbol) {
+                sb.append(entry.symbol);
+                if (entry.count-1 > 0) {
+                    maxHeap.add(new FreqEntry(entry.symbol, entry.count-1));
+                }
+            } else { //if most frequent one has been used previously - use next one from the min heap
+                if (!maxHeap.isEmpty()) {
+                    FreqEntry entry2 = maxHeap.poll();
+                    sb.append(entry2.symbol);
+                    if (entry2.count-1 > 0) {
+                        maxHeap.add(new FreqEntry(entry2.symbol, entry2.count-1));
+                    }
+                }
+                maxHeap.add(entry); //put back most frequent one for next iterations
+            }
+        }
+        return sb.toString();
+    }
+
+    // O(n) - time, O(1) - space, since we deal only with 26 letters
+    public String reorganizeString2(String S) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < S.length(); i++) { //n
             map.put(S.charAt(i), map.getOrDefault(S.charAt(i), 0) + 1);
         }
 
         Queue<Character> heap = new PriorityQueue<>((c1, c2) -> map.get(c2) - map.get(c1));
-        for (Character key: map.keySet()) {
+        for (Character key: map.keySet()) { //26
             heap.add(key);
         }
 
         StringBuilder sb = new StringBuilder();
         char prev = '_';
-        while (!heap.isEmpty()) {
+        while (!heap.isEmpty()) { //26
             char cur = heap.poll();
             sb.append(cur);
             map.put(cur, map.get(cur)-1);
@@ -59,7 +105,7 @@ public class ReorganizeString_767 {
     }
 
     // https://leetcode.com/problems/reorganize-string/solution/
-    public String reorganizeString2(String S) {
+    public String reorganizeString3(String S) {
         int N = S.length();
         int[] counts = new int[26];
         for (char c: S.toCharArray()) {
@@ -89,5 +135,15 @@ public class ReorganizeString_767 {
         }
 
         return String.valueOf(ans);
+    }
+
+    private static class FreqEntry {
+        char symbol;
+        int count;
+
+        public FreqEntry(char symbol, int count) {
+            this.symbol = symbol;
+            this.count = count;
+        }
     }
 }

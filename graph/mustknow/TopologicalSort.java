@@ -30,6 +30,7 @@ public class TopologicalSort {
         TopologicalSort s = new TopologicalSort();
         System.out.println(s.sort(new int[][]{{1,3},{2,3},{2,5},{3,4},{5,6},{4,6},{6,7}})); //[2, 5, 1, 3, 4, 6, 7], [1, 2, 3, 5, 4, 6, 7]
         System.out.println(s.sort2(new int[][]{{1,3},{2,3},{2,5},{3,4},{5,6},{4,6},{6,7}})); //[2, 5, 1, 3, 4, 6, 7], [1, 2, 3, 5, 4, 6, 7]
+        System.out.println(s.sort3(new int[][]{{1,3},{2,3},{2,5},{3,4},{5,6},{4,6},{6,7}})); //[2, 5, 1, 3, 4, 6, 7], [1, 2, 3, 5, 4, 6, 7]
     }
 
     // O(V+E) - time, O(V) - space
@@ -100,5 +101,47 @@ public class TopologicalSort {
             }
         }
         return sorted;
+    }
+
+    // using colors, -1 - visiting, 1 - visited
+    public List<Integer> sort3(int[][] edges) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < edges.length; i++) {
+            graph.computeIfAbsent(edges[i][0], key -> graph.getOrDefault(key, new ArrayList<>())).add(edges[i][1]);
+        }
+        Map<Integer, Integer> visited = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+        for (Integer node: graph.keySet()) {
+            if (!visited.containsKey(node)) {
+                if (dfs3(graph, node, visited, stack)) { // a cycle found
+                    return Collections.emptyList();
+                }
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            res.add(stack.pop());
+        }
+
+        return res;
+    }
+
+    private boolean dfs3(Map<Integer, List<Integer>> graph, Integer node, Map<Integer, Integer> visited, Stack<Integer> stack) {
+        if (visited.containsKey(node) && visited.get(node) == -1) { //visiting
+            return true;
+        }
+        if (visited.containsKey(node)) { //visited
+            return false;
+        }
+        visited.put(node, -1);
+        for (Integer child: graph.getOrDefault(node, new ArrayList<>())) {
+            if (dfs3(graph, child, visited, stack)) {
+                return true;
+            }
+        }
+        visited.put(node, 1);
+        stack.push(node);
+
+        return false;
     }
 }
