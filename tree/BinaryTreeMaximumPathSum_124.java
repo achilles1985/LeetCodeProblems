@@ -1,5 +1,8 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import utils.TreeNode;
 
 /**H
@@ -9,14 +12,13 @@ import utils.TreeNode;
  * The path must contain at least one node and does not need to go through the root.
  *
  * Example 1:
- *
  * Input: [1,2,3]
- *
  *        1
  *       / \
  *      2   3
  *
  * Output: 6
+ * Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
  *
  * Example 2:
  * Input: [-10,9,20,null,null,15,7]
@@ -25,8 +27,8 @@ import utils.TreeNode;
  *   9  20
  *     /  \
  *    15   7
- *
  * Output: 42
+ * Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
  */
 public class BinaryTreeMaximumPathSum_124 {
 
@@ -44,7 +46,7 @@ public class BinaryTreeMaximumPathSum_124 {
         TreeNode root2 = new TreeNode(-2);
         root2.left = new TreeNode(1);
 
-        System.out.println(s.maxPathSum(new TreeNode(0))); //0
+        System.out.println(s.maxPathSum(new TreeNode(-3))); //0
         System.out.println(s.maxPathSum(root)); //42
         System.out.println(s.maxPathSum(root1)); //2
         System.out.println(s.maxPathSum(root2)); //1
@@ -55,22 +57,21 @@ public class BinaryTreeMaximumPathSum_124 {
         if (root.left == null && root.right == null) {
             return root.val;
         }
-        int[] maxHolder = new int[1];
-        maxHolder[0] = Integer.MIN_VALUE;
-        maxPathSumHelper(root, maxHolder);
+        int[] globalMaxHolder = new int[]{Integer.MIN_VALUE};
+        maxPathSumHelper(root, globalMaxHolder);
 
-        return maxHolder[0];
+        return globalMaxHolder[0];
     }
 
-    private int maxPathSumHelper(TreeNode root, int[] maxHolder) {
+    private int maxPathSumHelper(TreeNode root, int[] globalMaxHolder) {
         if (root == null) {
             return 0;
         }
 
-        int left = Math.max(maxPathSumHelper(root.left, maxHolder), 0);
-        int right = Math.max(maxPathSumHelper(root.right, maxHolder), 0);
+        int left = Math.max(maxPathSumHelper(root.left, globalMaxHolder), 0);
+        int right = Math.max(maxPathSumHelper(root.right, globalMaxHolder), 0);
 
-        maxHolder[0] = Math.max(maxHolder[0], left + root.val + right);
+        globalMaxHolder[0] = Math.max(globalMaxHolder[0], left + root.val + right);
 
         return Math.max(root.val, root.val + Math.max(left, right));
     }

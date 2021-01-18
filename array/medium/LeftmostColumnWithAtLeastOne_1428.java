@@ -42,6 +42,23 @@ import java.util.List;
  */
 public class LeftmostColumnWithAtLeastOne_1428 {
 
+    // O(rows + cols) - time, O(1) - space
+    public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
+        List<Integer> dimension = binaryMatrix.dimensions();
+        int rows = dimension.get(0);
+        int cols = dimension.get(1);
+        int row = 0, col = cols-1;
+        while (row < rows && col >= 0) {
+            if (binaryMatrix.get(row, col) == 1) {
+                col--;
+            } else {
+                row++;
+            }
+        }
+        // If we never left the last column, this is because it was all 0's.
+        return (col == cols - 1) ? -1 : col + 1;
+    }
+
     // O(rows*log(cols)) - time, O(1) - space
     public int leftMostColumnWithOneBF(BinaryMatrix binaryMatrix) {
         List<Integer> dimention = binaryMatrix.dimensions();
@@ -72,22 +89,6 @@ public class LeftmostColumnWithAtLeastOne_1428 {
         }
 
         return right;
-    }
-
-    // O(rows + cols) - time, O(1) - space
-    public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
-        List<Integer> dimension = binaryMatrix.dimensions();
-        int rows = dimension.get(0);
-        int cols = dimension.get(1);
-        int row = 0, col = cols-1;
-        while (row < rows && col >= 0) {
-            if (binaryMatrix.get(row, col) == 1) {
-                col--;
-            } else {
-                row++;
-            }
-        }
-        return col == cols ? -1 : col;
     }
 
     private class BinaryMatrix {

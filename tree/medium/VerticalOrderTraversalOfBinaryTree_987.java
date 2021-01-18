@@ -1,12 +1,13 @@
 package tree.medium;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.TreeMap;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import utils.TreeNode;
 
 /**M
@@ -50,6 +51,9 @@ import utils.TreeNode;
  *     The tree will have between 1 and 1000 nodes.
  *     Each node's value will be between 0 and 1000.
  */
+/*
+    sort the nodes based on the 3-dimensional coordinates (col,row,val)
+ */
 public class VerticalOrderTraversalOfBinaryTree_987 {
 
     public static void main(String[] args) {
@@ -78,58 +82,70 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
         root2.right.right.left = new TreeNode(5);
         root2.right.right.left.left = new TreeNode(6);
 
-        System.out.println(s.verticalTraversal(root)); //[[4],[2],[1,5,6],[3],[7]]
-        System.out.println(s.verticalTraversal2(root1)); //[[9],[3,15],[20],[7]]
-        System.out.println(s.verticalTraversal2(root2)); //[[8],[0,3,6],[1,4,5],[2,7]]
+        System.out.println(s.verticalTraversalDFS(root)); //[[4],[2],[1,5,6],[3],[7]]
+        System.out.println(s.verticalTraversalDFS(root1)); //[[9],[3,15],[20],[7]]
+        System.out.println(s.verticalTraversalDFS(root2)); //[[8],[0,3,6],[1,4,5],[2,7]]
     }
 
-    // O(n) - time, O(n) - space (Iterative)
-    public List<List<Integer>> verticalTraversal2(TreeNode root) {
-        if (root == null) {
-            return new ArrayList<>();
-        }
-        Map<Integer, List<Integer>> map = new TreeMap<>();
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        Queue<Integer> valueQueue = new LinkedList<>();
-        nodeQueue.add(root);
-        valueQueue.add(0);
-        while (!nodeQueue.isEmpty()) {
-            TreeNode node = nodeQueue.poll();
-            Integer value = valueQueue.poll();
-            map.computeIfAbsent(value, key -> new ArrayList<>()).add(node.val);
-            if (node.left != null) {
-                nodeQueue.add(node.left);
-                valueQueue.add(value-1);
-            }
-            if (node.right != null) {
-                nodeQueue.add(node.right);
-                valueQueue.add(value+1);
-            }
-        }
+    // BF approach is to create and collect all tuples(col,row,val) and sort that list by (col,row) and form the res, O(n*log(n))
+
+    // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines), O(n) - space
+    // In case the tree is a linked list - O(n) - time, subgroups = N, each subgroup consists of only one value
+    public List<List<Integer>> verticalTraversalDFS(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        for (List<Integer> value: map.values()) {
-            result.add(value);
+        Map<Integer, List<NodeInfo>> map = new TreeMap<>();
+        AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
+        AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
+        helper(map, root, 0, 0, min, max);
+
+        for (int i = min.intValue(); i <= max.intValue(); i++) {
+            List<NodeInfo> nodes = map.get(i);
+            nodes.sort(Comparator.comparing(NodeInfo::getRow).thenComparing(NodeInfo::getVal));
+            List<Integer> temp = new ArrayList<>();
+            for (NodeInfo nodeInfo: nodes) {
+                temp.add(nodeInfo.val);
+            }
+            result.add(temp);
         }
         return result;
     }
 
-    // O(n) - time, O(n) - space (recursive)
-    public List<List<Integer>> verticalTraversal(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        Map<Integer, List<Integer>> map = new TreeMap<>();
-        populateNodeDepthMap(map, root, 0);
-        for (Map.Entry<Integer, List<Integer>> entry: map.entrySet()) {
-            result.add(entry.getValue());
-        }
-        return result;
-    }
-
-    private void populateNodeDepthMap(Map<Integer, List<Integer>> map, TreeNode root, int key) {
+    private void helper(Map<Integer, List<NodeInfo>> map, TreeNode root, int col, int row, AtomicInteger min, AtomicInteger max) {
         if (root == null) {
             return;
         }
-        map.computeIfAbsent(key, k -> new ArrayList<>()).add(root.val);
-        populateNodeDepthMap(map, root.left, key-1);
-        populateNodeDepthMap(map, root.right, key+1);
+        map.computeIfAbsent(col, key->new ArrayList<>()).add(new NodeInfo(root.val, col, row));
+        if (col < min.intValue()) {
+            min.set(col);
+        }
+        if (col > max.intValue()) {
+            max.set(col);
+        }
+        helper(map, root.left, col-1, row+1, min, max);
+        helper(map, root.right, col+1, row+1, min, max);
+    }
+
+    static class NodeInfo {
+        int val;
+        int col;
+        int row;
+
+        NodeInfo(int val, int col, int row) {
+            this.val = val;
+            this.col = col;
+            this.row = row;
+        }
+
+        public int getVal() {
+            return val;
+        }
+
+        public int getCol() {
+            return col;
+        }
+
+        public int getRow() {
+            return row;
+        }
     }
 }

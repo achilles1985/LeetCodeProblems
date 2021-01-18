@@ -1,5 +1,11 @@
 package math;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**M
  * Implement pow(x, n), which calculates x raised to the power n (i.e. xn).
  *
@@ -25,6 +31,10 @@ public class Pow_50 {
 
     // O(n) - time, O(1) - space
     public double myPowBF(double x, int n) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        final Collection<List<Integer>> values = map.values();
+        new ArrayList<>(values);
+
         double result = 1.0;
         for (int i = 1; i <= Math.abs(n); i++) {
             result *= x;
@@ -36,25 +46,20 @@ public class Pow_50 {
     }
 
     // O(log(n)) - time, space
+    // 2^10 = 2^5*2^5 = (2*2)^5 = 4^5 = 4*4^2*4^2 = 4*16^2 = 4*16*16 = 1024 each time we decrese n by halve with leads to log(n)
     public double myPow(double x, int n) {
-        long N = n;
-        if (N < 0) {
-            x = 1 / x;
-            N = -N;
+        if(n < 0) {
+            return 1.0/pow(x, n);
         }
-
-        return fastPow(x, N);
+        return pow(x, n);
     }
 
-    private double fastPow(double x, long n) {
-        if (n == 0) {
-            return 1.0;
+    private double pow(double x, int n){
+        if(n == 0) return 1;
+        if(n == 1) return x;
+        if(n%2 == 0) {
+            return pow(x * x, n/2);
         }
-        double half = fastPow(x, n / 2);
-        if (n % 2 == 0) {
-            return half * half;
-        } else {
-            return half * half * x;
-        }
+        return x * pow(x * x, n/2);
     }
 }
