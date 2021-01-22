@@ -26,6 +26,9 @@ import java.util.Queue;
  * 0 <= nums[i] < 1000000.
  * 1 <= k <= len(nums) * (len(nums) - 1) / 2.
  */
+/*
+    1. all are positive? 2. k range?
+ */
 // https://leetcode.com/problems/find-k-th-smallest-pair-distance/
 public class FindKthSmallestPairDistance_719 {
 

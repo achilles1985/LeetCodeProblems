@@ -4,7 +4,7 @@ import utils.SolutionUtils;
 
 import java.util.*;
 
-/**H [TODO]
+/**H [marked]
  * Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right.
  * You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
  *
@@ -42,6 +42,75 @@ public class SlidingWindowMaximum_239 {
         SolutionUtils.print(s.maxSlidingWindowBF(new int[]{1}, 1)); //[1]
     }
 
+    // O(n*k) - time, O(1) - space
+    // Time can be improve to O(n*log(k)) with heap
+    public int[] maxSlidingWindowBF(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k < 1 || k > nums.length) {
+            return new int[]{};
+        }
+        int[] result = new int[nums.length-k+1];
+        int length = nums.length;
+        for (int i = 0; i <= length - k; i++) {
+            int max = Integer.MIN_VALUE;
+            for (int j = i; j < i + k; j++) {
+                max = Math.max(max, nums[j]);
+            }
+            result[i] = max;
+        }
+        return result;
+    }
+
+    // https://leetcode.com/problems/sliding-window-maximum/discuss/947027/Java-O(nlogk)-Heap-solution
+    // O(n*log(k)) - time, O(n) - space
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int[] res = new int[nums.length - k + 1];
+        Queue<Node> pq = new PriorityQueue<>(Comparator.comparing(Node::getVal));
+        for(int i = 0; i < k; i++) {
+            pq.offer(new Node(nums[i], i));
+        }
+        int n = nums.length;
+        res[0] = pq.peek().val;
+        for(int curStartIdx = 1; curStartIdx < n - k + 1; curStartIdx++) {
+            int curEndIndex = k + curStartIdx - 1;
+            while(!pq.isEmpty() && pq.peek().index <= curEndIndex - k) {
+                pq.poll();
+            }
+            pq.offer(new Node(nums[curEndIndex], curEndIndex));
+            res[curStartIdx] = pq.peek().val;
+        }
+
+        return res;
+    }
+
+    // O(n) - time, O(n) - space
+    // Solution based on dequeue
+    public int[] maxSlidingWindow2(int[] a, int k) {
+        if (a == null || k <= 0) {
+            return new int[0];
+        }
+        int n = a.length;
+        int[] r = new int[n-k+1];
+        int ri = 0;
+        // store index
+        Deque<Integer> q = new LinkedList<>();
+        for (int i = 0; i < a.length; i++) {
+            // remove numbers out of range k
+            while (!q.isEmpty() && q.peek() < i - k + 1) {
+                q.pollFirst();
+            }
+            // remove smaller numbers in k range as they are useless
+            while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
+                q.pollLast();
+            }
+            // q contains index... r contains content
+            q.offer(i);
+            if (i >= k - 1) {
+                r[ri++] = a[q.peek()];
+            }
+        }
+        return r;
+    }
+
     // O(n) - time, O(n) - space
     public int[] maxSlidingWindowDP(int[] nums, int k) {
         int length = nums.length;
@@ -71,51 +140,20 @@ public class SlidingWindowMaximum_239 {
         return result;
     }
 
-    // O(n) - time, O(n) - space
-    // Solution based on dequeue
-    public int[] maxSlidingWindow2(int[] a, int k) {
-        if (a == null || k <= 0) {
-            return new int[0];
+    private static class Node {
+        int val;
+        int index;
+        Node(int val, int index) {
+            this.val = val;
+            this.index = index;
         }
-        int n = a.length;
-        int[] r = new int[n-k+1];
-        int ri = 0;
-        // store index
-        Deque<Integer> q = new ArrayDeque<>();
-        for (int i = 0; i < a.length; i++) {
-            // remove numbers out of range k
-            while (!q.isEmpty() && q.peek() < i - k + 1) {
-                q.pollFirst();
-            }
-            // remove smaller numbers in k range as they are useless
-            while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
-                q.pollLast();
-            }
-            // q contains index... r contains content
-            q.offer(i);
-            if (i >= k - 1) {
-                r[ri++] = a[q.peek()];
-            }
-        }
-        return r;
-    }
 
-    // O(n*k) - time, O(1) - space
-    public int[] maxSlidingWindowBF(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k < 1 || k > nums.length) {
-            return new int[]{};
+        public int getVal() {
+            return val;
         }
-        List<Integer> result = new ArrayList<>();
-        int length = nums.length;
-        for (int i = 0; i <= length - k; i++) {
-            int max = Integer.MIN_VALUE;
-            for (int j = i; j < i + k; j++) {
-                max = Math.max(max, nums[j]);
-            }
-            result.add(max);
+
+        public int getIndex() {
+            return index;
         }
-        return result.stream()
-                .mapToInt(num -> num)
-                .toArray();
     }
 }

@@ -3,7 +3,7 @@ package slidingWindow.hard;
 import java.util.HashMap;
 import java.util.Map;
 
-/**H
+/**H [marked]
  * Given a string, find the length of the longest substring T that contains at most k distinct characters.
  *
  * Example 1:

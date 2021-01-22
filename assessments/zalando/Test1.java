@@ -7,9 +7,10 @@ public class Test1 {
 
     public static void main(String[] args) {
         Test1 s = new Test1();
-        System.out.println(s.solution2(new int[]{0,4,-1,0,3}, new int[]{0,-2,5,0,3}));
-        System.out.println(s.solution2(new int[]{4, -1, 0, 3}, new int[]{-2, 6, 0, 4}));
-        System.out.println(s.solution3(3,2, new int[]{2,1,1,0,1}));
+        System.out.println(s.solution2(new int[]{0,4,-1,0,3}, new int[]{0,-2,5,0,3})); //0
+        System.out.println(s.solution2(new int[]{2,-2,-3,3}, new int[]{0,0,4,-4})); //1
+        //System.out.println(s.solution2(new int[]{4, -1, 0, 3}, new int[]{-2, 6, 0, 4})); //0
+        //System.out.println(s.solution3(3,2, new int[]{2,1,1,0,1}));
     }
 
     public List<List<Integer>> reconstructMatrix(int upper, int lower, int[] colsum) {

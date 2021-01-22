@@ -1,8 +1,6 @@
 package binarySearch.medium;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /** M
@@ -31,14 +29,46 @@ import java.util.Set;
  1 <= A[i] <= 1e7
  1 <= K <= 1e8
  */
+/*
+    is k within the range? if no missing element? duplicates?
+ */
 public class MissingElementInSortedArray_1060 {
 
     public static void main(String[] args) {
         MissingElementInSortedArray_1060 s = new MissingElementInSortedArray_1060();
-        System.out.println(s.missingElement(new int[] {4,7,9,10}, 3)); //8
+        System.out.println(s.missingElement(new int[] {1,2,3,4,7,8}, 2)); //6
+        System.out.println(s.missingElement(new int[] {1,2,3,4,5}, 3)); //6
+
         System.out.println(s.missingElement(new int[] {1,2,4}, 3)); //6
+        System.out.println(s.missingElement(new int[] {4,7,9,10}, 3)); //8
         System.out.println(s.missingElement(new int[] {4,7,9,10}, 1)); //5
         System.out.println(s.missingElement(new int[] {1,2,4}, 3)); //6
+    }
+
+    // O(n+k) - time, O(1) - space
+    public int missingElementBF2(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int count = 0;
+        for (int i = 1; i < nums.length; i++) {
+            int diff = nums[i] - nums[i-1];
+            if (diff > 1) {
+                int num = nums[i-1];
+                while (num < nums[i]-1) {
+                    num++;
+                    count++;
+                    if (count == k) {
+                        return num;
+                    }
+                }
+            }
+        }
+        if (count < k) {
+            return nums[nums.length-1] + k - count;
+        }
+        return 0;
     }
 
     // O(n+k) - time, O(n) - space

@@ -1,5 +1,7 @@
 package binarySearch.hard;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /** H
  Given an array which consists of non-negative integers and an integer m, you can split the array
  into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
@@ -28,10 +30,43 @@ public class SplitArrayLargestSum_410 {
 
     public static void main(String[] args) {
         SplitArrayLargestSum_410 s = new SplitArrayLargestSum_410();
-        System.out.println(s.splitArray(new int[]{7,2,5,4,3,1}, 6)); // 7
-        System.out.println(s.splitArrayBF(new int[]{7,2,5,4,3,1}, 4)); // 7
-        System.out.println(s.splitArrayBF(new int[]{7,2,5,10,8}, 3)); // 14
-        System.out.println(s.splitArrayBF(new int[]{1,2147483647}, 2)); // 2147483647
+        System.out.println(s.splitArrayBF2(new int[]{7,2,5,4,3,1}, 6)); // 7
+
+        System.out.println(s.splitArrayBF2(new int[]{7,2,5,4,3,1}, 6)); // 7
+        System.out.println(s.splitArrayBF2(new int[]{7,2,5,10,8}, 3)); // 14
+        System.out.println(s.splitArrayBF2(new int[]{1,2147483647}, 2)); // 2147483647
+    }
+
+    public int splitArrayBF2(int[] nums, int m) {
+        if (nums == null || nums.length == 0 || m < 0) {
+            return 0;
+        }
+        AtomicInteger result = new AtomicInteger(Integer.MAX_VALUE);
+        helper(nums, 0, 0, 0, m, 0, result);
+
+        return result.intValue();
+    }
+
+    // O(n^m) - time, O(n) - space
+    /* We can use depth-first search to generate all possible splitting plan. For each element in the array,
+        we can choose to append it to the previous subarray or start a new subarray starting with that element (if the number of subarrays does not exceed m).
+        The sum of the current subarray can be updated at the same time.*/
+    private void helper(int[] nums, int i, int subArrays, int sum, int m, int maxSum, AtomicInteger min) {
+        if (i == nums.length && subArrays == m) {
+            if (maxSum < min.intValue()) {
+                min.set(maxSum);
+            }
+            return;
+        }
+        if (i == nums.length) {
+            return;
+        }
+        if (i > 0 ) {
+            helper(nums, i + 1, subArrays, sum + nums[i], m, Math.max(sum + nums[i], maxSum), min);
+        }
+        if (subArrays < m) {
+            helper(nums, i+1, subArrays+1, nums[i], m, Math.max(nums[i], maxSum), min);
+        }
     }
 
     // O(n^m) - time, O(n) - space
@@ -68,18 +103,16 @@ public class SplitArrayLargestSum_410 {
             right += num;
         }
 
-        int res = left;
-        while (left <= right) {
+        while (left < right) {
             int mid = left + (right-left)/2;
             if (isPossible(nums, m, mid)) {
-                res = mid;
-                right = mid-1;
+                right = mid;
             } else {
                 left = mid+1;
             }
         }
 
-        return res;
+        return right;
     }
 
     private boolean isPossible(int[] nums, int m, int mid) {

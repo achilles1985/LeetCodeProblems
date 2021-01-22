@@ -17,6 +17,7 @@ import java.util.Map;
  * Output: 5
  * Explanation: t is "aabbb" which its length is 5.
  */
+
 public class LongestSubstringWithAtMostTwoDistinctCharacters_159 {
 
     public static void main(String[] args) {
@@ -46,8 +47,33 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters_159 {
         return max;
     }
 
-    // O(n) - time, O(1) - space since map has mex size of 3.
+    // O(n) - time, O(1) - space (since map has map size of 3)
     public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        int left = 0, right = 0;
+        while (right < s.length()) {
+            char rightChar = s.charAt(right);
+            map.put(rightChar, map.getOrDefault(rightChar, 0) + 1);
+            while (map.size() > 2) {
+                char leftChar = s.charAt(left);
+                map.put(leftChar, map.get(leftChar) - 1);
+                if (map.get(leftChar) == 0) {
+                    map.remove(leftChar);
+                }
+                left++;
+            }
+            max = Math.max(max, right - left + 1);
+            right++;
+        }
+        return max;
+    }
+
+    // O(n) - time, O(1) - space since map has map size of 3.
+    public int lengthOfLongestSubstringTwoDistinct2(String s) {
         Map<Character, Integer> charToLastIndex = new HashMap<>();
         int left = 0;
         int right = 0;
@@ -63,31 +89,6 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters_159 {
             }
             max = Math.max(max, right - left);
         }
-        return max;
-    }
-
-    // O(n) - time, O(1) - space (since map has mex size of 3)
-    public int lengthOfLongestSubstringTwoDistinct2(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        int max = 0;
-        Map<Character, Integer> map = new HashMap<>();
-        for (int j = 0, i = 0; j < s.length(); j++) {
-            char c = s.charAt(j);
-            if (map.size() <= 2) {
-                map.put(c, map.getOrDefault(c, 0) + 1);
-            }
-            while (map.size() == 3) {
-                char left = s.charAt(i++);
-                map.put(left, map.getOrDefault(left, 0) - 1);
-                if (map.get(left) == 0) {
-                    map.remove(left);
-                }
-            }
-            max = Math.max(max, j - i + 1);
-        }
-
         return max;
     }
 

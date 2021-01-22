@@ -19,15 +19,48 @@ public class MinimumWindowSubstring_76 {
 
     public static void main(String[] args) {
         MinimumWindowSubstring_76 s = new MinimumWindowSubstring_76();
+        System.out.println(s.minWindow2("aa", "aa")); //aa
+        System.out.println(s.minWindow2("a", "a")); //a
+        System.out.println(s.minWindow2("abaacbab", "abc")); //acb
+        System.out.println(s.minWindow2("ADOBECODEBANC", "ABC")); //BANC
+
+        System.out.println(s.minWindow("abaacbab", "abc")); //acb
         System.out.println(s.minWindow("ADOBECODEBANC", "ABC")); //BANC
         System.out.println(s.minWindow("bba", "ab")); //ba
 
-        System.out.println(s.minWindowBF("bba", "ab")); //ba
-        System.out.println(s.minWindowBF("ADOBECODEBANC", "ABC")); //BANC
+        System.out.println(s.minWindowBF2("ADOBECODEBANC", "ABC")); //BANC
+        System.out.println(s.minWindowBF2("abaacbab", "abc")); //acb
+        System.out.println(s.minWindowBF2("bba", "ab")); //ba
+    }
+
+    // O(n^3) - time, O(m-n) - space
+    public String minWindowBF(String s, String t) {
+        if (s == null || s.isEmpty() || t == null || t.isEmpty()) {
+            return "";
+        }
+        Map<Character, Integer> map = new HashMap<>(); // if only letters, it's constant space
+        for (int k = 0; k < t.length(); k++) {
+            char c = t.charAt(k);
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        int min = Integer.MAX_VALUE;
+        String minStr = "";
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i + t.length(); j <= s.length(); j++) {
+                String sub = s.substring(i, j); // O(m-n) space
+                if (match(sub, t, map)) {
+                    if (sub.length() < min) {
+                        min = sub.length();
+                        minStr = sub;
+                    }
+                }
+            }
+        }
+        return minStr;
     }
 
     // O(s^2) - time, O(t) - space
-    public String minWindowBF(String s, String t) {
+    public String minWindowBF2(String s, String t) {
         if (s.length() == 0 || t.length() == 0) {
             return "";
         }
@@ -98,6 +131,65 @@ public class MinimumWindowSubstring_76 {
             right++;
         }
         return result;
+    }
+
+    public String minWindow2(String s, String t) {
+        if (s == null || s.isEmpty() || t == null || t.isEmpty()) {
+            return "";
+        }
+        Map<Character, Integer> tMap = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+        int left = 0, right = 0;
+        int count = t.length();
+        int min = Integer.MAX_VALUE;
+        String result = "";
+        while (right < s.length()) {
+            char rightC = s.charAt(right);
+            if (tMap.containsKey(rightC)) {
+                tMap.put(rightC, tMap.get(rightC) - 1);
+                if (tMap.get(rightC) >= 0) {
+                    count--;
+                }
+            }
+            while (count == 0 && left <= right) {
+                int curLength = right - left + 1;
+                if (curLength < min) {
+                    min = curLength;
+                    result = s.substring(left, right+1);
+                }
+                char leftC = s.charAt(left);
+                if (tMap.containsKey(leftC)) {
+                    tMap.put(leftC, tMap.get(leftC) + 1);
+                    if (tMap.get(leftC) > 0) {
+                        count++;
+                    }
+                }
+                left++;
+            }
+            right++;
+        }
+        return result;
+    }
+
+    private boolean match(String str, String t, Map<Character, Integer> tMap) {
+        Map<Character, Integer> sMap = new HashMap<>(); // if only letters, it's constant space
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+        }
+        if (sMap.size() < tMap.size()) {
+            return false;
+        }
+        int count = 0;
+        for (Character key: tMap.keySet()) {
+            if (sMap.containsKey(key) && sMap.get(key) >= tMap.get(key)) {
+                count++;
+            }
+        }
+        return count == tMap.size();
     }
 
 }

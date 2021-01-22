@@ -1,6 +1,8 @@
 package slidingWindow.medium;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /** M
@@ -30,6 +32,10 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
 
     public static void main(String[] args) {
         LongestSubstringWithoutRepeatingCharacters_3 s = new LongestSubstringWithoutRepeatingCharacters_3();
+
+        System.out.println(s.lengthOfLongestSubstring4("abba")); //2
+        System.out.println(s.lengthOfLongestSubstring4("abcabcbb")); //3
+
         System.out.println(s.lengthOfLongestSubstring("pwwkeww")); //3
         System.out.println(s.lengthOfLongestSubstring("dvdf")); //3
         System.out.println(s.lengthOfLongestSubstring("au")); //2
@@ -38,7 +44,22 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
         System.out.println(s.lengthOfLongestSubstringBF("pwwkew")); //3
     }
 
-    // O(n) - time, O(min(n,m)) - space
+    // O(n) - time, O(unique chars) - space
+    public int lengthOfLongestSubstring4(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        for (int i = 0, j = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (map.containsKey(c)) {
+                j = Math.max(map.get(c) + 1, j);
+            }
+            max = Math.max(max, i - j + 1);
+            map.put(c, i);
+        }
+        return max;
+    }
+
+    // O(2n) - time, O(unique chars) - space
     public int lengthOfLongestSubstring(String s) {
         int n = s.length();
         Set<Character> set = new HashSet<>();

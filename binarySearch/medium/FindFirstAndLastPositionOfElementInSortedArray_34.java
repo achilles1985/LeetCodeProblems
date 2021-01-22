@@ -1,5 +1,6 @@
 package binarySearch.medium;
 
+import java.util.Arrays;
 import utils.SolutionUtils;
 
 /** M
@@ -19,6 +20,16 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
 
     public static void main(String[] args) {
         FindFirstAndLastPositionOfElementInSortedArray_34 s = new FindFirstAndLastPositionOfElementInSortedArray_34();
+        SolutionUtils.print(s.searchRange3(new int[]{5,7,7,8,8,10}, 8)); //[3,4]
+        SolutionUtils.print(s.searchRange3(new int[]{1,2,3,5,5,6,7}, 5)); //[3,4]
+        SolutionUtils.print(s.searchRange3(new int[]{2,2}, 2)); // [0,1]
+        SolutionUtils.print(s.searchRange3(new int[]{1}, 1)); // [0,0]
+        SolutionUtils.print(s.searchRange3(new int[]{5,7,7,8,8,10}, 8)); //[3,4]
+        SolutionUtils.print(s.searchRange3(new int[]{5,7,7,8,8,10}, 6)); // [-1,-1]
+        SolutionUtils.print(s.searchRange3(new int[]{8,8,8,8,8,8}, 8)); // [0,5]
+        SolutionUtils.print(s.searchRange3(new int[]{8,8,8,8,8,8}, 9)); // [-1,-1]
+        SolutionUtils.print(s.searchRange3(new int[]{8,8,8,8,8,8}, 5)); // [-1,-1]
+
         SolutionUtils.print(s.searchRange(new int[]{1,2,3,5,5,6,7}, 5)); //[3,4]
         SolutionUtils.print(s.searchRange2(new int[]{5,7,7,8,8,10}, 8)); //[3,4]
 
@@ -135,4 +146,36 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         return range;
     }
 
+    // O(log(n)) - time, O(1) - space
+    public int[] searchRange3(int[] nums, int target) {
+        int[] range = new int[]{-1,-1};
+        int idx = Arrays.binarySearch(nums, target);
+        if (idx < 0) {
+            return range;
+        }
+        int left = 0;
+        int right = idx;
+        while (left < right) {
+            int mid = left + (right - left)/2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        range[0] = right;
+        left = idx;
+        right = nums.length-1;
+        while (left < right) {
+            int mid = left + (right - left)/2 + 1; // +1 so that l = mid; doesn't result in an infinite loop when l + 1 == r.
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        range[1] = left;
+
+        return range;
+    }
 }

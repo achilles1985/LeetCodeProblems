@@ -63,6 +63,9 @@ public class BinarySearch_704 {
     }
 
     // Template 1
+    /*
+        if target is not within the range, we can get Lo=-1 or Hi=array.length
+     */
     public int template1(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
@@ -85,6 +88,14 @@ public class BinarySearch_704 {
     }
 
     // Template 2
+    /*
+        if target is not within the range, we can get Lo=0 or Hi=array.length-1
+        But if we change:
+            if(nums[mid]<t) start=mid else end=mid-1
+            if(nums[mid]>t) end=mid-1 else start=mid
+            if(nums[mid]>t) end=mid else start=mid+1
+        we've got 0, or infinite cycle
+     */
     public int template2(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;

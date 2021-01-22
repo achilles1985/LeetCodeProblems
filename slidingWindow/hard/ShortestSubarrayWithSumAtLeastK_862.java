@@ -4,7 +4,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * H [TODO]
+ * H [marked]
  * Return the length of the shortest, non-empty, contiguous subarray of A with sum at least K.
  * If there is no non-empty subarray with sum at least K, return -1.
  * <p>
@@ -25,11 +25,14 @@ import java.util.LinkedList;
  * -10 ^ 5 <= A[i] <= 10 ^ 5
  * 1 <= K <= 10 ^ 9
  */
+// https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/discuss/143726/C%2B%2BJavaPython-O(N)-Using-Deque
 public class ShortestSubarrayWithSumAtLeastK_862 {
 
     public static void main(String[] args) {
         ShortestSubarrayWithSumAtLeastK_862 s = new ShortestSubarrayWithSumAtLeastK_862();
+        //System.out.println(s.shortestSubarray3(new int[] {84,-37,32,40,95}, 167)); //3
         System.out.println(s.shortestSubarray(new int[] {84,-37,32,40,95}, 167)); //3
+
         System.out.println(s.shortestSubarray(new int[] {1,1,1,3,-2,3,-1,1,1,1,1}, 4)); //3
         System.out.println(s.shortestSubarray(new int[] {2,-1,2,-3,5,4,2,2,2}, 8)); //2
         System.out.println(s.shortestSubarray(new int[] {77, 19, 35, 10, -14}, 19)); //1
@@ -77,5 +80,21 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
         }
 
         return answer == n + 1 ? -1 : answer;
+    }
+
+    // Incorrect
+    public int shortestSubarray3(int[] A, int K) {
+        int sum = 0;
+        int j = 0; int min = A.length+1;
+        for (int i = 0; i < A.length; i++) {
+            sum += A[i];
+            while(sum >= K) {
+                min = Math.min(min, i+1-j);
+                sum -= A[j];
+                j++;
+            }
+        }
+
+        return min == A.length+1 ? -1 : min;
     }
 }

@@ -12,13 +12,17 @@ package array.medium;
  Follow up:
  If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n).
  */
+// https://leetcode.com/problems/minimum-size-subarray-sum/discuss/433123/JavaC%2B%2BPython-Sliding-Window
 public class MinimumSizeSubarraySum_209 {
 
     public static void main(String[] args) {
         MinimumSizeSubarraySum_209 s = new MinimumSizeSubarraySum_209();
-        System.out.println(s.minSubArrayLen4(7, new int[]{2,3,1,2,4,3})); //2
-        System.out.println(s.minSubArrayLen4(4, new int[]{1,4,4})); //1
-        System.out.println(s.minSubArrayLen4(11, new int[]{1,2,3,4,5})); //3
+        System.out.println(s.minSubArrayLenBinary(7, new int[]{10,20,30,40,50})); //2
+        System.out.println(s.minSubArrayLenBinary2(7, new int[]{10,20,30,40,50})); //2
+
+        System.out.println(s.minSubArrayLenBinary(7, new int[]{2,3,1,2,4,3})); //2
+        System.out.println(s.minSubArrayLenBinary(4, new int[]{1,4,4})); //1
+        System.out.println(s.minSubArrayLenBinary(11, new int[]{1,2,3,4,5})); //3
     }
 
     // O(n^3) - time, O(1) - space
@@ -56,7 +60,7 @@ public class MinimumSizeSubarraySum_209 {
     }
 
     // O(n*log(n)) - time, O(n) - space
-    public int minSubArrayLen2(int s, int[] nums) {
+    public int minSubArrayLenBinary2(int s, int[] nums) {
         if (nums.length == 0) {
             return 0;
         }
@@ -107,7 +111,7 @@ public class MinimumSizeSubarraySum_209 {
         return min == nums.length+1 ? 0 : min;
     }
 
-    public int minSubArrayLen4(int s, int[] nums) {
+    public int minSubArrayLenBinary(int s, int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
