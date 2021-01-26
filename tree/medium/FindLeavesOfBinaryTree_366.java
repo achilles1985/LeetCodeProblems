@@ -8,10 +8,8 @@ import java.util.List;
 /**M [marked]
  * Given a binary tree, collect a tree's nodes as if you were doing this: Collect and remove all leaves, repeat until the tree is empty.
  *
- *
  * Example:
  * Input: [1,2,3,4,5]
- *
  *           1
  *          / \
  *         2   3
@@ -30,11 +28,12 @@ public class FindLeavesOfBinaryTree_366 {
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
 
+        System.out.println(s.findLeavesBF(root));
         System.out.println(s.findLeaves(root));
     }
 
     // O(n^2) - time, O(n) - space
-    public List<List<Integer>> findLeaves(TreeNode root) {
+    public List<List<Integer>> findLeavesBF(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         while (root != null) {
             List<Integer> leaves = new ArrayList<>();
@@ -42,6 +41,29 @@ public class FindLeavesOfBinaryTree_366 {
             result.add(leaves);
         }
         return result;
+    }
+
+    // O(n) - time, space
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        helper(root, result);
+
+        return result;
+    }
+
+    private int helper(TreeNode root, List<List<Integer>> result) {
+        if (root == null) {
+            return -1;
+        }
+        int leftHeight = helper(root.left, result);
+        int rightHeight = helper(root.right, result);
+        int height = Math.max(leftHeight, rightHeight) + 1;
+        if (result.size() == height) {
+            result.add(new ArrayList<>());
+        }
+        result.get(height).add(root.val);
+
+        return height;
     }
 
     private TreeNode findLeaves(TreeNode root, List<Integer> leaves) {

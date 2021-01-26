@@ -51,6 +51,7 @@ public class BinaryTreeLongestConsecutiveSequence_298 {
     }
 
     // O(n) - time, space
+    // At each step we decide: continue with sequence or start a new one.
     public int longestConsecutive(TreeNode root) {
         return dfsTopDown(root, null, 0);
     }

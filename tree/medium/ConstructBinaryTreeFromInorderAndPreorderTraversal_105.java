@@ -53,7 +53,7 @@ public class ConstructBinaryTreeFromInorderAndPreorderTraversal_105 {
         }
         Integer rootIdx = inorderMap.get(preorder[preIdx.intValue()]);
         TreeNode root = new TreeNode(inorder[rootIdx]);
-        preIdx.getAndIncrement();
+        preIdx.getAndIncrement(); // must be global
         root.left = buildTree(inorder, inStart, rootIdx-1, preIdx, preorder, inorderMap);
         root.right = buildTree(inorder, rootIdx+1, inEnd, preIdx, preorder, inorderMap);
 

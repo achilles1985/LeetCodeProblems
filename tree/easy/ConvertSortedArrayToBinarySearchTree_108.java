@@ -27,7 +27,6 @@ public class ConvertSortedArrayToBinarySearchTree_108 {
         TreeNode root = s.sortedArrayToBST(new int[] {1,1,1,1,1,1,2,2,2,2,2,3,3,4,5,6,7});
 
         TreeUtils.print(root);
-
     }
 
     private TreeNode unsortedArrayToBST(int[] arr) {

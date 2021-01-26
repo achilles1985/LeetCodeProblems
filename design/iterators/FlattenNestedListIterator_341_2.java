@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class FlattenNestedListIterator2 {
+public class FlattenNestedListIterator_341_2 {
 
     public class NestedIterator implements Iterator<Integer> {
 

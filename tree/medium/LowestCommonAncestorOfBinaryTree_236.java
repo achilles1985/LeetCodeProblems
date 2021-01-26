@@ -1,12 +1,12 @@
 package tree.medium;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import utils.TreeNode;
 
@@ -41,27 +41,29 @@ import utils.TreeNode;
 public class LowestCommonAncestorOfBinaryTree_236 {
 
     public static void main(String[] args) {
-        ExecutorService es = Executors.newFixedThreadPool(10);
         LowestCommonAncestorOfBinaryTree_236 s = new LowestCommonAncestorOfBinaryTree_236();
         TreeNode root = new TreeNode(3);
+        TreeNode p = new TreeNode(5);
+        TreeNode q = new TreeNode(4);
+
         root.left = new TreeNode(5);
         root.right = new TreeNode(1);
-        root.left.left = new TreeNode(6);
+        root.left.left = p;
         root.left.right = new TreeNode(2);
         root.left.right.left = new TreeNode(7);
-        root.left.right.right = new TreeNode(4);
+        root.left.right.right = q;
         root.right.right = new TreeNode(8);
         root.right.left = new TreeNode(0);
 
-        System.out.println(s.lowestCommonAncestor(root, new TreeNode(6), new TreeNode(4))); //5
+        System.out.println(s.lowestCommonAncestor(root, p, q)); //5
     }
 
-    // O(n) - time, space
+    // O(n) - time, O(h) - space
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;
         }
-        if (root.val == p.val || root.val == q.val) {
+        if (root == p || root == q) {
             return root;
         }
         TreeNode left = lowestCommonAncestor(root.left, p, q);
@@ -69,7 +71,6 @@ public class LowestCommonAncestorOfBinaryTree_236 {
         if (left != null && right != null) {
             return root;
         }
-
         return left != null ? left : right;
     }
 
@@ -111,4 +112,5 @@ public class LowestCommonAncestorOfBinaryTree_236 {
         }
         return q;
     }
+
 }

@@ -55,6 +55,30 @@ public class PathSumIII_437 {
         return counter[0];
     }
 
+    public int pathSum2(TreeNode root, int sum) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0,1);
+
+        return helper(root, sum, 0, map);
+    }
+
+    private int helper(TreeNode root, int target, int sum, Map<Integer, Integer> map) {
+        if (root == null) {
+            return 0;
+        }
+        int count = 0;
+        sum += root.val;
+        if (map.containsKey(sum-target)) {
+            count += map.get(sum-target);
+        }
+        map.put(sum, map.getOrDefault(sum, 0) + 1);
+        int left = helper(root.left, target, sum, map);
+        int right = helper(root.right, target, sum, map);
+        map.put(sum, map.getOrDefault(sum, 0) - 1);
+
+        return count + left + right;
+    }
+
     private void preorder(TreeNode root, int sum, int curSum, Map<Integer, Integer> map, int[] counter) {
         if (root == null) {
             return;

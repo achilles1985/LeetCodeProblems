@@ -27,6 +27,9 @@ import utils.TreeNode;
  *     to_delete.length <= 1000
  *     to_delete contains distinct values between 1 and 1000.
  */
+/*
+    Do postorder iteration not preorder one
+ */
 public class DeleteNodesAndReturnForest_1110 {
 
     public static void main(String[] args) {
@@ -39,6 +42,12 @@ public class DeleteNodesAndReturnForest_1110 {
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(7);
 
+        TreeNode root2 = new TreeNode(1);
+        root2.left = new TreeNode(2);
+        root2.left.left = new TreeNode(4);
+        root2.left.right = new TreeNode(3);
+
+        System.out.println(s.delNodes(root2, new int[]{2,3}));
         System.out.println(s.delNodes(root, new int[]{1}));
     }
 

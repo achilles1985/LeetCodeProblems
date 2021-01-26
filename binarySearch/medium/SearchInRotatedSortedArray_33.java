@@ -2,7 +2,7 @@ package binarySearch.medium;
 
 import java.util.Arrays;
 
-/**M
+/**M [marked]
  * Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
  * (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
  * You are given a target value to search. If found in the array return its index, otherwise return -1.
@@ -25,16 +25,17 @@ public class SearchInRotatedSortedArray_33 {
 
     public static void main(String[] args) {
         SearchInRotatedSortedArray_33 s = new SearchInRotatedSortedArray_33();
+        System.out.println(s.search(new int[]{5,4,3,2,1}, 1)); //4
+
+        System.out.println(s.search(new int[]{4,5,6,7,0,1,2}, 0)); //4
         System.out.println(s.search(new int[]{5,1,3}, 3)); //2
-        System.out.println(s.search(new int[]{3,1}, 1)); //1
         System.out.println(s.search(new int[]{1,3}, 1)); //0
         System.out.println(s.search(new int[]{1}, 1)); //0
-        System.out.println(s.search(new int[]{4,5,6,7,0,1,2}, 0)); //4
         System.out.println(s.search(new int[]{4,5,6,7,0,1,2}, 3)); //-1
     }
 
     // O(log(n)) - time, O(1) - space
-    public int search(int[] nums, int target) {
+    public int searchBF(int[] nums, int target) {
         int pivot = findPivot(nums);
         if (pivot == 0) {
             int res = Arrays.binarySearch(nums, 0, nums.length, target);
@@ -46,6 +47,33 @@ public class SearchInRotatedSortedArray_33 {
         }
         int res = Arrays.binarySearch(nums, pivot, nums.length, target);
         return res < 0 ? -1 : res;
+    }
+
+    // O(log(n)) - time, O(1) - space
+    // One path
+    public int search(int[] nums, int target) {
+        int start = 0, end = nums.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            else if (nums[mid] >= nums[start]) {
+                if (target >= nums[start] && target < nums[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            }
+            else {
+                if (target <= nums[end] && target > nums[mid]) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+        }
+        return -1;
     }
 
     private int findPivot(int[] nums) {

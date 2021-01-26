@@ -1,6 +1,8 @@
 package tree.medium;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -53,22 +55,36 @@ public class KthSmallestElemenIinBST_230 {
         root2.left.right = new TreeNode(4);
         root2.left.left.left = new TreeNode(1);
 
-        System.out.println(s.kthSmallest2(root1, 1)); //1
-        System.out.println(s.kthSmallest2(root2, 3)); //3
-    }
-
-    // O(n*log(k)) - time, O(n+k) - space
-    public int kthSmallest(TreeNode root, int k) {
-        Queue<Integer> heap = new PriorityQueue<>((n1,n2) -> n2-n1);
-        kthSmallestUtils(root, k, heap);
-        return  heap.peek();
+        System.out.println(s.kthSmallest(root1, 1)); //1
+        System.out.println(s.kthSmallest(root2, 3)); //3
     }
 
     // O(n) - time, O(n) - space
-    public int kthSmallest2(TreeNode root, int k) {
+    public int kthSmallestBF(TreeNode root, int k) {
         List<Integer> list = new ArrayList<>();
         kthSmallest2Utils(root, k, list);
         return list.get(k-1);
+    }
+
+    // O(n) - time, O(h) - space
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) {
+            return 0;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode node = root;
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            node = stack.pop();
+            if (--k == 0) {
+                break;
+            }
+            node = node.right;
+        }
+        return node.val;
     }
 
     private void kthSmallest2Utils(TreeNode root, int k, List<Integer> list) {
@@ -80,15 +96,4 @@ public class KthSmallestElemenIinBST_230 {
         kthSmallest2Utils(root.right, k, list);
     }
 
-    private void kthSmallestUtils(TreeNode root, int k, Queue<Integer> heap) {
-        if (root == null) {
-            return;
-        }
-        heap.add(root.val);
-        if (heap.size() > k) {
-            heap.poll();
-        }
-        kthSmallestUtils(root.left, k, heap);
-        kthSmallestUtils(root.right, k, heap);
-    }
 }

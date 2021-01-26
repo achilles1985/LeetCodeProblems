@@ -34,6 +34,9 @@ import utils.TreeNode;
  * The root-to-leaf path 4->0 represents the number 40.
  * Therefore, sum = 495 + 491 + 40 = 1026.
  */
+/*
+    1. May I assume the result fits Integer?
+ */
 public class SumRootToLeafNumbers_129 {
 
     public static void main(String[] args) {

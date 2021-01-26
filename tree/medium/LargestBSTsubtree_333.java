@@ -64,71 +64,76 @@ public class LargestBSTsubtree_333 {
         root1.right.left.left = new TreeNode(10);
         root1.right.left.right = new TreeNode(13);
 
-        System.out.println(s.largestBST_BF(root)); //3
-        System.out.println(s.largestBST(root)); //3
+        System.out.println(s.largestBSTSubtreeBF(root)); //3
+        System.out.println(s.largestBSTSubtree(root)); //3
     }
 
     // O(n^2) - time for skewed tree
-    public int largestBST_BF(TreeNode root){
-        if (isBST(root)) {
+    public int largestBSTSubtreeBF(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (isBST(root, null, null)) {
             return size(root);
         }
-        return Math.max(largestBST_BF(root.left), largestBST_BF(root.right));
-    }
+        int left = largestBSTSubtreeBF(root.left);
+        int right = largestBSTSubtreeBF(root.right);
 
-    // O(n) - time for skewed tree
-    public int largestBST(TreeNode root){
-        return largest(root).size;
-    }
-
-    private MinMax largest(TreeNode root){
-        if(root == null){
-            return new MinMax();
-        }
-        MinMax leftMinMax = largest(root.left);
-        MinMax rightMinMax = largest(root.right);
-
-        MinMax m = new MinMax();
-        if(!leftMinMax.isBST || !rightMinMax.isBST || ((leftMinMax.max != null && root.val >= leftMinMax.max) || (rightMinMax.min != null && root.val <= rightMinMax.min))){
-            m.isBST = false;
-            m.size = Math.max(leftMinMax.size, rightMinMax.size);
-            return m;
-        }
-        m.isBST = true;
-        m.size = leftMinMax.size + rightMinMax.size + 1;
-        m.min = root.left != null ? leftMinMax.min : root.val;
-        m.max = root.right != null ? rightMinMax.max : root.val;
-        return m;
-    }
-
-    private static class MinMax {
-        private int size;
-        private Integer min;
-        private Integer max;
-        private boolean isBST = true;
+        return Math.max(left, right);
     }
 
     private int size(TreeNode root) {
-        if (root == null) {
+        if(root == null) {
             return 0;
         }
         return size(root.left) + size(root.right) + 1;
     }
 
-    private boolean isBST(TreeNode root) {
-        return isValidBST(root, null, null);
-    }
-
-    private boolean isValidBST(TreeNode root, Integer min, Integer max) {
-        if (root == null) {
+    private boolean isBST(TreeNode root, Integer left, Integer right) {
+        if(root == null) {
             return true;
         }
-        if ((min != null && root.val <= min) || (max != null && root.val >= max)) {
+        if(left != null && root.val <= left || right != null && root.val >= right) {
             return false;
         }
-        if (!isValidBST(root.left, min, root.val) || !isValidBST(root.right, root.val, max)) {
-            return false;
+        return isBST(root.left, left, root.val) && isBST(root.right, root.val, right);
+    }
+
+    // O(n) - time for skewed tree
+    public int largestBSTSubtree(TreeNode root){
+        return largest(root).size;
+    }
+
+    private MinMax largest(TreeNode root){
+        if (root == null) {
+            return new MinMax(0, null, null, true);
         }
-        return true;
+        MinMax leftMinMax = largest(root.left);
+        MinMax rightMinMax = largest(root.right);
+
+        // root must be > max on the left and < min on the right
+        if(!leftMinMax.isBST || !rightMinMax.isBST
+                || ((leftMinMax.max != null && root.val <= leftMinMax.max)
+                || (rightMinMax.min != null && root.val >= rightMinMax.min))) {
+            return new MinMax(Math.max(leftMinMax.size, rightMinMax.size), null, null, false);
+        }
+        int curSize = leftMinMax.size + rightMinMax.size + 1;
+        Integer curMin = root.left != null ? leftMinMax.min : root.val;
+        Integer curMax = root.right != null ? rightMinMax.max : root.val;
+        return new MinMax(curSize, curMin, curMax, true);
+    }
+
+    private static class MinMax {
+        int size;
+        Integer min;
+        Integer max;
+        boolean isBST;
+
+        MinMax(int size, Integer min, Integer max, boolean isBST) {
+            this.size = size;
+            this.min = min;
+            this.max = max;
+            this.isBST = isBST;
+        }
     }
 }

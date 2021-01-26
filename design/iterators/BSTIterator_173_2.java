@@ -30,10 +30,10 @@ import utils.TreeNode;
  next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
  You may assume that next() call will always be valid, that is, there will be at least a next smallest number in the BST when next() is called.
  */
-public class BSTIterator2 {
+public class BSTIterator_173_2 {
     private Stack<TreeNode> stack;
 
-    public BSTIterator2(TreeNode root) {
+    public BSTIterator_173_2(TreeNode root) {
         stack = new Stack<>();
         populate(root);
     }
@@ -67,7 +67,7 @@ public class BSTIterator2 {
         root.right.left = new TreeNode(9);
         root.right.right = new TreeNode(20);
 
-        BSTIterator2 iterator = new BSTIterator2(root);
+        BSTIterator_173_2 iterator = new BSTIterator_173_2(root);
         System.out.println(iterator.next());    // return 3
         System.out.println(iterator.next());    // return 7
         System.out.println(iterator.hasNext()); // return true

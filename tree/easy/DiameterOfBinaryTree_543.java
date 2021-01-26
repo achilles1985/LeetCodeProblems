@@ -8,8 +8,7 @@ import utils.TreeNode;
  *
  * Example:
  * Given a binary tree
- *
- *             1
+ *            1
  *          /   \
  *         2     3
  *        / \   /
@@ -29,9 +28,9 @@ public class DiameterOfBinaryTree_543 {
         root.left.right = new TreeNode(5);
         root.right.left = new TreeNode(6);
 
+        System.out.println(s.diameterOfBinaryTree(root)); //4
         System.out.println(s.diameterOfBinaryTreeBF(root)); //4
         System.out.println(s.diameterOfBinaryTree2(root)); //4
-        System.out.println(s.diameterOfBinaryTree(root)); //4
     }
 
     // O(n^2) - time, O(n) - space

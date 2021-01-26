@@ -19,6 +19,8 @@ Questions
  */
 public class CloneBinaryTreeWithRandomPointer_1485 {
 
+    // BF O(2n) - time, is to traverse first time to build the map. Traverse second time to build the result.
+
     // O(n) - time, O(n) - space
     public NodeCopy copyRandomBinaryTree(Node root) {
         Map<Node, NodeCopy> map = new HashMap<>();

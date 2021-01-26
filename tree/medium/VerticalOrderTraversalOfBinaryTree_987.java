@@ -89,7 +89,7 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
 
     // BF approach is to create and collect all tuples(col,row,val) and sort that list by (col,row) and form the res, O(n*log(n))
 
-    // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines), O(n) - space
+    // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines),  O(n) - space
     // In case the tree is a linked list - O(n) - time, subgroups = N, each subgroup consists of only one value
     public List<List<Integer>> verticalTraversalDFS(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
@@ -98,9 +98,10 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
         AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
         helper(map, root, 0, 0, min, max);
 
-        for (int i = min.intValue(); i <= max.intValue(); i++) {
+        // k*n/k*log(n/k) = n*log(n/k) < n*log(n)
+        for (int i = min.intValue(); i <= max.intValue(); i++) { //k
             List<NodeInfo> nodes = map.get(i);
-            nodes.sort(Comparator.comparing(NodeInfo::getRow).thenComparing(NodeInfo::getVal));
+            nodes.sort(Comparator.comparing(NodeInfo::getRow).thenComparing(NodeInfo::getVal)); // n/k*log(n/k)
             List<Integer> temp = new ArrayList<>();
             for (NodeInfo nodeInfo: nodes) {
                 temp.add(nodeInfo.val);

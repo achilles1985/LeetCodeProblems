@@ -1,10 +1,10 @@
 package tree.medium;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
 
 import utils.TreeNode;
 
@@ -35,26 +35,29 @@ public class BinaryTreeRightSideView_199 {
         System.out.println(s.rightSideView(root)); //[1,3,4]
     }
 
-    // O(n) - time, O(h) - space
+    // O(n) - time, O(D) - space, D - diameter of the tree, D=N/2 for complete binary tree
     // The idea is to take the last element on each level
     public List<Integer> rightSideView(TreeNode root) {
         if (root == null) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
-        Queue<TreeNode> queue = new LinkedList<>();
+        List<Integer> res = new ArrayList<>();
+        Deque<TreeNode> queue = new ArrayDeque<>();
         queue.add(root);
-        List<Integer> result = new ArrayList<>();
         while (!queue.isEmpty()) {
             int size = queue.size();
-            Stack<Integer> stack = new Stack<>();
+            res.add(queue.peekLast().val);
             while (size-- > 0) {
                 TreeNode node = queue.poll();
-                stack.push(node.val);
-                if (node.left != null) queue.add(node.left);
-                if (node.right != null) queue.add(node.right);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
             }
-            result.add(stack.pop());
         }
-        return result;
+
+        return res;
     }
 }

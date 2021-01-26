@@ -1,5 +1,8 @@
 package tree.easy;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
 import utils.TreeNode;
 
 /** E
@@ -85,6 +88,30 @@ public class LowestCommonAncestorOfBinarySearchTree_235 {
                 root = root.left;
             } else {
                 return root;
+            }
+        }
+        return null;
+    }
+
+    public TreeNode lowestCommonAncestorIterative2(TreeNode root, TreeNode p, TreeNode q) {
+        if (p == null || q == null) {
+            return null;
+        }
+        TreeNode left = p.val < q.val ? p : q;
+        TreeNode right = p.val > q.val ? p : q;
+
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node.val < left.val) {
+                stack.push(node.right);
+            } else if (node.val > right.val) {
+                stack.push(node.left);
+            } else if (node.val >= left.val && node.val <= right.val) {
+                return node;
             }
         }
         return null;

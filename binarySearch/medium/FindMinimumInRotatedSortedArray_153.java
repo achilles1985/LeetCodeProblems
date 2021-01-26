@@ -29,15 +29,30 @@ public class FindMinimumInRotatedSortedArray_153 {
         System.out.println(s.findMin(new int[]{4,5,6,7,8,9,0,1,2,3})); //0
     }
 
+    // O(n) - time, O(1) - space
+    public int findMinBF(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int min = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] < nums[i-1]) {
+                min = nums[i];
+            }
+        }
+        return min;
+    }
+
+    // O(log(n)) - time, O(1) - space
     public int findMin(int[] nums) {
         int low = 0;
         int high = nums.length - 1;
         while(low < high){
             int mid = (low + high) / 2;
-            if(nums[mid] > nums[high]){
+            if(nums[mid] > nums[high]){ //nums[mid] is definitely not a pivot
                 low = mid + 1;
             } else {
-                high = mid;
+                high = mid; // nums[mid] might be a pivot
             }
         }
         return nums[low];

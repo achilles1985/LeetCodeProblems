@@ -27,6 +27,10 @@ import utils.TreeNode;
  * Output: false
  * Explanation: The root node's value is 5 but its right child's value is 4.
  */
+/*
+    if root > root.left && root < root.right is not enough to tell the tree is valid.
+    root must be < all nodes of the left subtree and > of all nodes on the right subtree.
+ */
 public class ValidateBinarySearchTree_98 {
 
     public static void main(String[] args) {
