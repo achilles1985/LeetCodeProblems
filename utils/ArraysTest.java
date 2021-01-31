@@ -44,6 +44,7 @@ public class ArraysTest {
         list1.add(2);
         // list to array
         int[] ints = list1.stream().mapToInt(i -> i).toArray();
+        Arrays.stream(new int[]{1,2,3}).sum();
 
         // sorting
         final int[] sorted = Arrays.stream(arr)

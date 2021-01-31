@@ -3,7 +3,7 @@ package array.medium;
 import java.util.HashMap;
 import java.util.Map;
 
-/** M [marked]
+/** M [!marked]
  * Given an array nums and a target value k, find the maximum length of a subarray that sums to k. If there isn't one, return 0 instead.
  * Note:
  * The sum of the entire nums array is guaranteed to fit within the 32-bit signed integer range.
@@ -21,13 +21,14 @@ import java.util.Map;
  * Follow Up:
  * Can you do it in O(n) time?
  */
+// https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/discuss/77778/Java-O(n)-explain-how-I-come-up-with-this-idea
 public class MaximumSizeSubarraySumEqualsK_325 {
 
     public static void main(String[] args) {
         MaximumSizeSubarraySumEqualsK_325 s = new MaximumSizeSubarraySumEqualsK_325();
+        System.out.println(s.maxSubArrayLen2(new int[]{-2, -1, 2, 1}, 1)); //2
         System.out.println(s.maxSubArrayLen(new int[]{1, -1, 5, -2, 3}, 3)); //4
         System.out.println(s.maxSubArrayLen(new int[]{1, 0, -1}, -1)); //2
-        System.out.println(s.maxSubArrayLen(new int[]{-2, -1, 2, 1}, 1)); //2
     }
 
     // O(n^2) - time, O(1) - space
@@ -60,11 +61,28 @@ public class MaximumSizeSubarraySumEqualsK_325 {
                     max = Math.max(max, i - map.get(sum-k));
                 }
             }
-            if (!map.containsKey(sum)) {
+            if (!map.containsKey(sum)) { // we should avoid overriding its index as we want the max j - i, so we want to keep i as left as possible
                 map.put(sum, i);
             }
         }
 
         return max == Integer.MIN_VALUE ? 0 : max;
+    }
+
+    public int maxSubArrayLen2(int[] nums, int k) {
+        int max = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum-k)) {
+                max = Math.max(max, i-map.get(sum-k));
+            }
+            if (!map.containsKey(sum)) {
+                map.put(sum, i);
+            }
+        }
+        return max;
     }
 }

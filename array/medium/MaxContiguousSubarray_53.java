@@ -1,6 +1,6 @@
 package array.medium;
 
-/** M [marked]
+/** M [!marked]
  * Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 
  * Example:
@@ -18,13 +18,13 @@ public class MaxContiguousSubarray_53 {
 
     public static void main(String[] args) {
         MaxContiguousSubarray_53 s = new MaxContiguousSubarray_53();
-        System.out.println(s.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
-        System.out.println(s.maxSubArray(new int[]{1})); // 1
-        System.out.println(s.maxSubArray(new int[]{-1})); // -1
+        System.out.println(s.maxSubArrayBF(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
+        System.out.println(s.maxSubArrayBF(new int[]{1})); // 1
+        System.out.println(s.maxSubArrayBF(new int[]{-1})); // -1
 
-        System.out.println(s.maxSubArray2(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
-        System.out.println(s.maxSubArray2(new int[]{1})); // 1
-        System.out.println(s.maxSubArray2(new int[]{-1})); // -1
+        System.out.println(s.maxSubArrayBF2(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
+        System.out.println(s.maxSubArrayBF2(new int[]{1})); // 1
+        System.out.println(s.maxSubArrayBF2(new int[]{-1})); // -1
 
         System.out.println(s.maxSubArray3(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
         System.out.println(s.maxSubArray3(new int[]{1})); // 1
@@ -48,7 +48,7 @@ public class MaxContiguousSubarray_53 {
     }
 
     // O(n^2) - time, O(1) - space
-    public int maxSubArray2(int[] nums) {
+    public int maxSubArrayBF2(int[] nums) {
         int maxSum = nums[0];
         for (int i = 0; i < nums.length; i++) {
             int sum = 0;
@@ -61,7 +61,7 @@ public class MaxContiguousSubarray_53 {
     }
 
     // O(n^3) - time, O(1) - space
-    public int maxSubArray(int[] nums) {
+    public int maxSubArrayBF(int[] nums) {
         int maxSum = nums[0];
         for (int i = 0; i < nums.length; i++) {
             for (int j = i; j < nums.length; j++) {
