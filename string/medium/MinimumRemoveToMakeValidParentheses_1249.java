@@ -1,5 +1,7 @@
 package string.medium;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -40,7 +42,12 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
 
     public static void main(String[] args) {
         MinimumRemoveToMakeValidParentheses_1249 s = new MinimumRemoveToMakeValidParentheses_1249();
+        System.out.println(s.minRemoveToMakeValid("())()(((")); // ()()
+        System.out.println(s.minRemoveToMakeValid("))((")); // ""
         System.out.println(s.minRemoveToMakeValid("lee(t(c)o)de)")); // lee(t(c)o)de
+        System.out.println(s.minRemoveToMakeValid("((())")); // (()))
+        System.out.println(s.minRemoveToMakeValid("((()))))")); // (()))
+
         System.out.println(s.minRemoveToMakeValid("a)b(c)d")); // ab(c)d
         System.out.println(s.minRemoveToMakeValid("))((")); // ""
         System.out.println(s.minRemoveToMakeValid("(a(b(c)d)")); // a(b(c)d)
@@ -85,7 +92,7 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
         return sb.toString();
     }
 
-    // without stacks
+    // O(n) - time, O(1) - space
     public String minRemoveToMakeValid2(String s) {
         // Parse 1: Remove all invalid ")"
         StringBuilder sb = new StringBuilder();

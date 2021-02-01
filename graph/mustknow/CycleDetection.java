@@ -12,6 +12,7 @@ import java.util.Set;
  * Detect cycle in directed graph: https://www.geeksforgeeks.org/detect-cycle-in-a-graph/
  * Detect cycle in undirected graph: https://www.geeksforgeeks.org/detect-cycle-undirected-graph/
  */
+// For cycle detection, color graph can be user, visiting node mark as -1, visited as 1
 public class CycleDetection {
 
     public static void main(String[] args) {

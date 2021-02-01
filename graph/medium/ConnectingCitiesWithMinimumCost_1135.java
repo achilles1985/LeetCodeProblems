@@ -61,7 +61,7 @@ public class ConnectingCitiesWithMinimumCost_1135 {
         int[] parent;
         int size;
 
-        public DisjointSet(int size) {
+        DisjointSet(int size) {
             this.size = size;
             parent = new int[size+1];
             for (int i = 0; i <= size; i++) {

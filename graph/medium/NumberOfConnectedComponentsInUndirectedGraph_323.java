@@ -27,7 +27,10 @@ import java.util.Set;
  thus will not appear together in edges.
  */
 /*
-We do DFS and count how much time we cal dfs from for loop or Union find
+    We do DFS and count how much time we cal dfs from for loop or Union find
+
+    Go to path compression and union by rank gradually
+    https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/discuss/516491/Java-Union-Find-DFS-BFS-Solutions-Complexity-Explain-Clean-code
  */
 public class NumberOfConnectedComponentsInUndirectedGraph_323 {
 

@@ -57,7 +57,7 @@ public class CloneGraph_133 {
         n4.neighbors.add(n1);
 
         Node clone = s.cloneGraph(n1);
-        Node clone2 = s.cloneGraphIterative(n1);
+        Node clone2 = s.cloneGraphBFS(n1);
     }
 
     // O(V+E) - time, O(V) - space (because of visited)
@@ -86,29 +86,6 @@ public class CloneGraph_133 {
             }
         }
         return visited.get(node);
-    }
-
-    // O(V+E) - time, O(V) - space (because of visited)
-    public Node cloneGraphIterative(Node node) {
-        if (node == null) {
-            return null;
-        }
-        Queue<Node> queue = new LinkedList<>();
-        Map<Node, Node> map = new HashMap<>();
-        queue.add(node);
-        map.put(node, new Node(node.val));
-        while (!queue.isEmpty()) {
-            Node n = queue.poll();
-            for (Node child : n.neighbors) {
-                if (!map.containsKey(child)) {
-                    queue.add(child);
-                    map.put(child, new Node(child.val));
-                }
-                map.get(n).neighbors.add(map.get(child));
-            }
-        }
-
-        return map.get(node);
     }
 
     private Node cloneGraphHelper(Node node, Map<Node, Node> visited) {

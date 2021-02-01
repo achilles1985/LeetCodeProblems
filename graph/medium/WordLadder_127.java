@@ -21,7 +21,6 @@ import java.util.*;
  beginWord = "hit",
  endWord = "cog",
  wordList = ["hot","dot","dog","lot","log","cog"]
-
  Output: 5
  Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
  return its length 5.
@@ -31,7 +30,6 @@ import java.util.*;
  beginWord = "hit"
  endWord = "cog"
  wordList = ["hot","dot","dog","lot","log"]
-
  Output: 0
  Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  */
@@ -48,10 +46,36 @@ public class WordLadder_127 {
 
     public static void main(String[] args) {
         WordLadder_127 s = new WordLadder_127();
-
         System.out.println(s.ladderLength("hit", "cog", Arrays.asList("hot","dot","dog","lot","log","cog"))); // 5
         System.out.println(s.ladderLength("hit", "cog", Arrays.asList("hot","dot","dog","lot","log"))); // 0
         System.out.println(s.ladderLength("lost", "miss", Arrays.asList("most","mist","miss","lost","fist", "fish"))); // 4
+    }
+
+    // O(n*m) - time, n - length of the word, m - total number of words. O(n) -space
+    public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<>(wordList);
+        Queue<WordDistance> queue = new LinkedList<>();
+        queue.add(new WordDistance(beginWord, 1));
+        set.add(beginWord);
+        while (!queue.isEmpty()) { //n
+            WordDistance entry = queue.poll();
+            if (entry.getWord().equals(endWord)) {
+                return entry.getDistance();
+            }
+            for (int i = 0; i < entry.getWord().length(); i++) { //len
+                StringBuilder sb = new StringBuilder(entry.getWord());
+                for (int j = 0; j < 26; j++) {
+                    sb.setCharAt(i, (char)(j+'a'));
+                    String newWord = sb.toString();
+                    if (set.contains(newWord)) {
+                        queue.add(new WordDistance(newWord, entry.getDistance() + 1));
+                        set.remove(newWord);
+                    }
+                }
+            }
+        }
+
+        return 0;
     }
 
     // O(n*m) - time, n - length of the word, m - total number of words. O(n) -space
@@ -83,12 +107,29 @@ public class WordLadder_127 {
     }
 
     private static class StringWithDistance {
-        private String word;
-        private int distance;
+        String word;
+        int distance;
 
         StringWithDistance(String word, int distance) {
             this.word = word;
             this.distance = distance;
+        }
+    }
+
+    private static class WordDistance {
+        String word;
+        int distance;
+
+        WordDistance(String word, int distance) {
+            this.word = word;
+            this.distance = distance;
+        }
+
+        String getWord() {
+            return word;
+        }
+        int getDistance() {
+            return distance;
         }
     }
 }

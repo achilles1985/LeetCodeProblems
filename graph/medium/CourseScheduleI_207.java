@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**M
+/**M [marked]
  * There are a total of n courses you have to take, labeled from 0 to n-1.
  * Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is
  * expressed as a pair: [0,1]
@@ -47,43 +47,47 @@ public class CourseScheduleI_207 {
         System.out.println(s.canFinish(4, new int[][]{{1,2},{2,3},{3,4},{4,1}})); // false
     }
 
+    // BF: check cycle for each node (without visited map) O(E+V^2) - time, O(V) - space
+
     // O(V+E) - time, O(V) - space (Cycle detection)
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if (numCourses == 0) {
+        if (numCourses < 0) {
+            return false;
+        }
+        if (prerequisites == null || prerequisites.length == 0) {
             return true;
         }
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int[] edge: prerequisites) {
-            int vertex = edge[0];
-            int child = edge[1];
-            graph.computeIfAbsent(vertex, (v) -> new ArrayList<>()).add(child);
-        }
-        Set<Integer> visited = new HashSet<>();
-        Set<Integer> stack = new HashSet<>();
-        for (int course = 0; course < numCourses; course++) {
-            if (visited.contains(course)) {
-                continue;
-            }
-            if (hasCycle(graph, visited, stack, course)) {
-                return false;
+        Map<Integer, List<Integer>> graph = buildGraph(prerequisites); // E
+        Map<Integer, Integer> visited = new HashMap<>();
+        for (int course = 0; course < numCourses; course++) { // V
+            if (!visited.containsKey(course)) {
+                if (hasCycle(graph, course, visited)) {
+                    return false;
+                }
             }
         }
         return true;
     }
 
-    private boolean hasCycle(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> stack, int node) {
-        if (stack.contains(node)) {
+    private Map<Integer, List<Integer>> buildGraph(int[][] edges) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] edge: edges) {
+            graph.computeIfAbsent(edge[0], key -> new ArrayList<>()).add(edge[1]);
+        }
+        return graph;
+    }
+
+    private boolean hasCycle(Map<Integer, List<Integer>> graph, int node, Map<Integer, Integer> visited) {
+        if (visited.containsKey(node) && visited.get(node) == -1) {
             return true;
         }
-
-        stack.add(node);
-        visited.add(node);
-        for (int child: graph.getOrDefault(node, Collections.emptyList())) {
-            if (hasCycle(graph, visited, stack, child)) {
+        visited.put(node, -1);
+        for (Integer child: graph.getOrDefault(node, Collections.emptyList())) {
+            if (hasCycle(graph, child, visited)) {
                 return true;
             }
         }
-        stack.remove(node);
+        visited.put(node, 1);
 
         return false;
     }

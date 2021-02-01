@@ -1,16 +1,13 @@
 package graph.medium;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 
-import java.util.Stack;
 import utils.SolutionUtils;
 
 /**M
@@ -46,66 +43,69 @@ public class CourseScheduleII_210 {
 
     public static void main(String[] args) {
         CourseScheduleII_210 s = new CourseScheduleII_210();
+        SolutionUtils.print(s.findOrder(2, new int[][]{{1,0}})); //[0,1]
+
         SolutionUtils.print(s.findOrder(4, new int[][]{{1,2},{2,3},{3,4},{4,1}})); // []
         SolutionUtils.print(s.findOrder(3, new int[][]{})); // [0,1,2]
         SolutionUtils.print(s.findOrder(4, new int[][]{{1,0},{2,0},{3,1},{3,2}})); //[0,1,2,3] or [0,2,1,3]
-        SolutionUtils.print(s.findOrder(2, new int[][]{{1,0}})); //[0,1]
         SolutionUtils.print(s.findOrder(3, new int[][]{{1,0}})); // [2,0,1]
 
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         stack.push(1);
         stack.push(2);
-        for (int num: stack) {
-            int a = num;
+        int [] res = new int[stack.size()];
+        int i = 0;
+        // for stack pollFirst() polls the element which returns on pop()
+        while (! stack.isEmpty()) {
+            res[i++] = stack.pollLast();
         }
     }
 
     // O(V+E) - time, O(V) - space, V - number of courses (Topological sort), E - number of dependents
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        if (numCourses <= 0 || prerequisites == null) {
-            return new int[]{0};
-        }
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int i = 0; i < prerequisites.length; i++) {
-            graph.computeIfAbsent(prerequisites[i][0], key -> graph.getOrDefault(key, new ArrayList<>())).add(prerequisites[i][1]);
-        }
-        Set<Integer> visited = new HashSet<>();
-        Set<Integer> recursion = new HashSet<>();
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (visited.contains(i)) {
-                continue;
-            }
-            if (hasCycle(graph, visited, recursion, stack, i)) {
-                return new int[]{};
+        Map<Integer, List<Integer>> graph = buildGraph(prerequisites);
+        Map<Integer, Integer> visited = new HashMap<>();
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int course = 0; course < numCourses; course++) {
+            if (!visited.containsKey(course)) {
+                if (hasCycle(graph, course, stack, visited)) {
+                    return new int[]{};
+                }
             }
         }
-        int size = stack.size();
-        int[] result = new int[size];
+        int[] result = new int[stack.size()];
         int i = 0;
-        for (int num: stack) {
-            result[i++] = num;
+        while (!stack.isEmpty()) {
+            result[i++] = stack.pollLast();
         }
         return result;
     }
 
-    private boolean hasCycle(Map<Integer, List<Integer>> graph, Set<Integer> visited, Set<Integer> recursion, Stack<Integer> stack, Integer node) {
-        if (recursion.contains(node)) {
+    private Map<Integer, List<Integer>> buildGraph(int[][] edges) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] edge: edges) {
+            graph.computeIfAbsent(edge[0], key -> new ArrayList<>()).add(edge[1]);
+        }
+        return graph;
+    }
+
+    private boolean hasCycle(Map<Integer, List<Integer>> graph, int node, Deque<Integer> stack, Map<Integer, Integer> visited) {
+        if (visited.containsKey(node) && visited.get(node) == -1) {
             return true;
         }
-        if (visited.contains(node)) {
+        if (visited.containsKey(node)) { // required, 2, [1,0]
             return false;
         }
-        recursion.add(node);
-        visited.add(node);
+        visited.put(node, -1); // visiting
         for (Integer child: graph.getOrDefault(node, Collections.emptyList())) {
-            if (hasCycle(graph, visited, recursion, stack, child)) {
+            if (hasCycle(graph, child, stack, visited)) {
                 return true;
             }
         }
-        recursion.remove(node);
+        visited.put(node, 1); // visited
         stack.push(node);
 
         return false;
     }
+
 }
