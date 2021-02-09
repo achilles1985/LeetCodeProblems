@@ -1,8 +1,5 @@
 package tree;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import utils.TreeNode;
 
 /**H
@@ -58,18 +55,18 @@ public class BinaryTreeMaximumPathSum_124 {
             return root.val;
         }
         int[] globalMaxHolder = new int[]{Integer.MIN_VALUE};
-        maxPathSumHelper(root, globalMaxHolder);
+        helper(root, globalMaxHolder);
 
         return globalMaxHolder[0];
     }
 
-    private int maxPathSumHelper(TreeNode root, int[] globalMaxHolder) {
+    private int helper(TreeNode root, int[] globalMaxHolder) {
         if (root == null) {
             return 0;
         }
 
-        int left = Math.max(maxPathSumHelper(root.left, globalMaxHolder), 0);
-        int right = Math.max(maxPathSumHelper(root.right, globalMaxHolder), 0);
+        int left = Math.max(helper(root.left, globalMaxHolder), 0);
+        int right = Math.max(helper(root.right, globalMaxHolder), 0);
 
         globalMaxHolder[0] = Math.max(globalMaxHolder[0], left + root.val + right);
 

@@ -31,7 +31,7 @@ public class IntegerToEnglishWords_273 {
 
     public static void main(String[] args) {
         IntegerToEnglishWords_273 s = new IntegerToEnglishWords_273();
-        System.out.println(s.numberToWords(12346789));
+        System.out.println(s.numberToWords(123456789));
 
         System.out.println(s.numberToWords2(40345));
         System.out.println(s.numberToWords2(1_123_456_789));

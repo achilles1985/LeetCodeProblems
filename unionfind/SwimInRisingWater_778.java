@@ -100,23 +100,23 @@ public class SwimInRisingWater_778 {
         int cols = grid[0].length;
         int[][] directions = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
         Queue<int[]> minHeap = new PriorityQueue<>((e1,e2) -> e1[2] - e2[2]);
-        Set<Integer> seen = new HashSet<>();
+        boolean[][] seen = new boolean[rows][cols];
         minHeap.add(new int[]{0,0,grid[0][0]});
         int count = 0;
         while (!minHeap.isEmpty()) {
             int[] cell = minHeap.poll();
-            int index = cell[0]*cols + cell[1];
-            count = Math.max(count, grid[cell[0]][cell[1]]);
-            if (cell[0] == rows-1 && cell[1] == cols-1) {
+            int x = cell[0];
+            int y = cell[1];
+            count = Math.max(count, grid[x][y]);
+            if (x == rows-1 && y == cols-1) {
                 return count;
             }
             for (int[] direction: directions) {
-                int row = cell[0] + direction[0];
-                int col = cell[1] + direction[1];
-                int nextIdx = row*cols + col;
-                if (row >= 0 && row < rows && col >= 0 && col < cols && !seen.contains(nextIdx)) {
-                    minHeap.add(new int[]{row, col, grid[row][col]});
-                    seen.add(index);
+                int newX = x + direction[0];
+                int newY = y + direction[1];
+                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && !seen[newX][newY]) {
+                    minHeap.add(new int[]{newX, newY, grid[newX][newY]});
+                    seen[newX][newY] = true;
                 }
             }
         }

@@ -71,44 +71,6 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
     // O(log(n)) - time, O(1) - space
     public int[] searchRange(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
-            return new int[]{-1, -1};
-        }
-        int[] range = new int[] {-1, -1};
-        int left = 0, right = nums.length - 1;
-        // find left bound index
-        while (left <= right) {
-            int mid = (left + right)/2;
-            if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-
-        if (left < nums.length && nums[left] == target) { // for [2,2,2,2,2], 3 - left can go beyond arr.length
-          range[0] = left;
-        }
-
-        // find right bound index
-        left = 0;
-        right = nums.length - 1;
-        while (left <= right) {
-            int mid = (left + right)/2;
-            if (nums[mid] <= target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        if (right >= 0 && nums[right] == target) { // for [2,2,2,2,2], 1 - right can go beyond 0
-            range[1] = right;
-        }
-
-        return range;
-    }
-
-    public int[] searchRange2(int[] nums, int target) {
-        if (nums == null || nums.length == 0) {
             return new int[]{-1,-1};
         }
 
@@ -140,6 +102,44 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
             }
         }
         if (nums[right] == target) {
+            range[1] = right;
+        }
+
+        return range;
+    }
+
+    public int[] searchRange2(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return new int[]{-1, -1};
+        }
+        int[] range = new int[] {-1, -1};
+        int left = 0, right = nums.length - 1;
+        // find left bound index
+        while (left <= right) {
+            int mid = (left + right)/2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        if (left < nums.length && nums[left] == target) { // for [2,2,2,2,2], 3 - left can go beyond arr.length
+          range[0] = left;
+        }
+
+        // find right bound index
+        left = 0;
+        right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right)/2;
+            if (nums[mid] <= target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (right >= 0 && nums[right] == target) { // for [2,2,2,2,2], 1 - right can go beyond 0
             range[1] = right;
         }
 

@@ -1,4 +1,4 @@
-package bfs;
+package dfs;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -49,40 +49,37 @@ public class NumberOfIslands_200 {
     }
 
     // O(rows*columns) - time, O(min(rows,cols)) - space
-    public int numIslands(char[][] chars) {
-        if (chars == null || chars.length == 0) {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) {
             return 0;
         }
-        int count = 0;
-        for (int i = 0; i < chars.length; i++) {
-            for (int j = 0; j < chars[0].length; j++) {
-                if (chars[i][j] == '1') {
-                    count++;
-                    bfs(i,j,chars);
+        int nr = grid.length;
+        int nc = grid[0].length;
+        int num_islands = 0;
+        for (int r = 0; r < nr; ++r) {
+            for (int c = 0; c < nc; ++c) {
+                if (grid[r][c] == '1') {
+                    ++num_islands;
+                    dfs(grid, r, c);
                 }
             }
         }
-        return count;
+
+        return num_islands;
     }
 
-    private void bfs(int i, int j, char[][] chars) {
-        int[][] directions = new int[][]{{1,0},{-1,0},{0,-1},{0,1}};
-        Queue<int[]> adjacents = new LinkedList<>();
-        adjacents.add(new int[]{i,j});
-        while (!adjacents.isEmpty()) {
-            int[] adjacent = adjacents.poll();
-            int row = adjacent[0];
-            int col = adjacent[1];
-            for (int[] direction: directions) {
-                int nextRow = row + direction[0];
-                int nextCol = col + direction[1];
-                if (nextRow < 0 || nextRow >= chars.length || nextCol < 0 || nextCol >= chars[0].length || chars[nextRow][nextCol] == '0') {
-                    continue;
-                }
-                adjacents.add(new int[]{nextRow, nextCol});
-                chars[nextRow][nextCol] = '0';
-            }
+    private void dfs(char[][] grid, int r, int c) {
+        int nr = grid.length;
+        int nc = grid[0].length;
+
+        if (r < 0 || c < 0 || r >= nr || c >= nc || grid[r][c] == '0') {
+            return;
         }
-    }
 
+        grid[r][c] = '0';
+        dfs(grid, r - 1, c);
+        dfs(grid, r + 1, c);
+        dfs(grid, r, c - 1);
+        dfs(grid, r, c + 1);
+    }
 }

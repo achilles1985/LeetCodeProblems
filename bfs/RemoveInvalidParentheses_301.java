@@ -34,9 +34,9 @@ public class RemoveInvalidParentheses_301 {
 
     public static void main(String[] args) {
         RemoveInvalidParentheses_301 s = new RemoveInvalidParentheses_301();
-        System.out.println(s.removeInvalidParentheses2("()())()")); //["()()()", "(())()"]
-        System.out.println(s.removeInvalidParentheses2("(a)())()")); //["(a)()()", "(a())()"]
-        System.out.println(s.removeInvalidParentheses2(")(")); //[]
+        System.out.println(s.removeInvalidParentheses3("()())()")); //["()()()", "(())()"]
+        System.out.println(s.removeInvalidParentheses3("(a)())()")); //["(a)()()", "(a())()"]
+        System.out.println(s.removeInvalidParentheses3(")(")); //[]
     }
 
     // O(n*2^n or n*n!) - time, 2^n - all possible strings, O(?) - space, probably n!
@@ -112,6 +112,43 @@ public class RemoveInvalidParentheses_301 {
         return results;
     }
 
+    public List<String> removeInvalidParentheses3(String s) {
+        if (s == null || s.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Set<String> visited = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.add(s);
+        visited.add(s);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<String> temp = new ArrayList<>();
+            while (size-- > 0) {
+                String curr = queue.poll();
+                if (isValid(curr)) {
+                    temp.add(curr);
+                }
+                for (int i = 0; i < curr.length(); i++) {
+                    char toRemove = curr.charAt(i);
+                    if (toRemove != ')' && toRemove !='(') {
+                        continue;
+                    }
+                    String start = curr.substring(0,i);
+                    String end = curr.substring(i+1);
+                    String newStr = start + end;
+                    if (!visited.contains(newStr)) {
+                        queue.add(newStr);
+                        visited.add(newStr);
+                    }
+                }
+            }
+            if (!temp.isEmpty()) {
+                return temp;
+            }
+        }
+        return Collections.emptyList();
+    }
+
     private boolean isValid(String str) {
         int count = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -126,4 +163,5 @@ public class RemoveInvalidParentheses_301 {
         }
         return count == 0;
     }
+
 }

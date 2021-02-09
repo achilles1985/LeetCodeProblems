@@ -1,0 +1,13 @@
+1)
+Given a floor plan, which includes the rooms ('O'), the obstacles ('X') and a robot vacuum ('R'),
+your goal is to return the set of rooms that are farthest from the robot vacuum (when the robot takes the shortest path).
+  The robot vacuum only move vertically and horizontally (not diagonally). So for instance an example floor plan is
+
+    0 1 2 3 4
+0   4 3 4 5 6
+1   3 2 3 4 5
+2   2 1 X 5 6
+3   1 R X 6 (this)
+4   2 1 X (this) X
+
+For which the answers include (4, 3) and (3, 4) (i.e the two tiles in the  bottom right corner) having the distance of 7.

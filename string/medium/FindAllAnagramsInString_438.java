@@ -33,14 +33,27 @@ public class FindAllAnagramsInString_438 {
 
     public static void main(String[] args) {
         FindAllAnagramsInString_438 s = new FindAllAnagramsInString_438();
-        System.out.println(s.findAnagrams3("cbaebabacd", "abc")); //[0,6]
-        System.out.println(s.findAnagrams3("aaaaaaaaaa", "aaaaaaaaaaaaa")); //[0,6]
-        System.out.println(s.findAnagrams3("", "a"));//[0,1,2]
-        System.out.println(s.findAnagrams3("abab", "ab"));//[0,1,2]
+        System.out.println(s.findAnagrams("cbaebabacd", "abc")); //[0,6]
+        System.out.println(s.findAnagrams("aaaaaaaaaa", "aaaaaaaaaaaaa")); //[0,6]
+        System.out.println(s.findAnagrams("", "a"));//[0,1,2]
+        System.out.println(s.findAnagrams("abab", "ab"));//[0,1,2]
+    }
+
+    // O(n*m) - time, O(1) - space (no rehash)
+    public List<Integer> findAnagramsBF(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        String patternHash = hash(p, 0, p.length());
+        for (int i = 0; i <= s.length() - p.length(); i++) {
+            String stringHash = hash(s, i, p.length());
+            if (patternHash.equals(stringHash)) {
+                list.add(i);
+            }
+        }
+        return list;
     }
 
     // O(n + m) - time, O(1) - space (with rehashing)
-    public List<Integer> findAnagrams3(String s, String p) {
+    public List<Integer> findAnagrams(String s, String p) {
         int sL = s.length(), pL = p.length();
         if (sL < pL) {
             return new ArrayList();
@@ -107,20 +120,6 @@ public class FindAllAnagramsInString_438 {
         }
 
         return chars;
-    }
-
-    // O(n*m) - time, O(1) - space (no rehash)
-    public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> list = new ArrayList<>();
-        String patternHash = hash(p, 0, p.length());
-        for (int i = 0; i <= s.length() - p.length(); i++) {
-            String stringHash = hash(s, i, p.length());
-            if (patternHash.equals(stringHash)) {
-                list.add(i);
-            }
-        }
-
-        return list;
     }
 
     private String hash(String p, int start, int end) {

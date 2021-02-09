@@ -116,7 +116,8 @@ public class RegularExpressionMatching_10 {
         //if next character is not * means either current value at pattern and text should be same
         //or current value at pattern should be . in which case you can skip one character of text
         if(pPattern == pattern.length - 1 || pattern[pPattern+1] != '*') {
-            return (pInput < text.length && (text[pInput] == pattern[pPattern] || pattern[pPattern] == '.')) && matchRegexRecursive(text, pattern, pInput+1, pPattern+1);
+            return (pInput < text.length && (text[pInput] == pattern[pPattern] || pattern[pPattern] == '.'))
+                    && matchRegexRecursive(text, pattern, pInput+1, pPattern+1);
         }
 
         //if we have case like abc and ad*bc so here we totally skip d*

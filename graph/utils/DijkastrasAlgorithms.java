@@ -55,7 +55,7 @@ public class DijkastrasAlgorithms {
             for (int i = 0; i < graph.length; i++) {
                 if (!visited[i]) {
                     int newWeight = weights[vertex] + graph[vertex][i];
-                    if (graph[vertex][i] != 0 && weights[i] > newWeight) {
+                    if (graph[vertex][i] != 0 && newWeight < weights[i]) {
                         weights[i] = newWeight;
                         heap.add(new int[] {i, newWeight});
                     }

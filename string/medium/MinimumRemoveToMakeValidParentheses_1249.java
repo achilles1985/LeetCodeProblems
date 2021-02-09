@@ -1,7 +1,5 @@
 package string.medium;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -42,8 +40,9 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
 
     public static void main(String[] args) {
         MinimumRemoveToMakeValidParentheses_1249 s = new MinimumRemoveToMakeValidParentheses_1249();
-        System.out.println(s.minRemoveToMakeValid("())()(((")); // ()()
         System.out.println(s.minRemoveToMakeValid("))((")); // ""
+
+        System.out.println(s.minRemoveToMakeValid("())()(((")); // ()()
         System.out.println(s.minRemoveToMakeValid("lee(t(c)o)de)")); // lee(t(c)o)de
         System.out.println(s.minRemoveToMakeValid("((())")); // (()))
         System.out.println(s.minRemoveToMakeValid("((()))))")); // (()))
@@ -52,14 +51,14 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
         System.out.println(s.minRemoveToMakeValid("))((")); // ""
         System.out.println(s.minRemoveToMakeValid("(a(b(c)d)")); // a(b(c)d)
 
-        System.out.println(s.minRemoveToMakeValid2("((())")); // "(())"
-        System.out.println(s.minRemoveToMakeValid2("(()))")); // "(())"
-        System.out.println(s.minRemoveToMakeValid2("))((")); // ""
-        System.out.println(s.minRemoveToMakeValid2("(a(b(c)d)")); // a(b(c)d)
+        System.out.println(s.minRemoveToMakeValid("((())")); // "(())"
+        System.out.println(s.minRemoveToMakeValid("(()))")); // "(())"
+        System.out.println(s.minRemoveToMakeValid("))((")); // ""
+        System.out.println(s.minRemoveToMakeValid("(a(b(c)d)")); // a(b(c)d)
     }
 
     // O(n) - time, space
-    public String minRemoveToMakeValid(String s) {
+    public String minRemoveToMakeValidBF(String s) {
         if (s == null || s.isEmpty()) {
             return s;
         }
@@ -93,7 +92,7 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
     }
 
     // O(n) - time, O(1) - space
-    public String minRemoveToMakeValid2(String s) {
+    public String minRemoveToMakeValid(String s) {
         // Parse 1: Remove all invalid ")"
         StringBuilder sb = new StringBuilder();
         int openSeen = 0;
@@ -115,17 +114,18 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
         // Parse 2: Remove the rightmost "("
         StringBuilder result = new StringBuilder();
         int openToKeep = openSeen - balance;
-        for (int i = 0; i < sb.length(); i++) {
+        for (int i = 0; i < sb.length(); i++) { // we cannot traverse via the same sb, that's why instantiated result
             char c = sb.charAt(i);
             if (c == '(') {
                 openToKeep--;
-                if (openToKeep < 0) {
-                    continue;
-                }
+            }
+            if (c == '(' && openToKeep < 0) {
+                continue;
             }
             result.append(c);
         }
 
         return result.toString();
     }
+
 }

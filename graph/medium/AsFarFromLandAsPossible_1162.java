@@ -37,10 +37,10 @@ public class AsFarFromLandAsPossible_1162 {
                 {0,0,1,0,1},
                 {0,0,0,0,0},
                 {1,0,0,0,1}})); //2
-        System.out.println(s.maxDistance3(new int[][]{
+        System.out.println(s.maxDistance(new int[][]{
                 {1,0,1},
                 {0,0,0},
-                {1,0,0}})); //2
+                {1,0,1}})); //2
         System.out.println(s.maxDistance3(new int[][]{
                 {1,0,0},
                 {0,0,0},
@@ -162,6 +162,57 @@ public class AsFarFromLandAsPossible_1162 {
         public Coordinate(int x, int y) {
             this.x = x;
             this.y = y;
+        }
+    }
+
+    public int maxDistance(int[][] grid) {
+        if (grid == null || grid.length == 0) {
+            return -1;
+        }
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        Queue<Holder> queue = new LinkedList<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1) {
+                    queue.add(new Holder(i,j,1));
+                    visited[i][j] = true;
+                }
+            }
+        }
+        int[][] distances = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        int max = -1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                Holder curr = queue.poll();
+                if (curr.distance > max) {
+                    max = curr.distance;
+                }
+                for (int[] distance: distances) {
+                    int newX = curr.x + distance[0];
+                    int newY = curr.y + distance[1];
+                    int newDistance = Math.abs(newX-curr.x) + Math.abs(newY-curr.y);
+                    if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && !visited[newX][newY]) {
+                        queue.add(new Holder(newX, newY, newDistance));
+                        visited[newX][newY] = true;
+                    }
+                }
+            }
+        }
+        return max;
+    }
+
+    private static class Holder {
+        int x;
+        int y;
+        int distance;
+
+        Holder(int x, int y, int distance) {
+            this.x = x;
+            this.y = y;
+            this.distance = distance;
         }
     }
 }

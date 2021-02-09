@@ -66,7 +66,7 @@ public class WallsAndGates_286 {
         s.wallsAndGates(rooms2); // [[0,-1],[1,2]]
     }
 
-    // BFS approach. O(rows*cols) - time, space
+    // BFS approach. O(rows*cols) - time, O(rows*cols) - space, in case when all cells are gates
     public void wallsAndGatesBFS(int[][] rooms) {
         if (rooms == null || rooms.length == 0) {
             return;
