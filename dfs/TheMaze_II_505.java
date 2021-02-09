@@ -1,6 +1,8 @@
 package dfs;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**M
  * There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down,
@@ -68,6 +70,7 @@ public class TheMaze_II_505 {
         }, new int[]{0,4}, new int[]{3,2})); // -1
     }
 
+    // O(m*n*max(m,n)) - time, O(m*n) - space
     public int shortestDistance(int[][] maze, int[] start, int[] destination) {
         int[][] distances = new int[maze.length][maze[0].length];
         for (int[] distance: distances) {
@@ -77,6 +80,43 @@ public class TheMaze_II_505 {
         dfs(maze, start, distances);
 
         return distances[destination[0]][destination[1]] == Integer.MAX_VALUE ? -1 : distances[destination[0]][destination[1]];
+    }
+
+    // O(m*n*log(m*n)) - time, O(m*n) - space
+    public int shortestDistance2(int[][] maze, int[] start, int[] dest) {
+        int[][] distance = new int[maze.length][maze[0].length];
+        for (int[] row: distance) {
+            Arrays.fill(row, Integer.MAX_VALUE);
+        }
+        distance[start[0]][start[1]] = 0;
+        dijkstra(maze, start, distance);
+
+        return distance[dest[0]][dest[1]] == Integer.MAX_VALUE ? -1 : distance[dest[0]][dest[1]];
+    }
+
+    private void dijkstra(int[][] maze, int[] start, int[][] distance) {
+        int[][] dirs={{0,1},{0,-1},{-1,0},{1,0}};
+        Queue<int[] > queue = new PriorityQueue< >((a, b) -> a[2] - b[2]);
+        queue.offer(new int[]{start[0],start[1],0});
+        while (!queue.isEmpty()) {
+            int[] s = queue.poll();
+            if(distance[s[0]][s[1]] < s[2])
+                continue;
+            for (int[] dir: dirs) {
+                int x = s[0] + dir[0];
+                int y = s[1] + dir[1];
+                int count = 0;
+                while (x >= 0 && y >= 0 && x < maze.length && y < maze[0].length && maze[x][y] == 0) {
+                    x += dir[0];
+                    y += dir[1];
+                    count++;
+                }
+                if (distance[s[0]][s[1]] + count < distance[x - dir[0]][y - dir[1]]) {
+                    distance[x - dir[0]][y - dir[1]] = distance[s[0]][s[1]] + count;
+                    queue.offer(new int[]{x - dir[0], y - dir[1], distance[x - dir[0]][y - dir[1]]});
+                }
+            }
+        }
     }
 
     private void dfs(int[][] maze, int[] start, int[][] distances) {
@@ -90,7 +130,7 @@ public class TheMaze_II_505 {
                 nextCol += direction[1];
                 count++;
             }
-            if (distances[nextRow - direction[0]][nextCol - direction[1]] > distances[start[0]][start[1]] + count) {
+            if (distances[start[0]][start[1]] + count < distances[nextRow - direction[0]][nextCol - direction[1]]) {
                 distances[nextRow - direction[0]][nextCol - direction[1]] = distances[start[0]][start[1]] + count;
                 dfs(maze, new int[]{nextRow - direction[0], nextCol - direction[1]}, distances);
             }

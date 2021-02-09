@@ -56,7 +56,7 @@ public class TheMaze_490 {
 
     public static void main(String[] args) {
         TheMaze_490 s = new TheMaze_490();
-        System.out.println(s.hasPath(new int[][]{
+        System.out.println(s.hasPath2(new int[][]{
                 {0,0,1,0,0},
                 {0,0,0,0,0},
                 {0,0,0,1,0},
@@ -77,13 +77,13 @@ public class TheMaze_490 {
         int[][] directions = new int[][]{{1,0},{-1,0},{0,-1},{0,1}};
         boolean[][] visited = new boolean[maze.length][maze[0].length];
 
-        Queue<int[]> neighbors = new LinkedList<>();
-        neighbors.add(start);
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(start);
         visited[start[0]][start[1]] = true;
-        while (!neighbors.isEmpty()) {
-            int size = neighbors.size();
+        while (!queue.isEmpty()) {
+            int size = queue.size();
             while (size-- > 0) {
-                int[] cell = neighbors.poll();
+                int[] cell = queue.poll();
                 int row = cell[0];
                 int col = cell[1];
                 if (row == destination[0] && col == destination[1]) {
@@ -97,7 +97,7 @@ public class TheMaze_490 {
                         nextCol += direction[1];
                     }
                     if (!visited[nextRow - direction[0]][nextCol - direction[1]]) {
-                        neighbors.add(new int[]{nextRow - direction[0], nextCol - direction[1]});
+                        queue.add(new int[]{nextRow - direction[0], nextCol - direction[1]});
                         visited[nextRow - direction[0]][nextCol - direction[1]] = true;
                     }
                 }
@@ -106,6 +106,43 @@ public class TheMaze_490 {
         return false;
     }
 
+    public boolean hasPath2(int[][] maze, int[] start, int[] destination) {
+        return bfs(maze, start[0], start[1], destination);
+    }
+
+    private boolean bfs(int[][] maze, int startX, int startY, int[] destination) {
+        int rows = maze.length;
+        int cols = maze[0].length;
+        int[][] dirs = new int[][]{{1,0},{-1,0},{0,-1},{0,1}};
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] seen = new boolean[rows][cols];
+        queue.add(new int[]{startX, startY});
+        seen[startX][startY] = true;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int[] curr = queue.poll();
+                int x = curr[0];
+                int y = curr[1];
+                if (x == destination[0] && y == destination[1]) {
+                    return true;
+                }
+                for (int[] dir: dirs) {
+                    int newX = x + dir[0];
+                    int newY = y + dir[1];
+                    while (newX >= 0 && newX < rows && newY >= 0 && newY < cols && maze[newX][newY] == 0) {
+                        newX += dir[0];
+                        newY += dir[1];
+                    }
+                    if (!seen[newX-dir[0]][newY-dir[1]]) {
+                        queue.add(new int[]{newX-1, newY-1});
+                        seen[newX-dir[0]][newY-dir[1]] = true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 
 }

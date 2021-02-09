@@ -104,14 +104,14 @@ public class NumberOfIslands_200 {
             }
         }
 
-        int find(int x) { // with path compression
+        int find(int x) { // with path compression, O(1) - time
             if (parent[x] != x) {
                 parent[x] = find(parent[x]);
             }
             return parent[x];
         }
 
-        void union(int x, int y) {
+        void union(int x, int y) { //union by rank, O(1) - time
             int p1 = find(x);
             int p2 = find(y);
             if (p1 != p2) {

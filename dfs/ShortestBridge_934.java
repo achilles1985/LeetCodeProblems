@@ -52,65 +52,60 @@ public class ShortestBridge_934 {
 
     // O(n*m) - time, space
     public int shortestBridge(int[][] A) {
-        int[] firstIsland = new int[2];
-        boolean found = false;
-        for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < A[0].length; j++) {
-                if (A[i][j] == 1 && !found) {
-                    firstIsland = new int[]{i,j};
-                    found = true;
-                }
-            }
+        if (A == null || A.length == 0) {
+            return -1;
         }
-
-        dfs(firstIsland[0], firstIsland[1], A);
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < A[0].length; j++) {
-                if (A[i][j] == 1) {
-                    min = Math.min(min, bfs(i,j,A));
-                }
-            }
-        }
-        return min;
-    }
-
-    private void dfs(int i, int j, int[][] matrix) {
-        if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || matrix[i][j] == 0 || matrix[i][j] == -1) {
-            return;
-        }
-        matrix[i][j] = -1;
-        dfs(i, j + 1, matrix);
-        dfs(i + 1, j, matrix);
-        dfs(i, j - 1, matrix);
-        dfs(i - 1, j, matrix);
-    }
-
-    private int bfs(int i, int j, int[][] matrix) {
-        int[][] directions = new int[][] {{0,1},{1,0},{0,-1},{-1,0}};
-        Queue<int[]> neighbors = new LinkedList<>();
-        neighbors.add(new int[]{i,j});
-        int levels = -1;
-        while (!neighbors.isEmpty()) {
-            int size = neighbors.size();
+        int rows = A.length;
+        int cols = A[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        findFirstIsland(A, queue); // find first island and mark all cells as visited and add them to the queue
+        int[][] directions = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        int level = 0;
+        while (!queue.isEmpty()) { // bfs from all cells of the second island at once till find second island
+            int size = queue.size();
             while (size-- > 0) {
-                int[] cell = neighbors.poll();
-                int row = cell[0];
-                int col = cell[1];
-                if (matrix[row][col] == -1) {
-                    return levels;
-                }
+                int[] curr = queue.poll();
                 for (int[] direction: directions) {
-                    int nextRow = row + direction[0];
-                    int nextCol = col + direction[1];
-                    if (nextRow >= 0 && nextRow < matrix.length && nextCol >= 0 && nextCol < matrix[0].length) {
-                        neighbors.add(new int[]{nextRow, nextCol});
+                    int newX = curr[0] + direction[0];
+                    int newY = curr[1] + direction[1];
+                    if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && A[newX][newY] != -1) {
+                        if (A[newX][newY] == 1) {
+                            return level;
+                        }
+                        queue.add(new int[]{newX,newY});
+                        A[newX][newY] = -1;
                     }
                 }
             }
-            levels++;
+            level++;
         }
+        return -1;
+    }
 
-        return levels;
+    private void findFirstIsland(int[][] grid, Queue<int[]> queue) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1) {
+                    dfs(grid,queue,i,j);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void dfs(int[][] grid, Queue<int[]> queue, int i, int j) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        if (i < 0 || i == rows || j < 0 || j == cols || grid[i][j] == -1 || grid[i][j] == 0) {
+            return;
+        }
+        queue.add(new int[]{i,j});
+        grid[i][j] = -1;
+        dfs(grid,queue,i,j+1);
+        dfs(grid,queue,i+1,j);
+        dfs(grid,queue,i,j-1);
+        dfs(grid,queue,i-1,j);
     }
 }

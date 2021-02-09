@@ -27,8 +27,9 @@ public class IntersectionOfTwoArrays_349 {
 
     public static void main(String[] args) {
         IntersectionOfTwoArrays_349 s = new IntersectionOfTwoArrays_349();
-        SolutionUtils.print(s.intersection(new int[] {1,2,2,1}, new int[] {2,2})); // [2]
-        SolutionUtils.print(s.intersection(new int[] {4,9,5}, new int[] {9,4,9,8,4})); // [9,4]
+        SolutionUtils.print(s.intersection2(new int[] {4,3,9,3,1,9,7,6,9,7}, new int[] {5,0,8})); // []
+        SolutionUtils.print(s.intersection2(new int[] {1,2,2,1}, new int[] {2,2})); // [2]
+        SolutionUtils.print(s.intersection2(new int[] {4,9,5}, new int[] {9,4,9,8,4})); // [9,4]
     }
 
     // O(m+n) - time, O(m+n) - space
@@ -64,5 +65,36 @@ public class IntersectionOfTwoArrays_349 {
         }
 
         return Arrays.copyOf(res, k);
+    }
+
+    // Incorrect, try to sort arrays and go with O(1) space
+    public int[] intersection2(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int first = 0, second = 0;
+        int size = Math.min(nums1.length, nums2.length);
+        int[] temp = new int[size];
+        int k = 0;
+        while (first < nums1.length && second < nums2.length) {
+            if (nums1[first] < nums2[second]) {
+                first++;
+            } else if (nums2[second] < nums1[first]) {
+                second++;
+            } else {
+                temp[k++] = nums1[first];
+                first++;
+                second++;
+            }
+        }
+        int i = 0, j = 1;
+        for (; j < k; j++) {
+            if (temp[i] != temp[j]) {
+                temp[++i] = temp[j];
+            }
+        }
+        if (j == 1) {
+            return new int[]{};
+        }
+        return Arrays.copyOf(temp, i+1);
     }
 }

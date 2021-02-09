@@ -80,6 +80,16 @@ public class NumberOfDistinctIslands_694 {
     }
 
     private void dfs(int i, int j, StringBuilder sb, int[][] grid) {
+        if (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1) {
+            grid[i][j] = 0;
+            dfs2(i, j + 1, sb.append("r"), grid);
+            dfs2(i + 1, j, sb.append("d"), grid);
+            dfs2(i, j - 1, sb.append("l"), grid);
+            dfs2(i - 1, j, sb.append("u"), grid);
+        }
+    }
+
+    private void dfs2(int i, int j, StringBuilder sb, int[][] grid) {
         if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) {
             sb.deleteCharAt(sb.length()-1);
             return;
@@ -90,15 +100,5 @@ public class NumberOfDistinctIslands_694 {
         dfs(i, j-1, sb.append("l"), grid);
         dfs(i-1, j, sb.append("u"), grid);
         sb.append("b"); // explored all ways, backtrack
-    }
-
-    private void dfs2(int i, int j, StringBuilder sb, int[][] grid) {
-        if (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1) {
-            grid[i][j] = 0;
-            dfs2(i, j + 1, sb.append("r"), grid);
-            dfs2(i + 1, j, sb.append("d"), grid);
-            dfs2(i, j - 1, sb.append("l"), grid);
-            dfs2(i - 1, j, sb.append("u"), grid);
-        }
     }
 }

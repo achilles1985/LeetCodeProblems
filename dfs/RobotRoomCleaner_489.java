@@ -52,40 +52,34 @@ import java.util.Set;
  */
 public class RobotRoomCleaner_489 {
 
-    private int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-    private Set<String> visited = new HashSet();
-    private Robot robot;
-
-    // O(4^c)) - time, O(c) - space, c - number of cell to clean
+    // O(cells) - time (need to visit each cell exactly once), O(cells) - space (because of HasSet)
     public void cleanRoom(Robot robot) {
-        this.robot = robot;
-        backtrack(0, 0, 0);
+        dfs(robot, 0, 0, 0, new HashSet<>());
     }
 
-    private void goBack() {
+    // [x, y] is the relative position from the initial point
+    private void dfs(Robot robot, int x, int y, int curDir, Set<String> visited) {
+        int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        robot.clean();
+        visited.add(x + "," + y);
+        for (int i = 0; i < 4; i++) {
+            int nextDir = (curDir + i) % 4;
+            int newX = x + dirs[nextDir][0];
+            int newY = y + dirs[nextDir][1];
+            if (!visited.contains(newX + "," + newY) && robot.move()) {
+                dfs(robot, newX, newY, nextDir, visited);
+            }
+            robot.turnRight();
+        }
+        goBack(robot);
+    }
+
+    private void goBack(Robot robot) {
         robot.turnRight();
         robot.turnRight();
         robot.move();
         robot.turnRight();
         robot.turnRight();
-    }
-
-    private void backtrack(int row, int col, int d) {
-        visited.add(row + "," + col);
-        robot.clean();
-        // going clockwise : 0: 'up', 1: 'right', 2: 'down', 3: 'left'
-        for (int i = 0; i < 4; ++i) {
-            int newD = (d + i) % 4;
-            int newRow = row + directions[newD][0];
-            int newCol = col + directions[newD][1];
-
-            if (!visited.contains(newRow + "," + newCol) && robot.move()) {
-                backtrack(newRow, newCol, newD);
-                goBack();
-            }
-            // turn the robot following chosen direction : clockwise
-            robot.turnRight();
-        }
     }
 
     private interface Robot {

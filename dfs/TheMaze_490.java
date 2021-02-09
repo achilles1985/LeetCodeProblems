@@ -135,26 +135,26 @@ public class TheMaze_490 {
     public boolean hasPath2(int[][] maze, int[] start, int[] destination) {
         int[][] directions = new int[][]{{1,0},{-1,0},{0,-1},{0,1}};
         boolean[][] visited = new boolean[maze.length][maze[0].length];
-        return dfs2(maze, start, destination, directions, visited);
+        return dfs2(maze, start[0], start[1], destination, directions, visited);
     }
 
-    private boolean dfs2(int[][] maze, int[] start, int[] destination, int[][] directions, boolean[][] visited) {
-        if (visited[start[0]][start[1]]) {
+    private boolean dfs2(int[][] maze, int x, int y, int[] destination, int[][] directions, boolean[][] visited) {
+        if (visited[x][y]) {
             return false;
         }
-        if (start[0] == destination[0] && start[1] == destination[1]) {
+        if (x == destination[0] && y == destination[1]) {
             return true;
         }
 
-        visited[start[0]][start[1]] = true;
+        visited[x][y] = true;
         for (int[] direction: directions) {
-            int nextX = start[0] + direction[0];
-            int nextY = start[1] + direction[1];
-            while (nextX >=0 && nextX < maze.length && nextY >= 0 && nextY < maze[0].length && maze[nextX][nextY] != 1) { // Go in one direction till the wall.
+            int nextX = x + direction[0];
+            int nextY = y + direction[1];
+            while (nextX >=0 && nextX < maze.length && nextY >= 0 && nextY < maze[0].length && maze[nextX][nextY] == 0) { // Go in one direction till the wall.
                 nextX += direction[0];
                 nextY += direction[1];
             }
-            if (dfs2(maze, new int[]{nextX - direction[0], nextY - direction[1]}, destination, directions, visited)) { // Checks if there is a ball at the wall.
+            if (dfs2(maze, nextX - direction[0], nextY - direction[1], destination, directions, visited)) { // Checks if there is a ball at the wall.
                 return true;
             }
         }
