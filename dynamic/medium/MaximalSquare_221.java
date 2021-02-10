@@ -71,6 +71,44 @@ public class MaximalSquare_221 {
         return max*max;
     }
 
+    // O(n^2) - time, O(n^2) - space
+    public int maximalSquare(char[][] matrix) {
+        if (matrix == null || matrix.length == 0) {
+            return 0;
+        }
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] dp = new int[rows][cols];
+        int max = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] == '1') {
+                    int local = dfs(matrix,i,j,dp);
+                    max = Math.max(max, local);
+                }
+            }
+        }
+
+        return max*max;
+    }
+
+    private int dfs(char[][] matrix, int i, int j, int[][] dp) {
+        if (i < 0 || i == matrix.length || j < 0 || j == matrix[0].length || matrix[i][j] == '0') {
+            return 0;
+        }
+        if (dp[i][j] != 0) {
+            return dp[i][j];
+        }
+        int right = dfs(matrix,i,j+1,dp);
+        int down = dfs(matrix,i+1,j,dp);
+        int rightDown = dfs(matrix,i+1,j+1,dp);
+
+        int min = Math.min(rightDown,Math.min(right,down)) + 1;
+        dp[i][j] = min;
+
+        return min;
+    }
+
     // O(n^2) - time, O(1) - space
     public int maximalSquareDP(char[][] matrix) {
         int rows = matrix.length;
@@ -129,38 +167,4 @@ public class MaximalSquare_221 {
         return max * max;
     }
 
-    public int maximalSquareTopDown(char[][] matrix) {
-        int max = 0;
-        Map<String, Integer> map = new HashMap<>();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                if (matrix[i][j] == '1') {
-                    int localMax = squareSubmatrixDynamicTopDownUtils(matrix, i, j, map);
-                    max = Math.max(max, localMax);
-                }
-            }
-        }
-
-        return max * max;
-    }
-
-    private int squareSubmatrixDynamicTopDownUtils(char[][] m, int i, int j, Map<String, Integer> map) {
-        if (i == m.length || j == m[0].length || m[i][j] == '0') {
-            return 0;
-        }
-
-        String key = i + ":" + j;
-        if (map.containsKey(key)) {
-            return map.get(key);
-        }
-
-        int m1 = squareSubmatrixDynamicTopDownUtils(m, i, j + 1, map);
-        int m2 = squareSubmatrixDynamicTopDownUtils(m, i + 1, j + 1, map);
-        int m3 = squareSubmatrixDynamicTopDownUtils(m, i + 1, j, map);
-        int min = 1 + Math.min(Math.min(m1, m2), m3);
-
-        map.put(key, min);
-
-        return min;
-    }
 }

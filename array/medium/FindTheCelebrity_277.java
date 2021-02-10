@@ -36,6 +36,12 @@ package array.medium;
  */
 /* The knows API is defined in the parent class Relation.
       boolean knows(int a, int b); */
+/*
+    Questions:
+    1. Is going to be only one celebrity? Any duplicate nodes?
+*/
+
+// https://leetcode.com/problems/find-the-celebrity/solution/
 public class FindTheCelebrity_277 {
 
     // O(n^2) - time, O(1) - space
@@ -44,6 +50,20 @@ public class FindTheCelebrity_277 {
             if (isCelebrity(i, n)) {
                 return i;
             }
+        }
+        return -1;
+    }
+
+    // O(n) - time, O(1) - space
+    public int findCelebrity(int n) {
+        int celebrityCandidate = 0;
+        for (int i = 1; i < n; i++) { // we can eliminate nodes that are not celebrity for sure
+            if (knows(celebrityCandidate, i)) {
+                celebrityCandidate = i;
+            }
+        }
+        if (isCelebrity(celebrityCandidate, n)) { // check if the candidate is a celebrity
+            return celebrityCandidate;
         }
         return -1;
     }
