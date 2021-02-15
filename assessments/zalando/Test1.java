@@ -1,13 +1,14 @@
 package assessments.zalando;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Test1 {
 
     public static void main(String[] args) {
         Test1 s = new Test1();
-        System.out.println(s.solution2(new int[]{0,4,-1,0,3}, new int[]{0,-2,5,0,3})); //0
+        System.out.println(s.solution2(new int[]{0,4,-1,0,3}, new int[]{0,-2,5,0,3})); //2
         System.out.println(s.solution2(new int[]{2,-2,-3,3}, new int[]{0,0,4,-4})); //1
         //System.out.println(s.solution2(new int[]{4, -1, 0, 3}, new int[]{-2, 6, 0, 4})); //0
         //System.out.println(s.solution3(3,2, new int[]{2,1,1,0,1}));
@@ -79,6 +80,7 @@ public class Test1 {
         return upper.toString() + "," + lower.toString();
     }
 
+    // O(n) - time, O(1) - space
     public int solution2(int[] A, int[] B) {
         List<Integer> indexesA = findFairIndex(A);
         List<Integer> indexesB = findFairIndex(B);
@@ -89,11 +91,13 @@ public class Test1 {
 
     private List<Integer> findFairIndex(int[] nums) {
         List<Integer> result = new ArrayList<>();
-        int[] prefixSum = calculatePrefixSum(nums);
-        for (int i = 1; i < nums.length - 1; i++) {
-            if (prefixSum[i] == (prefixSum[nums.length - 1] - prefixSum[i])) {
+        int sum = Arrays.stream(nums).sum();
+        int leftSum = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (leftSum == (sum - leftSum)) {
                 result.add(i);
             }
+            leftSum += nums[i];
         }
         return result;
     }

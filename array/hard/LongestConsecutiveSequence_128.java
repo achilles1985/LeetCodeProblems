@@ -26,11 +26,11 @@ public class LongestConsecutiveSequence_128 {
         System.out.println(s.longestConsecutive3(new int[]{0,3,7,2,5,8,4,6,0,1})); // 9
         System.out.println(s.longestConsecutive3(new int[]{100,4,200,1,3,2})); // 4 [1,2,3,4]
 
-        System.out.println(s.longestConsecutive2(new int[]{2,1,3,5,10,11,12})); // 7
-        System.out.println(s.longestConsecutive2(new int[]{9,1,4,7,3,-1,0,5,8,-1,6})); // 7
-        System.out.println(s.longestConsecutive2(new int[]{9,1,4,7,3,-1,0,5,8,-1,6})); // 7
-        System.out.println(s.longestConsecutive2(new int[]{100,4,101,102,200,1,3,2})); // 4 [1,2,3,4]
-        System.out.println(s.longestConsecutive2(new int[]{1,2,0,1})); // 3
+        System.out.println(s.longestConsecutive4(new int[]{2,1,3,5,10,11,12})); // 3
+        System.out.println(s.longestConsecutive4(new int[]{9,1,4,7,3,-1,0,5,8,-1,6})); // 7
+        System.out.println(s.longestConsecutive4(new int[]{9,1,4,7,3,-1,0,5,8,-1,6})); // 7
+        System.out.println(s.longestConsecutive4(new int[]{100,4,101,102,200,1,3,2})); // 4 [1,2,3,4]
+        System.out.println(s.longestConsecutive4(new int[]{1,2,0,1})); // 3
     }
 
     // O(n^2) - time, O(1) - space
@@ -51,30 +51,6 @@ public class LongestConsecutiveSequence_128 {
                 val++;
             }
             max = Math.max(max, cur);
-        }
-        return max;
-    }
-
-    // O(n) - time, space
-    public int longestConsecutive2(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        Set<Integer> set = new HashSet<>();
-        for (int num: nums) {
-            set.add(num);
-        }
-        int max = 1;
-        for (int i = 0; i < nums.length; i++) {
-            int localMax = 1;
-            int val = nums[i];
-            if (!set.contains(val-1)) {
-                while (set.contains(val + 1)) {
-                    localMax++;
-                    val++;
-                }
-            }
-            max = Math.max(localMax, max);
         }
         return max;
     }
@@ -101,6 +77,57 @@ public class LongestConsecutiveSequence_128 {
         }
 
         return Math.max(longestStreak, currentStreak);
+    }
+
+    // Not sure if runs in O(n) time
+    // O(n) - time, space
+    public int longestConsecutive4(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> seen = new HashSet<>();
+        for (int num: nums) {
+            set.add(num);
+        }
+        int max = 1;
+        for (int i = 0; i < nums.length; i++) {
+            int localMax = 1;
+            int val = nums[i];
+            if (!seen.contains(val)) {
+                while (set.contains(val + 1)) { // build sequences from numbers that are not already part of a longer sequence
+                    seen.add(val);
+                    localMax++;
+                    val++;
+                }
+            }
+            max = Math.max(localMax, max);
+        }
+        return max;
+    }
+
+    // O(n) - time, space
+    public int longestConsecutive2(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            set.add(num);
+        }
+        int max = 1;
+        for (int i = 0; i < nums.length; i++) {
+            int localMax = 1;
+            int val = nums[i];
+            if (!set.contains(val-1)) {
+                while (set.contains(val + 1)) { // build sequences from numbers that are not already part of a longer sequence
+                    localMax++;
+                    val++;
+                }
+            }
+            max = Math.max(localMax, max);
+        }
+        return max;
     }
 
 }

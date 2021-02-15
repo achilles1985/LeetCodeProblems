@@ -14,7 +14,7 @@ public class LongestSequenceOfItems {
                 Arrays.asList("item1", "item2"),
                 Arrays.asList("item2", "item3"),
                 Arrays.asList("item4", "item5"),
-                Arrays.asList("item3", "item6"))));
+                Arrays.asList("item3", "item6")))); //[item1, item2, item3, item6]
     }
 
     // O(n^2) - time (can be improved to O(n) - if using union-by-rank), O(n) - space , where n - number of items
@@ -34,7 +34,7 @@ public class LongestSequenceOfItems {
         // traverse through the items and find the longest union sequence
         Map<Integer, List<String>> parentToItems = new HashMap<>();
         for (String item: itemToIndex.keySet()) {
-            final int parent = uf.find(itemToIndex.get(item));
+            int parent = uf.find(itemToIndex.get(item));
             parentToItems.computeIfAbsent(parent, key -> new ArrayList<>()).add(item);
         }
         int max = 0;

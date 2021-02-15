@@ -47,7 +47,7 @@ public class BinaryTreeLongestConsecutiveSequence_298 {
         root.right.right = new TreeNode(4);
         root.right.right.right = new TreeNode(5);
 
-        System.out.println(s.longestConsecutive(root)); //3
+        System.out.println(s.longestConsecutive2(root)); //3
     }
 
     // O(n) - time, space
