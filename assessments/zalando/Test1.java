@@ -85,6 +85,7 @@ public class Test1 {
         List<Integer> indexesA = findFairIndex(A);
         List<Integer> indexesB = findFairIndex(B);
         indexesA.retainAll(indexesB);
+        Arrays.sort(A);
 
         return indexesA.size();
     }

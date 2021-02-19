@@ -22,11 +22,12 @@ public class SubarraySumEqualsK_560 {
 
     public static void main(String[] args) {
         SubarraySumEqualsK_560 s = new SubarraySumEqualsK_560();
+        System.out.println(s.subarraySum(new int[]{3,4,7,2,-3,1,4,2}, 7)); //4
         System.out.println(s.subarraySum(new int[]{1,2,1,2,1,3}, 3)); //4
         System.out.println(s.subarraySum(new int[]{1,2,3}, 3)); //2 (1,2), (3)
         System.out.println(s.subarraySum(new int[]{1,1,1}, 2)); //2 (1,1), (1,1)
 
-        System.out.println(s.subarraySum2(new int[]{1,3,2,1,4,5}, 4)); //2 (1,3) (4)
+        System.out.println(s.subarraySum(new int[]{1,3,2,1,4,5}, 4)); //2 (1,3) (4)
         System.out.println(s.subarraySum(new int[]{-1,-1,1}, 1)); //1
         System.out.println(s.subarraySum(new int[]{1,2,1,2,1}, 3)); //4 (1,2), (2,1), (1,2), (2,1)
         System.out.println(s.subarraySum(new int[]{1}, 0)); //0
@@ -34,7 +35,7 @@ public class SubarraySumEqualsK_560 {
     }
 
     // O(n^2) - time, O(1) - space
-    public int subarraySum(int[] nums, int k) {
+    public int subarraySumBF(int[] nums, int k) {
         int count = 0;
         for (int i = 0; i < nums.length; i++) {
             int sum = 0;
@@ -49,10 +50,10 @@ public class SubarraySumEqualsK_560 {
     }
 
     // O(n) - time, space
-    public int subarraySum2(int[] nums, int k) {
+    public int subarraySum(int[] nums, int k) {
         int count = 0;
         int sum = 0;
-        Map <Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
@@ -65,7 +66,7 @@ public class SubarraySumEqualsK_560 {
     }
 
     // Wrong since sliding window cannot be used here.
-    public int subarraySum3(int[] nums, int k) {
+    public int subarraySum2(int[] nums, int k) {
         if (k == 0 && nums.length == 1) {
             return nums[0] == k ? 1 : 0;
         }

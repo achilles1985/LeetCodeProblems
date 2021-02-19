@@ -44,7 +44,7 @@ public class FindSmallestCommonElementInAllRows_1198 {
         })); //-1
     }
 
-    // O(cols*rows*log(rows)) - time, O(1) - space
+    // O(cols*rows*log(cols)) - time, O(1) - space
     public int smallestCommonElementBF(int[][] mat) {
         for (int i = 0; i < mat[0].length; i++) {
             boolean found = true;
@@ -62,14 +62,14 @@ public class FindSmallestCommonElementInAllRows_1198 {
     // Count the number of each value row by row.
     public int smallestCommonElement(int[][] mat) {
         int count[] = new int[10001];
-        int n = mat.length, m = mat[0].length;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
+        int rows = mat.length, cols = mat[0].length;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
                 ++count[mat[i][j]];
             }
         }
         for (int k = 1; k <= 10000; ++k) {
-            if (count[k] == n) {
+            if (count[k] == rows) {
                 return k;
             }
         }

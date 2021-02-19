@@ -14,10 +14,10 @@ package array.medium;
  * Note:
  * You may assume k is always valid, 1 ≤ k ≤ array's length.
  */
-public class FindTheKLargestElement {
+public class FindTheKLargestElement_215 {
 
     public static void main(String[] args) {
-        FindTheKLargestElement s = new FindTheKLargestElement();
+        FindTheKLargestElement_215 s = new FindTheKLargestElement_215();
         System.out.println(s.findKLargest(new int[]{3,2,1,5,4}, 3)); //3
         System.out.println(s.findKLargest(new int[]{1,1,1,1}, 3)); //1
     }

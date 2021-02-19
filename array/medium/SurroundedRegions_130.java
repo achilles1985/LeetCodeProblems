@@ -23,10 +23,19 @@ import utils.SolutionUtils;
  Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'.
  Two cells are connected if they are adjacent cells connected horizontally or vertically.
  */
+/*
+Pay attention: region to flip must be surrounded!
+ */
 public class SurroundedRegions_130 {
 
     public static void main(String[] args) {
         SurroundedRegions_130 s = new SurroundedRegions_130();
+        char[][] board0 = {
+                {'X', 'X', 'X', 'X'},
+                {'X', 'O', 'O', 'X'},
+                {'X', 'X', 'O', 'X'},
+                {'X', 'O', 'X', 'X'}};
+
         char[][] board1 = {
                 {'X', 'O', 'X', 'X', 'O'},
                 {'X', 'O', 'O', 'X', 'O'},
@@ -51,14 +60,17 @@ public class SurroundedRegions_130 {
                 {'O','X','O','X','O','X'},
                 {'X','O','X','O','X','O'},
                 {'O','X','O','X','O','X'}};
-        s.solve(board1);
-        s.solve(board2);
-        s.solve(board3);
-        s.solve(board4);
-        s.solve(board5);
+        s.solve(board0);
+
+        //s.solve(board1);
+        //s.solve(board2);
+        //s.solve(board3);
+        //s.solve(board4);
+        //s.solve(board5);
+        SolutionUtils.print(board0);
     }
 
-    // O(m*n) - time
+    // O(rows*cols) - time, O(1) - space
     public void solve(char[][] board) {
         if (board == null || board.length == 0) {
             return;

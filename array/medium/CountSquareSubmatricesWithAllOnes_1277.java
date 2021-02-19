@@ -1,6 +1,6 @@
 package array.medium;
 
-/**M
+/** M[marked]
  Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
 
  Example 1:
@@ -34,6 +34,9 @@ package array.medium;
     1 <= arr.length <= 300
     1 <= arr[0].length <= 300
     0 <= arr[i][j] <= 1
+ */
+/*
+    1. Is matrix modification allowed?
  */
 public class CountSquareSubmatricesWithAllOnes_1277 {
 

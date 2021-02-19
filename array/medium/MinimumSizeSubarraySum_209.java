@@ -12,6 +12,10 @@ package array.medium;
  Follow up:
  If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n).
  */
+/*
+    Sliding window since arrays contains all positive
+ */
+
 // https://leetcode.com/problems/minimum-size-subarray-sum/discuss/433123/JavaC%2B%2BPython-Sliding-Window
 public class MinimumSizeSubarraySum_209 {
 
