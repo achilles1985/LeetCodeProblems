@@ -30,6 +30,22 @@ public class PalindromicSubstrings_647 {
         System.out.println(s.countSubstrings2("abc")); //3
     }
 
+    // O(n^3) - time, O(1) - space
+    public int countSubstringsBF(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i; j <= s.length(); j++) {
+                if (isPalindrom(i,j,s)) { // n, can be O(1) if use dp[][]
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     // O(n^2) - time, O(1) - space
     public int countSubstrings2(String s) {
         if (s == null || s.length() == 0) {
@@ -42,6 +58,18 @@ public class PalindromicSubstrings_647 {
         }
         return count;
     }
+
+    private boolean isPalindrom(int i, int j, String s) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
 
     private int expand(int left, int right, String s) {
         int count = 0;
