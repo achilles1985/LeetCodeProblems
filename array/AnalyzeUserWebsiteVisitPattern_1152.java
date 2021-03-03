@@ -1,15 +1,8 @@
 package array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
-/** M [TODO]
+/** M
  * We are given some website visits: the user with name username[i] visited the website website[i] at time timestamp[i].
  * A 3-sequence is a list of websites of length 3 sorted in ascending order by the time of their visits.  (The websites in a 3-sequence are not necessarily distinct.)
  * Find the 3-sequence visited by the largest number of users. If there is more than one solution, return the lexicographically smallest such 3-sequence.
@@ -47,52 +40,73 @@ import java.util.Set;
  *     It is guaranteed that there is at least one user who visited at least 3 websites.
  *     No user visits two websites at the same time.
  */
+/*
+To be honest, this question's explanation is very confusing and I didn't understand it in contest. Let me explain it here:
+Every user visits websites and the websites for each user visits can form 3 - sequences. Our goal is to find the most common 3-seq in those users.
+    - we collect the time and website info according to every user
+    - n^3 traverse all 3-seq in every user and use count map to record the 3-seq ocurring times(remember to sort by time and avoid same sequence in the same user)
+    - get the result
+ */
 public class AnalyzeUserWebsiteVisitPattern_1152 {
 
     public static void main(String[] args) {
         AnalyzeUserWebsiteVisitPattern_1152 s = new AnalyzeUserWebsiteVisitPattern_1152();
-        System.out.println(s.mostVisitedPattern(
+        System.out.println(s.mostVisitedPattern2(
                 new String[]{"joe","joe","joe","james","james","james","james","mary","mary","mary"},
                 new int[]{1,2,3,4,5,6,7,8,9,10},
                 new String[]{"home","about","career","home","cart","maps","home","home","about","career"})); //["home","about","career"]
     }
 
-    public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
-        Set<String> unique = new HashSet<>();
-        Map<String, Integer> frequency = new HashMap<>();
-        Queue<Wrapper> queue = new PriorityQueue<>((w1, w2) -> w1.count == w2.count ? w2.site.compareTo(w1.site) : w1.count - w2.count);
-        for (int i = 0; i < username.length; i++) {
-            String user = username[i];
-            String site = website[i];
-            if (!unique.contains(user+site)) {
-                frequency.put(site, frequency.getOrDefault(site, 0) + 1);
-            }
-            unique.add(user + site);
+    // O(n^4) - time, O(n) - space
+    public List<String> mostVisitedPattern2(String[] username, int[] timestamp, String[] website) {
+        Map<String, List<TimeSite>> userToTimeSites = new HashMap<>();
+        int n = username.length;
+        // collect the website info for every user, key: username, value: (timestamp, website)
+        for (int i = 0; i < n; i++) {
+            userToTimeSites.computeIfAbsent(username[i], k -> new ArrayList<>()).add(new TimeSite(timestamp[i], website[i]));
         }
-        for (Map.Entry<String, Integer> e: frequency.entrySet()) {
-            String site = e.getKey();
-            int count = e.getValue();
-            queue.add(new Wrapper(site, count));
-            if (queue.size() > 3) {
-                queue.poll();
+        // count map to record every 3 combination occuring time for the different user.
+        Map<String, Integer> sequenceToCount = new HashMap<>();
+        String res = "";
+        for (String user : userToTimeSites.keySet()) {
+            Set<String> uniqueSites = new HashSet<>();
+            // this set is to avoid visit the same 3-seq in one user
+            List<TimeSite> timeSites = userToTimeSites.get(user);
+            Collections.sort(timeSites, (a, b)->(a.time - b.time)); // sort by time
+            // brutal force O(N ^ 3)
+            for (int i = 0; i < timeSites.size(); i++) {
+                for (int j = i + 1; j < timeSites.size(); j++) {
+                    for (int k = j + 1; k < timeSites.size(); k++) {
+                        String str = timeSites.get(i).web + " " + timeSites.get(j).web + " " + timeSites.get(k).web;
+                        if (!uniqueSites.contains(str)) {
+                            sequenceToCount.put(str, sequenceToCount.getOrDefault(str, 0) + 1);
+                            uniqueSites.add(str);
+                        }
+                        if (res.isEmpty()
+                                || sequenceToCount.get(res) < sequenceToCount.get(str)
+                                || (sequenceToCount.get(res) == sequenceToCount.get(str) && res.compareTo(str) > 0)) {
+                            // make sure the right lexi order
+                            res = str;
+                        }
+                    }
+                }
             }
         }
-
+        // grab the right answer
+        String[] r = res.split(" ");
         List<String> result = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            result.add(queue.poll().site);
+        for (String str : r) {
+            result.add(str);
         }
-
         return result;
     }
 
-    private class Wrapper {
-        String site;
-        int count;
-
-        Wrapper(String site, int count) {
-            this.site = site;
-            this.count = count;
+    private class TimeSite {
+        int time;
+        String web;
+        public TimeSite(int time, String web) {
+            this.time = time;
+            this.web = web;
         }
     }
 }
