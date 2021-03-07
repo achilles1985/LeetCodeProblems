@@ -27,6 +27,7 @@ public class CoinChange_322 {
 
     public static void main(String[] args) {
         CoinChange_322 s = new CoinChange_322();
+        System.out.println(s.coinChange(new int[] {2}, 3)); //-1
         System.out.println(s.coinChange(new int[] {2,5}, 3)); //-1
 
         System.out.println(s.makeChangeDynamicButtomUp(new int[] {2}, 3));

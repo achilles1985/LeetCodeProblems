@@ -33,7 +33,7 @@ public class LongestConsecutiveSequence_128 {
         System.out.println(s.longestConsecutive4(new int[]{1,2,0,1})); // 3
     }
 
-    // O(n^2) - time, O(1) - space
+    // O(n^2) - time, O(n) - space
     public int longestConsecutiveBF(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
