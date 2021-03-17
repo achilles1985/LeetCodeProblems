@@ -28,7 +28,7 @@ public class PartitionLabels_763 {
         System.out.println(s.partitionLabels("ababab")); //[6]
     }
 
-    // BF, merge intervals technics, like in 56. O(n*log(n)) - time
+    // BF, merge intervals tecknic, like in 56. O(n*log(n)) - time
 
     // O(n) - time, O(1) - space
     public List<Integer> partitionLabels(String S) {

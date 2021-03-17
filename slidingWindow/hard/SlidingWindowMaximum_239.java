@@ -31,6 +31,8 @@ public class SlidingWindowMaximum_239 {
 
     public static void main(String[] args) {
         SlidingWindowMaximum_239 s = new SlidingWindowMaximum_239();
+        SolutionUtils.print(s.maxSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
+
         SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
         SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,1,2,0,5}, 3)); //[3,3,2,5]
         SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-2,-3,-4,-5,-6}, 3)); //[3,3,5,5,6,7]
@@ -64,51 +66,49 @@ public class SlidingWindowMaximum_239 {
     // O(n*log(k)) - time, O(n) - space
     public int[] maxSlidingWindow(int[] nums, int k) {
         int[] res = new int[nums.length - k + 1];
-        Queue<Node> pq = new PriorityQueue<>(Comparator.comparing(Node::getVal));
+        Queue<Node> maxHeap = new PriorityQueue<>(Comparator.comparing(Node::getVal).reversed());
         for(int i = 0; i < k; i++) {
-            pq.offer(new Node(nums[i], i));
+            maxHeap.offer(new Node(nums[i], i));
         }
-        int n = nums.length;
-        res[0] = pq.peek().val;
-        for(int curStartIdx = 1; curStartIdx < n - k + 1; curStartIdx++) {
+        res[0] = maxHeap.peek().val;
+        for(int curStartIdx = 1; curStartIdx < nums.length - k + 1; curStartIdx++) {
             int curEndIndex = k + curStartIdx - 1;
-            while(!pq.isEmpty() && pq.peek().index <= curEndIndex - k) {
-                pq.poll();
+            while(!maxHeap.isEmpty() && maxHeap.peek().index <= curEndIndex - k) {
+                maxHeap.poll();
             }
-            pq.offer(new Node(nums[curEndIndex], curEndIndex));
-            res[curStartIdx] = pq.peek().val;
+            maxHeap.offer(new Node(nums[curEndIndex], curEndIndex));
+            res[curStartIdx] = maxHeap.peek().val;
         }
 
         return res;
     }
 
     // O(n) - time, O(n) - space
-    // Solution based on dequeue
-    public int[] maxSlidingWindow2(int[] a, int k) {
-        if (a == null || k <= 0) {
+    // Solution based on dequeue. Keep max element at queue head, if it's index is out of windows, remove. If tail elements < nums[current] remove them.
+    public int[] maxSlidingWindow2(int[] nums, int k) {
+        if (nums == null || k <= 0) {
             return new int[0];
         }
-        int n = a.length;
-        int[] r = new int[n-k+1];
-        int ri = 0;
+        int[] result = new int[nums.length - k + 1];
+        int idx = 0;
         // store index
         Deque<Integer> q = new LinkedList<>();
-        for (int i = 0; i < a.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             // remove numbers out of range k
-            while (!q.isEmpty() && q.peek() < i - k + 1) {
+            while (!q.isEmpty() && q.peekFirst() < i - k + 1) {
                 q.pollFirst();
             }
             // remove smaller numbers in k range as they are useless
-            while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
+            while (!q.isEmpty() && nums[q.peekLast()] < nums[i]) {
                 q.pollLast();
             }
             // q contains index... r contains content
             q.offer(i);
             if (i >= k - 1) {
-                r[ri++] = a[q.peek()];
+                result[idx++] = nums[q.peekFirst()];
             }
         }
-        return r;
+        return result;
     }
 
     // O(n) - time, O(n) - space
