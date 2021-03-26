@@ -32,6 +32,8 @@ Hint:
     Consider the graphs where each pair in "pairs" is an edge.
     Two words are similar if they are the same, or are in the same connected component of this graph.
     For each of words1, do dfs and check whether words1[i]==words2[i]
+
+    In UF, if there can be duplicates in pairs, map is used for unique index for each unique word in pairs.
  */
 public class SentenceSimilarity_II_737 {
 
@@ -105,7 +107,7 @@ public class SentenceSimilarity_II_737 {
             if (words1[i].equals(words2[i])) {
                 continue;
             }
-            if (!map.containsKey(words1[i]) || !map.containsKey(words2[i]) || ds.find(map.get(words1[i])) != ds.find(map.get(words2[i]))) {
+            if (!map.containsKey(words1[i]) || !map.containsKey(words2[i]) || ds.find(map.get(words1[i])) != ds.find(map.get(words2[i]))) { // if words're similar they have the same parent.
                 return false;
             }
         }

@@ -1,9 +1,7 @@
 package design;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**H
  * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value.
@@ -53,8 +51,8 @@ public class SlidingWindowMedian_480 {
         System.out.println(s.medianSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3));
     }
 
-    // O((n-k)*log(k)*k) - time, O(1) - space
-    public double[] medianSlidingWindow(int[] nums, int k) {
+    // O((n-k)*(k*log(k)+k)) - time, O(1) - space
+    public double[] medianSlidingWindowBF(int[] nums, int k) {
         int m = 0;
         double[] result = new double[nums.length - k + 1];
         for (int i = 0; i <= nums.length - k; i++) {
@@ -72,5 +70,53 @@ public class SlidingWindowMedian_480 {
             }
         }
         return result;
+    }
+
+    // ?
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        Queue<Long> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        Queue<Long> minHeap = new PriorityQueue<>();
+        double[] res = new double[nums.length - k + 1];
+        for(int i = 0; i < k; i++){
+            insert(nums[i], minHeap, maxHeap);
+        }
+        for(int i = 0; i < res.length; i++){
+            if(maxHeap.size() == minHeap.size()){
+                res[i] = maxHeap.peek() / 2.0 + minHeap.peek() / 2.0;
+            } else{
+                res[i] = maxHeap.peek();
+            }
+            if(i < res.length - 1){
+                delete((long)nums[i], minHeap, maxHeap);
+                insert((long)nums[i + k], minHeap, maxHeap);
+            }
+        }
+        return res;
+    }
+
+    public void insert(long num, Queue<Long> minHeap, Queue<Long> maxHeap){
+        if(maxHeap.isEmpty() || num <= maxHeap.peek()){
+            maxHeap.offer(num);
+        } else{
+            minHeap.offer(num);
+        }
+        rebalance(minHeap, maxHeap);
+    }
+
+    public void delete(long num, Queue<Long> minHeap, Queue<Long> maxHeap){
+        if(maxHeap.contains(num)){
+            maxHeap.remove(num);
+        } else{
+            minHeap.remove(num);
+        }
+        rebalance(minHeap, maxHeap);
+    }
+
+    public void rebalance(Queue<Long> minHeap, Queue<Long> maxHeap){
+        if(maxHeap.size() > minHeap.size() + 1){
+            minHeap.offer(maxHeap.poll());
+        }else if(maxHeap.size() < minHeap.size()){
+            maxHeap.offer(minHeap.poll());
+        }
     }
 }

@@ -45,6 +45,7 @@ public class KthSmallestElementInSortedMatrix_378 {
         return heap.peek();
     }
 
+    // Move via all rows at the same time (like in MergeKSortedLists)
     // O(rows*log(rows) + k*log(k)) - time, O(rows) - space
     public int kthSmallest3(int[][] matrix, int k) {
         Queue<Node> minHeap = new PriorityQueue<>((n1, n2) -> matrix[n1.row][n1.col] - matrix[n2.row][n2.col]);
@@ -53,13 +54,13 @@ public class KthSmallestElementInSortedMatrix_378 {
         }
         int count = 0;
         while (!minHeap.isEmpty()) { //O(k*log(k)
-            Node node = minHeap.poll();
+            Node polled = minHeap.poll();
             if (++count == k) {
-                return matrix[node.row][node.col];
+                return matrix[polled.row][polled.col];
             }
-            if (node.col + 1 < matrix[0].length){
-                node.col++;
-                minHeap.add(node);
+            if (polled.col + 1 < matrix[0].length){
+                polled.col++;
+                minHeap.add(polled);
             }
         }
         return -1;

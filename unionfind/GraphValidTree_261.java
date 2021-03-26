@@ -28,7 +28,7 @@ public class GraphValidTree_261 {
         System.out.println(s.validTree(4, new int[][]{})); // false
     }
 
-    // O(E + V) - time, O(V) - space
+    // O(E + V) - time, O(V) - space (https://leetcode.com/problems/graph-valid-tree/solution/) - analysis
     public boolean validTree(int n, int[][] edges) {
         if (n <= 1) {
             return true;
@@ -38,45 +38,40 @@ public class GraphValidTree_261 {
         }
 
         DisjointSet ds = new DisjointSet(n);
-        for (int[] edge: edges) {
+        for (int[] edge: edges) { //E
             if (ds.find(edge[0]) == ds.find(edge[1])) {
                 return false;
             }
             ds.union(edge[0], edge[1]);
         }
-        int count = 0;
-        for (int i = 0; i < ds.parent.length; i++) {
-            if (ds.parent[i] == i) {
-              count++;
-            }
-            if (count > 1) {
-                return false;
-            }
-        }
-        return true;
+
+        return ds.count == 1;
     }
 
     private static class DisjointSet {
         int[] parent;
+        int count;
 
         DisjointSet(int size) {
+            count = size;
             parent = new int[size];
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) { //V
                 parent[i] = i;
             }
         }
 
-        int find(int node) {
+        int find(int node) { // O(1)
             if (node != parent[node]) {
                 parent[node] = find(parent[node]);
             }
             return parent[node];
         }
 
-        void union(int n1, int n2) {
+        void union(int n1, int n2) { // O(log(n)) - since not using union-by-ranke
             int p1 = find(n1);
             int p2 = find(n2);
             parent[p2] = p1;
+            count--;
         }
     }
 }

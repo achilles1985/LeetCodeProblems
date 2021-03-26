@@ -1,7 +1,4 @@
 package algorithmstechniqes;
-
-import java.util.Random;
-
 /**
  * Quickselect is a selection algorithm to find the k-th smallest/largest element in an unordered list.
  */

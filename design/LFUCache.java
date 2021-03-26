@@ -54,7 +54,7 @@ public class LFUCache {
             return -1;
         }
         CachItem oldItem = keyToCacheItem.get(key);
-        frequencyToKeys.get(oldItem.frequency).remove(oldItem.key);
+        frequencyToKeys.get(oldItem.frequency).remove(oldItem.key); //O(1)
         if (frequencyToKeys.get(oldItem.frequency).isEmpty()) {
             frequencyToKeys.remove(oldItem.frequency);
             leastFrequency++;

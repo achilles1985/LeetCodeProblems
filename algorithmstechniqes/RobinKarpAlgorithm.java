@@ -1,8 +1,6 @@
 package algorithmstechniqes;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * https://medium.com/@harsha444/rabin-karp-algorithm-for-pattern-searching-explained-with-example-7dcdfa6b1c64, based on rolling hash

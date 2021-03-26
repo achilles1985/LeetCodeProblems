@@ -122,8 +122,8 @@ public class AccountsMerge_721 {
         }
         for (Map.Entry<Integer, List<String>> entry: idToEmails.entrySet()) {
             Collections.sort(entry.getValue());
-            entry.getValue().add(0, emailToName.get(entry.getValue().get(0)));
-            result.add(entry.getValue());
+            entry.getValue().add(0, emailToName.get(entry.getValue().get(0))); // get name
+            result.add(entry.getValue()); // add emails
         }
 
         return result;

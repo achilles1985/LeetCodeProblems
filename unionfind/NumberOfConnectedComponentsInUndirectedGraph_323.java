@@ -39,10 +39,10 @@ public class NumberOfConnectedComponentsInUndirectedGraph_323 {
         System.out.println(s.countComponents(5, new int[][] {{0, 1}, {1, 2}, {2,3}, {3, 4}})); //1
     }
 
-    // O(E+V) - time, O(V) - space
+    // O(E + V*log(V)) - time, O(V) - space, if union-by-rank  O(E+V) - time
     public int countComponents(int n, int[][] edges) {
         DisjointSet ds = new DisjointSet(n);
-        for (int[] edge: edges) {
+        for (int[] edge: edges) { //E
             ds.union(edge[0], edge[1]);
         }
         int counter = 0;
@@ -59,12 +59,12 @@ public class NumberOfConnectedComponentsInUndirectedGraph_323 {
 
         DisjointSet(int size) {
             parent = new int[size];
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) { //V
                 parent[i] = i;
             }
         }
 
-        int find(int node) {
+        int find(int node) { // with path compression
             if (node != parent[node]) {
                 parent[node] = find(parent[node]);
             }
