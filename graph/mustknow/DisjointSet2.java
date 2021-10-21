@@ -36,7 +36,7 @@ public class DisjointSet2 {
 
     // The idea of UNION BY RANK is to ensure that when we combine two trees, we try to keep the overall depth of the resulting tree small
     // (https://www.geeksforgeeks.org/union-find-algorithm-set-2-union-by-rank/)
-    public void unionWithRank(int x, int y) {
+    public void unionWithRank(int x, int y) { // Inverse-Ackermann function which boils down to O(1)
         int p1 = find(x);
         int p2 = find(y);
         if (p1 != p2) {

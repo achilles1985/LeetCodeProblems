@@ -1,6 +1,6 @@
 package string.medium;
 
-/** M
+/** M [marked]
  * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
  *
  * Example 1:
@@ -19,17 +19,33 @@ public class LongestPalindromicSubstring_5 {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring_5 s = new LongestPalindromicSubstring_5();
+        System.out.println(s.longestPalindrome("babad")); // bab
+        System.out.println(s.longestPalindrome("cbbd")); // bb
         System.out.println(s.longestPalindrome("abb")); // bb
         System.out.println(s.longestPalindrome("bb")); // bb
         System.out.println(s.longestPalindrome("abcba")); // abcba
         System.out.println(s.longestPalindrome("abcdddmnl")); // ddd
         System.out.println(s.longestPalindrome("cbbd")); // bb
-        System.out.println(s.longestPalindrome("babad")); // bab
-        System.out.println(s.longestPalindrome("cbbd")); // bb
     }
 
     // O(n^3) - time, O(1) - space
     public String longestPalindromeBF(String s) {
+        if (s == null || s.isEmpty() || s.length() == 1) {
+            return s;
+        }
+        for (int i = s.length(); i >= 1; i--) {
+            for (int j = 0; j + i <= s.length(); j++) {
+                String sub = s.substring(j, j + i);
+                if (isPalindrom(sub)) {
+                    return sub;
+                }
+            }
+        }
+        return "";
+    }
+
+    // O(n^3) - time, O(1) - space
+    public String longestPalindromeBF2(String s) {
         if (s == null || s.isEmpty() || s.length() == 1) {
             return s;
         }

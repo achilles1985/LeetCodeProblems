@@ -60,21 +60,22 @@ public class NumberOfIslands_200 {
         DisjointSet ds = new DisjointSet(chars);
         int rows = chars.length;
         int cols = chars[0].length;
-        for (int row = 0; row < chars.length; row++) {
-            for (int col = 0; col < chars[0].length; col++) {
+        for (int row = 0; row < rows; row++) { //n*m
+            for (int col = 0; col < cols; col++) {
                 if (chars[row][col] == '1') {
                     chars[row][col] = '0';
+                    int current = row * cols + col;
                     if (col + 1 < cols && chars[row][col+1] == '1') {
-                        ds.union(row*cols + col, row*cols + col + 1);
+                        ds.union(current, row*cols + col + 1); //1
                     }
                     if (row + 1 < rows && chars[row+1][col] == '1') {
-                        ds.union(row*cols + col, (row+1)*cols + col);
+                        ds.union(current, (row+1)*cols + col); //1
                     }
                     if (row - 1 >= 0 && chars[row-1][col] == '1') {
-                        ds.union(row*cols + col, (row-1)*cols + col);
+                        ds.union(current, (row-1)*cols + col); //1
                     }
                     if (col-1 >= 0 && chars[row][col-1] == '1') {
-                        ds.union(row*cols + col, row*cols + col -1);
+                        ds.union(current, row * cols + col - 1); //1
                     }
                 }
             }
@@ -93,9 +94,8 @@ public class NumberOfIslands_200 {
             int cols = grid[0].length;
             parent = new int[rows*cols];
             rank = new int[rows*cols];
-            Arrays.fill(parent, -1);
-            for (int i = 0; i < grid.length; i++) {
-                for (int j = 0; j < grid[0].length; j++) {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
                     if (grid[i][j] == '1') {
                         parent[i*cols + j] = i*cols + j;
                         count++;

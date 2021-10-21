@@ -28,7 +28,7 @@ public class ReverseInteger_7 {
         System.out.println(s.reverse(120)); //21
     }
 
-    // O(d) - time, O(1) - space; d - number of digits in x.
+    // O(log(x)) - time, O(1) - space; there are roughly log10(x) digits in x.
     public int reverse(int x) {
         boolean isNegative = false;
         if (x < 0) {
@@ -45,5 +45,24 @@ public class ReverseInteger_7 {
         }
 
         return isNegative ? (int)-res : (int)res;
+    }
+
+    // without using long
+    public int reverse2(int x) {
+        boolean isNegative = false;
+        if (x < 0) {
+            isNegative = true;
+        }
+        int xx = Math.abs(x);
+        int newX = 0;
+        while(xx > 0) {
+            int c = xx%10;
+            xx = xx/10;
+            if (newX > Integer.MAX_VALUE/10) {
+                return 0;
+            }
+            newX = newX*10 + c;
+        }
+        return isNegative ? -newX : newX;
     }
 }

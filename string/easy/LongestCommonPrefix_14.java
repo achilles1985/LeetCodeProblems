@@ -21,9 +21,11 @@ public class LongestCommonPrefix_14 {
 
     public static void main(String[] args) {
         LongestCommonPrefix_14 s = new LongestCommonPrefix_14();
-        System.out.println(s.longestCommonPrefix(new String[] {"aa","a"})); // a
-        System.out.println(s.longestCommonPrefix(new String[] {"flower","flow","flight"})); // fl
         System.out.println(s.longestCommonPrefix(new String[] {"dog","racecar","car"})); //
+
+        System.out.println(s.longestCommonPrefixBS(new String[] {"aa","a"})); // a
+        System.out.println(s.longestCommonPrefixBS(new String[] {"flower","flow","flight"})); // fl
+        System.out.println(s.longestCommonPrefixBS(new String[] {"reflower","flow","flight"})); //
     }
 
     // O(min(strs)*strs.length) - time, O(1) - space
@@ -39,5 +41,32 @@ public class LongestCommonPrefix_14 {
             }
         }
         return strs[0];
+    }
+
+    // O(s*log(m)) - time, s - sum of all chars in strings. In the worst case we have nnn equal strings with length m.
+    public String longestCommonPrefixBS(String[] strs) {
+        if (strs == null || strs.length == 0)
+            return "";
+        int minLen = Integer.MAX_VALUE;
+        for (String str : strs)
+            minLen = Math.min(minLen, str.length());
+        int low = 1;
+        int high = minLen;
+        while (low <= high) {
+            int middle = (low + high) / 2;
+            if (isCommonPrefix(strs, middle))
+                low = middle + 1;
+            else
+                high = middle - 1;
+        }
+        return strs[0].substring(0, (low + high) / 2);
+    }
+
+    private boolean isCommonPrefix(String[] strs, int len){
+        String str1 = strs[0].substring(0,len);
+        for (int i = 1; i < strs.length; i++)
+            if (!strs[i].startsWith(str1))
+                return false;
+        return true;
     }
 }

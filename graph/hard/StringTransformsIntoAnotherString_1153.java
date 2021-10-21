@@ -31,8 +31,9 @@ public class StringTransformsIntoAnotherString_1153 {
 
     public static void main(String[] args) {
         StringTransformsIntoAnotherString_1153 s = new StringTransformsIntoAnotherString_1153();
-        System.out.println(s.canConvert("abcdefghijklmnopqrstuvwxyz", "bcdefghijklmnopqrstuvwxyza")); // false
+        System.out.println(s.canConvert("abcdefghijklmnopqrstuvwxyz", "bcdefghijklmnopqrstuvwxyza")); //false
         System.out.println(s.canConvert("aabcc", "ccdee")); // true
+        System.out.println(s.canConvert("abcdefghijklmnopqrstuvwxyz", "bcdefghijklmnopqrstuvwxyza")); // false
         System.out.println(s.canConvert("leetcode", "codeleet")); // false
     }
 
@@ -41,7 +42,7 @@ public class StringTransformsIntoAnotherString_1153 {
         if (str1.equals(str2)) {
             return true;
         }
-        if (getFrequency(str2) >= 26) {
+        if (getDistinctSize(str2) >= 26) { // check is required
             return false;
         }
 
@@ -57,7 +58,7 @@ public class StringTransformsIntoAnotherString_1153 {
         return true;
     }
 
-    private int getFrequency(String str) {
+    private int getDistinctSize(String str) {
         Set<Character> distinct = new HashSet<>();
         for (final char c : str.toCharArray()) {
             distinct.add(c);

@@ -90,35 +90,22 @@ public class FriendCircles_547 {
 
     // O(n^2) - time, O(n) - space
     public int findCircleNumDFS(int[][] M) {
-        if (M == null || M.length == 0) {
-            return 0;
-        }
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int i = 0; i < M.length; i++) {
-            for (int j = 0; j < M[0].length; j++) {
-                if (M[i][j] == 1) {
-                    graph.computeIfAbsent(i, key -> graph.getOrDefault(key, new ArrayList<>())).add(j);
-                }
-            }
-        }
+        int[] visited = new int[M.length];
         int count = 0;
-        Set<Integer> visited = new HashSet<>();
-        for (Integer node: graph.keySet()) {
-            if (!visited.contains(node)) {
-                dfs(node, null, visited, graph);
+        for (int i = 0; i < M.length; i++) {
+            if (visited[i] == 0) {
+                dfs(M, visited, i);
                 count++;
             }
         }
         return count;
     }
-    private void dfs(Integer node, Integer parent, Set<Integer> visited, Map<Integer, List<Integer>> graph) {
-        if (visited.contains(node)) {
-            return;
-        }
-        visited.add(node);
-        for (Integer child: graph.getOrDefault(node, Collections.emptyList())) {
-            if (child != parent) {
-                dfs(child, node, visited, graph);
+
+    private void dfs(int[][] M, int[] visited, int i) {
+        for (int j = 0; j < M.length; j++) {
+            if (M[i][j] == 1 && visited[j] == 0) {
+                visited[j] = 1;
+                dfs(M, visited, j);
             }
         }
     }

@@ -68,7 +68,7 @@ public class DisjointSet {
     }
 
     // Combines two sets together to one.Does union by rank
-    public void union(int data1, int data2) {
+    public void union(int data1, int data2) { // Inverse-Ackermann function which boils down to O(1)
         Node node1 = nodes.get(data1);
         Node node2 = nodes.get(data2);
 

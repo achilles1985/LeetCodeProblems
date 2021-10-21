@@ -29,15 +29,33 @@ package string.medium;
 public class ShiftingLetters_848 {
 
     public static void main(String[] args) {
+        char c0 = 'd';
+        char nc0 = (char) (((c0 - 'a' + 66)%26) + 'a');
         char c1 = 101;
+
         char c2 = (char)101;
         StringBuilder sb = new StringBuilder();
         sb.append(c1).append(c2);
         System.out.println(sb.toString());
 
         ShiftingLetters_848 s = new ShiftingLetters_848();
-        System.out.println(s.shiftingLetters2("abc", new int[]{3,5,9})); // rpl
+        System.out.println(s.shiftingLetters3("abc", new int[]{3,5,9})); // rpl
         System.out.println(s.shiftingLetters2("bad", new int[]{10,20,30})); // jyh
+    }
+
+    public String shiftingLetters3(String s, int[] shifts) {
+        int[] sum = new int[shifts.length];
+        sum[shifts.length - 1] = shifts[shifts.length - 1];
+        for (int i = shifts.length - 2; i >= 0; i--) {
+            sum[i] = (shifts[i] + sum[i + 1])%Integer.MAX_VALUE;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            char newC = (char) (((c - 'a' + sum[i])%26) + 'a');
+            sb.append(newC);
+        }
+        return sb.toString();
     }
 
     // O(n) - time, space

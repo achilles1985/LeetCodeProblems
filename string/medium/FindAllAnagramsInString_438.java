@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * M
+ * M [marked]
  * Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
  * Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
  * The order of output does not matter.
@@ -62,12 +62,12 @@ public class FindAllAnagramsInString_438 {
         int[] pCount = new int[26];
         int[] sCount = new int[26];
         for (char ch : p.toCharArray()) {
-            pCount[(ch - 'a')]++;
+            pCount[ch - 'a']++;
         }
 
         List<Integer> output = new ArrayList();
         for (int i = 0; i < sL; ++i) {
-            sCount[(s.charAt(i) - 'a')]++;
+            sCount[s.charAt(i) - 'a']++;
             if (i >= pL) {
                 sCount[(s.charAt(i - pL) - 'a')]--;
             }

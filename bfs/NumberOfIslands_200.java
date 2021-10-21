@@ -48,7 +48,7 @@ public class NumberOfIslands_200 {
         System.out.println(s.numIslands(new char[][] {{}, {}})); // 0
     }
 
-    // O(rows*columns) - time, O(min(rows,cols)) - space
+    // O(rows*columns) - time, O(min(rows,cols)) - space (in worth case when grid filled with lands, size of queue can grow up min(m,n))
     public int numIslands(char[][] chars) {
         if (chars == null || chars.length == 0) {
             return 0;

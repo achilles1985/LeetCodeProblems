@@ -1,7 +1,7 @@
-package string.easy;
+package string.medium;
 
 /**
- * E
+ * M [marked]
  * Given an array of characters, compress it in-place.
  * The length after compression must always be smaller than or equal to the original array.
  * Every element of the array should be a character (not int) of length 1.
@@ -48,23 +48,23 @@ public class StringCompression_443 {
     public static void main(String[] args) {
         StringCompression_443 s = new StringCompression_443();
         System.out.println(s.compress(new char[] {'a', 'a', 'a', 'a', 'b', 'b', 'c', 'c', 'c'})); //6
+        System.out.println(s.compress(new char[] {'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'})); //3
         System.out.println(s.compress(new char[] {'a'})); //1
-        System.out.println(s.compress(new char[] {'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'})); //4
     }
 
     // O(n) - time, O(1) - space
     public int compress(char[] chars) {
-        int write = 0, anchor = 0;
-        for (int read = 0; read < chars.length; read++) {
-            if (read + 1 == chars.length || chars[read+1] != chars[anchor]) {
-                chars[write++] = chars[anchor];
-                int count = read - anchor + 1;
+        int write = 0, left = 0;
+        for (int right = 0; right < chars.length; right++) {
+            if (right + 1 == chars.length || chars[right + 1] != chars[left]) {
+                chars[write++] = chars[left];
+                int count = right - left + 1;
                 if (count > 1) {
                     for (char c : String.valueOf(count).toCharArray()) {
                         chars[write++] = c;
                     }
                 }
-                anchor = read + 1;
+                left = right + 1;
             }
         }
         return write;

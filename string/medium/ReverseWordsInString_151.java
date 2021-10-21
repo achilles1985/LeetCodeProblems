@@ -1,8 +1,6 @@
 package string.medium;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /** M
@@ -31,13 +29,55 @@ public class ReverseWordsInString_151 {
 
     public static void main(String[] args) {
         ReverseWordsInString_151 s = new ReverseWordsInString_151();
-        System.out.println(s.reverseWords2("a good   example")); // example good a
-        System.out.println(s.reverseWords2("the sky is blue")); // blue is sky the
-        System.out.println(s.reverseWords2("  hello world!  ")); // world! hello
+        System.out.println(s.reverseWords4("  hello world!  ")); // world! hello
+        System.out.println(s.reverseWords3("a  good   example")); // example good a
+        System.out.println(s.reverseWords3("the sky is blue")); // blue is sky the
 
         System.out.println(s.reverseWords("a good   example")); // example good a
         System.out.println(s.reverseWords("the sky is blue")); // blue is sky the
         System.out.println(s.reverseWords("  hello world!  ")); // world! hello
+    }
+
+    // O(n) - time, space
+    public String reverseWords4(String s) {
+        int left = 0, right = s.length() - 1;
+        // remove leading spaces
+        while (left <= right && s.charAt(left) == ' ') {
+            ++left;
+        }
+        // remove trailing spaces
+        while (left <= right && s.charAt(right) == ' ') {
+            --right;
+        }
+        Deque<String> d = new ArrayDeque<>();
+        StringBuilder word = new StringBuilder();
+        // push word by word in front of deque
+        while (left <= right) {
+            char c = s.charAt(left);
+            if ((word.length() != 0) && (c == ' ')) {
+                d.offerFirst(word.toString());
+                word.setLength(0);
+            } else if (c != ' ') {
+                word.append(c);
+            }
+            ++left;
+        }
+        d.offerFirst(word.toString());
+
+        return String.join(" ", d);
+    }
+
+    // O(n) - time, space
+    public String reverseWords3(String s) {
+        String[] words = s.trim().split("\\s+");
+        int left = 0, right = words.length - 1;
+        while (left < right) {
+            String temp = words[left];
+            words[left] = words[right];
+            words[right] = temp;
+            left++; right--;
+        }
+        return Arrays.stream(words).collect(Collectors.joining(" "));
     }
 
     // O(n) - time, space

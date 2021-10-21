@@ -75,26 +75,8 @@ public class CycleDetection {
         return false;
     }
 
-    private boolean hasCycleDirectedGraphHelper(Map<Integer, List<Integer>> map, Set<Integer> visited, Set<Integer> dfs, Integer vertex) {
-        if (dfs.contains(vertex)) {
-            return true;
-        }
-        if (visited.contains(vertex)) {
-            return false;
-        }
-        dfs.add(vertex);
-        visited.add(vertex);
-        for (Integer child: map.getOrDefault(vertex, Collections.emptyList())) {
-            if (hasCycleDirectedGraphHelper(map, visited, dfs, child)) {
-                return true;
-            }
-        }
-        dfs.remove(vertex);
-
-        return false;
-    }
-
     // O(V+E) - time, O(V) - space
+
     public boolean hasCycleUndirectedGraph(int[][] graph) {
         if (graph == null) {
             return false;
@@ -112,6 +94,25 @@ public class CycleDetection {
                 return true;
             }
         }
+        return false;
+    }
+
+    private boolean hasCycleDirectedGraphHelper(Map<Integer, List<Integer>> map, Set<Integer> visited, Set<Integer> dfs, Integer vertex) {
+        if (dfs.contains(vertex)) {
+            return true;
+        }
+        if (visited.contains(vertex)) { // check is required
+            return false;
+        }
+        dfs.add(vertex);
+        visited.add(vertex);
+        for (Integer child: map.getOrDefault(vertex, Collections.emptyList())) {
+            if (hasCycleDirectedGraphHelper(map, visited, dfs, child)) {
+                return true;
+            }
+        }
+        dfs.remove(vertex);
+
         return false;
     }
 

@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
- * M
+ * M [marked]
  * Given a string s of '(' , ')' and lowercase English characters.
  * Your task is to remove the minimum number of parentheses ( '(' or ')', in any positions )
  * so that the resulting parentheses string is valid and return any valid string.
@@ -40,10 +40,10 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
 
     public static void main(String[] args) {
         MinimumRemoveToMakeValidParentheses_1249 s = new MinimumRemoveToMakeValidParentheses_1249();
+        System.out.println(s.minRemoveToMakeValid("lee(t(c)o)de)")); // lee(t(c)o)de
         System.out.println(s.minRemoveToMakeValid("))((")); // ""
 
         System.out.println(s.minRemoveToMakeValid("())()(((")); // ()()
-        System.out.println(s.minRemoveToMakeValid("lee(t(c)o)de)")); // lee(t(c)o)de
         System.out.println(s.minRemoveToMakeValid("((())")); // (()))
         System.out.println(s.minRemoveToMakeValid("((()))))")); // (()))
 

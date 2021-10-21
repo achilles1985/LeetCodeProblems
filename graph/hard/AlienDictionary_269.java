@@ -1,13 +1,6 @@
 package graph.hard;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * H [marked]
@@ -40,13 +33,14 @@ import java.util.Stack;
 /*
 Questions
     1. only lower case letter? size <= 26?
-    2. x,z,x - > ""; x,x -> x
+    2. Edge cases: [x,z,x] - > ""; [x,x] -> x; [abc, ab] -> ""
  */
+// Find relation between chars, build graph, topological sort
 public class AlienDictionary_269 {
 
     public static void main(String[] args) {
         AlienDictionary_269 s = new AlienDictionary_269();
-
+        System.out.println(s.alienOrder(new String[] {"aba"})); // "ab"
         System.out.println(s.alienOrder(new String[] {"abc", "ab"})); // ""
         System.out.println(s.alienOrder(new String[] {"z", "z"})); // "z"
         System.out.println(s.alienOrder(new String[] {"z", "x", "z"})); // ""
@@ -57,26 +51,39 @@ public class AlienDictionary_269 {
         System.out.println(s.alienOrder(new String[] {"z", "x", "z"})); // ""
     }
 
-    // O(chars) - time, O(1) - space
+    // O(c) - time, O(1) - space, where c - total number of chars in the word list
     public String alienOrder(String[] words) {
-        if (words == null || words.length == 0) {
-            return "";
+        Map<Character, List<Character>> map = new HashMap<>();
+        for (String word: words) {
+            for (int i = 0; i < word.length(); i++) {
+                map.put(word.charAt(i), new ArrayList<>());
+            }
         }
-        if (words.length == 1) {
-            return words[0];
+        for (int k = 1; k < words.length; k++) {
+            String prev = words[k-1];
+            String curr = words[k];
+            if (curr.length() < prev.length() && prev.startsWith(curr)) {
+                return "";
+            }
+            int i = 0, j = 0;
+            while (i < prev.length() && j < curr.length()) {
+                if (prev.charAt(i) != curr.charAt(j)) {
+                    map.get(prev.charAt(i)).add(curr.charAt(j));
+                    break;
+                }
+                i++; j++;
+            }
         }
-        Map<Character, List<Character>> edges = buildGraph(words); // O(chars)
 
-        return topoligicalSort(edges); // O(26+25^2) = O(1) - time
+        return topologicSort(map);
     }
 
-    private String topoligicalSort(Map<Character, List<Character>> graph) {
-        Set<Character> visited = new HashSet<>();
-        Set<Character> dfs = new HashSet<>();
-        Stack<Character> stack = new Stack<>();
-        for (Character node : graph.keySet()) {
-            if (!visited.contains(node)) {
-                if (dfs(graph, node, visited, stack, dfs)) {
+    private String topologicSort(Map<Character, List<Character>> graph) {
+        Map<Character, Integer> visited = new HashMap<>();
+        Deque<Character> stack = new ArrayDeque<>();
+        for (Character node: graph.keySet()) {
+            if (!visited.containsKey(node)) {
+                if (hasCycle(graph, visited, stack, node)) {
                     return "";
                 }
             }
@@ -89,52 +96,22 @@ public class AlienDictionary_269 {
         return sb.toString();
     }
 
-    private boolean dfs(Map<Character, List<Character>> graph, Character node, Set<Character> visited, Stack<Character> stack, Set<Character> dfs) {
-        if (dfs.contains(node)) {
+    private boolean hasCycle(Map<Character, List<Character>> graph, Map<Character, Integer> visited, Deque<Character> stack, Character node) {
+        if (visited.containsKey(node) && visited.get(node) == -1) {
             return true;
         }
-        if (visited.contains(node)) {
+        if (visited.containsKey(node)) {
             return false;
         }
-        visited.add(node);
-        dfs.add(node);
-        for (Character child : graph.getOrDefault(node, Collections.emptyList())) {
-            if (dfs(graph, child, visited, stack, dfs)) {
+        visited.put(node, -1);
+        for (Character child: graph.getOrDefault(node, Collections.emptyList())) {
+            if (hasCycle(graph, visited, stack, child)) {
                 return true;
             }
         }
+        visited.put(node, 1);
         stack.push(node);
-        dfs.remove(node);
 
         return false;
-    }
-
-    private Map<Character, List<Character>> buildGraph(String[] words) {
-        Map<Character, List<Character>> graph = new HashMap<>();
-        for (String word : words) {
-            for (char c : word.toCharArray()) {
-                graph.putIfAbsent(c, new ArrayList<>());
-            }
-        }
-
-        String prevWord = words[0];
-        for (int i = 1; i < words.length; i++) {
-            String word = words[i];
-            if (prevWord.length() > word.length() && prevWord.startsWith(word)) {
-                return new HashMap<>();
-            }
-            int k = 0, j = 0;
-            while (k < prevWord.length() && j < word.length()) {
-                if (prevWord.charAt(k) != word.charAt(j)) {
-                    graph.get(prevWord.charAt(k)).add(word.charAt(j));
-                    break;
-                }
-                k++;
-                j++;
-            }
-            prevWord = word;
-        }
-
-        return graph;
     }
 }

@@ -38,27 +38,21 @@ public class SimilarStringGroups_839 {
     }
 
     //O(n^2*m) - time, O(n) - space, n - number of words, m - word's length
-    public int numSimilarGroups(String[] A) {
-        if (A == null || A.length == 0) {
+    public int numSimilarGroups(String[] strs) {
+        if (strs == null || strs.length == 0) {
             return 0;
         }
 
-        DisjointSet ds = new DisjointSet(A.length);
-        for (int i = 0; i < A.length; i++) {
-            for (int j = i+1; j < A.length; j++) {
-                if (similar(A[i], A[j])) {
+        DisjointSet ds = new DisjointSet(strs.length);
+        for (int i = 0; i < strs.length; i++) {
+            for (int j = i+1; j < strs.length; j++) {
+                if (similar(strs[i], strs[j])) {
                     ds.union(i, j);
                 }
             }
         }
 
-        int result = 0;
-        for (int i = 0; i < A.length; i++) {
-            if (ds.parent[i] == i) {
-                result++;
-            }
-        }
-        return result;
+        return ds.count;
     }
 
     private boolean similar(String word1, String word2) {
@@ -76,9 +70,11 @@ public class SimilarStringGroups_839 {
 
     private static final class DisjointSet {
         int[] parent;
+        int count;
 
         public DisjointSet(int size) {
             parent = new int[size];
+            count = size;
             for (int i = 0; i < size; i++) {
                 parent[i] = i;
             }
@@ -95,6 +91,7 @@ public class SimilarStringGroups_839 {
             int p1 = find(x);
             int p2 = find(y);
             parent[p2] = p1;
+            count--;
         }
     }
 }

@@ -1,9 +1,7 @@
 package unionfind;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Set;
 
 /**H
  * On an N x N grid, each square grid[i][j] represents the elevation at that point (i,j).
@@ -94,7 +92,7 @@ public class SwimInRisingWater_778 {
     }
 
     // Using min heap
-    // O(n*m*log(n*m)) - time, O(n*m) - space
+    // O(n^2*log(n^2)) - time, O(n^2) - space
     public int swimInWater2(int[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;

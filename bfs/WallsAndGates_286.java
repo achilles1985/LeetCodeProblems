@@ -62,8 +62,8 @@ public class WallsAndGates_286 {
         int[][] rooms2 = {
                 {0, -1},
                 {Integer.MAX_VALUE, Integer.MAX_VALUE}};
-        s.wallsAndGates(rooms1); // [[3,-1,0,1],[2,2,1,1],[1,-1,2,-1],[0,-1,3,4]]
-        s.wallsAndGates(rooms2); // [[0,-1],[1,2]]
+        s.wallsAndGatesDFS2(rooms1); // [[3,-1,0,1],[2,2,1,1],[1,-1,2,-1],[0,-1,3,4]]
+        s.wallsAndGatesDFS2(rooms2); // [[0,-1],[1,2]]
     }
 
     // BFS approach. O(rows*cols) - time, O(rows*cols) - space, in case when all cells are gates
@@ -98,8 +98,39 @@ public class WallsAndGates_286 {
         }
     }
 
+    public void wallsAndGatesBFS2(int[][] rooms) {
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[rooms.length][rooms[0].length];
+        for (int i = 0; i < rooms.length; i++) {
+            for (int j = 0; j < rooms[0].length; j++) {
+                if (rooms[i][j] == 0) {
+                    queue.add(new int[]{i,j});
+                    visited[i][j] = true;
+                }
+            }
+        }
+        int level = 1;
+        int[][] dirs = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                int[] poll = queue.poll();
+                for (int[] dir: dirs) {
+                    int newX = poll[0] + dir[0];
+                    int newY = poll[1] + dir[1];
+                    if (newX >= 0 && newX < rooms.length && newY >= 0 && newY < rooms[0].length && rooms[newX][newY] != -1 && !visited[newX][newY]) {
+                        queue.add(new int[]{newX,newY});
+                        visited[newX][newY] = true;
+                        rooms[newX][newY] = level;
+                    }
+                }
+            }
+            level++;
+        }
+    }
+
     // O(rows*cols) - time, space
-    public void wallsAndGates(int[][] rooms) {
+    public void wallsAndGatesDFS(int[][] rooms) {
         if (rooms == null || rooms.length == 0) {
             return;
         }
@@ -135,7 +166,7 @@ public class WallsAndGates_286 {
 
     // A bit optimized version, got rid of visited[][]
     // O(rows*cols) - time, O(w) - space, w - max stack depth
-    public void wallsAndGatesDFS(int[][] rooms) {
+    public void wallsAndGatesDFS2(int[][] rooms) {
         if (rooms == null || rooms.length == 0) {
             return;
         }

@@ -1,8 +1,6 @@
 package string.medium;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**M [marked]
  * Given an encoded string, return its decoded string.
@@ -75,9 +73,11 @@ public class DecodeString_394 {
         Stack<StringBuilder> stringStack = new Stack<>();
         StringBuilder currentString = new StringBuilder();
         int k = 0;
-        for (char ch : s.toCharArray()) {
+        for (char ch : s.toCharArray()) { //n
             if (Character.isDigit(ch)) {
                 k = k * 10 + ch - '0';
+            } else if (Character.isAlphabetic(ch)) {
+                currentString.append(ch);
             } else if (ch == '[') {
                 // push the number k to countStack
                 countStack.push(k);
@@ -90,12 +90,10 @@ public class DecodeString_394 {
                 StringBuilder decodedString = stringStack.pop();
                 int count = countStack.pop();
                 // decode currentK[currentString] by appending currentString k times
-                while (count-- > 0) {
+                while (count-- > 0) { //maxK
                     decodedString.append(currentString);
                 }
                 currentString = decodedString;
-            } else {
-                currentString.append(ch);
             }
         }
         return currentString.toString();

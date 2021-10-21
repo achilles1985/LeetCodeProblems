@@ -15,6 +15,23 @@ public class CharacterCounting {
         System.out.println(s.removeRedundant("aabbbcccaaa", 5)); //"aabbbcccaaa"
     }
 
+/*    private String removeRedundant2(String input, int limit) {
+        char[] arr = input.toCharArray();
+        int anchor = 0, write = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int diff = i - anchor;
+            if (arr[i] == arr[anchor] && diff == limit) {
+                write = i;
+            } else if (arr[i] != arr[anchor] && diff > limit) {
+                arr[write++] = arr[i];
+            } else if (arr[i] != arr[anchor] && diff <= limit) {
+                anchor = i;
+                write = anchor;
+            }
+        }
+        return new String(arr);
+    }*/
+
     // O(n) - time, space
     private String removeRedundant(String input, int limit) {
         StringBuilder sb = new StringBuilder();

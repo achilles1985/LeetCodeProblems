@@ -70,22 +70,18 @@ public class FriendCircles_547 {
                 }
             }
         }
-        int count = 0;
-        for (int i = 0; i < uf.parent.length; i++) {
-            if (uf.parent[i] == i) {
-                count++;
-            }
-        }
 
-        return count;
+        return uf.count;
     }
 
     private static class UnionFind {
         int[] parent;
+        int count;
 
         UnionFind(int n) {
             int size = n;
-            parent = new int[size];
+            this.count = n;
+            this.parent = new int[size];
             for (int i = 0; i < size; i++) {
                 parent[i] = i;
             }
@@ -102,6 +98,7 @@ public class FriendCircles_547 {
             int p1 = find(n1);
             int p2 = find(n2);
             parent[p2] = p1;
+            count--;
         }
     }
 

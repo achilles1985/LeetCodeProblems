@@ -13,11 +13,11 @@ public class IntegerToStrAndBack_00 {
         System.out.println(s.intToString2(0));
 
         System.out.println("String to integer");
-        System.out.println(s.stringToInt2("123"));
-        System.out.println(s.stringToInt2("1"));
-        System.out.println(s.stringToInt2("0"));
-        System.out.println(s.stringToInt2("-123"));
-        System.out.println(s.stringToInt2("-1"));
+        System.out.println(s.stringToInt("123"));
+        System.out.println(s.stringToInt("1"));
+        System.out.println(s.stringToInt("0"));
+        System.out.println(s.stringToInt("-123"));
+        System.out.println(s.stringToInt("-1"));
     }
 
     public String intToString2(int num) {
@@ -67,19 +67,4 @@ public class IntegerToStrAndBack_00 {
         return s.charAt(0) == '-' ? res*(-1) : res;
     }
 
-    public int stringToInt2(String s) {
-        if (s == null || s.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-
-        boolean isNegative = false;
-        if (s.charAt(0) == '-') {
-            isNegative = true;
-        }
-        int res = 0;
-        for (int i = isNegative ? 1 : 0; i < s.length(); i++) {
-            res = res * 10 + (s.charAt(i) - '0');
-        }
-        return isNegative ? -res : res;
-    }
 }

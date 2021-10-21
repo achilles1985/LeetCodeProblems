@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * H
+ * H [remember]
  * Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
  * <p>
  * Example 1:
@@ -31,6 +31,7 @@ public class IntegerToEnglishWords_273 {
 
     public static void main(String[] args) {
         IntegerToEnglishWords_273 s = new IntegerToEnglishWords_273();
+        System.out.println(s.numberToWords(1234567));
         System.out.println(s.numberToWords(123456789));
 
         System.out.println(s.numberToWords2(40345));
@@ -44,7 +45,27 @@ public class IntegerToEnglishWords_273 {
     // O(d) - time, O(d/3) - space
     public String numberToWords(int num) {
         Map<Integer, String> map = buildNumbersMap();
+        //return numberToWords2(num, map, new StringBuilder()).trim();
         return numberToWords(num, map).trim();
+    }
+
+    private String numberToWords2(int num, Map<Integer, String> map, StringBuilder sb) {
+        if (num == 0) {
+            return "Zero";
+        }
+        if (num > 1000_000) {
+            int base = num/1000_000;
+            num = num%1000_000;
+            sb.append(numberToWords2(base, map, sb));
+            sb.append(" Million");
+        }
+        if (num > 1000) {
+            int base = num/1000;
+            num = num%1000;
+            sb.append(numberToWords2(base, map, sb));
+            sb.append(" Thousand");
+        }
+        return sb.toString();
     }
 
     private String numberToWords(int num, Map<Integer, String> map) {

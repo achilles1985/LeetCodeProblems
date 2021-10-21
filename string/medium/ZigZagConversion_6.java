@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** M
- * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+ * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
+ * (you may want to display this pattern in a fixed font for better legibility)
 
  P   A   H   N
  A P L S I I G
@@ -43,25 +44,22 @@ public class ZigZagConversion_6 {
             return s;
         }
         List<StringBuilder> list = new ArrayList<>();
-        for (int i = 0; i < Math.min(numRows, s.length()); i++) {
+        for (int i = 0; i < numRows; i++) {
             list.add(new StringBuilder());
         }
-
-        int curRow = 0;
-        boolean moveDown = false;
+        boolean goDown = true;
+        int currRow = 0;
         for (int i = 0; i < s.length(); i++) {
-            list.get(curRow).append(s.charAt(i));
-            if (curRow == 0 || curRow == numRows - 1) {
-                moveDown = !moveDown;
-            }
-            curRow += moveDown ? 1: -1;
+            list.get(currRow).append(s.charAt(i));
+            if (currRow == numRows - 1) goDown = false;
+            if (currRow == 0) goDown = true;
+            currRow += goDown ? 1 : -1;
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder sb: list) {
+            result.append(sb.toString());
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-           sb.append(list.get(i));
-        }
-
-        return sb.toString();
+        return result.toString();
     }
 }

@@ -58,7 +58,7 @@ public class NumberOfIslands_200 {
         System.out.println(s.numIslands(new char[][] {{}, {}})); // 0
     }
 
-    // O(rows*columns) - time, space (since if all are '1', we keep the stack of m*n)
+    // O(rows*columns) - time, space (since if all are '1', we keep the stack of m*n, dfs goes by m*n depth)
     public int numIslands(char[][] chars) {
         if (chars == null || chars.length == 0) {
             return 0;

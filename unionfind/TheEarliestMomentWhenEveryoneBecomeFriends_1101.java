@@ -18,20 +18,20 @@ import java.util.Arrays;
  * no such earliest time.
  *
  * Example 1:
- * Input: logs = [[20190101,0,1],[20190104,3,4],[20190107,2,3],[20190211,1,5],[20190224,2,4],[20190301,0,3],
- * [20190312,1,2],[20190322,4,5]], N = 6
+ * Input: logs = [[2019-01-01,0,1],[2019-01-04,3,4],[2019-01-07,2,3],[2019-02-11,1,5],[2019-02-24,2,4],[2019-03-01,0,3],
+ * [2019-03-12,1,2],[2019-03-22,4,5]], N = 6
  * Output: 20190301
  * Explanation:
- * The first event occurs at timestamp = 20190101 and after 0 and 1 become friends we have the following friendship
+ * The first event occurs at timestamp = 2019-01-01 and after 0 and 1 become friends we have the following friendship
  * groups [0,1], [2], [3], [4], [5].
- * The second event occurs at timestamp = 20190104 and after 3 and 4 become friends we have the following friendship
+ * The second event occurs at timestamp = 2019-01-04 and after 3 and 4 become friends we have the following friendship
  * groups [0,1], [2], [3,4], [5].
- * The third event occurs at timestamp = 20190107 and after 2 and 3 become friends we have the following friendship
+ * The third event occurs at timestamp = 2019-01-07 and after 2 and 3 become friends we have the following friendship
  * groups [0,1], [2,3,4], [5].
- * The fourth event occurs at timestamp = 20190211 and after 1 and 5 become friends we have the following friendship
+ * The fourth event occurs at timestamp = 2019-02-11 and after 1 and 5 become friends we have the following friendship
  * groups [0,1,5], [2,3,4].
- * The fifth event occurs at timestamp = 20190224 and as 2 and 4 are already friend anything happens.
- * The sixth event occurs at timestamp = 20190301 and after 0 and 3 become friends we have that all become friends.
+ * The fifth event occurs at timestamp = 2019-02-24 and as 2 and 4 are already friend anything happens.
+ * The sixth event occurs at timestamp = 2019-03-01 and after 0 and 3 become friends we have that all become friends.
  *
  * Note:
  *     2 <= N <= 100

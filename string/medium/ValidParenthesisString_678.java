@@ -28,7 +28,11 @@ public class ValidParenthesisString_678 {
 
     public static void main(String[] args) {
         ValidParenthesisString_678 s = new ValidParenthesisString_678();
+        System.out.println(s.checkValidString("((())")); //false
+        System.out.println(s.checkValidString("(()))")); //false
         System.out.println(s.checkValidString(")(")); //false
+        System.out.println(s.checkValidString("(((((*(()((((*((**(((()()*)()()()*((((**)())*)*)))))))(())(()))())((*()()(((()((()*(())*(()**)()(())")); //false
+        System.out.println(s.checkValidString("((((()(()()()*()(((((*)()*(**(())))))(())()())(((())())())))))))(((((())*)))()))(()((*()*(*)))(*)()")); //true
         System.out.println(s.checkValidString("()")); //true
         System.out.println(s.checkValidString("(*)")); //true
         System.out.println(s.checkValidString("(*))")); //true
@@ -73,15 +77,15 @@ public class ValidParenthesisString_678 {
             }
         }
         // go right -> left and treat all * as ')'
-        open = 0;
+        int close = 0;
         for (int i = s.length() - 1; i >= 0; i--) {
             char c = s.charAt(i);
             if (c == ')' || c == '*') {
-                open++;
+                close++;
             } else {
-                open--;
+                close--;
             }
-            if (open < 0) {
+            if (close < 0) {
                 return false;
             }
         }

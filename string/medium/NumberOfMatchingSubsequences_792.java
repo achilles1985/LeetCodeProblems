@@ -1,9 +1,6 @@
 package string.medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**M [marked] (one path via string, one simultaneous path via entries in array of words)
  * Given string S and a dictionary of words words, find the number of words[i] that is a subsequence of S.
@@ -53,30 +50,28 @@ public class NumberOfMatchingSubsequences_792 {
     }
 
     // O(S + words) - time, O(words) - space
-    public int numMatchingSubseq(String S, String[] words) {
-        if (S == null || S.isEmpty()) {
+    public int numMatchingSubseq(String s, String[] words) {
+        if (s.isEmpty() || words.length == 0) {
             return 0;
         }
         Map<Character, List<String>> map = new HashMap<>();
         for (String word: words) {
-            map.computeIfAbsent(word.charAt(0), w -> new ArrayList<>()).add(word);
+            map.computeIfAbsent(word.charAt(0), k -> new ArrayList<>()).add(word);
         }
-        int counter = 0;
-        for (int i = 0; i < S.length(); i++) {
-            if (map.containsKey(S.charAt(i))) {
-                List<String> values = map.get(S.charAt(i));
-                map.remove(S.charAt(i));
-                for (int j = 0; j < values.size(); j++) {
-                    String value = values.get(j);
-                    if (value.length() == 1) {
-                        counter++;
-                    } else {
-                        map.computeIfAbsent(value.charAt(1), v -> new ArrayList<>()).add(value.substring(1));
-                    }
+        int count = 0;
+        for (char c: s.toCharArray()) {
+            List<String> suffixes = map.getOrDefault(c, Collections.emptyList());
+            map.remove(c);
+            for (int i = 0; i < suffixes.size(); i++) { // for each because of ConcurrentModificationException
+                String suffix = suffixes.get(i);
+                if (suffix.length() == 1) {
+                    count++;
+                } else {
+                    String newSuffix = suffix.substring(1);
+                    map.computeIfAbsent(newSuffix.charAt(0), k -> new ArrayList<>()).add(newSuffix);
                 }
             }
         }
-        return counter;
+        return count;
     }
-
 }

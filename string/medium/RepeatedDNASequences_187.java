@@ -63,8 +63,8 @@ public class RepeatedDNASequences_187 {
         }
         hashes.add(hash);
         Set<String> result = new HashSet<>();
-        for (int i = 1; i <= s.length() - DNA_SEQUENCE; i++) {
-            hash = rehash(hash, s, i);
+        for (int i = 1; i <= s.length() - DNA_SEQUENCE; i++) { // n - l
+            hash = rehash(hash, s, i); // 1
             if (hashes.contains(hash)) {
                 result.add(s.substring(i, i + DNA_SEQUENCE));
             }

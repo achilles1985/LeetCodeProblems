@@ -41,7 +41,7 @@ public class UnionFind {
     }
 
     // Combines two sets together to one. Does union by rank. Sets parent with max rank.
-    public void union(int val1, int val2) {
+    public void union(int val1, int val2) { // Inverse-Ackermann function which boils down to O(1)
         Node node1 = nodes.get(val1);
         Node node2 = nodes.get(val2);
         Node paren1 = findSet(node1);

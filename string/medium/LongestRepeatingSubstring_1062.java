@@ -1,8 +1,6 @@
 package string.medium;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**M [marked]
@@ -42,28 +40,18 @@ public class LongestRepeatingSubstring_1062 {
         System.out.println(s.longestRepeatingSubstring("aaaaa")); //4
     }
 
-    // O(n^2) - time, space
-    public int longestRepeatingSubstringBF(String S) {
-        if (S == null || S.isEmpty()) {
-            return 0;
-        }
-        Map<String, Integer> frequency = new HashMap<>();
-        for (int i = 0; i < S.length(); i++) {
-            for (int j = i+1; j <= S.length(); j++) {
-                String sub = S.substring(i, j);
-                frequency.put(sub, frequency.getOrDefault(sub, 0) + 1);
-            }
-        }
-
-        String result = "";
-        for (Map.Entry<String, Integer> entry: frequency.entrySet()) {
-            if (entry.getValue() > 1) {
-                if (entry.getKey().length() > result.length()) {
-                    result = entry.getKey();
+    // O(n^3) - time, O(n^2) - space
+    public int longestRepeatingSubstringBF(String s) {
+        for (int i = s.length() - 1; i >= 1; i--) { // L
+            Set<String> set = new HashSet<>();
+            for (int j = 0; j + i <= s.length(); j++) { // (N-L)
+                String sub = s.substring(j, j + i); // L
+                if (!set.add(sub)) {
+                    return sub.length();
                 }
             }
         }
-        return result.length();
+        return 0;
     }
 
     // O(N*logN) - time,
@@ -72,11 +60,10 @@ public class LongestRepeatingSubstring_1062 {
         if (S == null || S.isEmpty()) {
             return 0;
         }
-        int L = S.length();
-        int lo = 1, hi = L;
+        int lo = 1, hi = S.length();
         while (lo <= hi) {
             int mid = (lo + hi)/2;
-            if (search(S, L, mid)) {
+            if (hasRepeated(mid, S)) {
                 lo = mid + 1;
             } else {
                 hi = mid - 1;
@@ -93,14 +80,13 @@ public class LongestRepeatingSubstring_1062 {
         return 0;
     }
 
-    private boolean search(String str, int length, int n) {
-        Set<String> unique = new HashSet<>();
-        for (int i = 0; i <= length - n; i++) {
-            String sub = str.substring(i, i + n);
-            if (unique.contains(sub)) {
+    private boolean hasRepeated(int length, String s) {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i + length <= s.length(); i++) {
+            String sub = s.substring(i, i + length);
+            if (!set.add(sub)) {
                 return true;
             }
-            unique.add(sub);
         }
         return false;
     }

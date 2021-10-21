@@ -36,8 +36,8 @@ public class VerifyingAlienDictionary_953 {
 
     public static void main(String[] args) {
         VerifyingAlienDictionary_953 s = new VerifyingAlienDictionary_953();
-        System.out.println(s.isAlienSorted(new String[]{"hello","leetcode"}, "hlabcdefgijkmnopqrstuvwxyz")); //true
         System.out.println(s.isAlienSorted(new String[]{"word","world","row"}, "worldabcefghijkmnpqstuvxyz")); //false
+        System.out.println(s.isAlienSorted(new String[]{"hello","leetcode"}, "hlabcdefgijkmnopqrstuvwxyz")); //true
     }
 
     // O(words) - time, O(1) - space since map length == 26
@@ -70,9 +70,6 @@ public class VerifyingAlienDictionary_953 {
             i++;
             j++;
         }
-        if (i < w1.length()) {
-            return false;
-        }
-        return true;
+        return i >= w1.length();
     }
 }

@@ -90,10 +90,10 @@ public class CourseScheduleII_210 {
     }
 
     private boolean hasCycle(Map<Integer, List<Integer>> graph, int node, Deque<Integer> stack, Map<Integer, Integer> visited) {
-        if (visited.containsKey(node) && visited.get(node) == -1) {
+        if (visited.containsKey(node) && visited.get(node) == -1) { // visiting
             return true;
         }
-        if (visited.containsKey(node)) { // required, 2, [1,0]
+        if (visited.containsKey(node)) { // required, 2, [1,0], visited
             return false;
         }
         visited.put(node, -1); // visiting

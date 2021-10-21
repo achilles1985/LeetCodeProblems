@@ -40,17 +40,6 @@ public class GraphTraversal {
         return result;
     }
 
-    private void dfsHelper(Map<Integer, List<Integer>> map, Set<Integer> visited, List<Integer> result, int vertex) {
-        if (visited.contains(vertex)) {
-            return;
-        }
-        result.add(vertex);
-        visited.add(vertex);
-        for (int child: map.getOrDefault(vertex, Collections.emptyList())) {
-            dfsHelper(map, visited, result, child);
-        }
-    }
-
     // O(V+E) - time, O(V) - space
     public List<Integer> dfsIterative(int[][] edges) {
         List<Integer> result = new ArrayList<>();
@@ -99,6 +88,17 @@ public class GraphTraversal {
         }
 
         return result;
+    }
+
+    private void dfsHelper(Map<Integer, List<Integer>> map, Set<Integer> visited, List<Integer> result, int vertex) {
+        if (visited.contains(vertex)) {
+            return;
+        }
+        result.add(vertex);
+        visited.add(vertex);
+        for (int child: map.getOrDefault(vertex, Collections.emptyList())) {
+            dfsHelper(map, visited, result, child);
+        }
     }
 
 }

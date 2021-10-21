@@ -1,11 +1,6 @@
 package string.easy;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /** E
  Given a paragraph and a list of banned words, return the most frequent word that is not in the list of banned words.
@@ -54,10 +49,8 @@ public class MostCommonWord_819 {
         if (paragraph == null || paragraph.isEmpty()) {
             return "";
         }
-        Set<String> bannedWords = new HashSet<>();
-        for (String word: banned) {
-            bannedWords.add(word);
-        }
+        Set<String> bannedWords = new HashSet<>(Arrays.asList(banned));
+
         final String[] words = paragraph.split("\\W+");
         Map<String, Integer> frequency = new HashMap<>();
         for (String word: words) {
@@ -69,42 +62,5 @@ public class MostCommonWord_819 {
         Map.Entry<String, Integer> entry = Collections.max(frequency.entrySet(), Comparator.comparing(Map.Entry::getValue));
 
         return entry.getKey();
-    }
-
-    // O(n + m) - time, O(n+m) - space, n - number of chars in paragraph, m - number of banned
-    public String mostCommonWord(String paragraph, String[] banned) {
-        if (paragraph == null || paragraph.length() == 0) {
-            return "";
-        }
-        paragraph += ".";
-        Map<String, Integer> map = new HashMap<>();
-        Set<String> set = new HashSet<>();
-        for (String word: banned) {
-            set.add(word.toLowerCase());
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < paragraph.length(); i++) {
-            char symbol = paragraph.charAt(i);
-            if (Character.isAlphabetic(symbol)) {
-                sb.append(Character.toLowerCase(symbol));
-            } else {
-                if (!sb.toString().isEmpty()) {
-                    map.put(sb.toString(), map.getOrDefault(sb.toString(), 1) + 1);
-                    sb = new StringBuilder();
-                }
-            }
-        }
-        int maxCount = 0;
-        String ans = "";
-        for (Map.Entry<String, Integer> entry: map.entrySet()) {
-            if (!set.contains(entry.getKey())) {
-                if (entry.getValue() > maxCount) {
-                    maxCount = entry.getValue();
-                    ans = entry.getKey();
-                }
-            }
-        }
-
-        return ans;
     }
 }

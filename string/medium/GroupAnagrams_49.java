@@ -22,6 +22,7 @@ import java.util.Map;
  All inputs will be in lowercase.
  The order of your output does not matter.
  */
+// Q: 1. All words have the same length? Duplicates possible?
 public class GroupAnagrams_49 {
 
     public static void main(String[] args) {
