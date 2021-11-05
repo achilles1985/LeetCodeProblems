@@ -1,6 +1,8 @@
 package stack.medium;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import utils.SolutionUtils;
@@ -21,6 +23,7 @@ import utils.SolutionUtils;
 
  Note: The length of given array won't exceed 10000.
  */
+// 1. Duplicates possible?
 public class NextGreaterElementII_503 {
 
     public static void main(String[] args) {
@@ -28,12 +31,14 @@ public class NextGreaterElementII_503 {
         SolutionUtils.print(s.nextGreaterElementsBF(new int[]{5,4,3,2,1})); // [-1,5,5,5,5]
         SolutionUtils.print(s.nextGreaterElementsBF(new int[]{1,2,1})); // [2,-1,2]
 
+        SolutionUtils.print(s.nextGreaterElements2(new int[]{100,1,11,1,120,111,123,1,-1,-100})); // [120,11,120,120,123,123,-1,100,100,100]
         SolutionUtils.print(s.nextGreaterElements(new int[]{5,4,3,2,1})); // [-1,5,5,5,5]
         SolutionUtils.print(s.nextGreaterElements(new int[]{2,4})); // [4,-1]
         SolutionUtils.print(s.nextGreaterElements(new int[]{1,3,4,2})); // [3,4,-1,3]
     }
 
     // O(n^2) - time, O(n) - space
+
     public int[] nextGreaterElementsBF(int[] nums) {
         if (nums == null || nums.length == 0) {
             return new int[]{};
@@ -53,8 +58,8 @@ public class NextGreaterElementII_503 {
         }
         return result;
     }
-
     // O(n^2) - time, O(1) - space
+
     public int[] nextGreaterElementsBF2(int[] nums) {
         int[] res = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
@@ -94,4 +99,27 @@ public class NextGreaterElementII_503 {
         return result;
     }
 
+    // O(n) - time, O(n) - space
+    public int[] nextGreaterElements2(int[] nums) {
+        Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
+        Stack<int[]> stack = new Stack<>();
+        for (int i = 0; i < 2*nums.length; i++) {
+            int idx = i%nums.length;
+            int num = nums[idx];
+            while (!stack.isEmpty() && num > stack.peek()[1]) {
+                int[] pop = stack.pop();
+                map.computeIfAbsent(pop[1], k -> new HashMap<>()).put(pop[0], num);
+            }
+            stack.push(new int[]{idx, num});
+        }
+        int[] result = new int[nums.length];
+        Arrays.fill(result, -1);
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (map.containsKey(num)) {
+                result[i] = map.get(num).get(i);
+            }
+        }
+        return result;
+    }
 }

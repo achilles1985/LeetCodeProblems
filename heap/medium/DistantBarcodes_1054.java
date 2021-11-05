@@ -41,20 +41,20 @@ public class DistantBarcodes_1054 {
             map.put(code, map.getOrDefault(code, 0) + 1);
         }
 
-        Queue<Integer> heap = new PriorityQueue<>((c1, c2) -> map.get(c2) - map.get(c1));
+        Queue<Integer> maxHeap = new PriorityQueue<>((c1, c2) -> map.get(c2) - map.get(c1));
         for (int key: map.keySet()) {
-            heap.add(key);
+            maxHeap.add(key);
         }
 
         int i = 0;
         int[] res = new int[barcodes.length];
         int prev = -1;
-        while (!heap.isEmpty()) {
-            int cur = heap.poll();
+        while (!maxHeap.isEmpty()) {
+            int cur = maxHeap.poll();
             res[i++] = cur;
             map.put(cur, map.get(cur)-1);
             if (prev != -1 && map.get(prev) != 0) {
-                heap.add(prev);
+                maxHeap.add(prev);
             }
             prev = cur;
         }

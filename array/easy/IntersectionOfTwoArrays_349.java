@@ -1,4 +1,4 @@
-package binarySearch.easy;
+package array.easy;
 
 // https://leetcode.com/problems/intersection-of-two-arrays/
 
@@ -8,7 +8,7 @@ import java.util.Set;
 
 import utils.SolutionUtils;
 
-/** E
+/** E [marked]
  Given two arrays, write a function to compute their intersection.
 
  Example 1:
@@ -27,7 +27,11 @@ public class IntersectionOfTwoArrays_349 {
 
     public static void main(String[] args) {
         IntersectionOfTwoArrays_349 s = new IntersectionOfTwoArrays_349();
+        SolutionUtils.print(s.intersection(new int[] {4,9,5}, new int[] {9,4,9,8,4})); // [9,4]
+
         SolutionUtils.print(s.intersection2(new int[] {4,3,9,3,1,9,7,6,9,7}, new int[] {5,0,8})); // []
+        SolutionUtils.print(s.intersection2(new int[] {1,2}, new int[] {1,1})); // [1]
+        SolutionUtils.print(s.intersection2(new int[] {1}, new int[] {1})); // [1]
         SolutionUtils.print(s.intersection2(new int[] {1,2,2,1}, new int[] {2,2})); // [2]
         SolutionUtils.print(s.intersection2(new int[] {4,9,5}, new int[] {9,4,9,8,4})); // [9,4]
     }
@@ -55,19 +59,7 @@ public class IntersectionOfTwoArrays_349 {
         return findIntersection(set1, set2);
     }
 
-    private int[] findIntersection(Set<Integer> set1, Set<Integer> set2) {
-        int[] res = new int[set1.size()];
-        int k = 0;
-        for (Integer i: set1) {
-            if (set2.contains(i)) {
-                res[k++] = i;
-            }
-        }
-
-        return Arrays.copyOf(res, k);
-    }
-
-    // Incorrect, try to sort arrays and go with O(1) space
+    // O(n*log(n)) - time, O(1) - space
     public int[] intersection2(int[] nums1, int[] nums2) {
         Arrays.sort(nums1);
         Arrays.sort(nums2);
@@ -86,15 +78,28 @@ public class IntersectionOfTwoArrays_349 {
                 second++;
             }
         }
+        if (k == 0) {
+            return new int[]{};
+        }
         int i = 0, j = 1;
         for (; j < k; j++) {
             if (temp[i] != temp[j]) {
                 temp[++i] = temp[j];
             }
         }
-        if (j == 1) {
-            return new int[]{};
-        }
+
         return Arrays.copyOf(temp, i+1);
+    }
+
+    private int[] findIntersection(Set<Integer> set1, Set<Integer> set2) {
+        int[] res = new int[set1.size()];
+        int k = 0;
+        for (Integer i: set1) {
+            if (set2.contains(i)) {
+                res[k++] = i;
+            }
+        }
+
+        return Arrays.copyOf(res, k);
     }
 }

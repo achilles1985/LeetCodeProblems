@@ -1,12 +1,8 @@
 package stack.medium;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.Stack;
-import java.util.TreeSet;
+import java.util.*;
 
-/** M
+/** M [marked]
  Given a non-negative integer num represented as a string, remove k digits from the number so that the new number is the smallest possible.
 
  Note:
@@ -29,6 +25,10 @@ import java.util.TreeSet;
  Explanation: Remove all the digits from the number and it is left with nothing which is 0.
  */
 /*
+    1. Keep order? (yes)
+    2. Max value?
+ */
+/*
  Corner cases:
     1. k == 0 or k >= str.length
     2. If all digits in ascending order and k != 0, remove last k digits.
@@ -38,107 +38,81 @@ public class RemoveKDigits_402 {
     public static void main(String[] args) {
         RemoveKDigits_402 s = new RemoveKDigits_402();
         String s1 = "000001230012300".replaceFirst("^0*", "");
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
 
-        System.out.println(s.removeKdigitsBF2("112", 1)); // 11
-        System.out.println(s.removeKdigitsBF2("100", 1)); // 0
-        System.out.println(s.removeKdigitsBF2("10200", 1)); // 200
-        System.out.println(s.removeKdigitsBF2("1107", 1)); //107
-        System.out.println(s.removeKdigitsBF2("1432219", 3)); // 1219
-        System.out.println(s.removeKdigitsBF2("10", 2)); //0
+        System.out.println(s.removeKdigitsBF("1432219", 3)); // 1219
+        System.out.println(s.removeKdigitsBF("1111111", 3)); // 1111
+        System.out.println(s.removeKdigitsBF("100", 1)); // 0
+        System.out.println(s.removeKdigitsBF("10200", 1)); // 200
+        System.out.println(s.removeKdigitsBF("15428901574", 3)); // 12801574
+        System.out.println(s.removeKdigitsBF("112", 1)); // 11
+        System.out.println(s.removeKdigitsBF("10200", 1)); // 200
+        System.out.println(s.removeKdigitsBF("1107", 1)); //107
+        System.out.println(s.removeKdigitsBF("10", 2)); //0
     }
 
-    // O(n) - time, space
-    public String removeKdigitsBF2(String num, int k) {
+    // O(n^n) - time, O(n) - space
+    // If input is longer then 10, NumberFormatException
+    public String removeKdigitsBF(String num, int k) {
         if (k == 0) {
             return num;
         }
         if (k >= num.length()) {
             return "0";
         }
-        Stack<Character> stack = new Stack<>();
+        Set<Long> set = new HashSet<>();
+        helper(num, 0, num.length() - k, set, new StringBuilder());
+        long min = Collections.min(set);
+
+        return String.valueOf(min);
+    }
+
+    // O(n) - time, space
+    public String removeKdigits(String num, int k) {
+        if (k == 0) {
+            return num;
+        }
+        if (k >= num.length()) {
+            return "0";
+        }
+        Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < num.length(); i++) {
-            while (!stack.isEmpty() && num.charAt(i) < stack.peek() && k > 0) {
+            int number = num.charAt(i) - '0';
+            while (!stack.isEmpty() && number < stack.peek() && k-- > 0) {
                 stack.pop();
-                k--;
             }
-            stack.push(num.charAt(i));
+            stack.push(number);
+        }
+        StringBuilder sb = new StringBuilder();
+        while (k-- > 0 && !stack.isEmpty()) {
+            stack.pop();
+        }
+        while (!stack.isEmpty() && stack.peekLast() == 0) {
+            stack.removeLast();
         }
         if (stack.isEmpty()) {
             return "0";
         }
-        while (!stack.isEmpty() && k-- > 0) {
-            stack.pop();
-        }
-        StringBuilder sb = new StringBuilder();
-        Iterator<Character> it = stack.iterator();
-        while (it.hasNext()) {
-            sb.append(it.next());
-        }
-        String result = sb.toString().replaceFirst("^0+", "");
-        return result.length() == 0 ? "0" : result;
-    }
-
-    // O(n^n) - time, O(n) - space
-    // If input is longer then 10, NumberFormatException
-    public String removeKdigitsBF(String num, int k) {
-        SortedSet<Integer> set = new TreeSet<>();
-        removeKdigitsUtils(num, num.length()-k, 0, new StringBuilder(), set);
-
-        return String.valueOf(set.first());
-    }
-
-    // O(n*k) - time, O(k) - space
-    public String removeKdigits(String num, int k) {
-        if (k == num.length()) {
-            return "0";
-        }
-        Stack<Character> stack = new Stack<>();
-        int i = 0;
-        for (; i < num.length(); i++) {
-            char c = num.charAt(i);
-            while (!stack.isEmpty() && c < stack.peek() && k > 0) {
-                stack.pop();
-                k--;
-            }
-            stack.push(c);
-            if (k == 0) {
-                break;
-            }
-        }
-
-        String res = "";
         while (!stack.isEmpty()) {
-            res = stack.pop() + res;
-        }
-        res = removeTrailingZeros(res);
-        res = k == 0 ? res + num.substring(i + 1) : res.substring(0, res.length() - k);
-        if (res.length() == 0) {
-            return "0";
+            sb.append(stack.removeLast());
         }
 
-        return res;
+        return sb.toString();
     }
 
-    private String removeTrailingZeros(String str) {
-        if (str.startsWith("0")) {
-            return str.replaceFirst("^0*", "");
-        }
-
-        return str;
-    }
-
-    private void removeKdigitsUtils(String num, int k, int start, StringBuilder sb, Set<Integer> set) {
+    private void helper(String input, int start, int k, Set<Long> set, StringBuilder sb) {
         if (sb.length() == k) {
-            String str = sb.toString();
-            String formatted = str.startsWith("0") ? str.substring(1) : str;
-            set.add(formatted.isEmpty() ? 0 : Integer.parseInt(formatted));
+            long number = Integer.parseInt(sb.toString());
+            set.add(number);
             return;
         }
-
-        for (int i = start; i < num.length(); i++) {
-            sb.append(num.charAt(i));
-            removeKdigitsUtils(num, k, i+1, sb, set);
-            sb.deleteCharAt(sb.length()-1);
+        for (int i = start; i < input.length(); i++) {
+            sb.append(input.charAt(i));
+            helper(input, i+1, k, set, sb);
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
 }

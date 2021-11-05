@@ -40,6 +40,7 @@ public class ValidParentheses_20 {
         System.out.println(s.isValid("(}")); // false
         System.out.println(s.isValid("(])]")); // false
         System.out.println(s.isValid("{[]}")); // true
+        System.out.println(s.isValid("{][}")); // false
     }
 
     // O(n) - time, O(n) - space

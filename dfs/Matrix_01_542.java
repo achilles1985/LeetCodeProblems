@@ -2,6 +2,9 @@ package dfs;
 
 import utils.SolutionUtils;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /** M
  * Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.
  * The distance between two adjacent cells is 1.
@@ -49,16 +52,30 @@ public class Matrix_01_542 {
                 {0,0,0}}));
     }
 
-    // O(n*m) - time, space
+    // O(n*m) - time, O(n*m) space, when all cells are zero
     public int[][] updateMatrix(int[][] matrix) {
         if (matrix == null || matrix.length == 0) {
             return matrix;
         }
-        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
+        Queue<int[]> queue = new LinkedList<>();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                if (matrix[i][j] == 1) {
-                    matrix[i][j] = dfs(i,j,matrix, visited);
+                if (matrix[i][j] == 0) {
+                    queue.add(new int[]{i,j});
+                } else {
+                    matrix[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        int[][] dirs = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        while (!queue.isEmpty()) {
+            int[] polled = queue.poll();
+            for (int[] dir: dirs) {
+                int newX = polled[0] + dir[0];
+                int newY = polled[1] + dir[1];
+                if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && matrix[newX][newY] > matrix[polled[0]][polled[1]] + 1) {
+                    queue.add(new int[]{newX, newY});
+                    matrix[newX][newY] = matrix[polled[0]][polled[1]] + 1;
                 }
             }
         }
@@ -66,21 +83,4 @@ public class Matrix_01_542 {
         return matrix;
     }
 
-    private int dfs(int i, int j, int[][] matrix, boolean[][] visited) {
-        if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || visited[i][j]) {
-            return 0;
-        }
-        if (matrix[i][j] == 0) {
-            return 1;
-        }
-        visited[i][j] = true;
-        int right = dfs(i, j+1, matrix, visited);
-        int down = dfs(i+1, j, matrix, visited);
-        int left = dfs(i, j-1, matrix, visited);
-        int up = dfs(i-1, j, matrix, visited);
-
-        visited[i][j] = false;
-
-        return Math.min(Math.min(right, down), Math.min(left, up)) + 1;
-    }
 }

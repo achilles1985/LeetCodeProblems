@@ -115,7 +115,7 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         int[] range = new int[] {-1, -1};
         int left = 0, right = nums.length - 1;
         // find left bound index
-        while (left <= right) {
+        while (left <= right) { // if target is not within the range, we can get Lo=-1 or Hi=array.length
             int mid = (left + right)/2;
             if (nums[mid] < target) {
                 left = mid + 1;
@@ -155,7 +155,7 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         }
         int left = 0;
         int right = idx;
-        while (left < right) {
+        while (left < right) { // if target is not within the range, we can get Lo=0 or Hi=array.length-1
             int mid = left + (right - left)/2;
             if (nums[mid] < target) {
                 left = mid + 1;

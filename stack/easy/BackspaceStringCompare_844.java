@@ -1,5 +1,7 @@
 package stack.easy;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -37,13 +39,43 @@ public class BackspaceStringCompare_844 {
 
     public static void main(String[] args) {
         BackspaceStringCompare_844 s = new BackspaceStringCompare_844();
-        System.out.println("ab#c == ad#c " + s.backspaceCompare("y#fo##f", "y#f#o##f")); //true
+        System.out.println(s.backspaceCompare2("abcd", "bbcd")); //false
+        System.out.println(s.backspaceCompare2("y#fo##f", "y#f#o##f")); //true
 
         System.out.println("ab#c == ad#c " + s.backspaceCompare("ab#c", "ad#c"));//true
         System.out.println("ab## == c#d# " + s.backspaceCompare("ab##", "c#d#"));//true
         System.out.println("a##c == #a#c " + s.backspaceCompare("a##c", "#a#c"));//true
         System.out.println("a#c == b " + s.backspaceCompare("a#c", "b")); //false
     }
+
+    public boolean backspaceCompare2(String s, String t) {
+        Deque<Character> stack1 = populateStack(s);
+        Deque<Character> stack2 = populateStack(t);
+        if (stack1.size() != stack2.size()) {
+            return false;
+        }
+        int size = stack1.size();
+        for (int i = 0; i < size; i++) {
+            if (!stack1.pop().equals(stack2.pop())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private Deque<Character> populateStack(String s) {
+        Deque<Character> stack1 = new ArrayDeque<>();
+        for (char c: s.toCharArray()) {
+            if (!stack1.isEmpty() && c == '#') {
+                stack1.pop();
+            } else if (c != '#'){
+                stack1.push(c);
+            }
+        }
+        return stack1;
+    }
+
 
     // O(M+N) - time, O(N+M) - space
     public boolean backspaceCompareBF(String S, String T) {

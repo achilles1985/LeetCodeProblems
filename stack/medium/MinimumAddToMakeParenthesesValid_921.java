@@ -2,7 +2,6 @@ package stack.medium;
 
 import java.util.Stack;
 
-
 /**
  * M
  * Given a string S of '(' and ')' parentheses, we add the minimum number of parentheses ( '(' or ')', and in any positions ) so that the resulting parentheses string is valid.

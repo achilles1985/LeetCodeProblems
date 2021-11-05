@@ -29,13 +29,13 @@ import java.util.Queue;
 In push operation, the new element is always enqueued to q1. In pop() operation, if q2 is empty then all the elements except the last, are moved to q2.
 Finally the last element is dequeued from q1 and returned. (https://www.geeksforgeeks.org/implement-stack-using-queue/)
  */
-public class ImplementStackUsingQueues_121 {
+public class ImplementStackUsingQueues_225 {
     private Queue<Integer> q1;
     private Queue<Integer> q2;
     private int last;
 
     /** Initialize your data structure here. */
-    public ImplementStackUsingQueues_121() {
+    public ImplementStackUsingQueues_225() {
         q1 = new LinkedList<>();
         q2 = new LinkedList<>();
     }
@@ -50,7 +50,7 @@ public class ImplementStackUsingQueues_121 {
     /** Removes the element on top of the stack and returns that element. */
     // O(n) - time
     public int pop() {
-        while (!q1.isEmpty()) {
+        while (q1.size() > 1) {
             last = q1.poll();
             q2.add(last);
         }
@@ -75,7 +75,7 @@ public class ImplementStackUsingQueues_121 {
     }
 
     public static void main(String[] args) {
-        ImplementStackUsingQueues_121 stack = new ImplementStackUsingQueues_121();
+        ImplementStackUsingQueues_225 stack = new ImplementStackUsingQueues_225();
 
         stack.push(1);
         stack.push(2);

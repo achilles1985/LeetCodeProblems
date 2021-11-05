@@ -24,7 +24,9 @@ public class TopKFrequentElements_347 {
     public static void main(String[] args) {
         TopKFrequentElements_347 s = new TopKFrequentElements_347();
 
-        System.out.println(s.topKFrequent(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
+        System.out.println(s.topKFrequent4(new int[] {5,3,1,1,1,3,73,1}, 2)); // [1,3]
+        System.out.println(s.topKFrequent(new int[]{4,1,-1,2,-1,2,3}, 2));
+        System.out.println(s.topKFrequent(new int[] {1,1,1,2,2,2,3,3,3,4,4,5,5,6,7}, 4)); // [1,2,3,4,5]
         System.out.println(s.topKFrequent(new int[] {1}, 1)); // [1]
 
         System.out.println(s.topKFrequent2(new int[] {1,1,1,2,2,3}, 2)); // [1,2]
@@ -108,5 +110,34 @@ public class TopKFrequentElements_347 {
             }
         }
         return new int[]{};
+    }
+
+    // O(n) - time, space (bucket sort)
+    public int[] topKFrequent4(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+        Map.Entry<Integer, Integer> maxEntry = Collections.max(map.entrySet(), (e1,e2) -> e1.getValue() - e2.getValue());
+        int max = maxEntry.getValue();
+        List<List<Integer>> buckets = new ArrayList<>();
+        for (int i = 0; i <= max; i++) {
+            buckets.add(new ArrayList<>());
+        }
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            buckets.get(entry.getValue()).add(entry.getKey());
+        }
+        int[] result = new int[k];
+        int j = 0;
+        while (j < k) {
+            List<Integer> bucket = buckets.get(max--);
+            for (int i = 0; i < bucket.size(); i++) {
+                result[j++] = bucket.get(i);
+                if (j == k) {
+                    return result;
+                }
+            }
+        }
+        return result;
     }
 }

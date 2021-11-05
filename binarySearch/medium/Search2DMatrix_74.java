@@ -31,29 +31,29 @@ public class Search2DMatrix_74 {
 
     public static void main(String[] args) {
         Search2DMatrix_74 s = new Search2DMatrix_74();
-        System.out.println(s.searchMatrix2(new int[][]{{1,2,3,4,5}, {6,7,8,9,10}, {12,13,14,15,16}}, 5)); // true
+        System.out.println(s.searchMatrix(new int[][]{{1,3,5,7}, {10,11,16,20}, {23,30,34,60}}, 3)); // true
+        System.out.println(s.searchMatrix(new int[][]{{1,2,3,4,5}, {6,7,8,9,10}, {12,13,14,15,16}}, 5)); // true
+
         System.out.println(s.searchMatrix2(new int[][]{{1}}, 1)); // true
         System.out.println(s.searchMatrix2(new int[][]{{1}, {2}, {3}}, 4)); // false
         System.out.println(s.searchMatrix2(new int[][]{{1,2}, {}, {4}}, 4)); // true
     }
 
-    // O(rows) - time, O(1) - space
+    // O(rows+cols) - time, O(1) - space
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0) {
-            return false;
-        }
         int rows = matrix.length;
-        for (int i = 0; i < rows; i++) {
-            if (matrix[i] != null && matrix[i].length > 0 && matrix[i][matrix[i].length-1] >= target) {
-                int index = Arrays.binarySearch(matrix[i], target);
-                if (index < 0) {
-                    return false;
-                } else {
-                    return true;
-                }
+        int cols = matrix[0].length;
+        int row = 0, col = cols-1;
+        while (row < rows && col >= 0) {
+            if (matrix[row][col] == target) {
+                return true;
+            }
+            if (matrix[row][col] > target) {
+                col--;
+            } else {
+                row++;
             }
         }
-
         return false;
     }
 
@@ -62,21 +62,17 @@ public class Search2DMatrix_74 {
         if (matrix == null || matrix.length == 0) {
             return false;
         }
-
-        int columns = matrix[0].length;
-        int size = matrix.length * matrix[0].length - 1;
-
-        int lo = 0;
-        int hi = size;
-        while (lo <= hi) {
-            int middle = lo + (hi - lo) / 2;
-            int value = matrix[middle / columns][middle % columns];
+        int cols = matrix[0].length;
+        int left = 0, right = matrix.length * matrix[0].length - 1;
+        while (left <= right) {
+            int middle = left + (right - left) / 2;
+            int value = matrix[middle / cols][middle % cols];
             if (value == target) {
                 return true;
             } else if (value < target) {
-                lo = middle + 1;
+                left = middle + 1;
             } else {
-                hi = middle - 1;
+                right = middle - 1;
             }
         }
 

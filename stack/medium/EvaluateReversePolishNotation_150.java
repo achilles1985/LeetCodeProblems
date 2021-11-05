@@ -1,8 +1,10 @@
 package stack.medium;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
-/**M [M]
+/**M [marked]
  Evaluate the value of an arithmetic expression in Reverse Polish Notation.
  Valid operators are +, -, *, /. Each operand may be an integer or another expression.
 
@@ -36,72 +38,44 @@ public class EvaluateReversePolishNotation_150 {
 
     public static void main(String[] args) {
         EvaluateReversePolishNotation_150 s = new EvaluateReversePolishNotation_150();
-        System.out.println(s.evalRPN(new String[] { "2", "1", "+", "3", "*" })); // 9
-        System.out.println(s.evalRPN(new String[] { "4", "13", "5", "/", "+" })); // 6
-        System.out.println(s.evalRPN(new String[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" })); // 22
+        System.out.println(s.evalRPN2(new String[] { "2", "1", "+", "3", "*" })); // 9
+        System.out.println(s.evalRPN2(new String[] { "4", "13", "5", "/", "+" })); // 6
+        System.out.println(s.evalRPN2(new String[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" })); // 22
     }
 
-    public static double evaluate(String expr) {
-        String[] tokens = expr.split(" ");
-        Stack<Double> stack = new Stack<>();
-        for(String token : tokens) {
-            switch(token) {
-                case "+" : {
-                    double val1 = stack.pop();
-                    double val2 = stack.pop();
-                    stack.push(val1 + val2);
-                    break;
-                }
-                case "-" : {
-                    double val2 = stack.pop();
-                    double val1 = stack.pop();
-                    stack.push(val1 - val2);
-                    break;
-                }
-                case "*" : {
-                    double val1 = stack.pop();
-                    double val2 = stack.pop();
-                    stack.push(val1 * val2);
-                    break;
-                }
-                case "/" : {
-                    double val2 = stack.pop();
-                    double val1 = stack.pop();
-                    stack.push(val1 / val2);
-                    break;
-                }
-                default :
-                    stack.push(Double.parseDouble(token));
-            }
-        }
-        return stack.pop();
-    }
-
-    // O(n) - time, O(n) - space because of the stack
-    public int evalRPN(String[] tokens) {
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < tokens.length; i++) {
-            if (isOperator(tokens[i])) {
-                stack.push(eval(stack.pop(), stack.pop(), tokens[i]));
+    // O(n) - time, space
+    public int evalRPN2(String[] tokens) {
+        Deque<Integer> numbers = new ArrayDeque<>();
+        for (String token: tokens) {
+            if (token.equals("+")) {
+                int num1 = numbers.pop();
+                int num2 = numbers.pop();
+                numbers.push(num1 + num2);
+            } else if (token.equals("*")) {
+                int num1 = numbers.pop();
+                int num2 = numbers.pop();
+                numbers.push(num1*num2);
+            } else if (token.equals("-")) {
+                int num1 = numbers.pop();
+                int num2 = numbers.pop();
+                numbers.push(num2 - num1);
+            } else if (token.equals("/")) {
+                int num1 = numbers.pop();
+                int num2 = numbers.pop();
+                numbers.push(num2 / num1);
             } else {
-                stack.push(Integer.valueOf(tokens[i]));
+                int digit = 0;
+                boolean isNegative = false;
+                if (token.charAt(0) == '-') {
+                    isNegative = true;
+                }
+                for (int i = isNegative ? 1 : 0; i < token.length(); i++) {
+                    char c = token.charAt(i);
+                    digit = digit*10 + (c - '0');
+                }
+                numbers.push(isNegative ? -digit : digit);
             }
         }
-
-        return stack.pop();
-    }
-
-    private boolean isOperator(String value) {
-        return "+".equals(value) || "-".equals(value) || "*".equals(value) || "/".equals(value);
-    }
-
-    private int eval(int value1, int value2, String operator) {
-        switch (operator) {
-            case "+": return value1 + value2;
-            case "-": return value2 - value1;
-            case "*": return value1 * value2;
-            case "/": return value2 / value1;
-            default: throw new IllegalArgumentException("Wrong operator");
-        }
+        return numbers.pop();
     }
 }

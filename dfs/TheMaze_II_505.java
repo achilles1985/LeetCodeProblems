@@ -1,10 +1,11 @@
 package dfs;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/**M
+/**M [marked]
  * There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by rolling up, down,
  * left or right, but it won't stop rolling until hitting a wall. When the ball stops, it could choose the next
  * direction.
@@ -54,14 +55,14 @@ public class TheMaze_II_505 {
 
     public static void main(String[] args) {
         TheMaze_II_505 s = new TheMaze_II_505();
-        System.out.println(s.shortestDistance(new int[][]{
+        System.out.println(s.shortestDistanceDFS(new int[][]{
                 {0,0,1,0,0},
                 {0,0,0,0,0},
                 {0,0,0,1,0},
                 {1,1,0,1,1},
                 {0,0,0,0,0}
         }, new int[]{0,4}, new int[]{4,4})); // 12
-        System.out.println(s.shortestDistance(new int[][]{
+        System.out.println(s.shortestDistanceDFS(new int[][]{
                 {0,0,1,0,0},
                 {0,0,0,0,0},
                 {0,0,0,1,0},
@@ -71,7 +72,7 @@ public class TheMaze_II_505 {
     }
 
     // O(m*n*max(m,n)) - time, O(m*n) - space
-    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+    public int shortestDistanceDFS(int[][] maze, int[] start, int[] destination) {
         int[][] distances = new int[maze.length][maze[0].length];
         for (int[] distance: distances) {
             Arrays.fill(distance, Integer.MAX_VALUE);
@@ -80,6 +81,43 @@ public class TheMaze_II_505 {
         dfs(maze, start, distances);
 
         return distances[destination[0]][destination[1]] == Integer.MAX_VALUE ? -1 : distances[destination[0]][destination[1]];
+    }
+
+    // OO(m*n*max(m,n))- time, O(m*n) - space
+    public int shortestDistanceBFS(int[][] maze, int[] start, int[] destination) {
+        int rows = maze.length;
+        int cols = maze[0].length;
+        int[][] distance = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                distance[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        distance[start[0]][start[1]] = 0;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(start);
+        int[][] dists = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        while (!queue.isEmpty()) {
+            int[] polled = queue.poll();
+            int x = polled[0];
+            int y = polled[1];
+            for (int[] dist: dists) {
+                int newX = x + dist[0];
+                int newY = y + dist[1];
+                int count = 0;
+                while (newX >= 0 && newX < rows && newY >= 0 && newY < cols && maze[newX][newY] == 0) {
+                    newX += dist[0];
+                    newY += dist[1];
+                    count++;
+                }
+                if (distance[x][y] + count < distance[newX-dist[0]][newY-dist[1]]) {
+                    distance[newX-dist[0]][newY-dist[1]] = distance[x][y] + count;
+                    queue.add(new int[]{newX-dist[0], newY-dist[1]});
+                }
+            }
+        }
+
+        return distance[destination[0]][destination[1]] == Integer.MAX_VALUE ? -1 : distance[destination[0]][destination[1]];
     }
 
     // O(m*n*log(m*n)) - time, O(m*n) - space

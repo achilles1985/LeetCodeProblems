@@ -1,10 +1,6 @@
 package heap.medium;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 /** M
  There are n cities connected by m flights. Each fight starts from city u and arrives at v with a price w.
@@ -47,11 +43,12 @@ public class CheapestFlightsWithinKStops_787 {
 
     public static void main(String[] args) {
         CheapestFlightsWithinKStops_787 s = new CheapestFlightsWithinKStops_787();
+        System.out.println(s.findCheapestPrice(3, new int[][] {{0,1,100},{1,2,100},{0,2,500}}, 0, 2, 0)); // 500
         System.out.println(s.findCheapestPrice(3, new int[][] {{0,1,100},{1,2,100},{0,2,500}}, 0, 2, 1)); // 200
         System.out.println(s.findCheapestPriceDynamic(3, new int[][] {{0,1,100},{1,2,100},{0,2,500}}, 0, 2, 1)); // 200
 
-        System.out.println(s.findCheapestPrice(3, new int[][] {{0,1,100},{1,2,100},{0,2,500}}, 0, 2, 0)); // 500
     }
+
 
     // O(E + V*log(V)) - time, E - number of flights, V - number of cities, O(E+V) - space (Dijkastra algorithm)
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int stop) {
@@ -78,6 +75,31 @@ public class CheapestFlightsWithinKStops_787 {
             }
         }
 
+        return -1;
+    }
+
+    // O(E + V*log(V)) - time, E - number of flights, V - number of cities, O(E+V) - space (Dijkastra algorithm)
+    public int findCheapestPrice2(int n, int[][] flights, int src, int dst, int k) {
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        for (int[] edge: flights) {
+            int from = edge[0];
+            int to = edge[1];
+            graph.computeIfAbsent(from, key -> new ArrayList<>()).add(new int[]{to, edge[2]});
+        }
+
+        Queue<int[]> minHeap = new PriorityQueue<>((e1,e2) -> e1[1] - e2[1]);
+        minHeap.add(new int[]{src,0,0});
+        while (!minHeap.isEmpty()) {
+            int[] polled = minHeap.poll();
+            if (polled[0] == dst) {
+                return polled[1];
+            }
+            for (int[] child: graph.getOrDefault(polled[0], Collections.emptyList())) {
+                if (polled[2] <= k) {
+                    minHeap.add(new int[]{child[0], child[1] + polled[1], polled[2] +1});
+                }
+            }
+        }
         return -1;
     }
 

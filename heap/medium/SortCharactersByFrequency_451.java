@@ -40,8 +40,9 @@ public class SortCharactersByFrequency_451 {
     public static void main(String[] args) {
         SortCharactersByFrequency_451 s = new SortCharactersByFrequency_451();
         System.out.println(s.frequencySort("tree")); // eetr
-        System.out.println(s.frequencySort("cccaa")); // cccaa
         System.out.println(s.frequencySort("Aabb")); // bbAa
+        System.out.println(s.frequencySort("cccaa")); // cccaa
+        System.out.println(s.frequencySort("ccc1112a12222a")); // 222221111cccaa
     }
 
     // O(k*log(k)) - time, O(k) - space, k - number of unique chars

@@ -17,6 +17,7 @@ public class TrappingRainWater_42 {
     public static void main(String[] args) {
         TrappingRainWater_42 s = new TrappingRainWater_42();
 
+        System.out.println(s.trapBruteForce(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); //6
         System.out.println(s.trapBruteForce(new int[]{5,2,1,0,4})); //9
         System.out.println(s.trap4(new int[]{5,2,1,0,4})); //9
 
@@ -24,7 +25,6 @@ public class TrappingRainWater_42 {
         System.out.println(s.trap(new int[]{3,2,1,2,3})); //4
 
         System.out.println(s.trap2(new int[]{3,2,1,0,1,2,3})); //4
-        System.out.println(s.trap2(new int[]{0,1,0,2,1,0,1,3,2,1,2,1})); //6
     }
 
     // O(n^2) - time, O(1) - space. (Calculate the area of column at the current position)

@@ -1,4 +1,4 @@
-package binarySearch.medium;
+package backtracking.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;

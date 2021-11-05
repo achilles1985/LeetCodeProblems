@@ -36,6 +36,7 @@ public class MissingElementInSortedArray_1060 {
 
     public static void main(String[] args) {
         MissingElementInSortedArray_1060 s = new MissingElementInSortedArray_1060();
+        System.out.println(s.missingElement(new int[] {1,3,6,10,12,16,22,25}, 8)); //13
         System.out.println(s.missingElement(new int[] {1,2,3,4,7,8}, 2)); //6
         System.out.println(s.missingElement(new int[] {1,2,3,4,5}, 3)); //6
 
@@ -98,7 +99,7 @@ public class MissingElementInSortedArray_1060 {
         int left = 0, right = nums.length - 1;
         while (left < right) {
             int mid = left + (right - left)/2;
-            if (missing(nums, mid) < k) {
+            if (missing(nums, mid) < k) { // how many elements missed between nums[mid] and nums[0]
                 left = mid + 1;
             } else {
                 right = mid;

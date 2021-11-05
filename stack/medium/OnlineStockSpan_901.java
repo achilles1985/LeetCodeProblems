@@ -2,7 +2,7 @@ package stack.medium;
 
 import java.util.Stack;
 
-/** M
+/** M [marked]
  Write a class StockSpanner which collects daily price quotes for some stock, and returns the span of that stock's price for the current day.
  The span of the stock's price today is defined as the maximum number of consecutive days (starting from today and going backwards) for which the price of the stock was less than or equal to today's price.
  For example, if the price of a stock over the next 7 days were [100, 80, 60, 70, 60, 75, 85], then the stock spans would be [1, 1, 1, 2, 1, 4, 6].
@@ -30,25 +30,21 @@ import java.util.Stack;
  The total time limit for this problem has been reduced by 75% for C++, and 50% for all other languages.
  */
 public class OnlineStockSpan_901 {
-    private Stack<Integer> prices;
-    private Stack<Integer> weights;
+    private Stack<int[]> stack;
 
     public OnlineStockSpan_901() {
-        prices = new Stack();
-        weights = new Stack();
+        stack = new Stack();
     }
 
     // O(n) - time, space, n - number of pushes
     public int next(int price) {
-        int w = 1;
-        while (!prices.isEmpty() && prices.peek() <= price) {
-            prices.pop();
-            w += weights.pop();
+        int count = 1;
+        while (!stack.isEmpty() && stack.peek()[0] <= price) {
+            count += stack.pop()[1];
         }
+        stack.push(new int[]{price, count});
 
-        prices.push(price);
-        weights.push(w);
-        return w;
+        return count;
     }
 
     public static void main(String[] args) {

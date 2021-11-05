@@ -9,7 +9,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.PriorityQueue;
 
-/** M
+/** M [marked]
  * You are a hiker preparing for an upcoming hike. You are given heights, a 2D array of size rows x columns,
  * where heights[row][col] represents the height of cell (row, col). You are situated in the top-left cell, (0, 0),
  * and you hope to travel to the bottom-right cell, (rows-1, columns-1) (i.e., 0-indexed). You can move up, down, left, or right,
@@ -67,11 +67,11 @@ public class PathWithMinimumEffort_1631 {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
         }
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b)->(a[0]-b[0]));
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b)->(a[0]-b[0]));
         int[] dir = new int[]{0, 1, 0, -1, 0};
-        pq.add(new int[]{0, 0, 0});
-        while (!pq.isEmpty()) {
-            int[] top = pq.poll();
+        minHeap.add(new int[]{0, 0, 0});
+        while (!minHeap.isEmpty()) {
+            int[] top = minHeap.poll();
             int effort = top[0];
             int i = top[1];
             int j = top[2];
@@ -86,7 +86,7 @@ public class PathWithMinimumEffort_1631 {
                     int newDist = Math.max(effort, Math.abs(heights[a][b] - heights[i][j]));
                     if (dist[a][b] > newDist) {
                         dist[a][b] = newDist;
-                        pq.add(new int[]{dist[a][b], a, b});
+                        minHeap.add(new int[]{dist[a][b], a, b});
                     }
                 }
             }
@@ -95,21 +95,21 @@ public class PathWithMinimumEffort_1631 {
     }
 
     // since we know height ranges, we can do binary search
-    // O(n*m) - time, space.
+    // O(n*m) - time, space. O(log10^6) - for binary search, O(V+E) => O(n*m + n*m) - for BFS. Totally, O(log10^6)*O(n*m) = O(n*m).
     public int minimumEffortPath2(int[][] heights) {
         int left = 0;
         int right = 1000000;
-        int result = right;
+        int min = right;
         while (left <= right) { // O(log(10^6))=O(1), where maxHeight=10^6
             int mid = (left + right) / 2;
-            if (canReachDestinaton(heights, mid)) {
-                result = Math.min(result, mid);
+            if (canReachDestinaton(heights, mid)) { // check if path from source to dist can be found
+                min = Math.min(min, mid);
                 right = mid - 1;
             } else {
                 left = mid + 1;
             }
         }
-        return result;
+        return min;
     }
 
     public int minimumEffortPath3(int[][] heights) {
@@ -120,7 +120,7 @@ public class PathWithMinimumEffort_1631 {
         }
         UnionFind unionFind = new UnionFind(rows*cols);
         List<Edge> edgeList = new ArrayList<>();
-        for (int currentRow = 0; currentRow < rows; currentRow++) {
+        for (int currentRow = 0; currentRow < rows; currentRow++) { // n*m
             for (int currentCol = 0; currentCol < cols; currentCol++) {
                 if (currentRow > 0) {
                     edgeList.add(new Edge(
@@ -138,7 +138,7 @@ public class PathWithMinimumEffort_1631 {
                 }
             }
         }
-        Collections.sort(edgeList, (e1, e2) -> e1.difference - e2.difference);
+        Collections.sort(edgeList, (e1, e2) -> e1.difference - e2.difference); //n*m*log(n*m)
         for (int i = 0; i < edgeList.size(); i++) {
             int x = edgeList.get(i).x;
             int y = edgeList.get(i).y;

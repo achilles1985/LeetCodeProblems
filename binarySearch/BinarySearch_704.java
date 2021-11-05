@@ -26,31 +26,31 @@ public class BinarySearch_704 {
 
     public static void main(String[] args) {
         BinarySearch_704 s = new BinarySearch_704();
-        System.out.println(s.template2(new int[] {1, 2, 3, 4, 5, 6, 7}, 8)); // -1
+/*        System.out.println(s.template2(new int[] {1, 2, 3, 4, 5, 6, 7}, 8)); // -1
         System.out.println(s.template2(new int[] {7, 6, 5, 4, 3, 2, 1}, 2)); // -1
         System.out.println(s.template2(new int[] {7, 7, 7, 7, 7, 7, 7, 7}, 2)); // -1
         System.out.println(s.template2(new int[] {1, 2, 3, 4, 5, 6, 7}, 7)); // 6
         System.out.println(s.template2(new int[] {1, 2, 3, 4, 5, 6, 7}, 1)); // 0
         System.out.println(s.template2(new int[] {1, 2, 3, 4, 5, 6, 7}, 5)); // 4
         System.out.println(s.template2(new int[] {5}, 5)); // 0
-        System.out.println(s.template2(new int[] {2, 5}, 5)); // 1
+        System.out.println(s.template2(new int[] {2, 5}, 5)); // 1*/
 
-/*        System.out.println(s.leftMostIndex(new int[]{2,2}, 3)); //-1
-        System.out.println(s.leftMostIndex(new int[]{1,2,3,3,3,4,5,6}, 3)); // 2
-        System.out.println(s.leftMostIndex(new int[]{1,2,4,4,4,4,5,6}, 3)); //-1
-        System.out.println(s.leftMostIndex(new int[]{3,3,3,3}, 3)); //0
-        System.out.println(s.leftMostIndex(new int[]{1,2,3,3,3,3}, 3)); //2
-        System.out.println(s.leftMostIndex(new int[]{3,3,3,3,4,5,6,7}, 3)); //0
-        System.out.println(s.leftMostIndex(new int[]{3}, 3)); //0*/
+/*        System.out.println(s.leftMostIndex3(new int[]{2,2}, 3)); //-1
+        System.out.println(s.leftMostIndex3(new int[]{1,2,3,3,3,4,5,6}, 3)); // 2
+        System.out.println(s.leftMostIndex3(new int[]{1,2,4,4,4,4,5,6}, 3)); //-1
+        System.out.println(s.leftMostIndex3(new int[]{3,3,3,3}, 3)); //0
+        System.out.println(s.leftMostIndex3(new int[]{1,2,3,3,3,3}, 3)); //2
+        System.out.println(s.leftMostIndex3(new int[]{3,3,3,3,4,5,6,7}, 3)); //0
+        System.out.println(s.leftMostIndex3(new int[]{3}, 3)); //0*/
 
-/*        System.out.println(s.leftMostIndex(new int[]{1,2,3,4,5}, 3)); //2
-        System.out.println(s.leftMostIndex(new int[]{2,2}, 3)); //-1
-        System.out.println(s.rightMostNumber(new int[]{1,2,3,3,3,4,5,6}, 3)); // 4
-        System.out.println(s.rightMostNumber(new int[]{1,2,4,4,4,4,5,6}, 3)); //-1
-        System.out.println(s.rightMostNumber(new int[]{3,3,3,3}, 3)); //3
-        System.out.println(s.rightMostNumber(new int[]{1,2,3,3,3,3}, 3)); //5
-        System.out.println(s.rightMostNumber(new int[]{3,3,3,3,4,5,6,7}, 3)); //3
-        System.out.println(s.rightMostNumber(new int[]{3}, 3)); //0*/
+        System.out.println(s.rightMostIndex(new int[]{1,2,3,3,3,4,5,6}, 3)); // 4
+        System.out.println(s.rightMostIndex(new int[]{1,2,3,4,5}, 3)); //2
+        System.out.println(s.rightMostIndex(new int[]{2,2}, 3)); //-1
+        System.out.println(s.rightMostIndex(new int[]{1,2,4,4,4,4,5,6}, 3)); //-1
+        System.out.println(s.rightMostIndex(new int[]{3,3,3,3}, 3)); //3
+        System.out.println(s.rightMostIndex(new int[]{1,2,3,3,3,3}, 3)); //5
+        System.out.println(s.rightMostIndex(new int[]{3,3,3,3,4,5,6,7}, 3)); //3
+        System.out.println(s.rightMostIndex(new int[]{3}, 3)); //0
 
 /*        SolutionUtils.print(s.leftRightRange(new int[]{3,3}, 4)); // [-1,-1]
         SolutionUtils.print(s.leftRightRange(new int[]{3}, 4)); // [-1,-1]
@@ -115,6 +115,26 @@ public class BinarySearch_704 {
         return -1;
     }
 
+    public int leftMostIndex3(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int left = 0;
+        int right = nums.length-1;
+        while (left < right) {
+            int mid = (left + right)/ 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target){
+                right = mid - 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return nums[right] == target ? right : -1;
+    }
+
     public int leftMostIndex2(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
@@ -152,7 +172,25 @@ public class BinarySearch_704 {
         return -1;
     }
 
-    public int rightMostNumber(int[] nums, int target) {
+    public int rightMostIndex(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int left = 0;
+        int right = nums.length-1;
+        while (left < right) {
+            int mid = (left + right)/2+1; // +1 so that l = mid; doesn't result in an infinite loop when l + 1 == r.
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+
+        return nums[left] == target ? left : -1;
+    }
+
+    public int rightMostIndex2(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
         while (left <= right) {

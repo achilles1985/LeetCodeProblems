@@ -30,7 +30,7 @@ public class SplitArrayLargestSum_410 {
 
     public static void main(String[] args) {
         SplitArrayLargestSum_410 s = new SplitArrayLargestSum_410();
-        System.out.println(s.splitArrayBF2(new int[]{7,2,5,4,3,1}, 6)); // 7
+        System.out.println(s.splitArrayBF2(new int[]{7,2,5,4,3,1}, 3)); // 7
 
         System.out.println(s.splitArrayBF2(new int[]{7,2,5,4,3,1}, 6)); // 7
         System.out.println(s.splitArrayBF2(new int[]{7,2,5,10,8}, 3)); // 14

@@ -22,7 +22,7 @@ import java.util.Set;
  */
 /*
     Questions:
-    1. A.length == B.length?
+    1. A.length == B.length? should order be preserved?
  */
 public class MaximumLengthOfRepeatedSubarray_718 {
 
@@ -61,7 +61,7 @@ public class MaximumLengthOfRepeatedSubarray_718 {
     // O((A+B)*min(A,B)*log(min(A,B))), O(A) - space
     public int findLength(int[] A, int[] B) {
         int left = 0, right = Math.min(A.length, B.length)+1; // to be possible to construct hash of the length == min(A,B)
-        while (left < right) {
+        while (left < right) { // log(min(A,B))
             int mid = left + (right - left) / 2;
             if (search(A, B, mid)) {
                 left = mid + 1;
@@ -132,14 +132,15 @@ public class MaximumLengthOfRepeatedSubarray_718 {
         return false;
     }
 
+    // Can be improved to O(A+B) if used Robin-Karp alg to find hash
     private boolean search(int[] A, int[] B, int length) {
         Set<String> hashes = new HashSet<>();
         for (int i = 0; i <= A.length - length; i++) {
-            String hash = Arrays.toString(Arrays.copyOfRange(A, i, i + length));
+            String hash = Arrays.toString(Arrays.copyOfRange(A, i, i + length)); //A, can be O(1) with Robin-Karp alg
             hashes.add(hash);
         }
         for (int i = 0; i <= B.length - length; i++) {
-            String hash = Arrays.toString(Arrays.copyOfRange(B, i, i + length));
+            String hash = Arrays.toString(Arrays.copyOfRange(B, i, i + length)); //B, can be O(1) with Robin-Karp alg
             if (hashes.contains(hash)) {
                 return true;
             }

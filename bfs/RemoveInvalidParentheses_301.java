@@ -34,85 +34,14 @@ public class RemoveInvalidParentheses_301 {
 
     public static void main(String[] args) {
         RemoveInvalidParentheses_301 s = new RemoveInvalidParentheses_301();
-        System.out.println(s.removeInvalidParentheses3("()())()")); //["()()()", "(())()"]
-        System.out.println(s.removeInvalidParentheses3("(a)())()")); //["(a)()()", "(a())()"]
-        System.out.println(s.removeInvalidParentheses3(")(")); //[]
+        System.out.println(s.removeInvalidParentheses("()())()")); //["()()()", "(())()"]
+        System.out.println(s.removeInvalidParentheses("(a)())()")); //["(a)()()", "(a())()"]
+        System.out.println(s.removeInvalidParentheses(")(")); //[]
     }
 
     // O(n*2^n or n*n!) - time, 2^n - all possible strings, O(?) - space, probably n!
-    public List<String> removeInvalidParentheses2(String s) {
-        if (s == null || s.isEmpty()) {
-            return Collections.emptyList();
-        }
-        Set<String> visited = new HashSet<>();
-        Queue<String> queue = new LinkedList<>();
-        queue.add(s);
-        visited.add(s);
-        List<String> result = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            while (size-- > 0) {
-                String str = queue.poll();
-                visited.add(str);
-                if (isValid(str)) { //n
-                    result.add(str);
-                }
-                for (int i = 0; i < str.length(); i++) {
-                    StringBuilder sb = new StringBuilder(str);
-                    if (sb.charAt(i) != '(' && sb.charAt(i) != ')') {
-                        continue;
-                    }
-                    sb.deleteCharAt(i);
-                    String newStr = sb.toString();
-                    if (!visited.contains(newStr)) {
-                        queue.add(newStr);
-                        visited.add(newStr);
-                    }
-                }
-            }
-            if (!result.isEmpty()) {
-                return result;
-            }
-        }
-        return Collections.emptyList();
-    }
-
-    // O(n*2^n) - time, ? - space
     // https://zxi.mytechroad.com/blog/searching/leetcode-301-remove-invalid-parentheses/
     public List<String> removeInvalidParentheses(String s) {
-        if (s == null || s.length() == 0) {
-            return Collections.emptyList();
-        }
-        List<String> results = new ArrayList<>();
-        Queue<String> queue = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-        queue.add(s);
-        visited.add(s);
-        boolean found = false;
-        while (!queue.isEmpty()) {
-            String curr = queue.poll();
-            if (isValid(curr)) {
-                results.add(curr);
-                found = true;
-            }
-            if (found) {
-                continue;
-            }
-            for (int i = 0; i < curr.length(); i++) {
-                if (curr.charAt(i) != '(' && curr.charAt(i) != ')') { // do not remove letters
-                    continue;
-                }
-                String next = curr.substring(0, i) + curr.substring(i+1);
-                if (!visited.contains(next)) {
-                    queue.add(next);
-                    visited.add(next);
-                }
-            }
-        }
-        return results;
-    }
-
-    public List<String> removeInvalidParentheses3(String s) {
         if (s == null || s.isEmpty()) {
             return Collections.emptyList();
         }

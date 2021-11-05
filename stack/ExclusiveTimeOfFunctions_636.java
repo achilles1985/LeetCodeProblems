@@ -93,9 +93,10 @@ public class ExclusiveTimeOfFunctions_636 {
                 stack.push(log);
             } else {
                 Log top = stack.pop();
-                result[top.id] += (log.time - top.time + 1);
+                int executionTime = log.time - top.time + 1;
+                result[top.id] += executionTime;
                 if (!stack.isEmpty()) {
-                    result[stack.peek().id] -= (log.time - top.time + 1);
+                    result[stack.peek().id] -= executionTime;
                 }
             }
         }

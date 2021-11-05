@@ -3,7 +3,7 @@ package heap;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/** M
+/** M [marked]
  * You have some number of sticks with positive integer lengths.
  * These lengths are given as an array sticks, where sticks[i] is the length of the ith stick.
  * You can connect any two sticks of lengths x and y into one stick by paying a cost of x + y.
