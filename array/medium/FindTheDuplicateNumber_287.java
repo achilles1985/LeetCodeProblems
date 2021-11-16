@@ -22,11 +22,14 @@ import java.util.Arrays;
  Your runtime complexity should be less than O(n2).
  There is only one duplicate number in the array, but it could be repeated more than once.
  */
+/*
+    1. Can I modify array?
+ */
 public class FindTheDuplicateNumber_287 {
 
     public static void main(String[] args) {
         FindTheDuplicateNumber_287 s = new FindTheDuplicateNumber_287();
-        System.out.println(s.findDuplicate3(new int[] {1,3,4,2,2})); //2
+        System.out.println(s.findDuplicate4(new int[] {1,3,4,2,2})); //2
         System.out.println(s.findDuplicate2(new int[] {3,1,3,4,2})); //3
         System.out.println(s.findDuplicate2(new int[] {2,5,9,6,9,3,8,9,7,1})); //9
     }
@@ -62,6 +65,7 @@ public class FindTheDuplicateNumber_287 {
         return p1;
     }
 
+    // O(n) - time, O(1) - space
     public int findDuplicate3(int[] nums) {
         for (int i=0;i<=nums.length-1;i++){
             int val=Math.abs(nums[i]);
@@ -71,6 +75,21 @@ public class FindTheDuplicateNumber_287 {
             else {
                 return Math.abs(nums[i]);
             }
+        }
+        return -1;
+    }
+
+    // O(n) - time, O(1) - space
+    public int findDuplicate4(int[] nums) {
+        int k = 0, i = 0;
+        while (k <= nums.length) {
+            int num = nums[i];
+            if (num < 0) {
+                return i;
+            }
+            nums[i] = -num;
+            i = num;
+            k++;
         }
         return -1;
     }

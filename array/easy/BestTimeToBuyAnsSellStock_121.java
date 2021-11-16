@@ -20,31 +20,15 @@ public class BestTimeToBuyAnsSellStock_121 {
 
     public static void main(String[] args) {
         BestTimeToBuyAnsSellStock_121 s = new BestTimeToBuyAnsSellStock_121();
-        System.out.println(s.maxProfit4(new int[]{7,1,5,3,6,4})); //5
-        System.out.println(s.maxProfit4(new int[]{7,6,4,3,1})); // 0
+        System.out.println(s.maxProfit(new int[]{7,1,5,3,6,4})); //5
+        System.out.println(s.maxProfit(new int[]{7,6,4,3,1})); // 0
 
-        System.out.println(s.maxProfit4(new int[]{7,1,5,3,6,4})); //5
-        System.out.println(s.maxProfit4(new int[]{7,6,4,3,1})); // 0
-    }
-
-    public int maxProfit4(int[] prices) {
-        if (prices == null || prices.length < 2) {
-            return 0;
-        }
-        int maxProfit = 0;
-        int min = prices[0];
-        for (int i = 1; i < prices.length; i++) {
-            if (prices[i] < min) {
-                min = prices[i];
-            } else {
-                maxProfit = Math.max(maxProfit, prices[i] - min);
-            }
-        }
-        return maxProfit;
+        System.out.println(s.maxProfitDP(new int[]{7,1,5,3,6,4})); //5
+        System.out.println(s.maxProfitDP(new int[]{7,6,4,3,1})); // 0
     }
 
     // O(n^2) - time, O(1) - space
-    public int maxProfit(int[] prices) {
+    public int maxProfitBF(int[] prices) {
         int profit = 0;
         for (int i = 0; i < prices.length; i++) {
             int min = prices[i];
@@ -58,8 +42,19 @@ public class BestTimeToBuyAnsSellStock_121 {
         return profit;
     }
 
+    // O(n) - time, O(1) - space
+    public int maxProfit(int[] prices) {
+        int min = prices[0];
+        int max = 0;
+        for (int i = 1; i < prices.length; i++) {
+            min = Math.min(min, prices[i]);
+            max = Math.max(max, prices[i] - min);
+        }
+        return max;
+    }
+
     // O(n) - time, O(n) - space
-    public int maxProfit2(int[] prices) {
+    public int maxProfitDP(int[] prices) {
         if (prices == null || prices.length == 0) {
             return 0;
         }
@@ -79,18 +74,4 @@ public class BestTimeToBuyAnsSellStock_121 {
         return maxProfit;
     }
 
-    // O(n) - time, O(1) - space
-    public int maxProfit3(int[] prices) {
-        int min = Integer.MAX_VALUE;
-        int maxProfit = 0;
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] < min) {
-                min = prices[i];
-            } else if (prices[i] - min > maxProfit) {
-                maxProfit = prices[i] - min;
-            }
-        }
-
-        return maxProfit;
-    }
 }

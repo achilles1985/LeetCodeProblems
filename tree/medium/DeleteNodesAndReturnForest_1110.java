@@ -47,7 +47,7 @@ public class DeleteNodesAndReturnForest_1110 {
         root2.left.left = new TreeNode(4);
         root2.left.right = new TreeNode(3);
 
-        System.out.println(s.delNodes(root2, new int[]{2,3}));
+        System.out.println(s.delNodes(root, new int[]{3,5}));
         System.out.println(s.delNodes(root, new int[]{1}));
     }
 

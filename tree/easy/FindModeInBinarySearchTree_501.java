@@ -1,12 +1,7 @@
 package tree.easy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import utils.SolutionUtils;
 import utils.TreeNode;
@@ -99,12 +94,7 @@ public class FindModeInBinarySearchTree_501 {
     public int[] findModeBF(TreeNode root) {
         Map<Integer, Integer> frequency = new HashMap<>();
         populateFrequencyMap(root, frequency);
-        int max = 0;
-        for (Map.Entry<Integer, Integer> entry: frequency.entrySet()) {
-            if (entry.getValue() > max) {
-                max = entry.getValue();
-            }
-        }
+        int max = Collections.max(frequency.values());
         List<Integer> result = new ArrayList<>();
         for (Map.Entry<Integer, Integer> entry: frequency.entrySet()) {
             if (entry.getValue() == max) {

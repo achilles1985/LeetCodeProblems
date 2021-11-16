@@ -18,6 +18,9 @@ import java.util.Map;
  * -10000 <= A[i] <= 10000
  * 2 <= K <= 10000
  */
+/*
+Pay attentions, array might contain negative numbers
+ */
 public class SubarraySumsDivisibleByK_974 {
 
     public static void main(String[] args) {
@@ -41,6 +44,7 @@ public class SubarraySumsDivisibleByK_974 {
         return count;
     }
 
+    // O(n) - time, space
     public int subarraysDivByK(int[] A, int K) {
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
@@ -49,7 +53,7 @@ public class SubarraySumsDivisibleByK_974 {
         for (int i = 0; i < A.length; i++) {
             sum += A[i];
             int rem = sum % K;
-            if (rem < 0) { //???
+            if (rem < 0) { //if array is [-2,-3] and K = 5, then for 1st iteration sum would be -2 . According to question [-2,-3] will divisible by 5, so in order to accomodate those changes with make it positive so sum = -2 + 3 =>  sum = 1;
                 rem += K;
             }
             if (map.containsKey(rem)) {
@@ -68,8 +72,7 @@ public class SubarraySumsDivisibleByK_974 {
         int sum = 0;
         for (int i = 0; i < A.length; i++) {
             sum = (sum + A[i]) % K;
-            //if array is [-2,-3] and K = 5, then for 1st iteration sum would be -2 . According to question [-2,-3] will divisible by 5, so
-            // in order to accomodate those changes with make it positive so sum = -2 + 3 =>  sum = 1;
+            //if array is [-2,-3] and K = 5, then for 1st iteration sum would be -2 . According to question [-2,-3] will divisible by 5, so in order to accomodate those changes with make it positive so sum = -2 + 3 =>  sum = 1;
             if (sum < 0) {
                 sum += K;
             }

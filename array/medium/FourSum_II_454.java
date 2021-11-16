@@ -32,7 +32,7 @@ public class FourSum_II_454 {
         System.out.println(s.kSumCount(new int[][]{{1,2,-1},{1,0,2},{1,-1,2},{0,1,-2},{1,2,2},{1,2,3}})); //10
     }
 
-    // O(n^4) - time, space
+    // O(n^4) - time, space (BF)
 
     // O(n^2) - time, space
     public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {

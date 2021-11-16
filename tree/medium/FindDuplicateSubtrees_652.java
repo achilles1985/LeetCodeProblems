@@ -8,6 +8,18 @@ import java.util.Map;
 import java.util.Set;
 import utils.TreeNode;
 
+/** M [marked]
+ *      1
+ *    /  \
+ *   2    3
+ *  /    / \
+ * 4    2   4
+ *     /
+ *    4
+ * Given the root of a binary tree, return all duplicate subtrees.
+ * For each kind of duplicate subtrees, you only need to return the root node of any one of them.
+ * Two trees are duplicate if they have the same structure with the same node values.
+ */
 public class FindDuplicateSubtrees_652 {
 
     public static void main(String[] args) {
@@ -20,7 +32,7 @@ public class FindDuplicateSubtrees_652 {
         root.right.left.left = new TreeNode(4);
         root.right.right = new TreeNode(4);
 
-        System.out.println(s.findDuplicateSubtrees(root));
+        System.out.println(s.findDuplicateSubtrees(root)); //4,2
     }
 
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {

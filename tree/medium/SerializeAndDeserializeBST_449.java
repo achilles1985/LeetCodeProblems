@@ -48,11 +48,60 @@ public class SerializeAndDeserializeBST_449 {
         root2.left = new TreeNode(12344);
         root2.right = new TreeNode(12346);
 
-        String s1 = s.serializeBF(root);
-        TreeUtils.print(s.deserializeBF(s1));
+        TreeNode root3 = new TreeNode(2);
+        root3.left = new TreeNode(1);
+
+        String s1 = s.serializeBF2(root3);
+        TreeUtils.print(s.deserializeBF2(s1));
 
         String s2 = s.serialize(root);
         TreeUtils.print(s.deserialize(s2));
+    }
+
+    // Incorrect, if using inorder
+    public String serializeBF2(TreeNode root) {
+        if (root == null) {
+            return "X";
+        }
+        StringBuilder sb = new StringBuilder();
+        inorder(root, sb);
+
+        return sb.toString();
+    }
+
+    // Incorrect, if using inorder
+    public TreeNode deserializeBF2(String data) {
+        if (data.isEmpty()) {
+            return null;
+        }
+        String[] arr = data.split(",");
+        return toTree(arr, 0, arr.length-1);
+    }
+
+    private TreeNode toTree(String[] data, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+        int mid = (left + right)/2;
+        String valAsStr = data[mid];
+        if ("X".equals(valAsStr)) {
+            return null;
+        }
+        int val = Integer.parseInt(valAsStr);
+        TreeNode node = new TreeNode(val);
+        node.left = toTree(data, left, mid-1);
+        node.right = toTree(data, mid+1, right);
+
+        return node;
+    }
+
+    private void inorder(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, sb);
+        sb.append(root.val).append(",");
+        inorder(root.right, sb);
     }
 
     // O(n) - time, O(h) - space (only stack, result does not count. If it does, n+(n-1), where n - number of nodes, n-1 - number of delimeters)

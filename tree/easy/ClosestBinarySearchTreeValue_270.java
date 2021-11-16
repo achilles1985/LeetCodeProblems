@@ -1,9 +1,12 @@
 package tree.easy;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import utils.TreeNode;
 
-/** E
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/** E [marked]
  * Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
  * Note:
  *     Given target value is a floating point.
@@ -36,24 +39,37 @@ public class ClosestBinarySearchTreeValue_270 {
         System.out.println(s.closestValue(root, 3.714286));
     }
 
+    // O(n) - time, space
+    public int closestValueBF(TreeNode root, double target) {
+        List<Integer> nums = new ArrayList<>();
+        inorder(root, nums);
+        return Collections.min(nums, (n1,n2) ->  Math.abs(n1 - target) < Math.abs(n2 - target) ? -1 : 1);
+    }
+
     // O(h) - time, where h - height of the tree, h=log(n) - for balanced, n - skewed one.
     // O(1) - space
     public int closestValue(TreeNode root, double target) {
         if (root == null) {
-            return 0;
+            return -1;
         }
-        int closest = root.val;
-        double minDiff = Math.abs(root.val - target);
+        double min = Math.abs(root.val - target);
+        int ans = root.val;
         while (root != null) {
-            double curDiff = Math.abs(root.val - target);
-            if (curDiff < minDiff) {
-                minDiff = curDiff;
-                closest = root.val;
+            int val = root.val;
+            double diff = Math.abs(val - target);
+            if (diff < min) {
+                min = diff;
+                ans = val;
             }
-            root = root.val <= target ? root.right : root.left;
+            root = val < target ? root.right : root.left;
         }
-
-        return closest;
+        return ans;
     }
 
+    private void inorder(TreeNode root, List<Integer> nums) {
+        if (root == null) return;
+        inorder(root.left, nums);
+        nums.add(root.val);
+        inorder(root.right, nums);
+    }
 }

@@ -18,21 +18,18 @@ public class MaxContiguousSubarray_53 {
 
     public static void main(String[] args) {
         MaxContiguousSubarray_53 s = new MaxContiguousSubarray_53();
-        System.out.println(s.maxSubArrayBF(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
-        System.out.println(s.maxSubArrayBF(new int[]{1})); // 1
-        System.out.println(s.maxSubArrayBF(new int[]{-1})); // -1
-
+        System.out.println(s.maxSubArrayBF2(new int[]{5,4,-1,7,8})); // 23
         System.out.println(s.maxSubArrayBF2(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
         System.out.println(s.maxSubArrayBF2(new int[]{1})); // 1
         System.out.println(s.maxSubArrayBF2(new int[]{-1})); // -1
 
-        System.out.println(s.maxSubArray3(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
-        System.out.println(s.maxSubArray3(new int[]{1})); // 1
-        System.out.println(s.maxSubArray3(new int[]{-1})); // -1
+        System.out.println(s.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 6
+        System.out.println(s.maxSubArray(new int[]{1})); // 1
+        System.out.println(s.maxSubArray(new int[]{-1})); // -1
     }
 
     // O(n) - time, O(1) - space
-    public int maxSubArray3(int[] nums) {
+    public int maxSubArray(int[] nums) {
         int sum = nums[0];
         int maxSum = sum;
         for (int i = 1; i < nums.length; i++) {
@@ -48,7 +45,7 @@ public class MaxContiguousSubarray_53 {
     }
 
     // O(n^2) - time, O(1) - space
-    public int maxSubArrayBF2(int[] nums) {
+    public int maxSubArrayBF(int[] nums) {
         int maxSum = nums[0];
         for (int i = 0; i < nums.length; i++) {
             int sum = 0;
@@ -61,12 +58,12 @@ public class MaxContiguousSubarray_53 {
     }
 
     // O(n^3) - time, O(1) - space
-    public int maxSubArrayBF(int[] nums) {
+    public int maxSubArrayBF2(int[] nums) {
         int maxSum = nums[0];
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i; j < nums.length; j++) {
+        for (int i = 1; i <= nums.length; i++) {
+            for (int j = 0; j <= nums.length - i; j++) {
                 int sum = 0;
-                for (int k = i; k <= j; k++) {
+                for (int k = j; k < j + i; k++) {
                     sum += nums[k];
                 }
                 maxSum = Math.max(maxSum, sum);

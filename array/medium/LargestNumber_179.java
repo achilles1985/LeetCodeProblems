@@ -20,7 +20,6 @@ public class LargestNumber_179 {
 
     public static void main(String[] args) {
         LargestNumber_179 s = new LargestNumber_179();
-
         System.out.println(s.largestNumber(new int[] {0,0})); // 0
         System.out.println(s.largestNumber(new int[] {10,2})); // 210
         System.out.println(s.largestNumber(new int[] {3,30,34,5,9})); // 9534330

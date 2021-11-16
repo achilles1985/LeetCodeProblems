@@ -47,22 +47,27 @@ public class MaximumLevelSumOfBinaryTree_1161 {
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        int maxSum = 0, minLevel = 1, level  = 1;
+        int max = root.val;
+        int level = 1, answer = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             int sum = 0;
             while (size-- > 0) {
                 TreeNode node = queue.poll();
                 sum += node.val;
-                if (node.left != null) queue.add(node.left);
-                if (node.right != null) queue.add(node.right);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
             }
-            if (sum > maxSum) {
-                maxSum = sum;
-                minLevel = level;
+            if (sum > max) {
+                max = sum;
+                answer = level;
             }
             level++;
         }
-        return minLevel;
+        return answer;
     }
 }

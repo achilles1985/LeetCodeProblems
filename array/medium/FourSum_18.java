@@ -52,7 +52,7 @@ public class FourSum_18 {
         return new ArrayList<>(result);
     }
 
-    // O(n^3) - time, O(1) - space if we consider set as a part of result
+    // O(n^3) - time, O(n) - space
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Set<List<Integer>> set = new HashSet<>();
         Arrays.sort(nums);
@@ -80,4 +80,30 @@ public class FourSum_18 {
         return new ArrayList<>(set);
     }
 
+    // O(n^3) - time, O(n) - space
+    public List<List<Integer>> fourSum2(int[] nums, int target) {
+        Arrays.sort(nums);
+        Set<List<Integer>> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                int sum1 = nums[i] + nums[j];
+                int left = j+1, right = nums.length-1;
+                while (left < right) {
+                    int sum2 = sum1 + nums[left] + nums[right];
+                    if (sum2 == target) {
+                        List<Integer> temp = Arrays.asList(nums[i], nums[j], nums[left], nums[right]);
+                        Collections.sort(temp);
+                        set.add(temp);
+                        left++;
+                        right--;
+                    } else if (sum2 < target) {
+                        left++;
+                    } else {
+                        right--;
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(set);
+    }
 }

@@ -35,21 +35,6 @@ public class TwoSum_1 {
 
     // O(n) - time, O(n) - space
     public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], i);
-        }
-        for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if (map.containsKey(complement) && map.get(complement) != i) { // not use the same element twice
-                return new int[] { i, map.get(complement) };
-            }
-        }
-        throw new IllegalArgumentException("No two sum solution");
-    }
-
-    // O(n) - time, O(n) - space
-    public int[] twoSum2(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return new int[]{};
         }

@@ -27,7 +27,7 @@ public class ThreeSum_15 {
 
     public static void main(String[] args) {
         ThreeSum_15 s = new ThreeSum_15();
-        System.out.println(s.threeSum(new int[]{-1,0,1,2,-1,-4}));
+        System.out.println(s.threeSum2(new int[]{-1,0,1,2,-1,-4}));
     }
 
     // O(n^3) - time, O(1) - space
@@ -78,36 +78,32 @@ public class ThreeSum_15 {
         return new ArrayList<>(set);
     }
 
-    // O(n^2) - time, O(1) - space if set is a part of res
+    // O(n^2) - time, O(n) - space
     public List<List<Integer>> threeSum2(int[] nums) {
         if (nums == null || nums.length < 3) {
             return Collections.emptyList();
         }
         Set<List<Integer>> set = new HashSet<>();
         Arrays.sort(nums);
-        for (int i = 0; i < nums.length; i++) {
-            int sum = 0 - nums[i];
-            int lo = i+1;
-            int hi = nums.length-1;
-            while (lo < hi) {
-                if (nums[lo] + nums[hi] < sum) {
-                    lo++;
-                } else if (nums[lo] + nums[hi] > sum) {
-                    hi--;
+        for (int i = 0; i <= nums.length - 2; i++) {
+            int num = nums[i];
+            int left = i+1, right = nums.length-1;
+            while (left < right) {
+                int sum = nums[left] + nums[right];
+                if (sum + num == 0) {
+                    set.add(Arrays.asList(num, nums[left], nums[right]));
+                    left++; right--;
+                } else if (sum + num < 0) {
+                    left++;
                 } else {
-                    List<Integer> list = Arrays.asList(nums[i], nums[lo], nums[hi]);
-                    Collections.sort(list);
-                    set.add(list);
-                    lo++;
-                    hi--;
+                    right--;
                 }
             }
         }
-
         return new ArrayList<>(set);
     }
 
-    // O(n^2) - time, O(1) - space if set is a part of res
+    // O(n^2) - time, O(n) - space
     public List<List<Integer>> threeSum3(int[] nums) {
         if (nums == null || nums.length == 0) {
             return Collections.emptyList();

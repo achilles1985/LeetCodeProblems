@@ -41,29 +41,25 @@ public class ThreeSumClosest_16 {
         if (nums == null || nums.length < 3) {
             return Integer.MIN_VALUE;
         }
-
-        int ans = nums[0] + nums[1] + nums[2];
         Arrays.sort(nums);
-        for (int i = 0; i < nums.length-2; i++) {
-            int lo = i+1;
-            int hi = nums.length-1;
-            int sum = target - nums[i];
-            while (lo < hi) {
-                int diff = Math.abs((nums[i] + nums[lo] + nums[hi]) - target);
-                if (diff < Math.abs(ans-target)) {
-                    ans = nums[i] + nums[lo] + nums[hi];
-                }
-
-                if (nums[lo] + nums[hi] < sum) {
-                    lo++;
-                } else if (nums[lo] + nums[hi] > sum) {
-                    hi--;
+        int diff = Integer.MAX_VALUE;
+        int result = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            int left = i + 1, right = nums.length-1;
+            while (left < right) {
+                int sum = nums[left] + nums[right] + num;
+                if (sum < target) {
+                    left++;
                 } else {
-                    return target;
+                    right--;
+                }
+                if (Math.abs(sum - target) < diff) {
+                    diff = Math.abs(sum - target);
+                    result = sum;
                 }
             }
         }
-
-        return ans;
+        return result;
     }
 }

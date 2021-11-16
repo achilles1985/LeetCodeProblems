@@ -66,9 +66,10 @@ public class BinaryTreeLongestConsecutiveSequence_298 {
             return length;
         }
         length = (parent != null && p.val == parent.val + 1) ? length + 1 : 1;
+        int left = dfsTopDown(p.left, p, length);
+        int right = dfsTopDown(p.right, p, length);
 
-        return Math.max(length, Math.max(dfsTopDown(p.left, p, length),
-                dfsTopDown(p.right, p, length)));
+        return Math.max(length, Math.max(left, right));
     }
 
     private int dfsButtonUp(TreeNode p) {

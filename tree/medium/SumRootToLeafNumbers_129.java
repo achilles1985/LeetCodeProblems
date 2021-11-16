@@ -47,37 +47,23 @@ public class SumRootToLeafNumbers_129 {
         root.left.left = new TreeNode(5);
         root.left.right = new TreeNode(1);
 
-        System.out.println(s.sumNumbers2(root)); //1026
+        System.out.println(s.sumNumbers(root)); //1026
     }
 
     // O(n) - time, O(h) - space, h - height of the tree
     public int sumNumbers(TreeNode root) {
-        return sumNumbers(root, 0);
-    }
-
-    private int sumNumbers(TreeNode root, int sum) {
         if (root == null) {
             return 0;
         }
-        sum = sum*10 + root.val;
-        if (root.left == null && root.right == null) {
-            return sum;
-        }
-        int left = sumNumbers(root.left, sum);
-        int right = sumNumbers(root.right, sum);
+        AtomicInteger sum = new AtomicInteger(0); // or int[] sum = new int[1];
+        helper(root, 0, sum);
 
-        return left + right;
+        return sum.intValue();
     }
 
     // O(n) - time, O(h) - space, h - height of the tree
     public int sumNumbers2(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        AtomicInteger sum = new AtomicInteger(0);
-        helper(root, 0, sum);
-
-        return sum.intValue();
+        return helper2(root, 0);
     }
 
     private void helper(TreeNode root, int num, AtomicInteger sum) {
@@ -93,15 +79,17 @@ public class SumRootToLeafNumbers_129 {
         helper(root.right, num, sum);
     }
 
-    private static class Sum {
-        int value;
-
-        public Sum(int value) {
-            this.value = value;
+    private int helper2(TreeNode root, int sum) {
+        if (root == null) {
+            return 0;
         }
-
-        void add(int val) {
-            this.value += val;
+        sum = sum*10 + root.val;
+        if (root.left == null && root.right == null) {
+            return sum;
         }
+        int left = helper2(root.left, sum);
+        int right = helper2(root.right, sum);
+
+        return left + right;
     }
 }

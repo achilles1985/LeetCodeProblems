@@ -24,9 +24,9 @@ public class ArrayPartitionI_561 {
 
     public static void main(String[] args) {
         ArrayPartitionI_561 s = new ArrayPartitionI_561();
-        System.out.println(s.arrayPairSum2(new int[]{1,1})); // 1
-        System.out.println(s.arrayPairSum2(new int[]{1,4,3,2})); // 4
-        System.out.println(s.arrayPairSum2(new int[]{4,-4,3,2,-1,-2})); // -2
+        System.out.println(s.arrayPairSum(new int[]{1,4,3,2})); // 4
+        System.out.println(s.arrayPairSum(new int[]{1,1})); // 1
+        System.out.println(s.arrayPairSum(new int[]{4,-4,3,2,-1,-2})); // -2
     }
 
     // O(n*log(n)) - time, O(1) - space
@@ -40,32 +40,7 @@ public class ArrayPartitionI_561 {
         return sum;
     }
 
-    public int arrayPairSum2(int[] nums) {
-        int limit = 10_000;
-        int[] arr = new int[2*10000 + 1];
-        Arrays.fill(arr, Integer.MIN_VALUE);
-        for (int num: nums) {
-            arr[num + limit] = num;
-        }
-        int prev = Integer.MIN_VALUE;
-        int cur = Integer.MIN_VALUE;
-        int sum = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != Integer.MIN_VALUE) {
-                prev = cur;
-                cur = arr[i];
-            }
-            if (prev != Integer.MIN_VALUE && cur != Integer.MIN_VALUE) {
-                sum += prev;
-                prev = Integer.MIN_VALUE;
-                cur = Integer.MIN_VALUE;
-            }
-        }
-
-        return sum;
-    }
-
-    // O(n) - time, space (does not handle duplicates)
+    // O(n) - time, O(1) - space
     public int arrayPairSum(int[] nums) {
         int[] arr = new int[20001];
         int lim = 10000;
@@ -76,6 +51,9 @@ public class ArrayPartitionI_561 {
         for (int i = -10000; i <= 10000; i++) {
             sum += (arr[i + lim] + 1 - d) / 2 * i;
             d = (2 + arr[i + lim] - d) % 2;
+            if (d != 0) {
+                int h = 10;
+            }
         }
 
         return sum;

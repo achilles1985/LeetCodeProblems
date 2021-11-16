@@ -60,8 +60,8 @@ public class SurroundedRegions_130 {
                 {'O','X','O','X','O','X'},
                 {'X','O','X','O','X','O'},
                 {'O','X','O','X','O','X'}};
-        s.solve(board0);
 
+        s.solve(board0);
         //s.solve(board1);
         //s.solve(board2);
         //s.solve(board3);

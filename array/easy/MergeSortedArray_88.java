@@ -24,8 +24,16 @@ public class MergeSortedArray_88 {
         s.merge(new int[]{1,2,3,0,0,0}, 3, new int[]{2,5,6}, 3);
     }
 
-    // O(n+m) - time, O(n) - space. Space can be improved to O(1) if start from the end.
+    // O(n+m)*log(n+m) - time
     public void mergeBF(int[] nums1, int m, int[] nums2, int n) {
+        for (int i = 0; i < n; i++) {
+            nums1[i + m] = nums2[i];
+        }
+        Arrays.sort(nums1);
+    }
+
+    // O(n+m) - time, O(n) - space. Space can be improved to O(1) if start from the end.
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
         int[] nums1Copy = Arrays.copyOf(nums1, m);
         int write = 0;
         int i = 0, j = 0;
@@ -45,7 +53,7 @@ public class MergeSortedArray_88 {
     }
 
     // O(n+m) - time, O(1) - space
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
+    public void merge2(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1;
         int j = n - 1;
         int write = nums1.length - 1;

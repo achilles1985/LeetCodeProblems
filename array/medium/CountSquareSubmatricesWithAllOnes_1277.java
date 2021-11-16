@@ -42,7 +42,7 @@ public class CountSquareSubmatricesWithAllOnes_1277 {
 
     public static void main(String[] args) {
         CountSquareSubmatricesWithAllOnes_1277 s = new CountSquareSubmatricesWithAllOnes_1277();
-        System.out.println(s.countSquares2(new int[][]{
+        System.out.println(s.countSquaresDP(new int[][]{
                 {0,1,1,1},
                 {1,1,1,1},
                 {0,1,1,1}

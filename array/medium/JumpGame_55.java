@@ -1,4 +1,4 @@
-package array;
+package array.medium;
 
 /** M
  Given an array of non-negative integers, you are initially positioned at the first index of the array.

@@ -15,7 +15,7 @@ package array.medium;
  * It doesn't matter what values are set beyond the returned length.
  */
 /*
-    Do not copy the first element, start fro the second one.
+    Do not copy the first element, start from the second one.
  */
 public class RemoveDuplicatesFromSortedArray_II_80 {
 

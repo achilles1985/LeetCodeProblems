@@ -38,25 +38,22 @@ public class IntersectionOfTwoArrays_349 {
 
     // O(m+n) - time, O(m+n) - space
     public int[] intersection(int[] nums1, int[] nums2) {
-        if (nums1 == null || nums1.length == 0) {
-            return new int[0];
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums1) {
+            set.add(num);
         }
-        if (nums2 == null || nums2.length == 0) {
-            return new int[0];
+        Set<Integer> result = new HashSet<>();
+        for (int num: nums2) {
+            if (set.contains(num)) {
+                result.add(num);
+            }
         }
-        Set<Integer> set1 = new HashSet<>();
-        for (Integer i: nums1) {
-            set1.add(i);
+        int i = 0;
+        int[] ans = new int[result.size()];
+        for (int num: result) {
+            ans[i++] = num;
         }
-        Set<Integer> set2 = new HashSet<>();
-        for (Integer i: nums2) {
-            set2.add(i);
-        }
-
-        if (set1.size() < set2.size()) {
-            return findIntersection(set1, set2);
-        }
-        return findIntersection(set1, set2);
+        return ans;
     }
 
     // O(n*log(n)) - time, O(1) - space
@@ -89,17 +86,5 @@ public class IntersectionOfTwoArrays_349 {
         }
 
         return Arrays.copyOf(temp, i+1);
-    }
-
-    private int[] findIntersection(Set<Integer> set1, Set<Integer> set2) {
-        int[] res = new int[set1.size()];
-        int k = 0;
-        for (Integer i: set1) {
-            if (set2.contains(i)) {
-                res[k++] = i;
-            }
-        }
-
-        return Arrays.copyOf(res, k);
     }
 }
