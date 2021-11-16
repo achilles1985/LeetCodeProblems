@@ -2,7 +2,7 @@ package heap.medium;
 
 import java.util.*;
 
-/** M
+/** M [marked]
  There are n cities connected by m flights. Each fight starts from city u and arrives at v with a price w.
  Now given all the cities and flights, together with starting city src and the destination dst,
  your task is to find the cheapest price from src to dst with up to k stops. If there is no such route, output -1.
@@ -63,14 +63,14 @@ public class CheapestFlightsWithinKStops_787 {
         Queue<Item> heap = new PriorityQueue<>((i1, i2) -> i1.cost-i2.cost);
         heap.add(new Item(src, 0, 0));
         while (!heap.isEmpty()) {
-            Item top = heap.poll();
-            if (top.node == dst) {
-                return top.cost;
+            Item popped = heap.poll();
+            if (popped.node == dst) {
+                return popped.cost;
             }
-            Map<Integer, Integer> adjacents = graph.getOrDefault(top.node, new HashMap<>());
+            Map<Integer, Integer> adjacents = graph.getOrDefault(popped.node, new HashMap<>());
             for (int adjacent: adjacents.keySet()) {
-                if (top.stopsSoFar <= stop) {
-                    heap.add(new Item(adjacent, top.cost + adjacents.get(adjacent), top.stopsSoFar+1));
+                if (popped.stopsSoFar <= stop) {
+                    heap.add(new Item(adjacent, popped.cost + adjacents.get(adjacent), popped.stopsSoFar+1));
                 }
             }
         }

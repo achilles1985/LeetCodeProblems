@@ -64,14 +64,14 @@ public class RedundantConnection_684 {
             }
         }
 
-        int find(int node) {
+        int find(int node) { // O(1) since path compression
             if (parent[node] != node) {
                 parent[node] = find(parent[node]);
             }
             return parent[node];
         }
 
-        void union(int node1, int node2) {
+        void union(int node1, int node2) { // O(log(n)) - since no union by rank, O(1) - with union by rank
             int p1 = find(node1);
             int p2 = find(node2);
             parent[p2] = p1;

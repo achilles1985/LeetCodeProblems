@@ -1,12 +1,7 @@
 package multithreading.complitablefuture;
 
-import com.sun.tools.javac.util.List;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
 
 public class TestCompletableFuture {
 
@@ -21,7 +16,7 @@ public class TestCompletableFuture {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(String.format("Number of cores=%s. Thread=%s", Runtime.getRuntime().availableProcessors(), Thread.currentThread().getName()));
-        for (Integer id : List.of(1, 2, 3, 4, 5,6,7,8,9,10)) {
+        for (Integer id : Arrays.asList(1, 2, 3, 4, 5,6,7,8,9,10)) {
             System.out.println("Started processing id=" + id);
             CompletableFuture.supplyAsync(() -> firstOperation(id))
                     .thenApply((employee) -> secondOperation(employee))

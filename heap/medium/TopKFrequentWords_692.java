@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/** M
+/** M [marked]
  Given a non-empty list of words, return the k most frequent elements.
  Your answer should be sorted by frequency from highest to lowest. If two words have the same frequency, then the word with the lower alphabetical order comes first.
 
@@ -52,7 +52,7 @@ public class TopKFrequentWords_692 {
             map.put(word, map.getOrDefault(word, 0) + 1);
         }
 
-        Queue<String> heap = new PriorityQueue<>((w1, w2) -> map.get(w1) == map.get(w2) ? w2.compareTo(w1) : map.get(w1) - map.get(w2));
+        Queue<String> heap = new PriorityQueue<>((w1, w2) -> map.get(w1) == map.get(w2) ? w2.compareTo(w1) : map.get(w1) - map.get(w2)); // we use minHeap, if words have equal frequency, word 'b' comes after 'a'.
         for (String key: map.keySet()) {
             heap.add(key);
             if (heap.size() > k) {

@@ -27,6 +27,9 @@ import java.util.Stack;
  * Number of operations won't exceed 10000.
  * The last four operations won't be called when stack is empty.
  */
+/*
+    When we do popMax(), we need to find and remove that max element from stack and restore all elements that were upper the max back.
+ */
 public class MaxStack_716 {
 
     private Stack<Integer> stack;
@@ -45,7 +48,7 @@ public class MaxStack_716 {
     }
 
     public int pop() {
-        if (maxStack.isEmpty()) {
+        if (stack.isEmpty()) {
             return 0;
         }
         maxStack.pop();

@@ -26,7 +26,7 @@ public class LongestPalindromicSubstring_5 {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring_5 s = new LongestPalindromicSubstring_5();
-        System.out.println(s.longestPalindrome3("cbbd")); //a
+        System.out.println(s.longestPalindromeDP2("cbbd")); //a
 
         System.out.println(s.longestPalindromeDP("ac")); //a
         System.out.println(s.longestPalindromeDP("a")); //a
@@ -34,11 +34,31 @@ public class LongestPalindromicSubstring_5 {
         System.out.println(s.longestPalindromeDP("racecar")); //racecar
 
         System.out.println(s.longestPalindrome2("racecar")); //racecar
-        System.out.println(s.longestPalindrome("nabbam")); //abba
+        System.out.println(s.longestPalindromeBF("nabbam")); //abba
         System.out.println(s.longestPalindrome2("nabbam")); //abba
     }
 
-    public String longestPalindrome3(String s) {
+    // O(n^3) - time, O(1) - space
+    public String longestPalindromeBF(String s) {
+        if (s.length() == 1) {
+            return s;
+        }
+        String max = "";
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0, k = i; k <= s.length(); j++, k++) {
+                String sub = s.substring(j, k);
+                if (isPolindrom(sub)) {
+                    if (sub.length() > max.length()) {
+                        max = sub;
+                    }
+                }
+            }
+        }
+        return max;
+    }
+
+    // O(n^2) - time, space
+    public String longestPalindromeDP2(String s) {
         if (s == null || s.isEmpty()) {
             return "";
         }
@@ -63,25 +83,6 @@ public class LongestPalindromicSubstring_5 {
             }
         }
         return result;
-    }
-
-    // O(n^3) - time, O(1) - space
-    public String longestPalindrome(String s) {
-        if (s.length() == 1) {
-            return s;
-        }
-        String max = "";
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = 0, k = i; k <= s.length(); j++, k++) {
-                String sub = s.substring(j, k);
-                if (isPolindrom(sub)) {
-                    if (sub.length() > max.length()) {
-                        max = sub;
-                    }
-                }
-            }
-        }
-        return max;
     }
 
     // O(n^2) - time, O(1) - space
@@ -133,6 +134,8 @@ public class LongestPalindromicSubstring_5 {
         return max;
     }
 
+    // O(n*log(n)) - time, when using binary search and Robin-Karp algorithm to find a substring of given size is a palindrom.
+    //public String longestPalindromeBS(String s);
 
     private int expandAroundCenter(String s, int left, int right) {
         int L = left, R = right;

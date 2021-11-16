@@ -1,11 +1,6 @@
 package unionfind;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * M
@@ -45,12 +40,57 @@ public class AccountsMerge_721 {
 
     public static void main(String[] args) {
         AccountsMerge_721 s = new AccountsMerge_721();
-        System.out.println(s.accountsMerge(Arrays.asList(
+        System.out.println(s.accountsMerge2(Arrays.asList(
                 Arrays.asList("John", "johnsmith@mail.com", "john00@mail.com"),
                 Arrays.asList("John", "johnnybravo@mail.com"),
                 Arrays.asList("John", "johnsmith@mail.com", "john_newyork@mail.com", "john1@mail.com"),
                 Arrays.asList("Mary", "mary@mail.com")))); //[["John", 'john00@mail.com', 'john_newyork@mail.com',
         // 'johnsmith@mail.com'],  ["John", "johnnybravo@mail.com"], ["Mary", "mary@mail.com"]]
+    }
+
+    // O(accounts*emails + Sum(emails*log(emails))) - time, O(accounts*emails) - space
+    public List<List<String>> accountsMerge2(List<List<String>> accounts) {
+        if (accounts == null || accounts.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Map<String, String> emailToName = new HashMap();
+        Map<String, ArrayList<String>> graph = new HashMap();
+        for (List<String> account: accounts) { //accounts*emails
+            String name = account.get(0);
+            String parentEmail = account.get(1);
+            for (int i = 1; i < account.size(); i++) {
+                String email = account.get(i);
+                graph.computeIfAbsent(email, x-> new ArrayList<>()).add(parentEmail);
+                graph.computeIfAbsent(parentEmail, x-> new ArrayList<>()).add(email);
+                emailToName.put(email, name);
+            }
+        }
+        Set<String> seen = new HashSet<>();
+        List<List<String>> result = new ArrayList<>();
+        for (String key: graph.keySet()) { // unique emails
+            if (!seen.contains(key)) {
+                List<String> nodes = new ArrayList<>();
+                dfs(key,nodes,seen, graph);
+                if (!nodes.isEmpty()) {
+                    Collections.sort(nodes); //emails*log(emails)
+                    nodes.add(0, emailToName.get(nodes.get(0)));
+                    result.add(nodes);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private void dfs(String node, List<String> list, Set<String> seen, Map<String, ArrayList<String>> graph) {
+        if (seen.contains(node)) {
+            return;
+        }
+        list.add(node);
+        seen.add(node);
+        for (String child: graph.getOrDefault(node, new ArrayList<>())) {
+            dfs(child, list, seen, graph);
+        }
     }
 
     // O(n*m) - time, n - number of accounts, m - number of emails
@@ -82,8 +122,8 @@ public class AccountsMerge_721 {
         }
         for (Map.Entry<Integer, List<String>> entry: idToEmails.entrySet()) {
             Collections.sort(entry.getValue());
-            entry.getValue().add(0, emailToName.get(entry.getValue().get(0)));
-            result.add(entry.getValue());
+            entry.getValue().add(0, emailToName.get(entry.getValue().get(0))); // get name
+            result.add(entry.getValue()); // add emails
         }
 
         return result;

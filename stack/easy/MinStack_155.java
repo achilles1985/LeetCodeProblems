@@ -19,7 +19,9 @@ import java.util.Stack;
  minStack.top();      --> Returns 0.
  minStack.getMin();   --> Returns -2.
  */
-// Or one can use min heap to keep min value
+/*
+    Store (value, min) in stack
+ */
 public class MinStack_155 {
     private Stack<Pair> stack;
 

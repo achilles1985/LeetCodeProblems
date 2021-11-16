@@ -28,6 +28,10 @@ import java.util.Random;
  *     All words in A have the same length and are anagrams of each other.
  *     The judging time limit has been increased for this question.
  */
+/*
+    1. All words are unique? (if yes, there is no sense in map<string, int>)
+    Group similar words with union find
+ */
 public class SimilarStringGroups_839 {
 
     public static void main(String[] args) {

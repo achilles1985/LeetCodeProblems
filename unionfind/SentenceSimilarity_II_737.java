@@ -1,9 +1,6 @@
 package unionfind;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**M
  * Given two sentences words1, words2 (each represented as an array of strings), and a list of similar word pairs
@@ -34,18 +31,63 @@ import java.util.Map;
 Hint:
     Consider the graphs where each pair in "pairs" is an edge.
     Two words are similar if they are the same, or are in the same connected component of this graph.
+    For each of words1, do dfs and check whether words1[i]==words2[i]
+
+    In UF, if there can be duplicates in pairs, map is used for unique index for each unique word in pairs.
  */
 public class SentenceSimilarity_II_737 {
 
     public static void main(String[] args) {
         SentenceSimilarity_II_737 s = new SentenceSimilarity_II_737();
-        System.out.println(s.areSentencesSimilarTwo(
+        System.out.println(s.areSentencesSimilarTwo2(
                 new String[]{"great", "acting", "skills"},
                 new String[]{"fine", "drama", "talent"},
                 Arrays.asList(Arrays.asList("great", "good"), Arrays.asList("fine", "good"), Arrays.asList("acting","drama"), Arrays.asList("skills","talent")))); // true
     }
 
     // O(P+W) - time, O(P) - space, P - number of pairs, W - number of words
+    public boolean areSentencesSimilarTwo2(String[] words1, String[] words2, List<List<String>> pairs) {
+        if (words1.length != words2.length) {
+            return false;
+        }
+        Map<String, List<String>> graph = new HashMap<>();
+        for (List<String> pair: pairs) {
+            String from = pair.get(0);
+            String to = pair.get(1);
+            graph.computeIfAbsent(from, k-> new ArrayList<>()).add(to);
+            graph.computeIfAbsent(to, k-> new ArrayList<>()).add(from);
+        }
+        for (int i = 0; i < words1.length; i++) {
+            String source = words1[i];
+            String target = words2[i];
+            if (source.equals(target)) {
+                continue;
+            }
+            if (!dfs(source,target,new HashSet<>(),graph)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean dfs(String source, String target, Set<String> seen, Map<String, List<String>> graph) {
+        if (seen.contains(source)) {
+            return false;
+        }
+        if (target.equals(source)) {
+            return true;
+        }
+        seen.add(source);
+        for (String child: graph.getOrDefault(source, Collections.emptyList())) {
+            if (dfs(child,target,seen,graph)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // O(P+W) - time, O(P) - space, P - number of pairs, W - number of words
+    // If we do not use union-by-rank, O(W*log(P) + P) - time
     public boolean areSentencesSimilarTwo(String[] words1, String[] words2, List<List<String>> pairs) {
         if (words1.length != words2.length) {
             return false;
@@ -65,7 +107,7 @@ public class SentenceSimilarity_II_737 {
             if (words1[i].equals(words2[i])) {
                 continue;
             }
-            if (!map.containsKey(words1[i]) || !map.containsKey(words2[i]) || ds.find(map.get(words1[i])) != ds.find(map.get(words2[i]))) {
+            if (!map.containsKey(words1[i]) || !map.containsKey(words2[i]) || ds.find(map.get(words1[i])) != ds.find(map.get(words2[i]))) { // if words're similar they have the same parent.
                 return false;
             }
         }

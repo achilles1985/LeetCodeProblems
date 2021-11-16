@@ -1,13 +1,11 @@
-package dynamic;
+package dynamic.medium;
 
 // https://leetcode.com/problems/house-robber-iii/
 
 import utils.TreeNode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
 /** M
  * The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the "root."
@@ -62,37 +60,57 @@ public class HouseRobber_III_337 {
 
     // O(2^n) - time, O(n) - space
     // http://buttercola.blogspot.com/2016/06/leetcode-house-robber-iii.html
-    public int rob(TreeNode root) {
+    public int robBF(TreeNode root) {
         if (root == null) {
             return 0;
         }
-
         if (root.left == null && root.right == null) {
             return root.val;
         }
-
-
         // case1: rob the root
         int leftMax = 0;
         int rightMax = 0;
-
         if (root.left != null) {
-            leftMax = rob(root.left.left) + rob(root.left.right);
+            leftMax = robBF(root.left.left) + robBF(root.left.right);
         }
-
         if (root.right != null) {
-            rightMax = rob(root.right.left) + rob(root.right.right);
+            rightMax = robBF(root.right.left) + robBF(root.right.right);
         }
-
         int maxRoot = root.val + leftMax + rightMax;
 
         // case 2: not rob the root
-        leftMax = rob(root.left);
-        rightMax = rob(root.right);
-
+        leftMax = robBF(root.left);
+        rightMax = robBF(root.right);
         int maxNoRoot = leftMax + rightMax;
 
         return Math.max(maxRoot, maxNoRoot);
+    }
+
+    // O(n) - time, O(h) - space
+    public int rob(TreeNode root) {
+        return helper(root,new HashMap<>());
+    }
+
+    private int helper(TreeNode root, Map<TreeNode, Integer> cache) {
+        if (root == null) {
+            return 0;
+        }
+        if (cache.containsKey(root)) {
+            return cache.get(root);
+        }
+        int notRobCurrent = helper(root.left, cache) + helper(root.right, cache);
+        int a = 0, b = 0;
+        if (root.left != null) {
+            a = helper(root.left.left, cache) + helper(root.left.right, cache);
+        }
+        if (root.right != null) {
+            b = helper(root.right.left, cache) + helper(root.right.right, cache);
+        }
+        int robCurrent = root.val + a + b;
+        int max = Math.max(notRobCurrent, robCurrent);
+        cache.put(root, max);
+
+        return max;
     }
 
     // O(n) - time, space
@@ -110,7 +128,6 @@ public class HouseRobber_III_337 {
         if (root == null) {
             return new int[2];
         }
-
         int[] left = robHelper(root.left);
         int[] right = robHelper(root.right);
 

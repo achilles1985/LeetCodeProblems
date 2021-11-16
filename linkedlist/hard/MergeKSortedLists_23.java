@@ -10,7 +10,6 @@ import linkedlist.utils.ListNode;
  * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
  *
  * Example:
- *
  * Input:
  * [
  *   1->4->5,
@@ -65,10 +64,10 @@ public class MergeKSortedLists_23 {
         ListNode head = new ListNode(0);
         ListNode it = head;
         while (!queue.isEmpty()) {
-            ListNode node = queue.poll();
-            it.next = node;
-            if (node.next != null) {
-                queue.add(node.next);
+            ListNode polled = queue.poll();
+            it.next = polled;
+            if (polled.next != null) {
+                queue.add(polled.next);
             }
             it = it.next;
         }
