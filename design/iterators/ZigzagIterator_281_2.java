@@ -1,9 +1,6 @@
 package design.iterators;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**M
  * Given two 1d vectors, implement an iterator to return their elements alternately.
@@ -30,26 +27,28 @@ import java.util.Queue;
  *
  * Output: [1,4,8,2,5,9,3,6,7].
  */
-public class ZigzagIterator {
+public class ZigzagIterator_281_2 {
 
-    private Queue<Integer> queue;
+    private Queue<Iterator<Integer>> queue;
 
-    // O(n1+n2) - time, space
-    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+    // O(K) - space, k - number of lists
+    public ZigzagIterator_281_2(List<Integer> v1, List<Integer> v2) {
         queue = new LinkedList<>();
-        int i = 0, j = 0;
-        while (i < v1.size() || j < v2.size()) {
-            if (i < v1.size()) {
-                queue.offer(v1.get(i++));
-            }
-            if (j < v2.size()) {
-                queue.offer(v2.get(j++));
-            }
+        if (!v1.isEmpty()) {
+            queue.add(v1.iterator());
+        }
+        if (!v2.isEmpty()) {
+            queue.add(v2.iterator());
         }
     }
 
     public int next() {
-        return queue.poll();
+        Iterator<Integer> iter = queue.poll();
+        int val = iter.next();
+        if (iter.hasNext()) {
+            queue.add(iter);
+        }
+        return val;
     }
 
     public boolean hasNext() {
@@ -57,7 +56,7 @@ public class ZigzagIterator {
     }
 
     public static void main(String[] args) {
-        ZigzagIterator s = new ZigzagIterator(Arrays.asList(1,2), Arrays.asList(3,4,5,6));
+        ZigzagIterator_281_2 s = new ZigzagIterator_281_2(Arrays.asList(1,2), Arrays.asList(3,4,5,6));
         while (s.hasNext()) {
             System.out.println(s.next());
         }

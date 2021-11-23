@@ -1,16 +1,10 @@
 package tree.medium;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import utils.TreeNode;
 
-/**M
+/**M [marked]
  * Given a binary tree, return the vertical order traversal of its nodes values.
  * For each node at position (X, Y), its left and right children respectively will be at positions (X-1, Y-1) and
  * (X+1, Y-1).
@@ -92,38 +86,35 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
     // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines),  O(n) - space
     // In case the tree is a linked list - O(n) - time, subgroups = N, each subgroup consists of only one value
     public List<List<Integer>> verticalTraversalDFS(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        Map<Integer, List<NodeInfo>> map = new TreeMap<>();
-        AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
-        AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
-        helper(map, root, 0, 0, min, max);
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        Map<Integer, List<NodeInfo>> map = new HashMap<>();
+        populate(root, map, 0, 0);
 
-        // k*n/k*log(n/k) = n*log(n/k) < n*log(n)
-        for (int i = min.intValue(); i <= max.intValue(); i++) { //k
-            List<NodeInfo> nodes = map.get(i);
-            nodes.sort(Comparator.comparing(NodeInfo::getRow).thenComparing(NodeInfo::getVal)); // n/k*log(n/k)
+        int min = map.keySet().stream().min(Comparator.naturalOrder()).get();
+        int max = map.keySet().stream().max(Comparator.naturalOrder()).get();
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = min; i <= max; i++) {
+            List<NodeInfo> list = map.get(i);
+            Collections.sort(list, Comparator.comparing(NodeInfo::getRow).thenComparing(NodeInfo::getVal));
             List<Integer> temp = new ArrayList<>();
-            for (NodeInfo nodeInfo: nodes) {
-                temp.add(nodeInfo.val);
+            for (NodeInfo n: list) {
+                temp.add(n.val);
             }
             result.add(temp);
         }
+
         return result;
     }
 
-    private void helper(Map<Integer, List<NodeInfo>> map, TreeNode root, int col, int row, AtomicInteger min, AtomicInteger max) {
+    private void populate(TreeNode root,  Map<Integer, List<NodeInfo>> map, int col, int row) {
         if (root == null) {
             return;
         }
-        map.computeIfAbsent(col, key->new ArrayList<>()).add(new NodeInfo(root.val, col, row));
-        if (col < min.intValue()) {
-            min.set(col);
-        }
-        if (col > max.intValue()) {
-            max.set(col);
-        }
-        helper(map, root.left, col-1, row+1, min, max);
-        helper(map, root.right, col+1, row+1, min, max);
+        map.computeIfAbsent(col, key -> new ArrayList<>()).add(new NodeInfo(col, row, root.val));
+        populate(root.left, map, col-1, row+1);
+        populate(root.right, map, col+1, row+1);
     }
 
     static class NodeInfo {

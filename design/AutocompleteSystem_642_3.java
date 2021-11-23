@@ -12,7 +12,6 @@ import java.util.Queue;
  * Design a search autocomplete system for a search engine. Users may input a sentence (at least one word and end
  * with a special character '#'). For each character they type except '#', you need to return the top 3 historical
  * hot sentences that have prefix the same as the part of sentence already typed. Here are the specific rules:
- *
  *     The hot degree for a sentence is defined as the number of times a user typed the exactly same sentence before.
  *     The returned top 3 hot sentences should be sorted by hot degree (The first is the hottest one). If several
  *     sentences have the same degree of hot, you need to use ASCII-code order (smaller one appears first).
@@ -23,7 +22,6 @@ import java.util.Queue;
  * Your job is to implement the following functions:
  *
  * The constructor function:
- *
  * AutocompleteSystem(String[] sentences, int[] times): This is the constructor. The input is historical data.
  * Sentences is a string array consists of previously typed sentences. Times is the corresponding times a sentence
  * has been typed. Your system should record these historical data.
@@ -68,7 +66,6 @@ import java.util.Queue;
  * The user finished the input, the sentence "i a" should be saved as a historical sentence in system. And the
  * following input will be counted as a new search.
  *
- *
  * Note:
  *     The input sentence will always start with a letter and end with '#', and only one blank space will exist
  *     between two words.
@@ -83,7 +80,6 @@ Solution based on HashMaps: HashMap (a,b,c,...,z) each alphabeth letter correspo
 (https://leetcode.com/problems/design-search-autocomplete-system/solution/)
  */
 public class AutocompleteSystem_642_3 {
-
     private Map<Character, Map<String, Integer>> map;
     private String input;
 

@@ -56,6 +56,19 @@ public class DiameterOfBinaryTree_543 {
         return diameterOfBinaryTree2Helper(root, height);
     }
 
+    private HeightDiameter helper(TreeNode root) {
+        if (root == null) {
+            return new HeightDiameter(0,0);
+        }
+        HeightDiameter leftHD = helper(root.left);
+        HeightDiameter rightHD = helper(root.right);
+        int height = Math.max(leftHD.height, rightHD.height) + 1;
+        int diameter = leftHD.height+rightHD.height;
+        int maxDiameter = Math.max(diameter, Math.max(leftHD.diameter, rightHD.diameter));
+
+        return new HeightDiameter(height, maxDiameter);
+    }
+
     private int diameterOfBinaryTree2Helper(TreeNode root, Height height) {
         if (root == null) {
             return 0;
@@ -77,19 +90,6 @@ public class DiameterOfBinaryTree_543 {
         int left = height(root.left);
         int right = height(root.right);
         return Math.max(left, right) + 1;
-    }
-
-    private HeightDiameter helper(TreeNode root) {
-        if (root == null) {
-            return new HeightDiameter(0,0);
-        }
-        HeightDiameter leftHD = helper(root.left);
-        HeightDiameter rightHD = helper(root.right);
-        int height = Math.max(leftHD.height, rightHD.height) + 1;
-        int diameter = leftHD.height+rightHD.height;
-        int maxDiameter = Math.max(diameter, Math.max(leftHD.diameter, rightHD.diameter));
-
-        return new HeightDiameter(height, maxDiameter);
     }
 
     private static class HeightDiameter {

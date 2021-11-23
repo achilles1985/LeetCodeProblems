@@ -3,10 +3,11 @@ package design;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**M
+/**
+ * M
  * Design and implement an iterator to flatten a 2d vector. It should support the following operations: next and
  * hasNext.
- *
+ * <p>
  * Example:
  * Vector2D iterator = new Vector2D([[1,2],[3],[4]]);
  * iterator.next(); // return 1
@@ -16,13 +17,13 @@ import java.util.Queue;
  * iterator.hasNext(); // return true
  * iterator.next(); // return 4
  * iterator.hasNext(); // return false
- *
+ * <p>
  * Notes:
- *     Please remember to RESET your class variables declared in Vector2D, as static/class variables are persisted
- *     across multiple test cases. Please see here for more details.
- *     You may assume that next() call will always be valid, that is, there will be at least a next element in the 2d
- *     vector when next() is called.
- *
+ * Please remember to RESET your class variables declared in Vector2D, as static/class variables are persisted
+ * across multiple test cases. Please see here for more details.
+ * You may assume that next() call will always be valid, that is, there will be at least a next element in the 2d
+ * vector when next() is called.
+ * <p>
  * Follow up:
  * As an added challenge, try to code it using only iterators in C++ or iterators in Java.
  */
@@ -34,10 +35,8 @@ public class Flatten_2DVector_251 {
     public Flatten_2DVector_251(int[][] v) {
         queue = new LinkedList<>();
         for (int i = 0; i < v.length; i++) {
-            if (v[i] != null && v[i].length != 0) {
-                for (int j = 0; j < v[i].length; j++) {
-                    queue.add(v[i][j]);
-                }
+            for (int j = 0; j < v[i].length; j++) {
+                queue.add(v[i][j]);
             }
         }
     }

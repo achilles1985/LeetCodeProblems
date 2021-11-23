@@ -35,11 +35,11 @@ import java.util.Map;
  *     2 <= path.length <= 100
  *     1 <= value <= 10^9
  */
-public class FileSystem {
+public class FileSystem_1166 {
 
     private final Map<String, Integer> paths;
 
-    public FileSystem() {
+    public FileSystem_1166() {
         paths = new HashMap<>();
         paths.put("", -1);
     }
@@ -62,7 +62,7 @@ public class FileSystem {
     }
 
     public static void main(String[] args) {
-        FileSystem fileSystem = new FileSystem();
+        FileSystem_1166 fileSystem = new FileSystem_1166();
 
         System.out.println(fileSystem.createPath("/leet", 1)); // true
         System.out.println(fileSystem.createPath("/leet/code", 2)); // true

@@ -30,8 +30,32 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal_106 {
 
     public static void main(String[] args) {
         ConstructBinaryTreeFromInorderAndPostorderTraversal_106 s = new ConstructBinaryTreeFromInorderAndPostorderTraversal_106();
+        TreeUtils.print(s.buildTree2(new int[]{9,3,15,20,7}, new int[]{9,15,7,20,3}));
         TreeUtils.print(s.buildTree(new int[]{4,2,5,1,6,3,7}, new int[]{4,5,2,6,7,3,1}));
-        TreeUtils.print(s.buildTree(new int[]{9,3,15,20,7}, new int[]{9,15,7,20,3}));
+    }
+
+    public TreeNode buildTree2(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> numToIndex = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            numToIndex.put(inorder[i], i);
+        }
+        int[] postindex = new int[]{ postorder.length-1 };
+
+        return helper(postorder, postindex, inorder, 0, inorder.length-1, numToIndex);
+    }
+
+    private TreeNode helper(int[] postorder, int[] postindex, int[] inorder, int left, int right, Map<Integer, Integer> numToIndex) {
+        if (left > right) {
+            return null;
+        }
+        TreeNode root = new TreeNode(postorder[postindex[0]]);
+        int mid = numToIndex.get(postorder[postindex[0]]);
+
+        postindex[0]--;
+        root.left = helper(postorder, postindex, inorder, left, mid-1, numToIndex);
+        root.right = helper(postorder, postindex, inorder, mid+1, right, numToIndex);
+
+        return root;
     }
 
     // O(n) - time, O(h) - space
@@ -53,6 +77,7 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal_106 {
         Integer inRoot = map.get(postorder[poIdx.intValue()]);
         TreeNode node = new TreeNode(postorder[poIdx.intValue()]);
         poIdx.getAndDecrement();
+        // post order sequence is left --> right --> root. So since here we are building it backward, it should go from root --> right --> left
         node.right = buildTreeHelper(postorder, poIdx, inRoot+1, inEnd, map);
         node.left = buildTreeHelper(postorder, poIdx, inStart, inRoot-1, map);
         return node;

@@ -87,6 +87,27 @@ public class KthSmallestElemenIinBST_230 {
         return node.val;
     }
 
+    // O(n) - time, O(h) - space
+    public int kthSmallest2(TreeNode root, int k) {
+        int[] pair = new int[2];
+        helper(root, k, pair);
+
+        return pair[1];
+    }
+
+    private void helper(TreeNode root, int k, int[] pair) {
+        if (root == null) {
+            return;
+        }
+        helper(root.left, k, pair);
+        pair[0]++;
+        if (pair[0] == k) {
+            pair[1] = root.val;
+            return;
+        }
+        helper(root.right, k, pair);
+    }
+
     private void kthSmallest2Utils(TreeNode root, int k, List<Integer> list) {
         if (root == null) {
             return;

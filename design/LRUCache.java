@@ -16,6 +16,10 @@ import java.util.Map;
  * Follow up:
  * Could you do both operations in O(1) time complexity?
  */
+/*
+ 1. head = new CachItem(), tail = new CachItem();
+ 2. moveToHead() = removeFromList(item) + addFront(item)
+ */
 public class LRUCache {
     private CacheItem head;
     private CacheItem tail;

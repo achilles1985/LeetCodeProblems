@@ -50,8 +50,13 @@ public class Flatten_2DVector_251_2 {
         return outer < origin.length;
     }
 
+    // If the current outer and inner point to an integer, this method does nothing.
+    // Otherwise, inner and outer are advanced until they point to an integer.
+    // If there are no more integers, then outer will be equal to vector.length
+    // when this method terminates.
+    // O(rows) - time
     private void advanceIterator() {
-        while (outer < origin.length && inner == origin[outer].length) {
+        while (outer < origin.length && inner == origin[outer].length) { // 'while not if' because there can be empty arrays
             inner = 0;
             outer++;
         }

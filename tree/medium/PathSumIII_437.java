@@ -43,6 +43,7 @@ public class PathSumIII_437 {
         root.left.left.right = new TreeNode(-2);
         root.right.right.right= new TreeNode(1);
 
+        System.out.println(s.pathSumBF(root, 8)); //3
         System.out.println(s.pathSum(root, 8)); //3
     }
 
@@ -51,8 +52,10 @@ public class PathSumIII_437 {
         if (root == null) {
             return 0;
         }
-        return pathSumBF(root.left, targetSum) + pathSumBF(root.right, targetSum)
-                + helperBF(root, 0, targetSum);
+        int left = pathSumBF(root.left, targetSum);
+        int right = pathSumBF(root.right, targetSum);
+
+        return left + right + helperBF(root, 0, targetSum);
     }
 
     // O(n) - time, space

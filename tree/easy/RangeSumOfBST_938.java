@@ -60,17 +60,17 @@ public class RangeSumOfBST_938 {
     }
 
     //O(n) - time, space
-    public int rangeSumBST(TreeNode root, int L, int R) {
+    public int rangeSumBST(TreeNode root, int low, int high) {
         if (root == null) {
             return 0;
         }
-        if (root.val >= L && root.val <= R) {
-            return root.val + rangeSumBST(root.left, L, R) + rangeSumBST(root.right, L, R);
+        if (root.val < low) {
+            return rangeSumBST(root.right, low, high);
         }
-        if (root.val < L) {
-            return rangeSumBST(root.right, L, R);
+        if (root.val > high) {
+            return rangeSumBST(root.left, low, high);
         }
-        return rangeSumBST(root.left, L, R);
+        return root.val + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high);
     }
 
 }

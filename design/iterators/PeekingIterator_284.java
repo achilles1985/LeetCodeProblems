@@ -19,29 +19,28 @@ import java.util.List;
  *
  * Follow up: How would you extend your design to be generic and work with all types, not just integer?
  */
-public class PeekingIterator<T> implements Iterator<T> {
-
+public class PeekingIterator_284<T> implements Iterator<T> {
     private Iterator<T> iterator;
-    private T next;
+    private T peek;
 
-    public PeekingIterator(Iterator<T> iterator) {
+    public PeekingIterator_284(Iterator<T> iterator) {
         this.iterator = iterator;
     }
 
     // O(1) - time, space
     public T peek() {
-        if (next == null && iterator.hasNext()) {
-            next = iterator.next();
+        if (peek == null) {
+            peek = iterator.next();
         }
-        return next;
+        return peek;
     }
 
     // O(1) - time, space
     @Override
     public T next() {
-        if (next != null) {
-            T toReturn = next;
-            next = null;
+        if (peek != null) {
+            T toReturn = peek;
+            peek = null;
             return toReturn;
         }
         return iterator.next();
@@ -49,12 +48,12 @@ public class PeekingIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return next != null || iterator.hasNext();
+        return peek != null || iterator.hasNext();
     }
 
     public static void main(String[] args) {
         List<String> list = Arrays.asList("1","2","3","4");
-        PeekingIterator<String> iter = new PeekingIterator(list.iterator());
+        PeekingIterator_284<String> iter = new PeekingIterator_284(list.iterator());
         System.out.println(iter.hasNext()); //true
         System.out.println(iter.peek()); //1
         System.out.println(iter.peek()); //1

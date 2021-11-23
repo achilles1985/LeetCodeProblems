@@ -1,55 +1,52 @@
 package design.iterators;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-public class FlattenNestedListIterator_341_2 {
+// O(D) - space, D - max depth of stack frames
+public class FlattenNestedListIterator_341_2 implements Iterator<Integer> {
+    private Deque<ListIterator<NestedInteger>> stackOfIterators = new ArrayDeque<>();
+    private Integer peeked = null;
 
-    public class NestedIterator implements Iterator<Integer> {
+    public FlattenNestedListIterator_341_2(List<NestedInteger> nestedList) {
+        stackOfIterators.push(nestedList.listIterator());
+    }
 
-        // In Java, the Stack class is considered deprecated. Best practice is to use
-        // a Deque instead. We'll use addFirst() for push, and removeFirst() for pop.
-        private Deque<NestedInteger> stack;
-
-        // O(n+l), where n - number of integers, l - number of lists
-        public NestedIterator(List<NestedInteger> nestedList) {
-            // The constructor puts them on in the order we require. No need to reverse.
-            stack = new ArrayDeque(nestedList);
+    @Override
+    public Integer next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
+        // hasNext() called setPeeked(), which ensures peeked has the next integer
+        // in it. We need to clear the peeked field so that the element is returned
+        // again.
+        Integer result = peeked;
+        peeked = null;
+        return result;
+    }
 
-        @Override
-        public Integer next() {
-            // As per java specs, throw an exception if there's no elements left.
-            if (!hasNext()) throw new NoSuchElementException();
-            // hasNext ensures the stack top is now an integer. Pop and return
-            // this integer.
-            return stack.removeFirst().getInteger();
+    @Override
+    public boolean hasNext() {
+        // Try to set the peeked field. If any integers are remaining, it will
+        // contain the next one to be returned after this call.
+        setPeeked();
+        return peeked != null;
+    }
+
+    private void setPeeked() {
+        if (peeked != null) {
+            return;
         }
-
-
-        @Override
-        public boolean hasNext() {
-            // Check if there are integers left by getting one onto the top of stack.
-            makeStackTopAnInteger();
-            // If there are any integers remaining, one will be on the top of the stack,
-            // and therefore the stack can't possibly be empty.
-            return !stack.isEmpty();
-        }
-
-
-        private void makeStackTopAnInteger() {
-            // While there are items remaining on the stack and the front of
-            // stack is a list (i.e. not integer), keep unpacking.
-            while (!stack.isEmpty() && !stack.peekFirst().isInteger()) {
-                // Put the NestedIntegers onto the stack in reverse order.
-                List<NestedInteger> nestedList = stack.removeFirst().getList();
-                for (int i = nestedList.size() - 1; i >= 0; i--) {
-                    stack.addFirst(nestedList.get(i));
-                }
+        while (!stackOfIterators.isEmpty()) {
+            if (!stackOfIterators.peekFirst().hasNext()) {
+                stackOfIterators.pop();
+                continue;
             }
+            NestedInteger next = stackOfIterators.peekFirst().next();
+            if (next.isInteger()) {
+                peeked = next.getInteger();
+                return;
+            }
+            stackOfIterators.push(next.getList().listIterator());
         }
     }
 

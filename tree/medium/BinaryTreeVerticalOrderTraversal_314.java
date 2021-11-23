@@ -1,18 +1,10 @@
 package tree.medium;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import utils.TreeNode;
 
-/** M
+/** M [marked]
  * Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
  * If two nodes are in the same row and column, the order should be from left to right.
  *
@@ -94,6 +86,7 @@ public class BinaryTreeVerticalOrderTraversal_314 {
         root.left.right.left = new TreeNode(5);
         root.left.right.right = new TreeNode(2);
 
+        //System.out.println(s.verticalOrder3(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
         System.out.println(s.verticalOrderDFS(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
         System.out.println(s.verticalOrderBFS(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
     }
@@ -116,6 +109,30 @@ public class BinaryTreeVerticalOrderTraversal_314 {
             }
             result.add(temp);
         }
+        return result;
+    }
+
+    // O(n*log(n/k)) - time
+    public List<List<Integer>> verticalOrderDFS2(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        Map<Integer, List<NodeInfo>> map = new HashMap<>();
+        populate(root, map, 0, 0);
+
+        int min = map.keySet().stream().min(Comparator.naturalOrder()).get();
+        int max = map.keySet().stream().max(Comparator.naturalOrder()).get();
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = min; i <= max; i++) {
+            List<NodeInfo> list = map.get(i);
+            Collections.sort(list, Comparator.comparing(NodeInfo::getRow));
+            List<Integer> temp = new ArrayList<>();
+            for (NodeInfo n: list) {
+                temp.add(n.val);
+            }
+            result.add(temp);
+        }
+
         return result;
     }
 
@@ -176,6 +193,15 @@ public class BinaryTreeVerticalOrderTraversal_314 {
         helper(map, root.right, col+1, row+1, min, max);
     }
 
+    private void populate(TreeNode root,  Map<Integer, List<NodeInfo>> map, int col, int row) {
+        if (root == null) {
+            return;
+        }
+        map.computeIfAbsent(col, key -> new ArrayList<>()).add(new NodeInfo(col, row, root.val));
+        populate(root.left, map, col-1, row+1);
+        populate(root.right, map, col+1, row+1);
+    }
+
     private static class NodeInfo {
         int val;
         int col;
@@ -185,6 +211,14 @@ public class BinaryTreeVerticalOrderTraversal_314 {
             this.val = val;
             this.col = col;
             this.row = row;
+        }
+
+        int getCol() {
+            return col;
+        }
+
+        int getRow() {
+            return row;
         }
     }
 

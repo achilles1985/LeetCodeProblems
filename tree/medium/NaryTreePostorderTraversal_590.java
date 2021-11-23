@@ -8,7 +8,6 @@ import tree.utils.Node;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 /** E
  * Given an n-ary tree, return the postorder traversal of its nodes' values.

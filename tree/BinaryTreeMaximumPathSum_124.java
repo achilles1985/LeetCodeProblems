@@ -64,13 +64,16 @@ public class BinaryTreeMaximumPathSum_124 {
         if (root == null) {
             return 0;
         }
-
         int left = Math.max(helper(root.left, globalMaxHolder), 0);
         int right = Math.max(helper(root.right, globalMaxHolder), 0);
 
-        globalMaxHolder[0] = Math.max(globalMaxHolder[0], left + root.val + right);
+        // the price to start a new path where `node` is a highest node
+        int newPrice = left + root.val + right;
+        // update max_sum if it's better to start a new path
+        globalMaxHolder[0] = Math.max(globalMaxHolder[0], newPrice);
 
-        return Math.max(root.val, root.val + Math.max(left, right));
+        // return the max gain if continue the same path
+        return root.val + Math.max(left, right);
     }
 
 }

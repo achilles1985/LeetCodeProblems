@@ -1,14 +1,6 @@
 package dynamic.medium;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /** M [marked!]
  Given a list of words, each word consists of English lowercase letters.
@@ -104,22 +96,18 @@ public class LongestStringChain_1048 {
     // BFS
     // O(n^2) - time, O(n) - space
     public int longestStrChain3(String[] words) {
-        TreeMap<Integer, Set<String>> map = new TreeMap<>(Collections.reverseOrder());
+        SortedMap<Integer, Set<String>> map = new TreeMap<>(Collections.reverseOrder());
         for (String word : words) {
             int len = word.length();
-            if (!map.containsKey(len)) {
-                map.put(len, new HashSet<>());
-            }
-            map.get(len).add(word);
+            map.computeIfAbsent(len, key -> new HashSet<>()).add(word);
         }
 
         Queue<String> q = new LinkedList<>();
         Set<String> visited = new HashSet<>();
         int maxChain = 0;
-
-        for (int len : map.keySet()) {
+        for (int len : map.keySet()) { //unique lengths
             Set<String> wordsWithCurrentLen = map.get(len);
-            for (String word : wordsWithCurrentLen) {
+            for (String word : wordsWithCurrentLen) { //words by length
                 if (visited.contains(word)) {
                     continue;
                 }
@@ -128,7 +116,7 @@ public class LongestStringChain_1048 {
             }
 
             int chainLen = 0;
-            while (!q.isEmpty()) {
+            while (!q.isEmpty()) { // max depth
                 int size = q.size();
                 chainLen++;
                 int currLevelWordLen = q.peek().length();
@@ -136,7 +124,7 @@ public class LongestStringChain_1048 {
                 if (wordsWithPrevLen == null || wordsWithPrevLen.size() == 0) {
                     break;
                 }
-                while (size > 0) {
+                while (size-- > 0) {
                     String currStr = q.poll();
                     for (int i = 0; i < currStr.length(); i++) {
                         String cand = currStr.substring(0, i) + currStr.substring(i + 1);
@@ -145,7 +133,6 @@ public class LongestStringChain_1048 {
                             q.offer(cand);
                         }
                     }
-                    size--;
                 }
             }
             maxChain = Math.max(maxChain, chainLen);
@@ -154,7 +141,7 @@ public class LongestStringChain_1048 {
         return maxChain;
     }
 
-    // O(words.word.length) - time, space
+    // O(words*word.length) - time, space
     public int longestStrChain4(String[] words) {
         Map<String, Integer> dp = new HashMap<>();
         Arrays.sort(words, (a, b)->a.length() - b.length());

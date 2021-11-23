@@ -48,22 +48,6 @@ public class DecodeWays_91 {
         return numDecodings3(s, 0);
     }
 
-    private int numDecodings3(String s, int decodePointer) {
-        if (decodePointer >= s.length()) {
-            return 1;
-        }
-        int count = 0;
-        for (int i = 1; i <= 2; i++) {
-            if (decodePointer + i <= s.length()) {
-                String snippet = s.substring(decodePointer, decodePointer + i);
-                if (isValid(snippet)) {
-                    count += numDecodings3(s, decodePointer + i);
-                }
-            }
-        }
-        return count;
-    }
-
     // O(2^n) - time, O(n) - space
     public int numDecodings(String s) {
         if (s.isEmpty()) {
@@ -163,4 +147,19 @@ public class DecodeWays_91 {
         return count;
     }
 
+    private int numDecodings3(String s, int decodePointer) {
+        if (decodePointer >= s.length()) {
+            return 1;
+        }
+        int count = 0;
+        for (int i = 1; i <= 2; i++) {
+            if (decodePointer + i <= s.length()) {
+                String snippet = s.substring(decodePointer, decodePointer + i);
+                if (isValid(snippet)) {
+                    count += numDecodings3(s, decodePointer + i);
+                }
+            }
+        }
+        return count;
+    }
 }

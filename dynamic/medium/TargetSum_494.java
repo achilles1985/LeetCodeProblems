@@ -31,13 +31,13 @@ public class TargetSum_494 {
 
     public static void main(String[] args) {
         TargetSum_494 s = new TargetSum_494();
-        System.out.println(s.findTargetSumWaysBruteForce(new int[] {1,1,1,1,1}, 3)); //5
+        System.out.println(s.findTargetSumWaysBF(new int[] {1,1,1,1,1}, 3)); //5
         System.out.println(s.findTargetSumWaysDynamicTopDown(new int[] {1,1,1,1,1}, 3)); //5
     }
 
     // O(2^n) - time, n - size of nums, O(n) - space, the depth of the recursion tree ca go up to n.
-    public int findTargetSumWaysBruteForce(int[] nums, int S) {
-        return findTargetSumWaysBruteForce(nums, S, 0, 0);
+    public int findTargetSumWaysBF(int[] nums, int S) {
+        return findTargetSumWaysBF(nums, S, 0, 0);
     }
 
     public int findTargetSumWaysDynamicTopDown(int[] nums, int S) {
@@ -61,13 +61,13 @@ public class TargetSum_494 {
         return map.get(key);
     }
 
-    private int findTargetSumWaysBruteForce(int[] nums, int target, int i, int sum) {
+    private int findTargetSumWaysBF(int[] nums, int target, int i, int sum) {
         if (i == nums.length) {
             return sum == target ? 1 : 0;
         }
 
-        int s1 = findTargetSumWaysBruteForce(nums, target, i+1, sum + nums[i]);
-        int s2 = findTargetSumWaysBruteForce(nums, target, i+1, sum - nums[i]);
+        int s1 = findTargetSumWaysBF(nums, target, i+1, sum + nums[i]);
+        int s2 = findTargetSumWaysBF(nums, target, i+1, sum - nums[i]);
 
         return s1 + s2;
     }

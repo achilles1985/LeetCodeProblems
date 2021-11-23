@@ -2,6 +2,9 @@ package tree.medium;
 
 import utils.TreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**M [F]
  * Given a Binary Search Tree (BST) with root node root, and a target value V, split the tree into two subtrees where
  * one subtree has nodes that are all smaller or equal to the target value, while the other subtree has all nodes
@@ -55,24 +58,22 @@ public class SplitBST_776 {
         root.right.right = new TreeNode(7);
 
         //TreeNode[] res1 = s.splitBST(root, 2);
-        TreeNode[] res2 = s.splitBST(root, 6);
+        TreeNode[] res2 = s.splitBST(root, 2);
     }
 
     // O(n) - time, space
     public TreeNode[] splitBST(TreeNode root, int V) {
-        if (root == null) {
+        if(root == null) {
             return new TreeNode[]{null, null};
         }
-        else if (root.val <= V) {
-            TreeNode[] bns = splitBST(root.right, V);
-            root.right = bns[0];
-            bns[0] = root;
-            return bns;
+        if(root.val>V){
+            TreeNode[] subR = splitBST(root.left, V);
+            root.left = subR[1];
+            return new TreeNode[]{subR[0], root};
         } else {
-            TreeNode[] bns = splitBST(root.left, V);
-            root.left = bns[1];
-            bns[1] = root;
-            return bns;
+            TreeNode[] subR = splitBST(root.right, V);
+            root.right = subR[0];
+            return new TreeNode[]{root, subR[1]};
         }
     }
 }

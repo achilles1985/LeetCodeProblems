@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**M
+/**M [marked]
  * Design a SkipIterator that supports a method skip(int val). When it is called the next element equals val in iterator sequence should be skipped
  */
 /*

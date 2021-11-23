@@ -41,7 +41,7 @@ public class FlattenNestedListIterator_341 implements Iterator<Integer> {
         return iter.next();
     }
 
-    // O(n) - time, n - total number of elements
+    // O(l + i) - time, l - number of lists, i - number of integers. O(i + d) - space, i - number of integers, d - max number of stack frames.
     private void flatten(List<NestedInteger> nestedList) {
         for (NestedInteger item: nestedList) {
             if (item.isInteger()) {

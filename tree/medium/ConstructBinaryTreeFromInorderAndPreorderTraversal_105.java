@@ -22,6 +22,9 @@ import utils.TreeNode;
  *    15   7
  */
 /*
+    All values are unique?
+ */
+/*
     The idea is to find the root first which is the first element in preorder array.
     Then find that element in inorder array. Then all element on the left would be left subtree, right - right subtree.
     Then recurse on the left and right subarrays of inorder till the leaf is found. While recursing increment preorderIndex to find the next root.

@@ -2,7 +2,7 @@ package tree.medium;
 
 import utils.TreeNode;
 
-/** M
+/** M [marked]
  Given a binary tree, find the largest subtree which is a Binary Search Tree (BST), where largest means subtree with largest number of nodes in it.
  Note:
  A subtree must include all of its descendants.
@@ -101,15 +101,15 @@ public class LargestBSTsubtree_333 {
 
     // O(n) - time for skewed tree
     public int largestBSTSubtree(TreeNode root){
-        return largest(root).size;
+        return helper(root).size;
     }
 
-    private MinMax largest(TreeNode root){
+    private MinMax helper(TreeNode root){
         if (root == null) {
             return new MinMax(0, null, null, true);
         }
-        MinMax leftMinMax = largest(root.left);
-        MinMax rightMinMax = largest(root.right);
+        MinMax leftMinMax = helper(root.left);
+        MinMax rightMinMax = helper(root.right);
 
         // root must be > max on the left and < min on the right
         if(!leftMinMax.isBST || !rightMinMax.isBST
@@ -120,6 +120,7 @@ public class LargestBSTsubtree_333 {
         int curSize = leftMinMax.size + rightMinMax.size + 1;
         Integer curMin = root.left != null ? leftMinMax.min : root.val;
         Integer curMax = root.right != null ? rightMinMax.max : root.val;
+
         return new MinMax(curSize, curMin, curMax, true);
     }
 
