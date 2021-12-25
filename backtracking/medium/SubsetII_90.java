@@ -30,7 +30,7 @@ public class SubsetII_90 {
         System.out.println(s.subsetsWithDup(new int[]{2,1,2,3}));
     }
 
-    // O(n*log(n) + n*2^n) - time, O(n^2) - space
+    // O(n*log(n) + n*2^n) - time, O(n) - space (recursion stack + temp array = O(n) + O(n) = O(n))
     public List<List<Integer>> subsetsWithDup3(int[] nums) {
         Set<List<Integer>> result = new HashSet<>();
         Arrays.sort(nums);
@@ -48,7 +48,7 @@ public class SubsetII_90 {
         }
     }
 
-    // O(N*logN + N*2^N) - time, O(2^N) - space (recursion stack + copy array)
+    // O(N*logN + N*2^N) - time, O(N) - space (recursion stack + temp array = O(n) + O(n) = O(n))
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
@@ -58,7 +58,7 @@ public class SubsetII_90 {
         return result;
     }
 
-    // O(2^N*N*logN) - time, O(2^N) - space
+    // O(2^N + N*logN) - time, O(N) - space
     public List<List<Integer>> subsetsWithDup2(int[] nums) {
         Set<List<Integer>> result = new HashSet<>();
         dfs(nums, new ArrayList<>(), result, 0);
@@ -81,6 +81,7 @@ public class SubsetII_90 {
     private void subsetsWithDup(int[] nums, int start, List<Integer> list, List<List<Integer>> result) {
         result.add(new ArrayList<>(list));
         for (int i = start; i < nums.length; i++) {
+            // If the current element is a duplicate, ignore.
             if (i > start && nums[i] == nums[i-1]) {
                 continue;
             }

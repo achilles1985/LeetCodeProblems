@@ -112,7 +112,7 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
         if (root == null) {
             return;
         }
-        map.computeIfAbsent(col, key -> new ArrayList<>()).add(new NodeInfo(col, row, root.val));
+        map.computeIfAbsent(col, key -> new ArrayList<>()).add(new NodeInfo(root.val, col, row));
         populate(root.left, map, col-1, row+1);
         populate(root.right, map, col+1, row+1);
     }

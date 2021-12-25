@@ -49,6 +49,28 @@ public class CombinationSumI_39 {
         return new ArrayList<>(result);
     }
 
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        helper2(candidates, target, new ArrayList(), result, 0);
+
+        return new ArrayList(result);
+    }
+
+    void helper2(int[] nums, int target, List<Integer> temp, List<List<Integer>> result, int start) {
+        if (target == 0) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int i = start; i < nums.length; i++) {
+            if (target - nums[i] < 0) {
+                continue;
+            }
+            temp.add(nums[i]);
+            helper2(nums, target - nums[i], temp, result, i);
+            temp.remove(temp.size()-1);
+        }
+    }
+
     private void dfs(int[] nums, int sum, int target, List<Integer> list,  List<List<Integer>>  result, int start) {
         if (sum == target) {
             //Collections.sort(list); // if all the numbers are unique, there will be no duplicate tuples (like, 2,2,3; 3,2,2, etc.)
@@ -70,7 +92,7 @@ public class CombinationSumI_39 {
 
 
     // Incorrect since int i = 0 and we start from the beginning of the array instead of from the current index
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum3(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return Collections.emptyList();
         }

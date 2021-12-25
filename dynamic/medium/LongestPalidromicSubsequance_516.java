@@ -21,9 +21,7 @@ import java.util.Map;
  One possible longest palindromic subsequence is "bb".
  */
 /*
-    Questions:
-    should it be contiguous?
-
+    1. Should it be contiguous?
      Manacher's Algorithm runs in O(n) time
  */
 public class LongestPalidromicSubsequance_516 {

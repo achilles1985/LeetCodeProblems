@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**M
+/**M [marked]
  * Implement pow(x, n), which calculates x raised to the power n (i.e. xn).
  *
  * Example 1:

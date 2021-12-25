@@ -1,6 +1,7 @@
 package dynamic.medium;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**M
  * You are given n pairs of numbers. In every pair, the first number is always smaller than the second number.
@@ -32,15 +33,29 @@ public class MaximumLengthOfPairChain_646 {
         return helper(pairs, Integer.MIN_VALUE, 0);
     }
 
-    // O(n^2) - time, O(n) - space
+    // O(n*log(n)) - time, O(1) - space
     public int findLongestChain(int[][] pairs) {
+        Arrays.sort(pairs, Comparator.comparing(pair -> pair[1]));
+        int result = 0;
+        int anchor = Integer.MIN_VALUE;
+        for (int[] pair: pairs) {
+            if (pair[0] > anchor) {
+                anchor = pair[1];
+                result++;
+            }
+        }
+        return result;
+    }
+
+    // O(n^2) - time, O(n) - space
+    public int findLongestChainDP(int[][] pairs) {
         if (pairs == null) {
             return 0;
         }
         if (pairs.length < 2) {
             return pairs.length;
         }
-        Arrays.sort(pairs, (p1,p2)->p1[0]-p2[0]);
+        Arrays.sort(pairs, Comparator.comparingInt(p -> p[0]));
         int[] dp = new int[pairs.length];
         Arrays.fill(dp, 1);
         int max = 1;

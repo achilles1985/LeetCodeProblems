@@ -2,6 +2,8 @@ package stack;
 
 // https://leetcode.com/problems/trapping-rain-water/
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /** H
@@ -47,6 +49,27 @@ public class TrappingRainWater_42 {
         return ans;
     }
 
+    // Based on stack
+    // O(n) - time, O(n) - space
+    public int trap2(int[] height) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int ans = 0;
+        for (int i = 0; i < height.length; i++) {
+            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+                int popped = stack.pop();
+                if (stack.isEmpty()) {
+                    break;
+                }
+                int w = i - stack.peek()-1;
+                int h = Math.min(height[i], height[stack.peek()]) - height[popped]; // calculate the area of row between 2 points
+                ans += w*h;
+            }
+            stack.push(i);
+        }
+
+        return ans;
+    }
+
     // Not using stack
     // O(n) - time, O(n) - space
     public int trap(int[] height) {
@@ -68,27 +91,6 @@ public class TrappingRainWater_42 {
         int ans = 0;
         for (int i = 1; i < size-1; i++) {
             ans += (Math.min(maxLeft[i], maxRight[i]) - height[i]);
-        }
-
-        return ans;
-    }
-
-    // Based on stack
-    // O(n) - time, O(n) - space
-    public int trap2(int[] height) {
-        Stack<Integer> stack = new Stack<>();
-        int ans = 0;
-        for (int i = 0; i < height.length; i++) {
-            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
-                int popped = stack.pop();
-                if (stack.isEmpty()) {
-                    break;
-                }
-                int w = i - stack.peek()-1;
-                int h = Math.min(height[i], height[stack.peek()]) - height[popped]; // calculate the area of row between 2 points
-                ans += w*h;
-            }
-            stack.push(i);
         }
 
         return ans;

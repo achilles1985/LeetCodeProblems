@@ -93,7 +93,7 @@ public class GenerateParentheses_22 {
             dfs2(n, open+1, close, temp + "(", result);
         }
         if (close < open) {
-            dfs2(n, open, close-1, temp + ")", result);
+            dfs2(n, open, close+1, temp + ")", result);
         }
     }
 

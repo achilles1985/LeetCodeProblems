@@ -40,6 +40,8 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
 
     public static void main(String[] args) {
         MinimumRemoveToMakeValidParentheses_1249 s = new MinimumRemoveToMakeValidParentheses_1249();
+        System.out.println(s.minRemoveToMakeValid2("a)b(c)d")); // "ab(c)d"
+
         System.out.println(s.minRemoveToMakeValid("lee(t(c)o)de)")); // lee(t(c)o)de
         System.out.println(s.minRemoveToMakeValid("))((")); // ""
 
@@ -102,7 +104,8 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
             if (c == '(') {
                 openSeen++;
                 balance++;
-            } if (c == ')') {
+            }
+            if (c == ')') {
                 if (balance == 0) {
                     continue;
                 }
@@ -128,4 +131,38 @@ public class MinimumRemoveToMakeValidParentheses_1249 {
         return result.toString();
     }
 
+    public String minRemoveToMakeValid2(String s) {
+        // remove all invalid ')'
+        int open = 0, balance = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c  = s.charAt(i);
+            if (c == '(') {
+                open++;
+                balance++;
+            }
+            if (c == ')') {
+                if (balance == 0) {
+                    continue;
+                }
+                balance--;
+            }
+            sb.append(c);
+        }
+
+        // 2. remove right most '('
+        int openToKeep = open - balance;
+        StringBuilder sb2 = new StringBuilder();
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '(') {
+                openToKeep--;
+            }
+            if (sb.charAt(i) == '(' && openToKeep < 0) {
+                continue;
+            }
+            sb2.append(sb.charAt(i));
+        }
+
+        return sb2.toString();
+    }
 }

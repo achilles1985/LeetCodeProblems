@@ -1,6 +1,6 @@
 package random;
 
-/** M
+/** M [marked]
  * Given an array of positive integers w. where w[i] describes the weight of ith index (0-indexed).
  * We need to call the function pickIndex() which randomly returns an integer in the range [0, w.length - 1].
  * pickIndex() should return the integer proportional to its weight in the w array.
@@ -48,9 +48,35 @@ package random;
  *     1 <= w[i] <= 10^5
  *     pickIndex will be called at most 10000 times.
  */
+/*
+    The idea is to find the interval where the random number is placed to
+ */
 public class RandomPickWithWeight_528 {
     private int[] prefixSum;
-    private int total;
+
+    // O(w) - time (once), O(w) - space
+    public RandomPickWithWeight_528(int[] w) {
+        this.prefixSum = new int[w.length];
+        prefixSum[0] = w[0];
+        for (int i = 1; i < w.length; i++) {
+            prefixSum[i] += prefixSum[i-1] + w[i];
+        }
+    }
+
+    // O(log(w)) - time
+    public int pickIndex() {
+        double value = Math.random()*prefixSum[prefixSum.length-1];
+        int left = 0, right = prefixSum.length;
+        while (left < right) {
+            int mid = (left + right)/2;
+            if (value > prefixSum[mid]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return right;
+    }
 
     public static void main(String[] args) {
         RandomPickWithWeight_528 s1 = new RandomPickWithWeight_528(new int[]{1,3});
@@ -65,31 +91,5 @@ public class RandomPickWithWeight_528 {
         System.out.println(s2.pickIndex());
         System.out.println(s2.pickIndex());
         System.out.println(s2.pickIndex());
-    }
-
-    // O(w) - time (once), O(w) - space
-    public RandomPickWithWeight_528(int[] w) {
-        this.prefixSum = new int[w.length];
-
-        for (int i = 0; i < w.length; i++) {
-            total += w[i];
-            prefixSum[i] += total;
-        }
-    }
-
-    // O(log(w)) - time
-    public int pickIndex() {
-        double value = Math.random() * total;
-        int left = 0;
-        int right = prefixSum.length - 1;
-        while (left < right) {
-            int mid = left + (right - left)/2;
-            if (prefixSum[mid] < value) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        return left;
     }
 }

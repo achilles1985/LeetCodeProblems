@@ -35,6 +35,42 @@ public class NumberOfLongestIncreasingSubsequence_673 {
         System.out.println(s.findNumberOfLIS2(new int[]{1,3,5,4,7})); //2
     }
 
+    // O(n^2) - time, O(n) - space
+    public int findNumberOfLIS(int[] nums) {
+        int N = nums.length;
+        if (N <= 1) {
+            return N;
+        }
+        int[] lengths = new int[N]; //lengths[i] = length of longest ending in nums[i]
+        int[] counts = new int[N]; //count[i] = number of longest ending in nums[i]
+        Arrays.fill(counts, 1);
+
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < i; ++j)
+                if (nums[i] > nums[j]) {
+                    if (lengths[j] >= lengths[i]) {
+                        lengths[i] = lengths[j] + 1;
+                        counts[i] = counts[j];
+                    } else if (lengths[j] + 1 == lengths[i]) {
+                        counts[i] += counts[j];
+                    }
+                }
+        }
+
+        int longest = 0;
+        for (int length : lengths) {
+            longest = Math.max(longest, length);
+        }
+        int ans = 0;
+        for (int i = 0; i < N; ++i) {
+            if (lengths[i] == longest) {
+                ans += counts[i];
+            }
+        }
+        return ans;
+    }
+
+
     // incorrect
     public int findNumberOfLIS2(int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -84,40 +120,5 @@ public class NumberOfLongestIncreasingSubsequence_673 {
         cache.put(key, max);
 
         return  max;
-    }
-
-    // O(n^2) - time, O(n) - space
-    public int findNumberOfLIS(int[] nums) {
-        int N = nums.length;
-        if (N <= 1) {
-            return N;
-        }
-        int[] lengths = new int[N]; //lengths[i] = length of longest ending in nums[i]
-        int[] counts = new int[N]; //count[i] = number of longest ending in nums[i]
-        Arrays.fill(counts, 1);
-
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < i; ++j)
-                if (nums[i] > nums[j]) {
-                    if (lengths[j] >= lengths[i]) {
-                        lengths[i] = lengths[j] + 1;
-                        counts[i] = counts[j];
-                    } else if (lengths[j] + 1 == lengths[i]) {
-                        counts[i] += counts[j];
-                    }
-                }
-        }
-
-        int longest = 0;
-        for (int length : lengths) {
-            longest = Math.max(longest, length);
-        }
-        int ans = 0;
-        for (int i = 0; i < N; ++i) {
-            if (lengths[i] == longest) {
-                ans += counts[i];
-            }
-        }
-        return ans;
     }
 }

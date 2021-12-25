@@ -56,10 +56,19 @@ public class WordBreak_139 {
     }
 
     // O(n^n) - time (Consider the worst case where ss = "aaaaaaa" and every prefix of ss is present in the dictionary of words,
-    // then the recursion tree can grow upto n^n,
+    // then the recursion tree can grow upto n^n. Or O(2^n) - at each step we decide, split or not split.
     // O(n^2) - space (recursion tree depth + prefix). T(n) = T(n-1) + T(n-2) + T(n-3) + .... + T(1)
     public boolean wordBreakBF(String s, List<String> wordDict) {
         return wordBreakHelper(s, new HashSet<>(wordDict));
+    }
+
+    // O(set^len*len) - time, O(len^2)
+    public boolean wordBreakBF2(String s, List<String> wordDict) {
+        if (s == null || s.isEmpty()) {
+            return true;
+        }
+
+        return helper2(s, new HashSet<>(wordDict));
     }
 
     // O(n^3) - time (recursion tree can go up to n^2 + s.substring takes O(n)), O(n) - space. T(n) = T(n-1) + n - 2
@@ -83,15 +92,6 @@ public class WordBreak_139 {
             }
         }
         return T[s.length()];
-    }
-
-    // O(set^len*len) - time, O(len^2)
-    public boolean wordBreakBF2(String s, List<String> wordDict) {
-        if (s == null || s.isEmpty()) {
-            return true;
-        }
-
-        return helper2(s, new HashSet<>(wordDict));
     }
 
     private boolean wordBreakHelper(String s, Set<String> wordDict) {

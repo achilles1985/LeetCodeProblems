@@ -43,4 +43,17 @@ public class ValidPalindrome_125 {
         }
         return true;
     }
+
+    public boolean isPalindrome2(String s) {
+        String ss = s.replaceAll("\\W+|_", "").toLowerCase();
+        int left = 0, right = ss.length() - 1;
+        while (left < right) {
+            if (ss.charAt(left) != ss.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
 }

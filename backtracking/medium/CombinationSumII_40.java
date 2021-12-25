@@ -50,7 +50,7 @@ public class CombinationSumII_40 {
         System.out.println(s.combinationSum2_II(new int[] {2,3,5}, 8)); //[[3, 5]]
     }
 
-    // O(nums*nums^target) - time, O(target*nums) - space
+    // O(2^n) - time, O(nums) - space
     // Because of a set, it's not full backtracking, to make if full, go with combinationSum2_II
     public List<List<Integer>> combinationSum2_I(int[] candidates, int target) {
         Set<List<Integer>> result = new HashSet<>();
@@ -75,7 +75,7 @@ public class CombinationSumII_40 {
         }
     }
 
-    // O(nums*nums^target) - time, O(target*nums) - space
+    // O(2^n) - time, O(nums) - space (2^n) - because we do not reuse numbers, at each step we decide include it or not.
     public List<List<Integer>> combinationSum2_II(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0) {
             return Collections.emptyList();

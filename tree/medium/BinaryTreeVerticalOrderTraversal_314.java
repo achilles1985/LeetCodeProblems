@@ -86,9 +86,28 @@ public class BinaryTreeVerticalOrderTraversal_314 {
         root.left.right.left = new TreeNode(5);
         root.left.right.right = new TreeNode(2);
 
-        //System.out.println(s.verticalOrder3(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
+        System.out.println(s.verticalOrderBF(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
         System.out.println(s.verticalOrderDFS(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
         System.out.println(s.verticalOrderBFS(root)); //[[4],[9,5],[3,0,1],[8,2],[7]]
+    }
+
+    //n*log(n) - time
+    public List<List<Integer>> verticalOrderBF(TreeNode root) {
+        Map<Integer, List<NodeInfo>> map = new TreeMap<>();
+        populate(root, map, 0, 0);
+
+        List<List<Integer>> res = new ArrayList<>();
+        for (Integer col: map.keySet()) {
+            map.get(col).sort(Comparator.comparing(NodeInfo::getRow));
+            List<NodeInfo> nodes = map.get(col);
+            List<Integer> temp = new ArrayList<>();
+            for (NodeInfo node: nodes) {
+                temp.add(node.val);
+            }
+            res.add(temp);
+        }
+
+        return res;
     }
 
     // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines), O(n) - space
@@ -197,7 +216,7 @@ public class BinaryTreeVerticalOrderTraversal_314 {
         if (root == null) {
             return;
         }
-        map.computeIfAbsent(col, key -> new ArrayList<>()).add(new NodeInfo(col, row, root.val));
+        map.computeIfAbsent(col, key -> new ArrayList<>()).add(new NodeInfo(root.val, col, row));
         populate(root.left, map, col-1, row+1);
         populate(root.right, map, col+1, row+1);
     }

@@ -21,6 +21,9 @@ import java.util.Map;
  * Output: false
  * Explanation: The array cannot be partitioned into equal sum subsets.
  */
+/*
+ Problem can be devided to subproblems and there are overlapping subproblems, we can use DP.
+ */
 public class PartitionEqualSubsetSum_416 {
 
     public static void main(String[] args) {

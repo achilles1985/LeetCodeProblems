@@ -29,18 +29,17 @@ public class SubsetI_78 {
 
     public static void main(String[] args) {
         SubsetI_78 s = new SubsetI_78();
+        System.out.println(s.subsets(new int[] {1,2,3}));
         System.out.println(s.subsets(new int[] {3,1,5,4}));
-        System.out.println(s.subsets3(new int[] {1,2,3}));
         System.out.println(s.subsets(new int[] {1,2,3,4,5}));
         System.out.println(s.subsets(new int[] {4,4,4,1,4}));
     }
 
     // O(n*2^n) - time (since we either add an item to the set or not),
-    // O(2^n) - space (total number of sets generated, does not include recursion stack)
+    // O(n) - space, recursion stack
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        dfs(nums, 0, list, res);
+        dfs(nums, 0, new ArrayList<>(), res);
 
         return res;
     }

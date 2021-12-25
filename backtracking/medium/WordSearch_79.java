@@ -27,6 +27,7 @@ import java.util.Map;
 public class WordSearch_79 {
 
     public static void main(String[] args) {
+        String[] ss = "/home//more/../jore".split("/");
         WordSearch_79 s = new WordSearch_79();
         System.out.println(s.existsTrie(new char[][] {
                 {'A', 'B', 'C', 'E'},
@@ -78,6 +79,7 @@ public class WordSearch_79 {
         return false;
     }
 
+    // Create Trie from word, loop through matrix and check.
     // O(word+n*m) - time, O(word) - space, where m*n - board size
     public boolean existsTrie(char[][] board, String word) {
         if (word == null || word.isEmpty()) {

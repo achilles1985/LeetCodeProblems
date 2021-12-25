@@ -93,4 +93,20 @@ public class RemoveInvalidParentheses_301 {
         return count == 0;
     }
 
+    private boolean isValid2(String str) {
+        int balance = 0, close = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c == '(') {
+                balance++;
+            } else if (c == ')') {
+                if (balance == 0) {
+                    close++;
+                } else {
+                    balance--;
+                }
+            }
+        }
+        return (balance + close) == 0;
+    }
 }
