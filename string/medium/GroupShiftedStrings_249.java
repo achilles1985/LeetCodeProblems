@@ -25,40 +25,30 @@ public class GroupShiftedStrings_249 {
 
     public static void main(String[] args) {
         GroupShiftedStrings_249 s = new GroupShiftedStrings_249();
-        System.out.println(s.groupStrings(new String[] {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"}));
+        System.out.println(s.groupStrings(new String[] {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z", "al"})); //[["acef"],["a","z"],["al"],["abc","bcd","xyz"],["az","ba"]]
+        System.out.println(s.groupStrings(new String[] {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"})); //[[abc, bcd, xyz], [acef], [az, ba], [a, z]]
     }
 
     // O(n) - time, space
     public List<List<String>> groupStrings(String[] strings) {
-        List<List<String>> result = new ArrayList<>();
         Map<String, List<String>> map = new HashMap<>();
         for (String str : strings) {
             String hash = generateHash(str);
             map.computeIfAbsent(hash, h -> new ArrayList<>()).add(str);
         }
-        for (List<String> lists : map.values()) {
-            result.add(lists);
-        }
 
-        return result;
+        return new ArrayList<>(map.values());
     }
 
     public String generateHash(String word) {
-        if (word.length() == 1) {
-            return "No shift";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < word.length(); i++) { // no more than 26 times if no duplicates in a word
-            char prev = word.charAt(i - 1);
-            char curr = word.charAt(i);
-            int diff = (curr - 'a') - (prev - 'a');
-            if (diff < 0) {
-                diff = diff + 26;
-            }
-            sb.append(diff);
+        char[] chars = word.toCharArray();
+        StringBuilder hashKey = new StringBuilder();
+        for (int i = 1; i < chars.length; i++) {
+            char c = (char) ((chars[i] - chars[i - 1] + 26) % 26 + 'a');
+            hashKey.append(c);
         }
 
-        return sb.toString();
+        return hashKey.toString();
     }
 
 }

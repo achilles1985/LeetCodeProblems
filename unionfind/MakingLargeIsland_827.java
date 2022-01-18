@@ -34,6 +34,12 @@ public class MakingLargeIsland_827 {
     public static void main(String[] args) {
         MakingLargeIsland_827 s = new MakingLargeIsland_827();
         System.out.println(s.largestIsland(new int[][]{
+                {1,0,0,1,1},
+                {1,1,0,1,1},
+                {0,0,0,1,1},
+                {1,1,0,1,1}
+        })); //4
+        System.out.println(s.largestIsland(new int[][]{
                 {1,1},
                 {1,0}
         })); //4
@@ -64,19 +70,19 @@ public class MakingLargeIsland_827 {
 
     // O(rows*cols) - time, O(rows*cols) - space
     public int largestIsland(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
+        int rows = grid.length;
+        int cols = grid[0].length;
         int[] max = new int[1];
-        UnionFind uf = new UnionFind(m * n);
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        UnionFind uf = new UnionFind(rows * cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 if (grid[i][j] == 1) {
                     unionAround(uf, grid, i, j, max);
                 }
             }
         }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 if (grid[i][j] == 0) {
                     int[][] neighbors = new int[][]{
                             { i - 1, j }, { i + 1, j }, { i, j - 1 }, { i, j + 1 }
@@ -86,11 +92,13 @@ public class MakingLargeIsland_827 {
                     for (int[] neighbor : neighbors) {
                         int ni = neighbor[0];
                         int nj = neighbor[1];
-                        if (valid(m, n, ni, nj) && grid[ni][nj] == 1) {
-                            set.add(uf.find(m * ni + nj));
+                        if (valid(rows, cols, ni, nj) && grid[ni][nj] == 1) {
+                            set.add(uf.find(rows * ni + nj));
                         }
                     }
-                    for (int node : set) connect += uf.count[node];
+                    for (int node : set) {
+                        connect += uf.count[node];
+                    }
                     max[0] = Math.max(max[0], connect + 1);
                 }
             }
@@ -99,17 +107,17 @@ public class MakingLargeIsland_827 {
     }
 
     private void unionAround(UnionFind uf, int[][] grid, int i, int j, int[] max) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int[][] neighbors = new int[][]{{ i - 1, j }, { i + 1, j }, { i, j - 1 }, { i, j + 1 }};
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int[][] neighbors = new int[][]{{i,j+1},{i+1,j},{i,j-1},{i+1,j}};
         for (int[] neighbor : neighbors) {
             int ni = neighbor[0];
             int nj = neighbor[1];
-            if (valid(m, n, ni, nj) && grid[ni][nj] == 1) {
-                uf.union(m * i + j, m * ni + nj);
+            if (valid(rows, cols, ni, nj) && grid[ni][nj] == 1) {
+                uf.union(rows * i + j, rows * ni + nj);
             }
         }
-        max[0] = Math.max(max[0], uf.count[uf.find(i * m + j)]);
+        max[0] = Math.max(max[0], uf.count[uf.find(i * rows + j)]);
     }
 
     private boolean valid(int m, int n, int i, int j) {

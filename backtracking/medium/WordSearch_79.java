@@ -27,7 +27,6 @@ import java.util.Map;
 public class WordSearch_79 {
 
     public static void main(String[] args) {
-        String[] ss = "/home//more/../jore".split("/");
         WordSearch_79 s = new WordSearch_79();
         System.out.println(s.existsTrie(new char[][] {
                 {'A', 'B', 'C', 'E'},

@@ -2,7 +2,7 @@ package binarySearch.hard;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** H
+/** H [marked]
  Given an array which consists of non-negative integers and an integer m, you can split the array
  into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
 
@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 /*
     Given searching range and a target value, it is natural to apply Binary Search.
+    Finding lower bound
  */
 public class SplitArrayLargestSum_410 {
 

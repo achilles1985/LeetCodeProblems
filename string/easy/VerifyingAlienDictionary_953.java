@@ -70,6 +70,6 @@ public class VerifyingAlienDictionary_953 {
             i++;
             j++;
         }
-        return i >= w1.length();
+        return i >= w1.length(); // in case apple - app
     }
 }

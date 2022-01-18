@@ -1,3 +1,5 @@
+https://medium.com/swlh/binary-search-find-upper-and-lower-bound-3f07867d81fb
+
 NextClosestTime_681
     The natural way to represent the time is as an integer t (minutes) in the range 0 <= t < 24 * 60.
     Then the hours are t / 60, the minutes are t % 60, and each digit of the hours and minutes can be found by hours / 10, hours % 10 etc.
