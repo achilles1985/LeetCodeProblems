@@ -84,9 +84,7 @@ public class MakingLargeIsland_827 {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (grid[i][j] == 0) {
-                    int[][] neighbors = new int[][]{
-                            { i - 1, j }, { i + 1, j }, { i, j - 1 }, { i, j + 1 }
-                    };
+                    int[][] neighbors = new int[][]{{ i - 1, j }, { i + 1, j }, { i, j - 1 }, { i, j + 1 }};
                     int connect = 0;
                     Set<Integer> set = new HashSet<>();
                     for (int[] neighbor : neighbors) {
@@ -103,6 +101,7 @@ public class MakingLargeIsland_827 {
                 }
             }
         }
+
         return max[0];
     }
 

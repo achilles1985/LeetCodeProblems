@@ -72,6 +72,19 @@ public class MaximumLengthOfRepeatedSubarray_718 {
         return left - 1;
     }
 
+    public int findLength2(int[] nums1, int[] nums2) {
+        int left = 0, right = Math.min(nums1.length, nums2.length) + 1;
+        while (left < right) {
+            int mid = left + (right-left+1)/2;
+            if (!search(nums1, nums2, mid)) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        return left;
+    }
+
     // O((A+B)*log(min(A,B))), O(A) - space for set of hashes
     public int findLengthRK(int[] A, int[] B) {
         int left = 0, right = Math.min(A.length, B.length) + 1;

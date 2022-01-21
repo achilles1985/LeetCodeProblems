@@ -53,10 +53,10 @@ public class AlienDictionary_269 {
 
     // O(c) - time, O(1) - space, where c - total number of chars in the word list
     public String alienOrder(String[] words) {
-        Map<Character, List<Character>> map = new HashMap<>();
+        Map<Character, List<Character>> graph = new HashMap<>();
         for (String word: words) {
             for (int i = 0; i < word.length(); i++) {
-                map.put(word.charAt(i), new ArrayList<>());
+                graph.put(word.charAt(i), new ArrayList<>());
             }
         }
         for (int k = 1; k < words.length; k++) {
@@ -68,14 +68,14 @@ public class AlienDictionary_269 {
             int i = 0, j = 0;
             while (i < prev.length() && j < curr.length()) {
                 if (prev.charAt(i) != curr.charAt(j)) {
-                    map.get(prev.charAt(i)).add(curr.charAt(j));
+                    graph.get(prev.charAt(i)).add(curr.charAt(j));
                     break;
                 }
                 i++; j++;
             }
         }
 
-        return topologicSort(map);
+        return topologicSort(graph);
     }
 
     private String topologicSort(Map<Character, List<Character>> graph) {

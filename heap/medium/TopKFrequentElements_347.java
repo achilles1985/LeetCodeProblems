@@ -24,9 +24,9 @@ public class TopKFrequentElements_347 {
     public static void main(String[] args) {
         TopKFrequentElements_347 s = new TopKFrequentElements_347();
 
-        System.out.println(s.topKFrequent4(new int[] {5,3,1,1,1,3,73,1}, 2)); // [1,3]
-        System.out.println(s.topKFrequent(new int[]{4,1,-1,2,-1,2,3}, 2));
         System.out.println(s.topKFrequent(new int[] {1,1,1,2,2,2,3,3,3,4,4,5,5,6,7}, 4)); // [1,2,3,4,5]
+        System.out.println(s.topKFrequent(new int[] {5,3,1,1,1,3,73,1}, 2)); // [1,3]
+        System.out.println(s.topKFrequent(new int[]{4,1,-1,2,-1,2,3}, 2));
         System.out.println(s.topKFrequent(new int[] {1}, 1)); // [1]
 
         System.out.println(s.topKFrequent2(new int[] {1,1,1,2,2,3}, 2)); // [1,2]

@@ -17,6 +17,12 @@ import utils.TreeNode;
  * 2     3         <---
  *  \     \
  *   5     4       <---
+ *
+ *      1            <---
+ *    /   \
+ *   2     3         <---
+ *  /
+ * 4                 <---
  */
 public class BinaryTreeRightSideView_199 {
 
@@ -28,12 +34,23 @@ public class BinaryTreeRightSideView_199 {
         root.left.right = new TreeNode(5);
         root.right.right = new TreeNode(4);
 
-        System.out.println(s.rightSideView(root)); //[1,3,4]
+        System.out.println(s.rightSideViewBFS(root)); //[1,3,4]
+    }
+
+    // O(n) - time, O(h) - space
+    public List<Integer> rightSideViewDFS(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        helper(root, res, 0);
+
+        return res;
     }
 
     // O(n) - time, O(D) - space, D - diameter of the tree, D=N/2 for complete binary tree
     // The idea is to take the last element on each level
-    public List<Integer> rightSideView(TreeNode root) {
+    public List<Integer> rightSideViewBFS(TreeNode root) {
         if (root == null) {
             return Collections.emptyList();
         }
@@ -55,5 +72,17 @@ public class BinaryTreeRightSideView_199 {
         }
 
         return res;
+    }
+
+    private void helper(TreeNode root, List<Integer> list, int level) {
+        if (level == list.size()) {
+            list.add(root.val);
+        }
+        if (root.right != null) {
+            helper(root.right, list, level+1);
+        }
+        if (root.left != null) {
+            helper(root.left, list, level+1);
+        }
     }
 }

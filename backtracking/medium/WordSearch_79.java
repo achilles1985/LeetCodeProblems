@@ -11,7 +11,7 @@ import java.util.Map;
  Example:
  board =
  [
- ['A','B','C','E'],
+ ['A','B','C','E'],kl
  ['S','F','C','S'],
  ['A','D','E','E']
  ]

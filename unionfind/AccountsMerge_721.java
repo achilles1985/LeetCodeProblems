@@ -48,7 +48,7 @@ public class AccountsMerge_721 {
         // 'johnsmith@mail.com'],  ["John", "johnnybravo@mail.com"], ["Mary", "mary@mail.com"]]
     }
 
-    // O(accounts*emails + Sum(emails*log(emails))) - time, O(accounts*emails) - space
+    // O(n*m*log(n*m)) - time, O(n*m)- space, n - number of accounts, m - number of emails
     public List<List<String>> accountsMerge2(List<List<String>> accounts) {
         if (accounts == null || accounts.isEmpty()) {
             return Collections.emptyList();
@@ -82,6 +82,43 @@ public class AccountsMerge_721 {
         return result;
     }
 
+    // O(n*m*log(n*m)) - time, O(n*m)- space, n - number of accounts, m - number of emails
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        if (accounts == null || accounts.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Map<String, Integer> emailToId = new HashMap<>();
+        Map<String, String> emailToName = new HashMap<>();
+        int count = 0;
+        DisjointSet ds = new DisjointSet();
+        for (List<String> account: accounts) {
+            String name = account.get(0);
+            String parentEmail = account.get(1);
+            for (int j = 1; j < account.size(); j++) {
+                String email = account.get(j);
+                if (!emailToId.containsKey(email)) {
+                    emailToId.put(email, count++);
+                }
+                emailToName.put(email, name);
+                ds.union(emailToId.get(parentEmail), emailToId.get(email));
+            }
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        Map<Integer, List<String>> idToEmails = new HashMap<>();
+        for (String email: emailToId.keySet()) {
+            int id = ds.find(emailToId.get(email));
+            idToEmails.computeIfAbsent(id, k -> new ArrayList<>()).add(email); // group emails by id, like dfs in graph
+        }
+        for (Map.Entry<Integer, List<String>> entry: idToEmails.entrySet()) {
+            Collections.sort(entry.getValue());
+            entry.getValue().add(0, emailToName.get(entry.getValue().get(0))); // get name
+            result.add(entry.getValue()); // add emails
+        }
+
+        return result;
+    }
+
     private void dfs(String node, List<String> list, Set<String> seen, Map<String, ArrayList<String>> graph) {
         if (seen.contains(node)) {
             return;
@@ -91,42 +128,6 @@ public class AccountsMerge_721 {
         for (String child: graph.getOrDefault(node, new ArrayList<>())) {
             dfs(child, list, seen, graph);
         }
-    }
-
-    // O(n*m) - time, n - number of accounts, m - number of emails
-    public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        if (accounts == null || accounts.isEmpty()) {
-            return Collections.emptyList();
-        }
-        Map<String, Integer> emailToId = new HashMap<>();
-        Map<String, String> emailToName = new HashMap<>();
-        int count = 0;
-        DisjointSet ds = new DisjointSet();
-        for (int i = 0; i < accounts.size(); i++) {
-            String name = accounts.get(i).get(0);
-            for (int j = 1; j < accounts.get(i).size(); j++) {
-                String email = accounts.get(i).get(j);
-                if (!emailToId.containsKey(email)) {
-                    emailToId.put(email, count++);
-                }
-                emailToName.put(email, name);
-                ds.union(emailToId.get(accounts.get(i).get(1)), emailToId.get(email));
-            }
-        }
-
-        List<List<String>> result = new ArrayList<>();
-        Map<Integer, List<String>> idToEmails = new HashMap<>();
-        for (String email: emailToId.keySet()) {
-            int id = ds.find(emailToId.get(email));
-            idToEmails.computeIfAbsent(id, k -> idToEmails.getOrDefault(k, new ArrayList<>())).add(email);
-        }
-        for (Map.Entry<Integer, List<String>> entry: idToEmails.entrySet()) {
-            Collections.sort(entry.getValue());
-            entry.getValue().add(0, emailToName.get(entry.getValue().get(0))); // get name
-            result.add(entry.getValue()); // add emails
-        }
-
-        return result;
     }
 
     private static final class DisjointSet {
@@ -140,14 +141,14 @@ public class AccountsMerge_721 {
             }
         }
 
-        int find(int x) {
+        int find(int x) { // O(1)
             if (parent[x] != x) {
                 parent[x] = find(parent[x]);
             }
             return parent[x];
         }
 
-        void union(int x, int y) {
+        void union(int x, int y) { // O(1) if union-by-rank
             int p1 = find(x);
             int p2 = find(y);
             parent[p2] = p1;

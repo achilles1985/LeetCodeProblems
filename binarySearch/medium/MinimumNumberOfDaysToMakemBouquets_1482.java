@@ -64,7 +64,7 @@ public class MinimumNumberOfDaysToMakemBouquets_1482 {
             }
         }
 
-        return left;
+        return right;
     }
 
     private boolean isPossible(int days, int[] bloomDays, int m, int k) {

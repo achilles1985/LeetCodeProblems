@@ -48,9 +48,23 @@ public class FindPeakElement_162 {
         return nums.length - 1;
     }
 
-    // 1,2,3; 3,2,1; 1,2,4,3,2 - if n[m] < n[m+1], it means the peak is definitly to the right, otherwise n[m] might be the peak.
+    // 1,2,3; 3,2,1; 1,2,4,3,2 - if n[m] < n[m+1], it means the peak is definitely to the right, otherwise n[m] might be the peak.
     // O(log(n)) - time, O(1) - space
     public int findPeakElement(int[] nums) {
+        int left = 0, right = nums.length-1;
+        while (left < right) {
+            int mid = (left + right)/2;
+            if (nums[mid] < nums[mid+1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return right;
+    }
+
+    // O(log(n)) - time, O(1) - space
+    public int findPeakElement2(int[] nums) {
         int left = 0;
         int right = nums.length-1;
         while (left < right) {
@@ -65,19 +79,4 @@ public class FindPeakElement_162 {
         return left;
     }
 
-    // O(log(n)) - time, O(1) - space
-    public int findPeakElement2(int[] nums) {
-        int left = 0, right = nums.length - 1;
-        while (left <= right) {
-            int mid = left + (right - left)/2;
-            if (mid - 1 >= 0 && nums[mid-1] > nums[mid]) {
-                right = mid - 1;
-            } else if (mid + 1 <= nums.length - 1 && nums[mid] < nums[mid+1]) {
-                left = mid + 1;
-            } else {
-                return mid;
-            }
-        }
-        return left;
-    }
 }

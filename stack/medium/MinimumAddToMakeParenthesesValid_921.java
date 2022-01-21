@@ -67,7 +67,6 @@ public class MinimumAddToMakeParenthesesValid_921 {
     public int minAddToMakeValid(String S) {
         int open = 0;
         int close = 0;
-
         for (char c : S.toCharArray()) {
             if (c == '(') {
                 open++;

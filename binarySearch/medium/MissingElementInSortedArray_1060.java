@@ -10,6 +10,7 @@ import java.util.Set;
  Input: A = [4,7,9,10], K = 1
  Output: 5
  Explanation:
+
  The first missing number is 5.
 
  Example 2:

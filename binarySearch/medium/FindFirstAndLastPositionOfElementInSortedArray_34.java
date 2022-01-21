@@ -70,6 +70,39 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
 
     // O(log(n)) - time, O(1) - space
     public int[] searchRange(int[] nums, int target) {
+        int[] range = new int[]{-1,-1};
+        int idx = Arrays.binarySearch(nums, target); // make sure target exists
+        if (idx < 0) {
+            return range;
+        }
+        int left = 0;
+        int right = idx;
+        while (left < right) { // if target is not within the range, we can get Lo=0 or Hi=array.length-1
+            int mid = left + (right - left)/2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        range[0] = right;
+        left = idx;
+        right = nums.length-1;
+        while (left < right) {
+            int mid = left + (right - left)/2 + 1; // +1 so that l = mid; doesn't result in an infinite loop when l + 1 == r.
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        range[1] = left;
+
+        return range;
+    }
+
+    // O(log(n)) - time, O(1) - space
+    public int[] searchRange3(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return new int[]{-1,-1};
         }
@@ -142,39 +175,6 @@ public class FindFirstAndLastPositionOfElementInSortedArray_34 {
         if (right >= 0 && nums[right] == target) { // for [2,2,2,2,2], 1 - right can go beyond 0
             range[1] = right;
         }
-
-        return range;
-    }
-
-    // O(log(n)) - time, O(1) - space
-    public int[] searchRange3(int[] nums, int target) {
-        int[] range = new int[]{-1,-1};
-        int idx = Arrays.binarySearch(nums, target);
-        if (idx < 0) {
-            return range;
-        }
-        int left = 0;
-        int right = idx;
-        while (left < right) { // if target is not within the range, we can get Lo=0 or Hi=array.length-1
-            int mid = left + (right - left)/2;
-            if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        range[0] = right;
-        left = idx;
-        right = nums.length-1;
-        while (left < right) {
-            int mid = left + (right - left)/2 + 1; // +1 so that l = mid; doesn't result in an infinite loop when l + 1 == r.
-            if (nums[mid] > target) {
-                right = mid - 1;
-            } else {
-                left = mid;
-            }
-        }
-        range[1] = left;
 
         return range;
     }

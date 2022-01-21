@@ -114,7 +114,7 @@ public class RedundantConnection_684 {
         void union(int x, int y) {
             int p1 = find(x);
             int p2 = find(y);
-            parent[p1] = p2;
+            parent[p2] = p1;
         }
     }
 }

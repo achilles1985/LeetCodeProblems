@@ -92,8 +92,8 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
         Map<Integer, List<NodeInfo>> map = new HashMap<>();
         populate(root, map, 0, 0);
 
-        int min = map.keySet().stream().min(Comparator.naturalOrder()).get();
-        int max = map.keySet().stream().max(Comparator.naturalOrder()).get();
+        int min = Collections.min(map.keySet());
+        int max = Collections.max(map.keySet());
         List<List<Integer>> result = new ArrayList<>();
         for (int i = min; i <= max; i++) {
             List<NodeInfo> list = map.get(i);

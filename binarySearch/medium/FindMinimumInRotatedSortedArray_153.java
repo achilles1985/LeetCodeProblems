@@ -17,6 +17,7 @@ package binarySearch.medium;
  */
 // 0 1 2 3 4 5 6
 // 4,5,6,7,0,1,2
+// One can observe that as soon as curr element > last one, we need to go to the right, otherwise, to the left.
 public class FindMinimumInRotatedSortedArray_153 {
 
     public static void main(String[] args) {

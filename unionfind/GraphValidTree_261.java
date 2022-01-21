@@ -1,6 +1,6 @@
 package unionfind;
 
-/**M
+/**M [marked]
  * Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a
  * function to check whether these edges make up a valid tree.
  *
@@ -67,7 +67,7 @@ public class GraphValidTree_261 {
             return parent[node];
         }
 
-        void union(int n1, int n2) { // O(log(n)) - since not using union-by-ranke
+        void union(int n1, int n2) { // O(log(n)) - since not using union-by-rank, O(1) - with union-by-rank
             int p1 = find(n1);
             int p2 = find(n2);
             parent[p2] = p1;
