@@ -58,13 +58,12 @@ public class RemoveInvalidParentheses_301 {
                     temp.add(curr);
                 }
                 for (int i = 0; i < curr.length(); i++) {
+                    StringBuilder sb = new StringBuilder(curr);
                     char toRemove = curr.charAt(i);
                     if (toRemove != ')' && toRemove !='(') {
                         continue;
                     }
-                    String start = curr.substring(0,i);
-                    String end = curr.substring(i+1);
-                    String newStr = start + end;
+                    String newStr = sb.deleteCharAt(i).toString();
                     if (!visited.contains(newStr)) {
                         queue.add(newStr);
                         visited.add(newStr);

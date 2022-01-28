@@ -21,6 +21,7 @@ import java.util.Map;
  * ["a","z"]
  * ]
  */
+// Group words by hash as diff between chars in a word
 public class GroupShiftedStrings_249 {
 
     public static void main(String[] args) {

@@ -1,8 +1,6 @@
 package slidingWindow.medium;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /** M
@@ -40,24 +38,6 @@ public class NumberOfSubstringsContainingAllThreeCharacters_1358 {
         System.out.println(s.numberOfSubarrays(new int[]{1,1,2,1,1}, 3)); //2
     }
 
-    public int numberOfSubarrays(int[] nums, int k) {
-        int result = 0;
-        for (int s = k; s < nums.length; s++) {
-            for (int i = 0; i < nums.length - k; i++) {
-                int count = 0;
-                for (int j = i; j < i + s; j++) {
-                    if (nums[j]%2 != 0) {
-                        count++;
-                    }
-                }
-                if (count >= k) {
-                    result++;
-                }
-            }
-        }
-        return result;
-    }
-
     // O(n^3) - time, O(1) - space
     public int numberOfSubstringsBF(String s) {
         if (s == null || s.isEmpty()) {
@@ -76,6 +56,24 @@ public class NumberOfSubstringsContainingAllThreeCharacters_1358 {
             }
         }
         return count;
+    }
+
+    public int numberOfSubarrays(int[] nums, int k) {
+        int result = 0;
+        for (int s = k; s < nums.length; s++) {
+            for (int i = 0; i < nums.length - k; i++) {
+                int count = 0;
+                for (int j = i; j < i + s; j++) {
+                    if (nums[j]%2 != 0) {
+                        count++;
+                    }
+                }
+                if (count >= k) {
+                    result++;
+                }
+            }
+        }
+        return result;
     }
 
     // O(n) - time, space

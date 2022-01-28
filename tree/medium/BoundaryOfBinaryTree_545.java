@@ -4,7 +4,7 @@ import utils.TreeNode;
 
 import java.util.*;
 
-/**
+/**M
  *       1
  *    /    \
  *   2      3
@@ -45,58 +45,53 @@ public class BoundaryOfBinaryTree_545 {
 
     // O(n) - time
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
-        ArrayList<Integer> res = new ArrayList<>();
         if (root == null) {
-            return res;
+            return Collections.emptyList();
         }
+        List<Integer> res = new ArrayList<>();
         if (!isLeaf(root)) {
             res.add(root.val);
         }
-        TreeNode t = root.left;
-        while (t != null) { // left boundary
-            if (!isLeaf(t)) {
-                res.add(t.val);
-            }
-            if (t.left != null) {
-                t = t.left;
+        TreeNode curr = root.left; // start left bound from root's left child, not root!
+        while (curr != null && !isLeaf(curr)) { // left bound
+            res.add(curr.val);
+            if (curr.left != null) {
+                curr = curr.left;
             } else {
-                t = t.right;
+                curr = curr.right;
             }
+        }
+        addLeaves(root, res); // leaves
+        Deque<Integer> stack = new ArrayDeque<>();
+        curr = root.right; // start right bound from root's right child, not root!
+        while (curr != null && !isLeaf(curr)) { // right bound (counterclockwise)
+            stack.push(curr.val);
+            if (curr.right != null) {
+                curr = curr.right;
+            } else {
+                curr = curr.left;
+            }
+        }
+        while (!stack.isEmpty()) {
+            res.add(stack.pop());
+        }
 
-        }
-        addLeaves(res, root); // leaves
-        Stack<Integer> s = new Stack<>();
-        t = root.right;
-        while (t != null) { // right boundary
-            if (!isLeaf(t)) {
-                s.push(t.val);
-            }
-            if (t.right != null) {
-                t = t.right;
-            } else {
-                t = t.left;
-            }
-        }
-        while (!s.empty()) {
-            res.add(s.pop());
-        }
         return res;
     }
 
-    private boolean isLeaf(TreeNode t) {
-        return t.left == null && t.right == null;
+    private boolean isLeaf(TreeNode node) {
+        return node != null && node.left == null && node.right == null;
     }
 
-    private void addLeaves(List<Integer> res, TreeNode root) {
-        if (isLeaf(root)) {
-            res.add(root.val);
-        } else {
-            if (root.left != null) {
-                addLeaves(res, root.left);
-            }
-            if (root.right != null) {
-                addLeaves(res, root.right);
-            }
+    private void addLeaves(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
         }
+        if (isLeaf(root)) {
+            list.add(root.val);
+            return;
+        }
+        addLeaves(root.left, list);
+        addLeaves(root.right, list);
     }
 }

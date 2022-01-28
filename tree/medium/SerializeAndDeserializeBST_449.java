@@ -76,6 +76,7 @@ public class SerializeAndDeserializeBST_449 {
         String[] arr = data.split(",");
         return toTree(arr, 0, arr.length-1);
     }
+
     private TreeNode toTree(String[] data, int left, int right) {
         if (left > right) {
             return null;
@@ -92,6 +93,7 @@ public class SerializeAndDeserializeBST_449 {
 
         return node;
     }
+
     private void inorder(TreeNode root, StringBuilder sb) {
         if (root == null) {
             return;

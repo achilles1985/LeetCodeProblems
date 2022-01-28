@@ -47,6 +47,36 @@ public class MinimumSizeSubarraySum_209 {
         return min == nums.length+1 ? 0 : min;
     }
 
+    // O(n*log(n)) - time, O(n) - space
+    public int minSubArrayLenBinary(int s, int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int[] sum = new int[nums.length];
+        sum[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            sum[i] = sum[i-1] + nums[i];
+        }
+        if (sum[sum.length - 1] < s) {
+            return 0;
+        }
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) { //n
+            int left = i, right = nums.length - 1;
+            while (left < right) { //log(n)
+                int mid = left + (right - left)/2;
+                if (sum[mid] - sum[i] + nums[i] < s) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+            min = Math.min(min, left - i + 1);
+        }
+
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }
+
     // O(n^2) - time, O(1) - space
     public int minSubArrayLen1(int s, int[] nums) {
         int min = nums.length+1;
@@ -113,34 +143,5 @@ public class MinimumSizeSubarraySum_209 {
         }
 
         return min == nums.length+1 ? 0 : min;
-    }
-
-    public int minSubArrayLenBinary(int s, int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        int[] sum = new int[nums.length];
-        sum[0] = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            sum[i] = sum[i-1] + nums[i];
-        }
-        if (sum[sum.length - 1] < s) {
-            return 0;
-        }
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            int left = i, right = nums.length - 1;
-            while (left < right) {
-                int mid = left + (right - left)/2;
-                if (sum[mid] - sum[i] + nums[i] < s) {
-                    left = mid + 1;
-                } else {
-                    right = mid;
-                }
-            }
-            min = Math.min(min, left - i + 1);
-        }
-
-        return min == Integer.MAX_VALUE ? 0 : min;
     }
 }
