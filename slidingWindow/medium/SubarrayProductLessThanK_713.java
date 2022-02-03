@@ -29,8 +29,7 @@ public class SubarrayProductLessThanK_713 {
         }
         int result = 0;
         int prod = 1;
-        int left = 0;
-        for (int right = 0; right < nums.length; right++) {
+        for (int left = 0, right = 0; right < nums.length; right++) {
             prod *= nums[right];
             while (prod >= k) {
                 prod /= nums[left++];
@@ -39,4 +38,5 @@ public class SubarrayProductLessThanK_713 {
         }
         return result;
     }
+
 }

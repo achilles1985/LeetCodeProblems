@@ -1,11 +1,9 @@
 package slidingWindow.medium;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-/** M
+/** M [marked]
  Given a string, find the length of the longest substring without repeating characters.
 
  Example 1:
@@ -33,10 +31,10 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
     public static void main(String[] args) {
         LongestSubstringWithoutRepeatingCharacters_3 s = new LongestSubstringWithoutRepeatingCharacters_3();
 
-        System.out.println(s.lengthOfLongestSubstring4("abba")); //2
-        System.out.println(s.lengthOfLongestSubstring4("abcabcbb")); //3
-
         System.out.println(s.lengthOfLongestSubstring("pwwkeww")); //3
+        System.out.println(s.lengthOfLongestSubstring("abba")); //2
+        System.out.println(s.lengthOfLongestSubstring("abcabcbb")); //3
+
         System.out.println(s.lengthOfLongestSubstring("dvdf")); //3
         System.out.println(s.lengthOfLongestSubstring("au")); //2
         System.out.println(s.lengthOfLongestSubstring("abcabcbb")); //3
@@ -44,36 +42,20 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
         System.out.println(s.lengthOfLongestSubstringBF("pwwkew")); //3
     }
 
-    // O(n) - time, O(unique chars) - space
-    public int lengthOfLongestSubstring4(String s) {
-        Map<Character, Integer> map = new HashMap<>();
-        int max = 0;
-        for (int i = 0, j = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (map.containsKey(c)) {
-                j = Math.max(map.get(c) + 1, j);
-            }
-            max = Math.max(max, i - j + 1);
-            map.put(c, i);
+    // O(n^3) - time, O(min(n,m)) - space
+    public int lengthOfLongestSubstringBF(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
         }
-        return max;
-    }
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i+1; j <= s.length(); j++) {
+                if (allUnique(i, j, s)) {
+                    ans = Math.max(ans, j-i);
+                }
+            }
+        }
 
-    // O(2n) - time, O(unique chars) - space
-    public int lengthOfLongestSubstring(String s) {
-        int n = s.length();
-        Set<Character> set = new HashSet<>();
-        int ans = 0, i = 0, j = 0;
-        while (i < n && j < n) {
-            // try to extend the range [i, j]
-            if (!set.contains(s.charAt(j))){
-                set.add(s.charAt(j++));
-                ans = Math.max(ans, j - i);
-            }
-            else {
-                set.remove(s.charAt(i++));
-            }
-        }
         return ans;
     }
 
@@ -96,21 +78,20 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
         return max;
     }
 
-    // O(n^3) - time, O(min(n,m)) - space
-    public int lengthOfLongestSubstringBF(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        int ans = 0;
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i+1; j <= s.length(); j++) {
-                if (allUnique(i, j, s)) {
-                    ans = Math.max(ans, j-i);
-                }
+    // O(n) - time, O(1) - space, if only English lowercase
+    public int lengthOfLongestSubstring(String s) {
+        Set<Character> set = new HashSet<>();
+        int max = 0;
+        for (int left = 0, right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            while (set.contains(c)) {
+                set.remove(s.charAt(left++));
             }
+            set.add(c);
+            max = Math.max(max, right - left + 1);
         }
 
-        return ans;
+        return max;
     }
 
     private boolean allUnique(int start, int end, String s) {
@@ -123,5 +104,4 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
         }
         return true;
     }
-
 }

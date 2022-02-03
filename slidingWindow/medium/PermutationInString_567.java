@@ -56,18 +56,6 @@ public class PermutationInString_567 {
         return false;
     }
 
-    private String hash(String str) {
-        int[] frequency = new int[26];
-        for (int i = 0; i < str.length(); i++) {
-            frequency[str.charAt(i) - 'a']++;
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 26; i++) {
-            sb.append(frequency[i]).append("#");
-        }
-        return sb.toString();
-    }
-
     // O(n + m) - time, O(1) - space (sliding window with rehashing)
     public boolean checkInclusion(String s1, String s2) {
         if (s1 == null || s1.isEmpty() || s2 == null || s2.isEmpty()) {
@@ -89,5 +77,17 @@ public class PermutationInString_567 {
             }
         }
         return false;
+    }
+
+    private String hash(String str) {
+        int[] frequency = new int[26];
+        for (int i = 0; i < str.length(); i++) {
+            frequency[str.charAt(i) - 'a']++;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            sb.append(frequency[i]).append("#");
+        }
+        return sb.toString();
     }
 }

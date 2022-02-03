@@ -46,6 +46,7 @@ public class LongestSubstringWithAtMostKDistinctCharacters_340 {
             max = Math.max(max, right - left + 1);
             right++;
         }
+
         return max;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * M
+ * M [marked]
  * Given a string S, return the number of substrings of length K with no repeated characters.
  * <p>
  * Example 1:
@@ -53,13 +53,12 @@ public class FindKLengthSubstringsWithNoRepeatedCharacters_1100 {
     public int numKLenSubstrNoRepeats2(String S, int K) {
         Set<Character> set = new HashSet<>();
         int count = 0;
-        int left = 0;
-        for (int right = 0; right < S.length(); right++) {
+        for (int left = 0, right = 0; right < S.length(); right++) {
             while (set.contains(S.charAt(right)) || set.size() > K) {
                 set.remove(S.charAt(left++));
             }
             set.add(S.charAt(right));
-            if (right - left + 1 == K) {
+            if (set.size() == K) {
                 count++;
                 set.remove(S.charAt(left++));
             }

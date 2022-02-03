@@ -39,6 +39,27 @@ public class MinimumWindowSubsequence_727 {
         //System.out.println(s.minWindowBF("bstl", "l")); //l
     }
 
+    // O(n^3) - time, O(1) - space
+    public String minWindowBF(String S, String T) {
+        if (S == null || S.length() == 0 || T == null || T.length() == 0) {
+            return "";
+        }
+        int min = Integer.MAX_VALUE;
+        String result = "";
+        for (int i = 0; i < S.length(); i++) {
+            for (int j = i; j <= S.length(); j++) {
+                String substr = S.substring(i, j);
+                if (match(substr, T)) {
+                    if (substr.length() < min) {
+                        min = substr.length();
+                        result = substr;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     // O(s^2) - time, O(1) - space
     public String minWindow(String S, String T) {
         if (S.length() == 0 || T.length() == 0) {
@@ -83,27 +104,6 @@ public class MinimumWindowSubsequence_727 {
             // WARNING: we have to move right pointer to the next position of left pointer, NOT the next position
             // of right pointer
             right = left + 1;
-        }
-        return result;
-    }
-
-    // O(n^3) - time, O(1) - space
-    public String minWindowBF(String S, String T) {
-        if (S == null || S.length() == 0 || T == null || T.length() == 0) {
-            return "";
-        }
-        int min = Integer.MAX_VALUE;
-        String result = "";
-        for (int i = 0; i < S.length(); i++) {
-            for (int j = i; j <= S.length(); j++) {
-                String substr = S.substring(i, j);
-                if (match(substr, T)) {
-                    if (substr.length() < min) {
-                        min = substr.length();
-                        result = substr;
-                    }
-                }
-            }
         }
         return result;
     }

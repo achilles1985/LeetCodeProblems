@@ -33,9 +33,6 @@ public class NumberOfSubstringsContainingAllThreeCharacters_1358 {
         System.out.println(s.numberOfSubstrings("abcabc")); //10
         System.out.println(s.numberOfSubstrings("aaacb")); //3
         System.out.println(s.numberOfSubstrings("abc")); //1
-
-        System.out.println(s.numberOfSubarrays(new int[]{2,2,2,1,2,2,1,2,2,2}, 2)); //16
-        System.out.println(s.numberOfSubarrays(new int[]{1,1,2,1,1}, 3)); //2
     }
 
     // O(n^3) - time, O(1) - space
@@ -58,7 +55,8 @@ public class NumberOfSubstringsContainingAllThreeCharacters_1358 {
         return count;
     }
 
-    public int numberOfSubarrays(int[] nums, int k) {
+    // O(n^3) - time, O(1) - space
+    public int numberOfSubstringsBF2(int[] nums, int k) {
         int result = 0;
         for (int s = k; s < nums.length; s++) {
             for (int i = 0; i < nums.length - k; i++) {
@@ -80,8 +78,7 @@ public class NumberOfSubstringsContainingAllThreeCharacters_1358 {
     public int numberOfSubstrings(String s) {
         int[] freq = {0,0,0};
         int count = 0;
-        int left = 0;
-        for (int right = 0; right < s.length(); right++) {
+        for (int left = 0, right = 0; right < s.length(); right++) {
             freq[s.charAt(right) - 'a']++;
             while (freq[0] > 0 && freq[1] > 0 && freq[2] > 0) {
                 freq[s.charAt(left++) - 'a']--;

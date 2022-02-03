@@ -1,10 +1,9 @@
 package slidingWindow.medium;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**M
+/**M [marked]
  * Given a string s, find the length of the longest substring t that contains at most 2 distinct characters.
  *
  * Example 1:
@@ -49,47 +48,22 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters_159 {
 
     // O(n) - time, O(1) - space (since map has map size of 3)
     public int lengthOfLongestSubstringTwoDistinct(String s) {
-        if (s == null || s.isEmpty()) {
-            return 0;
-        }
         Map<Character, Integer> map = new HashMap<>();
         int max = 0;
-        int left = 0, right = 0;
-        while (right < s.length()) {
-            char rightChar = s.charAt(right);
-            map.put(rightChar, map.getOrDefault(rightChar, 0) + 1);
+        for (int left = 0, right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            map.put(c, map.getOrDefault(c, 0) + 1);
             while (map.size() > 2) {
-                char leftChar = s.charAt(left);
-                map.put(leftChar, map.get(leftChar) - 1);
-                if (map.get(leftChar) == 0) {
-                    map.remove(leftChar);
+                char cc = s.charAt(left);
+                map.put(cc, map.get(cc) - 1);
+                if (map.get(cc) == 0) {
+                    map.remove(cc);
                 }
                 left++;
             }
             max = Math.max(max, right - left + 1);
-            right++;
         }
+
         return max;
     }
-
-    // O(n) - time, O(1) - space since map has map size of 3.
-    public int lengthOfLongestSubstringTwoDistinct2(String s) {
-        Map<Character, Integer> charToLastIndex = new HashMap<>();
-        int left = 0;
-        int right = 0;
-        int max = 0;
-        while (right < s.length()) {
-            if (charToLastIndex.size() <= 2) {
-                charToLastIndex.put(s.charAt(right), right++);
-            }
-            if (charToLastIndex.size() == 3) {
-                int idxToRemove = Collections.min(charToLastIndex.values());
-                charToLastIndex.remove(s.charAt(idxToRemove));
-                left = idxToRemove + 1;
-            }
-            max = Math.max(max, right - left);
-        }
-        return max;
-    }
-
 }

@@ -19,14 +19,17 @@ public class MinimumWindowSubstring_76 {
 
     public static void main(String[] args) {
         MinimumWindowSubstring_76 s = new MinimumWindowSubstring_76();
+        System.out.println(s.minWindow3("aa", "aa")); //aa
+        System.out.println(s.minWindow3("a", "a")); //a
+        System.out.println(s.minWindow3("bba", "ab")); //ba
+        System.out.println(s.minWindow3("abaacbab", "abc")); //acb
+        System.out.println(s.minWindow3("ADOBECODEBANC", "ABC")); //BANC
+
         System.out.println(s.minWindow2("aa", "aa")); //aa
         System.out.println(s.minWindow2("a", "a")); //a
-        System.out.println(s.minWindow2("abaacbab", "abc")); //acb
-        System.out.println(s.minWindow2("ADOBECODEBANC", "ABC")); //BANC
 
         System.out.println(s.minWindow("abaacbab", "abc")); //acb
         System.out.println(s.minWindow("ADOBECODEBANC", "ABC")); //BANC
-        System.out.println(s.minWindow("bba", "ab")); //ba
 
         System.out.println(s.minWindowBF2("ADOBECODEBANC", "ABC")); //BANC
         System.out.println(s.minWindowBF2("abaacbab", "abc")); //acb
@@ -94,6 +97,44 @@ public class MinimumWindowSubstring_76 {
 
     // O(t + s) - time, O(t + s) - space, s - since we create result each time when encounter currLength < min
     public String minWindow(String s, String t) {
+        Map<Character, Integer> tMap = new HashMap<>();
+        for (char c: t.toCharArray()) {
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+        int tCount = tMap.size(); // number of unique chars in t
+
+        int min = Integer.MAX_VALUE;
+        String ans = "";
+        int sCount = 0;
+        Map<Character, Integer> sMap = new HashMap<>();
+        for (int left = 0, right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            if (tMap.containsKey(c)) {
+                sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+                if (tMap.containsKey(c) && sMap.get(c).intValue() == tMap.get(c).intValue()) {
+                    sCount++;
+                }
+            }
+            while (left <= right && tCount == sCount) {
+                if (right - left + 1 < min) {
+                    min = right - left + 1;
+                    ans = s.substring(left, right+1);
+                }
+                char cc = s.charAt(left);
+                if (tMap.containsKey(cc)) {
+                    sMap.put(cc, sMap.getOrDefault(cc, 0) - 1);
+                    if (sMap.get(cc) < tMap.get(cc)) {
+                        sCount--;
+                    }
+                }
+                left++;
+            }
+        }
+
+        return ans;
+    }
+
+    public String minWindow2(String s, String t) {
         if (s == null || s.length() == 0 || t == null || t.length() == 0) {
             return "";
         }
@@ -130,10 +171,11 @@ public class MinimumWindowSubstring_76 {
             }
             right++;
         }
+
         return result;
     }
 
-    public String minWindow2(String s, String t) {
+    public String minWindow3(String s, String t) {
         if (s == null || s.isEmpty() || t == null || t.isEmpty()) {
             return "";
         }

@@ -39,6 +39,9 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
         System.out.println(s.shortestSubarray(new int[] {1}, 1)); //1
         System.out.println(s.shortestSubarray(new int[] {1, 2}, 4)); //-1
         System.out.println(s.shortestSubarray(new int[] {2, -1, 2}, 3)); //3
+
+        System.out.println(s.sumZero(5));
+        System.out.println(s.sumZero(4));
     }
 
     // O(n^2) - time, O(1) - space
@@ -80,6 +83,28 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
         }
 
         return answer == n + 1 ? -1 : answer;
+    }
+
+    public int[] sumZero(int n) {
+        int d = n/2;
+        boolean even = true;
+        if (n%2 != 0) {
+            even = false;
+        }
+        int k = 0;
+        int[] ans = new int[n];
+        d = -1*d;
+        ans[k++] = d;
+        int size = even ? n + 1 : n;
+        while (--size > 0) {
+            d++;
+            if (d == 0 && even) {
+                continue;
+            }
+            ans[k++] = d;
+        }
+
+        return ans;
     }
 
     // Incorrect
