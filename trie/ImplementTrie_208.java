@@ -47,10 +47,11 @@ public class ImplementTrie_208 {
     public boolean search(String word) {
         TrieNode current = root;
         for (int i = 0; i < word.length(); i++) {
-            if (!current.children.containsKey(word.charAt(i))) {
+            char c = word.charAt(i);
+            if (!current.children.containsKey(c)) {
                 return false;
             }
-            current = current.children.get(word.charAt(i));
+            current = current.children.get(c);
         }
         return current.isComplete;
     }
@@ -60,10 +61,11 @@ public class ImplementTrie_208 {
     public boolean startsWith(String prefix) {
         TrieNode current = root;
         for (int i = 0; i < prefix.length(); i++) {
-            if (!current.children.containsKey(prefix.charAt(i))) {
+            char c = prefix.charAt(i);
+            if (!current.children.containsKey(c)) {
                 return false;
             }
-            current = current.children.get(prefix.charAt(i));
+            current = current.children.get(c);
         }
         return true;
     }

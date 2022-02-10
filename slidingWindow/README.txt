@@ -1,0 +1,1 @@
+We can use sliding window if the array contains only positives or negative also but in that case an array must be sorted.

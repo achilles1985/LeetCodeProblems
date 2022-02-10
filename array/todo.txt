@@ -6,3 +6,6 @@ MaxContiguousSubarray/Sequence(128/53),
 FindDuplicate,
 FindAllNotInArray,
 LargestNumber(179),ShuffleArray,PlusOne(66)
+
+Solving-kth-kind-of-problems
+https://leetcode.com/discuss/study-guide/1529866/solving-kth-kind-of-problems

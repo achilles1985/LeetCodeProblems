@@ -31,10 +31,11 @@ public class PrefixTrie {
     public void insert(String word) {
         PrefixTrieNode current = root;
         for (int i = 0; i < word.length(); i++) {
-            if (!current.children.containsKey(word.charAt(i))) {
-                current.children.put(word.charAt(i), new PrefixTrieNode(word.substring(0, i+1)));
+            char c = word.charAt(i);
+            if (!current.children.containsKey(c)) {
+                current.children.put(c, new PrefixTrieNode(word.substring(0, i+1)));
             }
-            current = current.children.get(word.charAt(i));
+            current = current.children.get(c);
         }
         current.isCompleteWord = true;
     }

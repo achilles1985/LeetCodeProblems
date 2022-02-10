@@ -5,16 +5,16 @@ package multithreading;
 
  class FooBar {
  public void foo() {
- for (int i = 0; i < n; i++) {
- print("foo");
- }
+    for (int i = 0; i < n; i++) {
+        print("foo");
+    }
  }
 
  public void bar() {
- for (int i = 0; i < n; i++) {
- print("bar");
- }
- }
+        for (int i = 0; i < n; i++) {
+            print("bar");
+        }
+    }
  }
 
  The same instance of FooBar will be passed to two different threads. Thread A will call foo() while thread B will call bar().

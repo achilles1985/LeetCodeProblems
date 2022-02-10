@@ -40,8 +40,8 @@ package design;
  *     At most 3000 calls will be made to enQueue, deQueue, Front, Rear, isEmpty, and isFull.
  */
 public class DesignCircularQueue_622 {
-    private Item head;
-    private Item tail;
+    private final Item head;
+    private final Item tail;
 
     private int maxSize;
     private int size;

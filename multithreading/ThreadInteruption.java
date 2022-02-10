@@ -1,7 +1,5 @@
 package multithreading;
 
-import java.util.Collections;
-
 public class ThreadInteruption {
 
     public static void main(String[] args) {

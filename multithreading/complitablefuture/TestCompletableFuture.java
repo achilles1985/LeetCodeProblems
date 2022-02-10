@@ -16,15 +16,19 @@ public class TestCompletableFuture {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(String.format("Number of cores=%s. Thread=%s", Runtime.getRuntime().availableProcessors(), Thread.currentThread().getName()));
-        for (Integer id : Arrays.asList(1, 2, 3, 4, 5,6,7,8,9,10)) {
-            System.out.println("Started processing id=" + id);
-            CompletableFuture.supplyAsync(() -> firstOperation(id))
+        List<CompletableFuture<?>> promises = new ArrayList<>();
+        for (Integer id : employees.keySet()) {
+            //System.out.println("Started processing id=" + id);
+            CompletableFuture<Void> promise = CompletableFuture.supplyAsync(() -> firstOperation(id))
                     .thenApply((employee) -> secondOperation(employee))
                     .thenApply((employee) -> thirdOperation(employee))
                     .thenAccept((employee) -> fourthOperation(employee));
-            System.out.println("Finished processing id=" + id);
+            promises.add(promise);
+            //System.out.println("Finished processing id=" + id);
         }
-        Thread.sleep(5000);
+        promises.forEach(CompletableFuture::join);
+        //CompletableFuture.allOf(promises.toArray(new CompletableFuture[]{})).join();
+        //Thread.sleep(20000);
 
         System.out.println("Finished program");
     }
@@ -32,7 +36,7 @@ public class TestCompletableFuture {
     private static void fourthOperation(Employee employee) {
         System.out.println(String.format("Finished processing employee with id=%s. Thread=%s", employee.id, Thread.currentThread().getName()));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
         }
     }
@@ -58,7 +62,7 @@ public class TestCompletableFuture {
     private static Employee firstOperation(Integer id) {
         System.out.println(String.format("Started processing employee with id=%s. Thread=%s", id, Thread.currentThread().getName()));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

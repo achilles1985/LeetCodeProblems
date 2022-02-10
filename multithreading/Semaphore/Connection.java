@@ -6,7 +6,7 @@ public enum Connection {
     INSTANCE;
 
     private int connections;
-    private Semaphore semaphore = new Semaphore(10);
+    private Semaphore semaphore = new Semaphore(10); // limits number of threads working with the resource simultaniously
 
     public void connect() {
         try {
