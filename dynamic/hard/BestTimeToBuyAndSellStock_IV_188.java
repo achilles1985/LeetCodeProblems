@@ -1,4 +1,4 @@
-package dynamic;
+package dynamic.hard;
 
 /**H
  * Say you have an array for which the i-th element is the price of a given stock on day i.
@@ -23,9 +23,9 @@ public class BestTimeToBuyAndSellStock_IV_188 {
 
     public static void main(String[] args) {
         BestTimeToBuyAndSellStock_IV_188 s = new BestTimeToBuyAndSellStock_IV_188();
-        System.out.println(s.maxProfit2(2, new int[]{5,11,3,50,60,90})); //93
-        System.out.println(s.maxProfit2(2, new int[]{2,4,1})); //2
-        System.out.println(s.maxProfit2(3, new int[]{3,2,6,5,0,3})); //7
+        System.out.println(s.maxProfit3(2, new int[]{5,11,3,50,60,90})); //93
+        System.out.println(s.maxProfit3(2, new int[]{2,4,1})); //2
+        System.out.println(s.maxProfit3(3, new int[]{3,2,6,5,0,3})); //7
     }
 
     // O(n*k) - time, space
@@ -68,5 +68,37 @@ public class BestTimeToBuyAndSellStock_IV_188 {
             }
         }
         return k%2 == 0 ? evenProfile[prices.length-1] : oddProfile[prices.length-1];
+    }
+
+    /*
+       Reccurance relation:
+       State: dp(i, k, h), i - day, k - transactions left, h - buy or sell
+       At each step we have 2 choices: do nothing or buy/sell. For buy we can buy that day or do nothing, for sell is the same.
+       Buy: dp(i,k,0)=dp(i+1,k,0) - price[i] or dp(i+1,k,0) in case do nothing
+       Sell: dp(i,k,1)=dp(i+1,k-1,1) + price[i] or dp(i+1,k,1) in case do nothing
+       dp(i,k,h)=max(doNothing, doSomething)
+     */
+    // O(n*k) - time, space
+    public int maxProfit3(int k, int[] prices) {
+        return helper(k, prices, new int[prices.length][k+1][2], 0, 0);
+    }
+
+    private int helper(int k, int[] prices, int[][][] dp, int i, int type) {
+        if (k == 0 || i == prices.length) {
+            return 0;
+        }
+        if (dp[i][k][type] != 0) {
+            return dp[i][k][type];
+        }
+        int doNothing = helper(k, prices, dp, i+1, type);
+        int doSomething;
+        if (type == 0) { //buy
+            doSomething = helper(k, prices, dp, i+1, 1) - prices[i];
+        } else { //sell
+            doSomething = helper(k-1, prices, dp, i+1, 0) + prices[i];
+        }
+        dp[i][k][type] = Math.max(doNothing, doSomething);
+
+        return dp[i][k][type];
     }
 }

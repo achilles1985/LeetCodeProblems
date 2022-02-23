@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toSet;
+
 /**
  * M
  * In a country popular for train travel, you have planned some train travelling one year in advance.
@@ -50,6 +52,8 @@ import java.util.Set;
 For non-travel days, the cost stays the same as for the previous day.
 For travel days, it's a minimum of yesterday's cost plus single-day ticket, or cost for 8 days ago plus 7-day pass,
 or cost 31 days ago plus 30-day pass (similar to classic coin-change problem).
+
+Recursion relation: dp(i) = min(dp(i+1) + costs[0], dp(i+7) + costs[1], dp(i+30) + costs[2])
  */
 public class MinimumCostForTickets_983 {
 
@@ -57,8 +61,16 @@ public class MinimumCostForTickets_983 {
     // 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
     public static void main(String[] args) {
         MinimumCostForTickets_983 s = new MinimumCostForTickets_983();
-        System.out.println(s.mincostTickets2(new int[]{1, 4, 6, 7, 8, 20}, new int[]{7, 2, 15})); //6
-        System.out.println(s.mincostTickets2(new int[]{1, 4, 6, 7, 8, 20}, new int[]{2, 7, 15})); //11
+        System.out.println(s.mincostTicketsMemoization(new int[]{1, 4, 6, 7, 8, 20}, new int[]{7, 2, 15})); //6
+        System.out.println(s.mincostTicketsMemoization(new int[]{1, 4, 6, 7, 8, 20}, new int[]{2, 7, 15})); //11
+    }
+
+    //O(1) - time
+    public int mincostTicketsMemoization(int[] days, int[] costs) {
+        Set<Integer> daySet = Arrays.stream(days).boxed().collect(toSet());
+        int[] dp = new int[367];
+
+        return helper(dp, costs, 1, daySet);
     }
 
     // O(1) - time, space
@@ -104,5 +116,24 @@ public class MinimumCostForTickets_983 {
             }
         }
         return dp[365];
+    }
+
+    private int helper(int[] dp, int[] costs, int i, Set<Integer> daySet) {
+        if (i > 366) {
+            return 0;
+        }
+        if (dp[i] != 0) {
+            return dp[i];
+        }
+        int min = Integer.MAX_VALUE;
+        if (daySet.contains(i)) {
+            min = Math.min(Math.min(min, helper(dp, costs, i+1, daySet) + costs[0]),
+                    Math.min(helper(dp, costs, i+7, daySet) + costs[1], helper(dp, costs, i+30, daySet) + costs[2]));
+        } else {
+            min = helper(dp, costs, i+1, daySet);
+        }
+        dp[i] = min;
+
+        return dp[i];
     }
 }

@@ -65,7 +65,7 @@ public class LongestCommonSubsequence_1143 {
 
     // O(n*m) - time and space, n,m - length of strings
     public int lcsDynamicTomDown(String s1, String s2) {
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>(); //or dp[][] = new int[s1.length()][s2.length()];
         return lcsDynamicTomDownUtils(s1, s2, 0, 0, map);
     }
 
@@ -103,7 +103,6 @@ public class LongestCommonSubsequence_1143 {
         return map.get(key);
     }
 
-
     // Incorrect
     public int longestCommonSubsequence(String text1, String text2) {
         if (text1 == null || text2 == null) {
@@ -124,5 +123,4 @@ public class LongestCommonSubsequence_1143 {
         }
         return iMin;
     }
-
 }

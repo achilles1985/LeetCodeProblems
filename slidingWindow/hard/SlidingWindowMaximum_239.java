@@ -31,7 +31,7 @@ public class SlidingWindowMaximum_239 {
 
     public static void main(String[] args) {
         SlidingWindowMaximum_239 s = new SlidingWindowMaximum_239();
-        SolutionUtils.print(s.maxSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
+        SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
 
         SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,-1,-3,5,3,6,7}, 3)); //[3,3,5,5,6,7]
         SolutionUtils.print(s.maxSlidingWindow2(new int[]{1,3,1,2,0,5}, 3)); //[3,3,2,5]
@@ -84,7 +84,8 @@ public class SlidingWindowMaximum_239 {
     }
 
     // O(n) - time, O(n) - space
-    // Solution based on dequeue. Keep max element at queue head, if it's index is out of windows, remove. If tail elements < nums[current] remove them.
+    // Solution based on dequeue. Keep max element at queue head, if it's index is out of windows, remove.
+    // If tail elements < nums[current] remove them.
     public int[] maxSlidingWindow2(int[] nums, int k) {
         if (nums == null || k <= 0) {
             return new int[0];

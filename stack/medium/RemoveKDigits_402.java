@@ -43,15 +43,15 @@ public class RemoveKDigits_402 {
         stack.push(2);
         stack.push(3);
 
-        System.out.println(s.removeKdigitsBF("1432219", 3)); // 1219
-        System.out.println(s.removeKdigitsBF("1111111", 3)); // 1111
-        System.out.println(s.removeKdigitsBF("100", 1)); // 0
-        System.out.println(s.removeKdigitsBF("10200", 1)); // 200
-        System.out.println(s.removeKdigitsBF("15428901574", 3)); // 12801574
-        System.out.println(s.removeKdigitsBF("112", 1)); // 11
-        System.out.println(s.removeKdigitsBF("10200", 1)); // 200
-        System.out.println(s.removeKdigitsBF("1107", 1)); //107
-        System.out.println(s.removeKdigitsBF("10", 2)); //0
+        System.out.println(s.removeKdigits("1432219", 3)); // 1219
+        System.out.println(s.removeKdigits("1111111", 3)); // 1111
+        System.out.println(s.removeKdigits("100", 1)); // 0
+        System.out.println(s.removeKdigits("10200", 1)); // 200
+        System.out.println(s.removeKdigits("15428901574", 3)); // 12801574
+        System.out.println(s.removeKdigits("112", 1)); // 11
+        System.out.println(s.removeKdigits("10200", 1)); // 200
+        System.out.println(s.removeKdigits("1107", 1)); //107
+        System.out.println(s.removeKdigits("10", 2)); //0
     }
 
     // O(n^n) - time, O(n) - space
@@ -87,9 +87,11 @@ public class RemoveKDigits_402 {
             stack.push(number);
         }
         StringBuilder sb = new StringBuilder();
+        // remove the remaining digits from the tail
         while (k-- > 0 && !stack.isEmpty()) {
             stack.pop();
         }
+        // remove leading zeros
         while (!stack.isEmpty() && stack.peekLast() == 0) {
             stack.removeLast();
         }

@@ -23,10 +23,15 @@ public class HouseRobber_198 {
 
     public static void main(String[] args) {
         HouseRobber_198 s = new HouseRobber_198();
-        System.out.println(s.rob2(new int[] {2,1,1,2})); // 4
-        System.out.println(s.rob(new int[] {1,2,3,1,2,5})); // 9
-        System.out.println(s.rob(new int[] {1,2,3,1})); // 4
-        System.out.println(s.rob(new int[] {2,7,9,3,1})); // 12
+        System.out.println(s.robMemoization(new int[] {2,1,1,2})); // 4
+        System.out.println(s.robMemoization(new int[] {1,2,3,1,2,5})); // 9
+        System.out.println(s.robMemoization(new int[] {1,2,3,1})); // 4
+        System.out.println(s.robMemoization(new int[] {2,7,9,3,1})); // 12
+    }
+
+    // O(n) - time, space
+    public int robMemoization(int[] nums) {
+        return helper(nums, nums.length-1,new int[nums.length]);
     }
 
     // O(n) - time, space
@@ -52,14 +57,37 @@ public class HouseRobber_198 {
     }
 
     // O(n) - time, O(1) - space
-    public int rob2(int[] num) {
-        int prevMax = 0;
-        int currMax = 0;
-        for (int x : num) {
-            int temp = currMax;
-            currMax = Math.max(prevMax + x, currMax);
-            prevMax = temp;
+    public int rob2(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
         }
-        return currMax;
+
+        int first = nums[0];
+        int second = Math.max(nums[0], nums[1]);
+        int third = second;
+        for (int i = 2; i < nums.length; i++) {
+            third = Math.max(nums[i] + first, second);
+            first = second;
+            second = third;
+        }
+        return third;
+    }
+
+    private int helper(int[] nums, int i, int[] dp) {
+        if (i < 0) {
+            return 0;
+        }
+        if (i == 0) {
+            return nums[i];
+        }
+        if (i == 1) {
+            return Math.max(nums[0], nums[1]);
+        }
+        int rob = nums[i] + helper(nums, i-2, dp);
+        int notRob = helper(nums, i-1, dp);
+
+        dp[i] = Math.max(rob, notRob);
+
+        return dp[i];
     }
 }
