@@ -85,7 +85,8 @@ public class SumOfSubarrayMinimums_907 {
         return sum;
     }
 
-    // Find number of subarrays where A[i] is the smallest element and multiple that number to A[i]. https://leetcode.com/problems/sum-of-subarray-minimums/discuss/170750/JavaC%2B%2BPython-Stack-Solution
+    // Find number of subarrays where A[i] is the smallest element and multiple that number to A[i].
+    // https://leetcode.com/problems/sum-of-subarray-minimums/discuss/170750/JavaC%2B%2BPython-Stack-Solution
     // O(n) - time, space
     public int sumSubarrayMins(int[] A) {
         long res = 0;

@@ -83,7 +83,7 @@ public class VerticalOrderTraversalOfBinaryTree_987 {
 
     // BF approach is to create and collect all tuples(col,row,val) and sort that list by (col,row) and form the res, O(n*log(n))
 
-    // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines),  O(n) - space
+    // O(k*n/k*log(n/k)) -> O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines),  O(n) - space
     // In case the tree is a linked list - O(n) - time, subgroups = N, each subgroup consists of only one value
     public List<List<Integer>> verticalTraversalDFS(TreeNode root) {
         if (root == null) {

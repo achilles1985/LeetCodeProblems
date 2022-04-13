@@ -2,10 +2,9 @@ package stack.medium;
 
 import utils.SolutionUtils;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
-/**
+/** M
  * There are n buildings in a line. You are given an integer array heights of size n that represents the heights of the buildings in the line.
  * The ocean is to the right of the buildings. A building has an ocean view if the building can see the ocean without obstructions.
  * Formally, a building has an ocean view if all the buildings to its right have a smaller height.
@@ -42,6 +41,36 @@ public class BuildingsWithOceanView_1762 {
         BuildingsWithOceanView_1762 s = new BuildingsWithOceanView_1762();
         SolutionUtils.print(s.findBuildings2(new int[]{4,2,3,1})); //[0,2,3]
         SolutionUtils.print(s.findBuildings2(new int[]{2,2,2})); //[2]
+
+        System.out.println(s.subdomainVisits(new String[]{"900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"}));
+    }
+
+    // a.b.c.d
+    public List<String> subdomainVisits(String[] cpdomains) {
+        Map<String, Integer> map = new HashMap<>();
+        for (String s: cpdomains) {
+            String[] sub1 = s.split(" ");
+            Integer num = Integer.parseInt(sub1[0]);
+            String domain = sub1[1];
+            String[] domains = domain.split("\\.");
+            Stack<String> stack = new Stack<>();
+            for (String sub: domains) {
+                stack.push(sub);
+            }
+            while (!stack.isEmpty()) {
+                String sub = stack.pop();
+                map.put(sub, map.getOrDefault(sub,0)+num);
+                if (!stack.isEmpty()) {
+                    stack.push(stack.pop() + "." + sub);
+                }
+            }
+        }
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry: map.entrySet()) {
+            res.add(entry.getValue() + " " + entry.getKey());
+        }
+
+        return res;
     }
 
     // O(n^2) - time, O(n) - space

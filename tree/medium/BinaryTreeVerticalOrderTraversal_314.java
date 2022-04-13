@@ -110,7 +110,7 @@ public class BinaryTreeVerticalOrderTraversal_314 {
         return res;
     }
 
-    // O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines), O(n) - space
+    // O(k*n/k*log(n/k)) -> O(n*log(n/k)) - k - number of subgroups we divide out nodes to (number of subgroups = vertical lines),  O(n) - space
     // In case the tree is a linked list - O(n) - time, subgroups = N, each subgroup consists of only one value
     public List<List<Integer>> verticalOrderDFS(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();

@@ -111,6 +111,7 @@ public class RedundantConnection_684 {
             return parent[x];
         }
 
+        // O(a(E)) - Inverse-Ackermann function which boils down to O(1)
         void union(int x, int y) {
             int p1 = find(x);
             int p2 = find(y);

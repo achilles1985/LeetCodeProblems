@@ -58,24 +58,6 @@ public class PathSum_112 {
         return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 
-    // O(n) - time, O(n) - space (tree is completely unbalanced); O(log(n)) - tree is balanced
-    public boolean hasPathSum2(TreeNode root, int targetSum) {
-        return helper(root, 0, targetSum);
-    }
-
-    private boolean helper(TreeNode root, int sum, int targetSum) {
-        if (root == null) {
-            return false;
-        }
-        if (root.left == null && root.right == null) {
-            if (root.val + sum == targetSum) {
-                return true;
-            }
-        }
-        return helper(root.left, sum+root.val, targetSum)
-                || helper(root.right, sum+root.val, targetSum);
-    }
-
     // O(n) - time, space
     public boolean hasPathSumIterative(TreeNode root, int sum) {
         if (root == null) {

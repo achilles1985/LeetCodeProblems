@@ -78,6 +78,7 @@ public class CourseScheduleI_207 {
         return graph;
     }
 
+    // '-1' - visiting, '1' - visited
     private boolean hasCycle(Map<Integer, List<Integer>> graph, int node, Map<Integer, Integer> visited) {
         if (visited.containsKey(node) && visited.get(node) == -1) {
             return true;

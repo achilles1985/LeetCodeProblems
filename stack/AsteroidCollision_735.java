@@ -1,5 +1,7 @@
 package stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -66,32 +68,26 @@ public class AsteroidCollision_735 {
 
     // O(n) - time, O(n) - space
     public int[] asteroidCollision(int[] asteroids) {
-        Stack<Integer> stack = new Stack<>();
-        for (int num: asteroids) {
-            boolean fullDistroy = false;
-            if (!stack.isEmpty() && stack.peek() > 0 && num < 0 && stack.peek() == Math.abs(num)) {
-                stack.pop();
-                continue;
-            }
-            while (!stack.isEmpty() && stack.peek() > 0 && num < 0 && Math.abs(num) >= stack.peek()) {
-                if (Math.abs(num) == Math.abs(stack.peek())) {
-                    stack.pop();
-                    fullDistroy = true;
-                    break;
-                }
-                stack.pop();
-            }
-            if (fullDistroy) {
-                continue;
-            }
-            if (stack.isEmpty() || stack.peek() < 0 && num < 0 || stack.peek() > 0 && num > 0 || stack.peek() < 0 && num > 0) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        for(int num : asteroids) {
+            if(num > 0) {
                 stack.push(num);
+            } else {
+                while(!stack.isEmpty() && stack.peek() > 0 && stack.peek() < Math.abs(num)) {
+                    stack.pop();
+                }
+                if(stack.isEmpty() || stack.peek() < 0)  {
+                    stack.push(num);
+                }
+                if(stack.peek() == Math.abs(num)) {
+                    stack.pop();
+                }
             }
         }
-        int size = stack.size();
-        int[] res = new int[size];
-        while (!stack.isEmpty()) {
-            res[--size] = stack.pop();
+        int[] res = new int[stack.size()];
+        int j=0;
+        while(!stack.isEmpty()) {
+            res[j++] = stack.pollLast();
         }
 
         return res;

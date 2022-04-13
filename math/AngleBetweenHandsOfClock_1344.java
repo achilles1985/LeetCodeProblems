@@ -31,21 +31,6 @@ public class AngleBetweenHandsOfClock_1344 {
         System.out.println(s.angleClock(3,15)); //7.5
         System.out.println(s.angleClock(1,57)); //76.5
         System.out.println(s.angleClock(1,30)); //135.0
-
-        s.addDigits(38);
-    }
-
-    public int addDigits(int num) {
-        int sum = num;
-        while (sum/10 > 0) {
-            num = sum;
-            sum = 0;
-            while(num > 0) {
-                sum += num%10;
-                num = num/10;
-            }
-        }
-        return sum;
     }
 
     public double angleClock(int hour, int minutes) {

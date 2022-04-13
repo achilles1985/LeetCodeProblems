@@ -42,6 +42,7 @@ public class LargestRectangleInHistogram_84 {
         return maxArea;
     }
 
+    // O(n) - time, space
     public int largestRectangleArea(int[] heights) {
         Stack<Integer> stack = new Stack<>();
         stack.push(-1); // to avoid NPE

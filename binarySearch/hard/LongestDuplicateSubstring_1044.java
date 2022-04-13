@@ -24,10 +24,10 @@ public class LongestDuplicateSubstring_1044 {
 
     public static void main(String[] args) {
         LongestDuplicateSubstring_1044 s = new LongestDuplicateSubstring_1044();
-        System.out.println(s.longestDupSubstringRK("moplvidmaagmsiyyrkchbyhivlqwqsjcgtumqscmxrxrvwsnjjvygrelcbjgbpounhuyealllginkitfaiviraqcycjmskrozcdqylbuejrgfnquercvghppljmojfvylcxakyjxnampmakyjbqgwbyokaybcuklkaqzawageypfqhhasetugatdaxpvtevrigynxbqodiyioapgxqkndujeranxgebnpgsukybyowbxhgpkwjfdywfkpufcxzzqiuglkakibbkobonunnzwbjktykebfcbobxdflnyzngheatpcvnhdwkkhnlwnjdnrmjaevqopvinnzgacjkbhvsdsvuuwwhwesgtdzuctshytyfugdqswvxisyxcxoihfgzxnidnfadphwumtgdfmhjkaryjxvfquucltmuoosamjwqqzeleaiplwcbbxjxxvgsnonoivbnmiwbnijkzgoenohqncjqnckxbhpvreasdyvffrolobxzrmrbvwkpdbfvbwwyibydhndmpvqyfmqjwosclwxhgxmwjiksjvsnwupraojuatksjfqkvvfroqxsraskbdbgtppjrnzpfzabmcczlwynwomebvrihxugvjmtrkzdwuafozjcfqacenabmmxzcueyqwvbtslhjeiopgbrbvfbnpmvlnyexopoahgmwplwxnxqzhucdieyvbgtkfmdeocamzenecqlbhqmdfrvpsqyxvkkyfrbyolzvcpcbkdprttijkzcrgciidavsmrczbollxbkytqjwbiupvsorvkorfriajdtsowenhpmdtvamkoqacwwlkqfdzorjtepwlemunyrghwlvjgaxbzawmikfhtaniwviqiaeinbsqidetfsdbgsydkxgwoqyztaqmyeefaihmgrbxzyheoegawthcsyyrpyvnhysynoaikwtvmwathsomddhltxpeuxettpbeftmmyrqclnzwljlpxazrzzdosemwmthcvgwtxtinffopqxbufjwsvhqamxpydcnpekqhsovvqugqhbgweaiheeicmkdtxltkalexbeftuxvwnxmqqjeyourvbdfikqnzdipmmmiltjapovlhkpunxljeutwhenrxyfeufmzipqvergdkwptkilwzdxlydxbjoxjzxwcfmznfqgoaemrrxuwpfkftwejubxkgjlizljoynvidqwxnvhngqakmmehtvykbjwrrrjvwnrteeoxmtygiiygynedvfzwkvmffghuduspyyrnftyvsvjstfohwwyxhmlfmwguxxzgwdzwlnnltpjvnzswhmbzgdwzhvbgkiddhirgljbflgvyksxgnsvztcywpvutqryzdeerlildbzmtsgnebvsjetdnfgikrbsktbrdamfccvcptfaaklmcaqmglneebpdxkvcwwpndrjqnpqgbgihsfeotgggkdbvcdwfjanvafvxsvvhzyncwlmqqsmledzfnxxfyvcmhtjreykqlrfiqlsqzraqgtmocijejneeezqxbtomkwugapwesrinfiaxwxradnuvbyssqkznwwpsbgatlsxfhpcidfgzrc")); // "akyj"
-        System.out.println(s.longestDupSubstringRK("banana")); // "ana"
-        System.out.println(s.longestDupSubstringRK("abcd")); // ""
-        System.out.println(s.longestDupSubstringRK("abcbd")); // ""
+        System.out.println(s.longestDupSubstring("moplvidmaagmsiyyrkchbyhivlqwqsjcgtumqscmxrxrvwsnjjvygrelcbjgbpounhuyealllginkitfaiviraqcycjmskrozcdqylbuejrgfnquercvghppljmojfvylcxakyjxnampmakyjbqgwbyokaybcuklkaqzawageypfqhhasetugatdaxpvtevrigynxbqodiyioapgxqkndujeranxgebnpgsukybyowbxhgpkwjfdywfkpufcxzzqiuglkakibbkobonunnzwbjktykebfcbobxdflnyzngheatpcvnhdwkkhnlwnjdnrmjaevqopvinnzgacjkbhvsdsvuuwwhwesgtdzuctshytyfugdqswvxisyxcxoihfgzxnidnfadphwumtgdfmhjkaryjxvfquucltmuoosamjwqqzeleaiplwcbbxjxxvgsnonoivbnmiwbnijkzgoenohqncjqnckxbhpvreasdyvffrolobxzrmrbvwkpdbfvbwwyibydhndmpvqyfmqjwosclwxhgxmwjiksjvsnwupraojuatksjfqkvvfroqxsraskbdbgtppjrnzpfzabmcczlwynwomebvrihxugvjmtrkzdwuafozjcfqacenabmmxzcueyqwvbtslhjeiopgbrbvfbnpmvlnyexopoahgmwplwxnxqzhucdieyvbgtkfmdeocamzenecqlbhqmdfrvpsqyxvkkyfrbyolzvcpcbkdprttijkzcrgciidavsmrczbollxbkytqjwbiupvsorvkorfriajdtsowenhpmdtvamkoqacwwlkqfdzorjtepwlemunyrghwlvjgaxbzawmikfhtaniwviqiaeinbsqidetfsdbgsydkxgwoqyztaqmyeefaihmgrbxzyheoegawthcsyyrpyvnhysynoaikwtvmwathsomddhltxpeuxettpbeftmmyrqclnzwljlpxazrzzdosemwmthcvgwtxtinffopqxbufjwsvhqamxpydcnpekqhsovvqugqhbgweaiheeicmkdtxltkalexbeftuxvwnxmqqjeyourvbdfikqnzdipmmmiltjapovlhkpunxljeutwhenrxyfeufmzipqvergdkwptkilwzdxlydxbjoxjzxwcfmznfqgoaemrrxuwpfkftwejubxkgjlizljoynvidqwxnvhngqakmmehtvykbjwrrrjvwnrteeoxmtygiiygynedvfzwkvmffghuduspyyrnftyvsvjstfohwwyxhmlfmwguxxzgwdzwlnnltpjvnzswhmbzgdwzhvbgkiddhirgljbflgvyksxgnsvztcywpvutqryzdeerlildbzmtsgnebvsjetdnfgikrbsktbrdamfccvcptfaaklmcaqmglneebpdxkvcwwpndrjqnpqgbgihsfeotgggkdbvcdwfjanvafvxsvvhzyncwlmqqsmledzfnxxfyvcmhtjreykqlrfiqlsqzraqgtmocijejneeezqxbtomkwugapwesrinfiaxwxradnuvbyssqkznwwpsbgatlsxfhpcidfgzrc")); // "akyj"
+        System.out.println(s.longestDupSubstring("banana")); // "ana"
+        System.out.println(s.longestDupSubstring("abcd")); // ""
+        System.out.println(s.longestDupSubstring("abcbd")); // "b"
 
     }
 
@@ -49,40 +49,36 @@ public class LongestDuplicateSubstring_1044 {
         return result;
     }
 
-    // O(log(n)*n) - time, O(n) - space
-    public String longestDupSubstring(String S) {
-        int left = 0, right = S.length() - 1;
-        String result = "";
+    // O(log(n)*n) - time, O(n) - space, to keep hashes
+    public String longestDupSubstring(String s) {
+        int left = 0, right = s.length();
+        String res = "";
         while (left < right) {
-            int mid = left + (right - left) / 2;
-            Wrapper pair = exists(S, mid);
-            if (pair.exist) {
-                left = mid + 1;
-                result = pair.substring;
+            int mid = left + (right-left+1)/2;
+            Wrapper checkResult = isPossible(mid,s);
+            if (checkResult.exist) {
+                left = mid;
+                if (checkResult.substring.length() > res.length()) {
+                    res = checkResult.substring;
+                }
             } else {
-                right = mid;
+                right = mid - 1;
             }
         }
-
-        return result.length() < 2 ? "" : result;
+        return res;
     }
 
-    // O(log(n)*n) - time, O(n) - space, to keep hashes
-    public String longestDupSubstringRK(String S) {
-        int left = 0, right = S.length() - 1;
-        String result = "";
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            Wrapper pair = existsRK(S, mid);
-            if (pair.exist) {
-                left = mid + 1;
-                result = pair.substring;
-            } else {
-                right = mid;
+    private Wrapper isPossible(int length, String str) {
+        Set<String> unique = new HashSet<>();
+        for (int i = 0; i <= str.length() - length; i++) {
+            String sub = str.substring(i, i + length);
+            if (unique.contains(sub)) {
+                return new Wrapper(true, sub);
             }
+            unique.add(sub);
         }
 
-        return result.length() < 2 ? "" : result;
+        return new Wrapper(false, "");
     }
 
     // TODO: Implement it correctly
@@ -111,19 +107,6 @@ public class LongestDuplicateSubstring_1044 {
         return new Wrapper(false, "");
     }
 
-    private Wrapper exists(String str, int length) {
-        Set<String> unique = new HashSet<>();
-        for (int i = 0; i <= str.length() - length; i++) {
-            String sub = str.substring(i, i + length);
-            if (unique.contains(sub)) {
-                return new Wrapper(true, sub);
-            }
-            unique.add(sub);
-        }
-
-        return new Wrapper(false, "");
-    }
-
     private static class Wrapper {
         boolean exist;
         String substring;
@@ -135,7 +118,7 @@ public class LongestDuplicateSubstring_1044 {
     }
 
     ////
-    public String longestDupSubstring2(String S) {
+    public String longestDupSubstring3(String S) {
         int n = S.length();
         // convert string to array of integers
         // to implement constant time slice

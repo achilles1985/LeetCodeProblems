@@ -30,6 +30,8 @@ import utils.TreeNode;
 /*
     if root > root.left && root < root.right is not enough to tell the tree is valid.
     root must be < all nodes of the left subtree and > of all nodes on the right subtree.
+
+    2,2,2 - is not a valid BST
  */
 public class ValidateBinarySearchTree_98 {
 

@@ -3,7 +3,7 @@ package slidingWindow.hard;
 import java.util.HashMap;
 import java.util.Map;
 
-/**H [marked]
+/**M [marked]
  * Given a string, find the length of the longest substring T that contains at most k distinct characters.
  *
  * Example 1:
@@ -29,22 +29,19 @@ public class LongestSubstringWithAtMostKDistinctCharacters_340 {
         if (s == null || s.isEmpty() || k <= 0) {
             return 0;
         }
-        int left = 0, right = 0;
-        Map<Character, Integer> map = new HashMap<>();
         int max = 0;
-        while (right < s.length()) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int left = 0, right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
-            map.put(c, map.getOrDefault(c, 0) + 1);
-            while (map.size() > k && left < right) {
-                char c2 = s.charAt(left);
-                map.put(c2, map.get(c2) - 1);
-                if (map.get(c2) == 0) {
-                    map.remove(c2);
+            map.put(c, map.getOrDefault(c,0) + 1);
+            while (map.size() > k) {
+                char cc = s.charAt(left++);
+                map.put(cc, map.get(cc) - 1);
+                if (map.get(cc) == 0) {
+                    map.remove(cc);
                 }
-                left++;
             }
-            max = Math.max(max, right - left + 1);
-            right++;
+            max = Math.max(max, right-left+1);
         }
 
         return max;

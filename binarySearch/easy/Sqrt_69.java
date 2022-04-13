@@ -20,8 +20,8 @@ public class Sqrt_69 {
     // We return the largest integer whose square is less than or equal to the given integer, e.g. sqr(21) = 4^2<sqr(21)<5^2, so we return 4.
     public static void main(String[] args) {
         Sqrt_69 s = new Sqrt_69();
-        System.out.println(s.mySqrt(4)); //2
         System.out.println(s.mySqrt(8)); //2
+        System.out.println(s.mySqrt(4)); //2
         System.out.println(s.mySqrt(21)); //4
     }
 

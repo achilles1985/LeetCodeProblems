@@ -32,16 +32,15 @@ public class LongestRepeatingCharacterReplacement_424 {
 
     // O(n) - time, O(1) - space
     public int characterReplacement(String s, int k) {
-        int maxFrequency = 0, ans = 0;
+        int mostFrequentLetter = 0, ans = 0;
         int[] freq = new int[26];
         for (int left = 0, right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             freq[c - 'A']++;
-            maxFrequency = Math.max(maxFrequency, freq[c - 'A']);
-            while (right - left + 1 - maxFrequency > k) {
-                char cc = s.charAt(left);
+            mostFrequentLetter = Math.max(mostFrequentLetter, freq[c - 'A']);
+            while (right - left + 1 - mostFrequentLetter > k) {
+                char cc = s.charAt(left++);
                 freq[cc - 'A']--;
-                left++;
             }
             ans = Math.max(ans, right - left + 1);
         }

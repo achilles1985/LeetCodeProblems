@@ -1,12 +1,10 @@
-package backtracking;
+package backtracking.hard;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**H
  * Given a 2D board and a list of words from the dictionary, find all words in the board.

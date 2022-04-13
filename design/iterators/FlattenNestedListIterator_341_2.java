@@ -16,9 +16,8 @@ public class FlattenNestedListIterator_341_2 implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        // hasNext() called setPeeked(), which ensures peeked has the next integer
-        // in it. We need to clear the peeked field so that the element is returned
-        // again.
+        // hasNext() called setPeeked(), which ensures peeked has the next integer in it.
+        // We need to clear the peeked field so that the element is returned again.
         Integer result = peeked;
         peeked = null;
         return result;

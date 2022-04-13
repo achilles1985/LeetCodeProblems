@@ -59,27 +59,14 @@ public class MaximumLengthOfRepeatedSubarray_718 {
     }
 
     // O((A+B)*min(A,B)*log(min(A,B))), O(A) - space
-    public int findLength(int[] A, int[] B) {
-        int left = 0, right = Math.min(A.length, B.length)+1; // to be possible to construct hash of the length == min(A,B)
-        while (left < right) { // log(min(A,B))
-            int mid = left + (right - left) / 2;
-            if (search(A, B, mid)) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        return left - 1;
-    }
-
-    public int findLength2(int[] nums1, int[] nums2) {
-        int left = 0, right = Math.min(nums1.length, nums2.length) + 1;
+    public int findLength(int[] nums1, int[] nums2) {
+        int left = 0, right = Math.min(nums1.length, nums2.length); // to be possible to construct hash of the length == min(A,B)
         while (left < right) {
             int mid = left + (right-left+1)/2;
-            if (!search(nums1, nums2, mid)) {
-                right = mid - 1;
-            } else {
+            if (isPossible(nums1, nums2,mid)) {
                 left = mid;
+            } else {
+                right = mid -1;
             }
         }
         return left;
@@ -90,7 +77,7 @@ public class MaximumLengthOfRepeatedSubarray_718 {
         int left = 0, right = Math.min(A.length, B.length) + 1;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            if (searchRK(A, B, mid)) {
+            if (isPossibleRK(A, B, mid)) {
                 left = mid + 1;
             } else {
                 right = mid;
@@ -116,7 +103,7 @@ public class MaximumLengthOfRepeatedSubarray_718 {
         return max;
     }
 
-    private boolean searchRK(int[] A, int[] B, int length) {
+    private boolean isPossibleRK(int[] A, int[] B, int length) {
         // TODO (fix rehashing algorithm)
         int hashA = 0;
         for (int i = 0; i < length; i++) {
@@ -146,14 +133,14 @@ public class MaximumLengthOfRepeatedSubarray_718 {
     }
 
     // Can be improved to O(A+B) if used Robin-Karp alg to find hash
-    private boolean search(int[] A, int[] B, int length) {
+    private boolean isPossible(int[] nums1, int[] nums2, int length) {
         Set<String> hashes = new HashSet<>();
-        for (int i = 0; i <= A.length - length; i++) {
-            String hash = Arrays.toString(Arrays.copyOfRange(A, i, i + length)); //A, can be O(1) with Robin-Karp alg
+        for (int i = 0; i <= nums1.length - length; i++) {
+            String hash = Arrays.toString(Arrays.copyOfRange(nums1, i, i + length)); //A, can be O(1) with Robin-Karp alg
             hashes.add(hash);
         }
-        for (int i = 0; i <= B.length - length; i++) {
-            String hash = Arrays.toString(Arrays.copyOfRange(B, i, i + length)); //B, can be O(1) with Robin-Karp alg
+        for (int i = 0; i <= nums2.length - length; i++) {
+            String hash = Arrays.toString(Arrays.copyOfRange(nums2, i, i + length)); //B, can be O(1) with Robin-Karp alg
             if (hashes.contains(hash)) {
                 return true;
             }

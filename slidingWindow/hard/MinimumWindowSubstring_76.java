@@ -19,9 +19,9 @@ public class MinimumWindowSubstring_76 {
 
     public static void main(String[] args) {
         MinimumWindowSubstring_76 s = new MinimumWindowSubstring_76();
+        System.out.println(s.minWindow3("bba", "ab")); //ba
         System.out.println(s.minWindow3("aa", "aa")); //aa
         System.out.println(s.minWindow3("a", "a")); //a
-        System.out.println(s.minWindow3("bba", "ab")); //ba
         System.out.println(s.minWindow3("abaacbab", "abc")); //acb
         System.out.println(s.minWindow3("ADOBECODEBANC", "ABC")); //BANC
 
@@ -233,5 +233,4 @@ public class MinimumWindowSubstring_76 {
         }
         return count == tMap.size();
     }
-
 }

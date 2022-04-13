@@ -4,7 +4,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * H [marked]
+ * H [marked]?
  * Return the length of the shortest, non-empty, contiguous subarray of A with sum at least K.
  * If there is no non-empty subarray with sum at least K, return -1.
  * <p>
@@ -39,9 +39,6 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
         System.out.println(s.shortestSubarray(new int[] {1}, 1)); //1
         System.out.println(s.shortestSubarray(new int[] {1, 2}, 4)); //-1
         System.out.println(s.shortestSubarray(new int[] {2, -1, 2}, 3)); //3
-
-        System.out.println(s.sumZero(5));
-        System.out.println(s.sumZero(4));
     }
 
     // O(n^2) - time, O(1) - space
@@ -62,6 +59,7 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
         return minLength == Integer.MAX_VALUE ? -1 : minLength;
     }
 
+    // cannot understand
     // O(n) - time, O(n) - space
     public int shortestSubarray(int[] A, int K) {
         int n = A.length;
@@ -85,29 +83,7 @@ public class ShortestSubarrayWithSumAtLeastK_862 {
         return answer == n + 1 ? -1 : answer;
     }
 
-    public int[] sumZero(int n) {
-        int d = n/2;
-        boolean even = true;
-        if (n%2 != 0) {
-            even = false;
-        }
-        int k = 0;
-        int[] ans = new int[n];
-        d = -1*d;
-        ans[k++] = d;
-        int size = even ? n + 1 : n;
-        while (--size > 0) {
-            d++;
-            if (d == 0 && even) {
-                continue;
-            }
-            ans[k++] = d;
-        }
-
-        return ans;
-    }
-
-    // Incorrect
+    // Incorrect, because arr might contains negatives
     public int shortestSubarray3(int[] A, int K) {
         int sum = 0;
         int j = 0; int min = A.length+1;

@@ -57,7 +57,7 @@ public class KokoEatingBananas_875 {
     private boolean isPossible(int speed, int[] piles, int h) {
         int hourSpent = 0;
         for (int pile: piles) {
-            hourSpent += Math.ceil((double) pile / speed);
+            hourSpent += Math.ceil((double) pile / speed); // pay attentions int res=10/3=3, but double res=10/3=3.33.
         }
         return hourSpent <= h;
     }

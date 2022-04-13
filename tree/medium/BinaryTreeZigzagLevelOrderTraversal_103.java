@@ -55,6 +55,7 @@ public class BinaryTreeZigzagLevelOrderTraversal_103 {
 
         System.out.println(s.zigzagLevelOrder3(root3)); //[[3],[20,9],[15,7]]
         System.out.println(s.zigzagLevelOrder3(root2)); //[[1],[3,2],[4,5]]
+        System.out.println(s.zigzagLevelOrder3(root3)); //[[1],[3,2],[4,5]]
     }
 
     // O(n) - time, space

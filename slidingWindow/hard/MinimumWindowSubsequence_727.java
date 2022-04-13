@@ -101,8 +101,7 @@ public class MinimumWindowSubsequence_727 {
                 minLen = right - left + 1;
                 result = S.substring(left, right + 1);
             }
-            // WARNING: we have to move right pointer to the next position of left pointer, NOT the next position
-            // of right pointer
+            // WARNING: we have to move right pointer to the next position of left pointer, NOT the next position of right pointer
             right = left + 1;
         }
         return result;

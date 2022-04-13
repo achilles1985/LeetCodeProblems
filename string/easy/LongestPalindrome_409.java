@@ -34,7 +34,7 @@ public class LongestPalindrome_409 {
         System.out.println(s.longestPalindrome("aaaabbbbcccdddkkk")); //15
     }
 
-    // O(n) - time
+    // O(n) - time, O(1) - space
     public int longestPalindrome(String s) {
         Map<Character, Integer> freq = new HashMap<>();
         for (char c: s.toCharArray()) {
@@ -53,14 +53,14 @@ public class LongestPalindrome_409 {
         return count + max%2;
     }
 
+    // O(n) - time, O(1) - space
     public int longestPalindrome2(String s) {
         if (s == null || s.length() < 1) return 0;
         Set<Character> set = new HashSet<>();
         for (int i = 0; i < s.length(); i++) {
             if (set.contains(s.charAt(i))) {
                 set.remove(s.charAt(i));
-            }
-            else {
+            } else {
                 set.add(s.charAt(i));
             }
         }

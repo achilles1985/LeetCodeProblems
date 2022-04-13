@@ -79,7 +79,7 @@ public class MaximumSizeSubarraySumEqualsK_325 {
             if (map.containsKey(sum-k)) {
                 max = Math.max(max, i-map.get(sum-k));
             }
-            if (!map.containsKey(sum)) {
+            if (!map.containsKey(sum)) { // we should avoid overriding its index as we want the max j - i, so we want to keep i as left as possible
                 map.put(sum, i);
             }
         }
