@@ -4,6 +4,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/*
+Run several task concurrently and wait for all of them to complete
+ */
 public class App {
 
     public static void main(String[] args) {

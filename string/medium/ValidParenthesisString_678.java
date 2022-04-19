@@ -43,21 +43,6 @@ public class ValidParenthesisString_678 {
         return helper(s, 0, 0);
     }
 
-    private boolean helper(String s, int index, int open) {
-        if (index == s.length()) {
-            return open == 0;
-        }
-        if (s.charAt(index) == '(') {
-            return helper(s, index + 1, open + 1);
-        } else if (s.charAt(index) == ')') {
-            return open != 0 && helper(s, index + 1, open - 1);
-        } else {
-            return helper(s, index + 1, open)
-                    || helper(s, index + 1, open + 1)
-                    || open != 0 && helper(s, index + 1, open - 1);
-        }
-    }
-
     // O(n) - time, O(1) - space
     public boolean checkValidString(String s) {
         if (s == null || s.isEmpty() || "*".equals(s)) {
@@ -91,5 +76,20 @@ public class ValidParenthesisString_678 {
         }
 
         return true;
+    }
+
+    private boolean helper(String s, int index, int open) {
+        if (index == s.length()) {
+            return open == 0;
+        }
+        if (s.charAt(index) == '(') {
+            return helper(s, index + 1, open + 1);
+        } else if (s.charAt(index) == ')') {
+            return open != 0 && helper(s, index + 1, open - 1);
+        } else {
+            return helper(s, index + 1, open)
+                    || helper(s, index + 1, open + 1)
+                    || open != 0 && helper(s, index + 1, open - 1);
+        }
     }
 }

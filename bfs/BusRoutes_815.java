@@ -34,6 +34,7 @@ public class BusRoutes_815 {
         System.out.println(s.numBusesToDestination(new int[][]{{7,12},{4,5,15},{6},{15,19},{9,12,13}},15,12)); //-1
     }
 
+    // O(n^2) - time, space
     public int numBusesToDestination(int[][] routes, int source, int target) {
         Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int i = 0; i < routes.length; i++) {

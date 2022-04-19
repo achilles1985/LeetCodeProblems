@@ -39,7 +39,32 @@ public class ReverseWordsInString_151 {
     }
 
     // O(n) - time, space
-    public String reverseWords4(String s) {
+    public String reverseWords(String s) {
+        String[] words = s.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (int i = words.length-1; i>= 0; i--) {
+            sb.append(words[i]).append(" ");
+        }
+        sb.deleteCharAt(sb.length()-1);
+
+        return sb.toString();
+    }
+
+    // O(n) - time, space
+    public String reverseWords2(String s) {
+        String[] words = s.trim().split("\\s+");
+        int left = 0, right = words.length - 1;
+        while (left < right) {
+            String temp = words[left];
+            words[left] = words[right];
+            words[right] = temp;
+            left++; right--;
+        }
+        return Arrays.stream(words).collect(Collectors.joining(" "));
+    }
+
+    // O(n) - time, space
+    public String reverseWords3(String s) {
         int left = 0, right = s.length() - 1;
         // remove leading spaces
         while (left <= right && s.charAt(left) == ' ') {
@@ -68,20 +93,7 @@ public class ReverseWordsInString_151 {
     }
 
     // O(n) - time, space
-    public String reverseWords3(String s) {
-        String[] words = s.trim().split("\\s+");
-        int left = 0, right = words.length - 1;
-        while (left < right) {
-            String temp = words[left];
-            words[left] = words[right];
-            words[right] = temp;
-            left++; right--;
-        }
-        return Arrays.stream(words).collect(Collectors.joining(" "));
-    }
-
-    // O(n) - time, space
-    public String reverseWords(String s) {
+    public String reverseWords4(String s) {
         if (s == null || s.isEmpty()) {
             return s;
         }
@@ -93,7 +105,7 @@ public class ReverseWordsInString_151 {
     }
 
     // O(n) - time, space
-    public String reverseWords2(String s) {
+    public String reverseWords5(String s) {
         if (s == null || s.isEmpty()) {
             return s;
         }
