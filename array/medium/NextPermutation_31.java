@@ -15,12 +15,14 @@ import utils.SolutionUtils;
 /*
     One should observe a patten.
     Find the first number smaller to the left then last number.
-    Find the next greater number for that number and swap them. Then reverse subarray.
+    Find the next greater number for that number to the right and swap them.
+    Then reverse subarray.
  */
 public class NextPermutation_31 {
 
     public static void main(String[] args) {
         NextPermutation_31 s = new NextPermutation_31();
+        s.nextPermutation(new int[]{1,2,3,1,2,7,6,5,4}); // 1,2,3,1,4,2,5,6,7
         s.nextPermutation(new int[]{2,1,5,4,3}); // 2,3,1,4,5
         s.nextPermutation(new int[]{2,3,1}); // 3,2,1
         s.nextPermutation(new int[]{1,5,8,4,7,6,5,3,1,9,5}); // 1,5,8,4,7,6,5,3,5,1,9

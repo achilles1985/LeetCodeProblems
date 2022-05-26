@@ -142,7 +142,8 @@ public class FindModeInBinarySearchTree_501 {
         }
         if (count.get() == maxCount.get()) {
             modes.add(root.val);
-        } if (count.get() > maxCount.get()) {
+        }
+        if (count.get() > maxCount.get()) {
             maxCount.set(count.get());
             modes.clear();
             modes.add(root.val);

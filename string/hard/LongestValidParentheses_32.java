@@ -20,8 +20,31 @@ public class LongestValidParentheses_32 {
 
     public static void main(String[] args) {
         LongestValidParentheses_32 s = new LongestValidParentheses_32();
-        System.out.println(s.longestValidParentheses2(")()())")); //4
+        System.out.println(s.subarraysWithMoreZerosThanOnes(new int[]{0,1,1,0,1})); //9
+
+        System.out.println(s.longestValidParentheses(")()())")); //4
         System.out.println(s.longestValidParentheses2("(()")); //2
+
+    }
+
+    public int subarraysWithMoreZerosThanOnes(int[] nums) {
+        int count = 0;
+        for (int k = 1; k < nums.length; k++) {
+            for (int i = 0, j = i+k; j < nums.length; i++, j++) {
+                int onces = 0, zeros = 0;
+                for (int m = i; m <= j; m++) {
+                    if (nums[m] == 1) {
+                        onces++;
+                    } else {
+                        zeros++;
+                    }
+                }
+                if (onces > zeros) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     // O(n^3) - time, O(n) - space

@@ -51,7 +51,7 @@ public class MinimumWindowSubstring_76 {
         for (int i = 0; i < s.length(); i++) {
             for (int j = i + t.length(); j <= s.length(); j++) {
                 String sub = s.substring(i, j); // O(m-n) space
-                if (match(sub, t, map)) {
+                if (match(sub, map)) {
                     if (sub.length() < min) {
                         min = sub.length();
                         minStr = sub;
@@ -216,7 +216,7 @@ public class MinimumWindowSubstring_76 {
         return result;
     }
 
-    private boolean match(String str, String t, Map<Character, Integer> tMap) {
+    private boolean match(String str, Map<Character, Integer> tMap) {
         Map<Character, Integer> sMap = new HashMap<>(); // if only letters, it's constant space
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);

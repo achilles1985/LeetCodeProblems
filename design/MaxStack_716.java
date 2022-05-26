@@ -48,24 +48,16 @@ public class MaxStack_716 {
     }
 
     public int pop() {
-        if (stack.isEmpty()) {
-            return 0;
-        }
         maxStack.pop();
+
         return stack.pop();
     }
 
     public int top() {
-        if (stack.isEmpty()) {
-            return 0;
-        }
         return stack.peek();
     }
 
     public int peekMax() {
-        if (maxStack.isEmpty()) {
-            return 0;
-        }
         return maxStack.peek();
     }
 

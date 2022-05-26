@@ -25,6 +25,7 @@ import java.util.LinkedList;
  * -10 ^ 5 <= A[i] <= 10 ^ 5
  * 1 <= K <= 10 ^ 9
  */
+//https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/discuss/204290/Monotonic-Queue-Summary
 // https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/discuss/143726/C%2B%2BJavaPython-O(N)-Using-Deque
 public class ShortestSubarrayWithSumAtLeastK_862 {
 

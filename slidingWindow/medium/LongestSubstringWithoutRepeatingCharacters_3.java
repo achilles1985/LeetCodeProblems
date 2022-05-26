@@ -1,6 +1,10 @@
 package slidingWindow.medium;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /** M [marked]
@@ -40,6 +44,34 @@ public class LongestSubstringWithoutRepeatingCharacters_3 {
         System.out.println(s.lengthOfLongestSubstring("abcabcbb")); //3
         System.out.println(s.lengthOfLongestSubstringBF("bbbbb")); //1
         System.out.println(s.lengthOfLongestSubstringBF("pwwkew")); //3
+
+        System.out.println(s.removeDuplicates("yfttttfbbbbnnnnffbgffffgbbbbgssssgthyyyy",4));
+    }
+
+    public String removeDuplicates(String s, int k) {
+        Map<Character, Integer> freq = new HashMap<>();
+        Deque<Character> stack = new ArrayDeque<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            freq.put(c, freq.getOrDefault(c,0)+1);
+            stack.push(c);
+            if (freq.get(c) < k) {
+                continue;
+            }
+            while (!stack.isEmpty() && freq.containsKey(c)) {
+                stack.pop();
+                freq.put(c, freq.getOrDefault(c,0)-1);
+                if (freq.get(c) == 0) {
+                    freq.remove(c);
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()) {
+            sb.append(stack.pollLast());
+        }
+
+        return sb.toString();
     }
 
     // O(n^3) - time, O(min(n,m)) - space

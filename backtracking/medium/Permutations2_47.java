@@ -30,7 +30,7 @@ public class Permutations2_47 {
         System.out.println(s.permuteUnique(new int[]{1,2,3})); //[[1, 1, 2], [1, 2, 1], [2, 1, 1]]
     }
 
-    // O(n*log(n) + n*n!) - time, O(n^2) - space (if result is not counted, if it does - n*n!)
+    // O(n*log(n) + n*n!) - time, O(n^2) - space (if result is not counted, if it does - n*n!)(depth of the recursion tree * temp array)
     // if you do not used Set, you need sorting because of duplicates
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();

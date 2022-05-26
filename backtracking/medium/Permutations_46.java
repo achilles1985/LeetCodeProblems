@@ -32,6 +32,7 @@ public class Permutations_46 {
     }
 
     // O(n*n!) - time (initially we have N choices, then N-1, ... 1 = N*(N-1)*(N-2)*...1 = N! + n to copy, space (to keep N! solutions)
+    // O(n^2) - space (depth of the recursion tree * temp array)
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<>(), nums, new boolean[nums.length]);

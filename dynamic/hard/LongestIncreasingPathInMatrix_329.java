@@ -43,7 +43,7 @@ public class LongestIncreasingPathInMatrix_329 {
                 {2,2,1}})); //4
     }
 
-    //O(4^n+m) or O(4^n*m) or O(2^n+m) or O(2^n*m) ? - time, O(m*n) - space, max height for recursion stack, it's m*n in a worth case
+    //O(2^n+m) - time, O(m*n) - space, max depth for recursion stack, it's m*n in a worth case
     public int longestIncreasingPathBF(int[][] matrix) {
         if (matrix == null | matrix.length == 0) {
             return 0;
@@ -62,9 +62,6 @@ public class LongestIncreasingPathInMatrix_329 {
     public int longestIncreasingPath(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
-        if (matrix == null | rows == 0) {
-            return 0;
-        }
         int max = 0;
         int[][] dp = new int[rows][cols];
         for (int i = 0; i < rows; i++) {
